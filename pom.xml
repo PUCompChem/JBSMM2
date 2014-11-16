@@ -1,0 +1,147 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>pu</groupId>
+  <artifactId>pu-jbsmm2</artifactId>
+  <packaging>jar</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>pu-jbsmm2</name>
+  <description>
+	JBSMM2 (Java Based System for Molecular Modeling) - ver. 2. 
+	Chemoinformatics applications and other software functionalities developed by computer chemistry group at the University of Plovdiv
+  </description>
+  <repositories>
+    <!-- 
+  	<repository>
+        <id>website_ambit</id>
+  		<url>http://ambit.sourceforge.net/jars</url>
+  		<snapshots>
+  			<enabled>false</enabled>
+  		</snapshots>
+  	</repository>
+  	-->
+    <repository>
+      <id>ambit-plovdiv</id>
+      <url>http://ambit.uni-plovdiv.bg:8083/nexus/content/repositories/thirdparty</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>ambit-plovdiv-releases</id>
+      <url>http://ambit.uni-plovdiv.bg:8083/nexus/content/repositories/releases</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>ambit-plovdiv-snapshots</id>
+      <url>http://ambit.uni-plovdiv.bg:8083/nexus/content/repositories/snapshots</url>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>always</updatePolicy>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>mvnrepository</id>
+      <name>mvnrepository</name>
+      <url>http://mvnrepository.com/</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <!-- jgoodies libs are here  -->
+    <repository>
+      <id>repo1.maven.org</id>
+      <name>repo1.maven.org</name>
+      <url>http://repo1.maven.org/maven2</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <!--
+  	<repository>
+  		<id>ucc-repo</id>
+  		<name>ucc-repo</name>
+  		<url>https://maven.ch.cam.ac.uk/m2repo</url>
+  	</repository>
+-->
+    <!-- 
+  	<repository>
+  		<id>CDK repository</id>
+  		<name>CDK repository</name>
+  		<url>http://pele.farmbio.uu.se/maven2/</url>
+  	</repository>  	
+
+  	<repository>
+     	<id>wwmm</id>
+     	<name>UCC Maven Repository</name>
+     	<url>http://wwmm.ch.cam.ac.uk/maven2</url>
+    </repository>
+     -->
+  </repositories>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+	<dependency>
+      <groupId>ambit</groupId>
+      <artifactId>ambit2-core</artifactId>
+      <version>${ambit.version}</version>      
+      <type>jar</type>
+    </dependency>
+    <dependency>
+      <groupId>ambit</groupId>
+      <artifactId>ambit2-smarts</artifactId>
+      <version>${ambit.version}</version>      
+      <type>jar</type>
+    </dependency>
+    <dependency>
+      <groupId>ambit</groupId>
+      <artifactId>ambit2-reactions</artifactId>
+      <version>${ambit.version}</version>      
+      <type>jar</type>
+    </dependency>
+    <dependency>
+      <groupId>ambit</groupId>
+      <artifactId>ambit2-ui</artifactId>
+      <version>${ambit.version}</version>      
+      <type>jar</type>
+    </dependency>
+  </dependencies>
+  
+  
+  <build>
+   <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+   <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>2.3.1</version>
+          <configuration>
+            <source>1.6</source>
+            <target>1.6</target>
+          </configuration>
+        </plugin>
+	   </plugins>
+   </pluginManagement>
+  </build>
+  <organization>
+  	<name>Computer Chemistry Group at the University of Plovdiv/</name>
+	<url>http://www.uni-plovdiv.net</url>
+  </organization>  
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <junit.version>4.8.1</junit.version>    
+    <cdk.version>1.4.11</cdk.version>
+    <ambit.version>2.5.9-SNAPSHOT</ambit.version>
+  </properties>
+</project>
