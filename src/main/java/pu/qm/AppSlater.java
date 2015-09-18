@@ -53,8 +53,7 @@ public class AppSlater
 	
 	
 	protected static void parseCommand(Options options, String[] args) throws Exception
-	{
-		
+	{		
 		CommandLineParser parser = new PosixParser();
 		CommandLine cmd = parser.parse( options, args);
 	}

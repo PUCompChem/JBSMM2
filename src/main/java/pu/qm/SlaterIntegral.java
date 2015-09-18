@@ -1,8 +1,10 @@
 package pu.qm;
 
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Formatter;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 import java.util.logging.Logger;
-
-
 
 
 public class SlaterIntegral 
@@ -30,7 +32,7 @@ public class SlaterIntegral
 	
 	public SlaterIntegral()
 	{
-		logger = getLogger();
+		setLogger();
 	}
 	
 	
@@ -86,14 +88,19 @@ public class SlaterIntegral
 				//printf ("PT = %e\n", PT);
 				A0 = (1/P) * Math.exp (-P);
 				//printf ("A(0) = %e\n", A0);
-				if (PT != 0) B0 = - Math.exp(-PT) * (1/PT) - Math.exp(PT) * (-1/PT);
-				else B0 = 2;
+				
+				if (PT != 0) 
+					B0 = - Math.exp(-PT) * (1/PT) - Math.exp(PT) * (-1/PT);
+				else 
+					B0 = 2;
 				//printf ("B(0) = %e\n", B0);
 				for (l = 1; l <= T; l++) {
 					A[l] = slat (P, l, 1);
 					//printf ("A(%d) = %e\n", l, A[l]);
-					if (PT != 0) B[l] = - slat (PT, l, 1) - slat (PT, l, -1);
-						else B[l] = (1 + Math.pow(-1, l)) / (l+1);
+					if (PT != 0) 
+						B[l] = - slat (PT, l, 1) - slat (PT, l, -1);
+					else 
+						B[l] = (1 + Math.pow(-1, l)) / (l+1);
 					//printf ("B(%d) = %e\n", l, B[l]);
 				}
 				for (i1 = 1; i1 <= T; i1++) 
@@ -146,10 +153,25 @@ public class SlaterIntegral
 	}
 	
 	
-	private Logger getLogger()
+	private void setLogger()
 	{
-		//TODO
-		return null;
+		if (logger == null)
+		logger = Logger.getAnonymousLogger();
+		logger.setUseParentHandlers(false);
+		Handler conHdlr = new ConsoleHandler();
+
+		conHdlr.setFormatter(new Formatter() {
+			public String format(LogRecord record) {
+				return 
+				/*
+		        		record.getLevel() + "  :  "
+		            + record.getSourceClassName() + " -:- "
+		            + record.getSourceMethodName() + " -:- "
+				 */
+				record.getMessage() + "\n";
+			}
+		});
+
+		logger.addHandler(conHdlr);
 	}
-	
 }
