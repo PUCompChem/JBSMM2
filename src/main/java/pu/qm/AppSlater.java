@@ -10,18 +10,14 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.PosixParser;
 
 public class AppSlater 
-{
-	
+{	
 	public static void main(String[] args) throws Exception
 	{
 		Options options = getOptions();
 		parseCommand(options, args);
-			
 		
 		printHelp(options, null);
-
 	}
-	
 	
 	
 	
@@ -46,6 +42,14 @@ public class AppSlater
         .withArgName("file")
         .withDescription("Output file")        
         .create( "o" );
+		options.addOption(output);
+		
+		Option polinomCoeafs   = OptionBuilder
+        .hasArg()
+        .withLongOpt("polinom-coeffs")
+        .withArgName("file")
+        .withDescription("A file with the polinom coefficents")        
+        .create( "p" );
 		options.addOption(output);
 		
 		return options;
