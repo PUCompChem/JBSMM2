@@ -46,9 +46,9 @@ public class AppSlater
 		
 		Option polinomCoeafs   = OptionBuilder
         .hasArg()
-        .withLongOpt("polinom-coeffs")
+        .withLongOpt("polynomilals")
         .withArgName("file")
-        .withDescription("A file with the polinom coefficents")        
+        .withDescription("A file with orbital polynomial coefficents")        
         .create( "p" );
 		options.addOption(output);
 		

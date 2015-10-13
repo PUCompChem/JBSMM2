@@ -20,8 +20,8 @@ public class SlaterIntegral
 	//public int EP2;
 	
 	public String orbital = null;
-	public ArrayList<OrbitalPolynomial> additionalOrbitalPolynomials = null;
-	public ArrayList<OrbitalPolynomial> orbitalPolynomials = null;
+	public ArrayList<OrbitalPolynomial> additionalOrbitalPolynomials = null; //taken directly from the parameter file
+	public ArrayList<OrbitalPolynomial> orbitalPolynomials = null; //these are the basic polynomials (from resource file + "-p" option
 	
 	public double P, PT, P1, P2, DI, R, NS;
 	public double A0, B0;
