@@ -1,5 +1,6 @@
 package pu.qm;
 
+import java.util.ArrayList;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Formatter;
 import java.util.logging.Handler;
@@ -16,11 +17,15 @@ public class SlaterIntegral
 	public int M;
 	public int T;	
 	public int TT;
-	public int EP2;
+	//public int EP2;
 	
-	double P, PT, P1, P2, DI, R, NS;
-	double A0, B0;
-	double S, SP;
+	public String orbital = null;
+	public ArrayList<OrbitalPolynomial> additionalOrbitalPolynomials = null;
+	public ArrayList<OrbitalPolynomial> orbitalPolynomials = null;
+	
+	public double P, PT, P1, P2, DI, R, NS;
+	public double A0, B0;
+	public double S, SP;
 	
 	public double A[];
 	public double B[];
