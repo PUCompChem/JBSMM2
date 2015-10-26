@@ -20,20 +20,24 @@ public class SlaterIntegral
 	//public int EP2;
 	
 	public String orbital = null;
-	public ArrayList<OrbitalPolynomial> additionalOrbitalPolynomials = null; //taken directly from the parameter file
-	public ArrayList<OrbitalPolynomial> orbitalPolynomials = null; //these are the basic polynomials (from resource file + "-p" option
+	
+	//taken directly from the parameter file
+	public ArrayList<OrbitalPolynomial> additionalOrbitalPolynomials = new ArrayList<OrbitalPolynomial>(); 
+	
+	//these are the basic polynomials (from resource file + "-p" option
+	public ArrayList<OrbitalPolynomial> orbitalPolynomials = new ArrayList<OrbitalPolynomial>(); 
 	
 	public double P, PT, P1, P2, DI, R, NS;
 	public double A0, B0;
 	public double S, SP;
 	
-	public double A[];
-	public double B[];
-	public double C1[];
-	public double C2[];
-	public double Z1[];
-	public double Z2[];
-	public double EP[][];
+	public double A[] = null;
+	public double B[] = null;
+	public double C1[] = null;
+	public double C2[] = null;
+	public double Z1[] = null;
+	public double Z2[] = null;
+	public double EP[][] = null;
 	
 	public SlaterIntegral()
 	{
@@ -178,5 +182,84 @@ public class SlaterIntegral
 		});
 
 		logger.addHandler(conHdlr);
+	}
+	
+	public boolean checkOrbitalPolynomial()
+	{
+		//TODO
+		
+		return true;
+	}
+	
+	public String toString()
+	{
+		StringBuffer sb = new StringBuffer();
+		sb.append("N = " + N + "\n");
+		sb.append("M = " + M + "\n");
+		sb.append("T = " + T + "\n");
+		sb.append("TT = " + TT + "\n");
+		
+		if (Z1 != null)
+		{	
+			sb.append("Z1 =");
+			for (int i = 0; i < Z1.length; i++)
+				sb.append(" " + Z1[i]);
+			sb.append("\n");
+		}
+		else
+			sb.append("Z1 = null\n");
+		
+		if (Z2 != null)
+		{	
+			sb.append("Z2 =");
+			for (int i = 0; i < Z2.length; i++)
+				sb.append(" " + Z2[i]);
+			sb.append("\n");
+		}
+		else
+			sb.append("Z2 = null\n");
+		
+		
+		if (C1 != null)
+		{	
+			sb.append("C1 =");
+			for (int i = 0; i < C1.length; i++)
+				sb.append(" " + C1[i]);
+			sb.append("\n");
+		}
+		else
+			sb.append("C1 = null\n");
+		
+		if (C2 != null)
+		{	
+			sb.append("C2 =");
+			for (int i = 0; i < C2.length; i++)
+				sb.append(" " + C2[i]);
+			sb.append("\n");
+		}
+		else
+			sb.append("C2 = null\n");
+		
+		sb.append("Orbital = " + orbital + "\n");
+		
+		if (EP != null)
+		{	
+			sb.append("EP = \n");
+			for (int i = 0; i < EP.length; i++)
+			{	
+				if (EP[i] == null)
+				{
+					sb.append(" null\n" );
+					continue;
+				}
+				for (int k = 0; k < EP[i].length; k++)
+					sb.append(" " + EP[i][k]);
+				sb.append("\n");
+			}
+		}
+		else
+			sb.append("EP = null\n");
+		
+		return sb.toString();
 	}
 }

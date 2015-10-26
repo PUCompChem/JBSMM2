@@ -15,6 +15,7 @@ public class IOUtils
 	int curLine = 0;
 	int additionalLinesNeeded = 0;
 	ArrayList<String> additionalLines = new ArrayList<String>();
+	ArrayList<OrbitalPolynomial> targetOPList = null; 
 	
 	//Loeading flags
 	boolean Flag_N = false;
@@ -52,13 +53,17 @@ public class IOUtils
 		long length = f.length();
 		SlaterIntegral sIntegral = new SlaterIntegral();
 		curSIntegral = sIntegral;
+		targetOPList = curSIntegral.additionalOrbitalPolynomials; 
 		
 		int n = 0;
 		while (f.getFilePointer() < length)
 		{
 			String line = f.readLine();
 			n++;
+			
+			line = handleComment(line);
 			line = line.trim();
+			
 			if (line.isEmpty())
 				continue; //Empty line is skipped
 			
@@ -417,8 +422,55 @@ public class IOUtils
 			return;
 		}
 		
-		//TODO
 		
+		if (varName.equals("Polynomial"))
+		{				
+			Tokenizer tok = new Tokenizer(varValue); 
+			if (tok.tokenCount() != 2)
+			{	
+				errors.add("Line " + curLine + " incorrect Polynomial header line: \"" + line +"\"");
+				return;
+			}
+			
+			Integer nObj = getInteger(tok.getToken(1));
+			if (nObj == null)
+			{	
+				errors.add("Line " + curLine + " incorrect Polynomial header line. Incorrect polynom order: \"" + line +"\"");
+				return;
+			}
+			
+			if (nObj > additionalLines.size())
+			{	
+				errors.add("Line " + curLine + " Insufficient number of lines for Polynomial section: \"" + line +"\"");
+				return;
+			}
+			
+			OrbitalPolynomial orbPol = new OrbitalPolynomial();
+			orbPol.orbital = tok.getToken(0);
+			
+			orbPol.coeffs = new double [nObj][nObj];
+			for (int i = 0; i < nObj; i++ )
+			{
+				ArrayList<Double> darray = getDoubleArray(additionalLines.get(i));
+				if (darray == null)
+				{
+					errors.add("Line " + curLine + "  \"" + line +"\"" 
+							+ "\n  Incorrect matrix row #" + (i+1) + "  " + additionalLines.get(i));
+					continue;
+				}
+				
+				if (darray.size() != nObj)
+				{
+					errors.add("Line " + curLine + "  \"" + line +"\"" 
+							+ "\n  Incorrect matrix row #" + (i+1) + "  " + additionalLines.get(i));
+					continue;
+				}
+				
+				for (int k = 0; k < nObj; k++)
+					orbPol.coeffs[i][k] = darray.get(k);
+			}
+			
+		}
 		
 	}
 	
@@ -461,6 +513,15 @@ public class IOUtils
 		}
 		
 		return darray;
+	}
+	
+	String handleComment(String line)
+	{
+		int pos = line.indexOf("#");
+		if (pos == -1)
+			return line;
+		else
+			return line.substring(0,pos);
 	}
 	
 }

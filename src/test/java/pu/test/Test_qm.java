@@ -25,6 +25,10 @@ public class Test_qm
 			System.out.println("Parameter file errors:");
 			for (int i = 0; i < io.errors.size(); i++)
 				System.out.println(io.errors.get(i));
+			
+			return;
 		}
+		
+		System.out.println(sIntergal.toString());
 	}
 }

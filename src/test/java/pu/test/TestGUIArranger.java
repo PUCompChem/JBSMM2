@@ -35,7 +35,7 @@ public class TestGUIArranger {
 		
 		JFrame vFrame = new JFrame("JSplitPane Sample");
 		vFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		vFrame.setSize(1800, 800);		
+		vFrame.setSize(1000, 600);		
 		arranger.setFrame(vFrame);
 		vFrame.setVisible(true);
 		arranger.setSpliterPositions();
