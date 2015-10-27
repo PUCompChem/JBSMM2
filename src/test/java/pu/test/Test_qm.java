@@ -15,6 +15,7 @@ public class Test_qm
 	{
 		IOUtils io = new IOUtils();
 		SlaterIntegral sIntergal = io.loadSlaterIntegral(paramsFile);
+		sIntergal.loadPredefinedOrbitalPolynomials();
 		
 		if (io.errors.isEmpty())
 		{
@@ -28,6 +29,21 @@ public class Test_qm
 			
 			return;
 		}
+		
+		int res = sIntergal.checkOrbitalPolynomial();
+		switch(res)
+		{
+		case 0:
+			System.out.println("Oprbital polynomial is OK");
+			break;
+		case 1:
+			System.out.println("Oprbital parameter is not set");
+			break;
+		case 2:
+			System.out.println("Oprbital polynomial is missing for " + sIntergal.orbital);
+			break;	
+		}
+		
 		
 		System.out.println(sIntergal.toString());
 	}

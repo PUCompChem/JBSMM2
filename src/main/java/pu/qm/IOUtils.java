@@ -97,7 +97,7 @@ public class IOUtils
 		return sIntegral;
 	}
 	
-	public List<OrbitalPolynomial> loadOrbitalPolynomials(String paramsFile) throws Exception
+	public ArrayList<OrbitalPolynomial> loadOrbitalPolynomials(String paramsFile) throws Exception
 	{
 		errors.clear();
 		File file = new File(paramsFile);
@@ -113,8 +113,14 @@ public class IOUtils
 		}
 					
 		long length = f.length();
+		
+		//This variable should not be needed
 		SlaterIntegral sIntegral = new SlaterIntegral();
 		curSIntegral = sIntegral;
+		
+		ArrayList<OrbitalPolynomial> orbPolList = new ArrayList<OrbitalPolynomial>();
+		targetOPList = orbPolList;
+		
 		
 		int n = 0;
 		while (f.getFilePointer() < length)
@@ -150,7 +156,7 @@ public class IOUtils
 		
 		f.close();
 		
-		return null;
+		return targetOPList;
 	}
 	
 	
@@ -470,8 +476,8 @@ public class IOUtils
 					orbPol.coeffs[i][k] = darray.get(k);
 			}
 			
+			targetOPList.add(orbPol);
 		}
-		
 	}
 	
 	

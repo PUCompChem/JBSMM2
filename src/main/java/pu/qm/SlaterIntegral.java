@@ -1,5 +1,7 @@
 package pu.qm;
 
+import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Formatter;
@@ -24,7 +26,7 @@ public class SlaterIntegral
 	//taken directly from the parameter file
 	public ArrayList<OrbitalPolynomial> additionalOrbitalPolynomials = new ArrayList<OrbitalPolynomial>(); 
 	
-	//these are the basic polynomials (from resource file + "-p" option
+	//these are the basic polynomials (from resource file + "-p" option)
 	public ArrayList<OrbitalPolynomial> orbitalPolynomials = new ArrayList<OrbitalPolynomial>(); 
 	
 	public double P, PT, P1, P2, DI, R, NS;
@@ -39,11 +41,23 @@ public class SlaterIntegral
 	public double Z2[] = null;
 	public double EP[][] = null;
 	
-	public SlaterIntegral()
+	public SlaterIntegral() throws Exception
 	{
 		setLogger();
 	}
 	
+	public void loadPredefinedOrbitalPolynomials() throws Exception
+	{
+		URL resource = this.getClass().getClassLoader().getResource("pu/qm/ABcoeffs.txt");
+		loadOrbitalPolynomials(resource.getFile());
+	}
+	
+	public void loadOrbitalPolynomials(String fileName) throws Exception
+	{
+		IOUtils ioUtils = new IOUtils();
+		ArrayList<OrbitalPolynomial> orbPol = ioUtils.loadOrbitalPolynomials(fileName);
+		orbitalPolynomials.addAll(orbPol);
+	}
 	
 	public double calculate()
 	{
@@ -161,6 +175,33 @@ public class SlaterIntegral
 		return AK * Math.exp (-L * PE) * FAK;
 	}
 	
+	public int checkOrbitalPolynomial()
+	{
+		if (orbital == null)
+			return 1;
+		
+		for (int i = 0; i < additionalOrbitalPolynomials.size(); i++)
+		{	
+			OrbitalPolynomial pol = additionalOrbitalPolynomials.get(i);
+			if (pol.orbital.equals(orbital))
+			{
+				EP = pol.coeffs;  
+				return 0;
+			}	
+		}
+		
+		for (int i = 0; i < orbitalPolynomials.size(); i++)
+		{	
+			OrbitalPolynomial pol = orbitalPolynomials.get(i);
+			if (pol.orbital.equals(orbital))
+			{
+				EP = pol.coeffs; 
+				return 0;
+			}	
+		}
+		
+		return 2; //Missing orbital polynomial
+	}
 	
 	private void setLogger()
 	{
@@ -184,12 +225,6 @@ public class SlaterIntegral
 		logger.addHandler(conHdlr);
 	}
 	
-	public boolean checkOrbitalPolynomial()
-	{
-		//TODO
-		
-		return true;
-	}
 	
 	public String toString()
 	{
@@ -240,6 +275,17 @@ public class SlaterIntegral
 		else
 			sb.append("C2 = null\n");
 		
+		sb.append("Loaded Orbital Polynomials: ");		
+		for (int i = 0; i < orbitalPolynomials.size(); i++)
+			sb.append(orbitalPolynomials.get(i).orbital + "  ");
+		sb.append("\n");
+			
+		sb.append("Additional Orbital Polynomials: ");		
+		for (int i = 0; i < additionalOrbitalPolynomials.size(); i++)
+			sb.append(additionalOrbitalPolynomials.get(i).orbital + "  ");
+		sb.append("\n");
+		
+		
 		sb.append("Orbital = " + orbital + "\n");
 		
 		if (EP != null)
@@ -259,6 +305,9 @@ public class SlaterIntegral
 		}
 		else
 			sb.append("EP = null\n");
+		
+		
+		
 		
 		return sb.toString();
 	}
