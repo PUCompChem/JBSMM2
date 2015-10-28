@@ -41,14 +41,15 @@ public class IOUtils
 		File file = new File(paramsFile);
 		RandomAccessFile f;
 		
-		try{
-			f = new RandomAccessFile(file,"r");
-		}
-		catch(Exception x)
+		
+		f = new RandomAccessFile(file,"r");
+		
+		/*
 		{	
 			errors.add("");
 			return null;
 		}
+		*/
 					
 		long length = f.length();
 		SlaterIntegral sIntegral = new SlaterIntegral();
@@ -278,9 +279,9 @@ public class IOUtils
 				return -13;
 			}
 			
-			curSIntegral.Z1 = new double[darray.size()];
+			curSIntegral.Z1 = new double[darray.size()+1];
 			for (int i = 0; i < darray.size(); i++)
-				curSIntegral.Z1[i] = darray.get(i);
+				curSIntegral.Z1[i+1] = darray.get(i);  //1-base indexing
 			return 0;
 		}
 		
@@ -303,9 +304,9 @@ public class IOUtils
 				return -16;
 			}
 			
-			curSIntegral.Z2 = new double[darray.size()];
+			curSIntegral.Z2 = new double[darray.size()+1];
 			for (int i = 0; i < darray.size(); i++)
-				curSIntegral.Z2[i] = darray.get(i);
+				curSIntegral.Z2[i+1] = darray.get(i); //1-base indexing
 			return 0;
 		}
 		
@@ -328,9 +329,9 @@ public class IOUtils
 				return -19;
 			}
 			
-			curSIntegral.C1 = new double[darray.size()];
+			curSIntegral.C1 = new double[darray.size()+1];
 			for (int i = 0; i < darray.size(); i++)
-				curSIntegral.C1[i] = darray.get(i);
+				curSIntegral.C1[i+1] = darray.get(i);  //1-base indexing
 			return 0;
 		}
 		
@@ -353,9 +354,9 @@ public class IOUtils
 				return -22;
 			}
 			
-			curSIntegral.C2 = new double[darray.size()];
+			curSIntegral.C2 = new double[darray.size()+1];
 			for (int i = 0; i < darray.size(); i++)
-				curSIntegral.C2[i] = darray.get(i);
+				curSIntegral.C2[i+1] = darray.get(i); //1-base indexing
 			return 0;
 		}
 		
@@ -454,7 +455,7 @@ public class IOUtils
 			OrbitalPolynomial orbPol = new OrbitalPolynomial();
 			orbPol.orbital = tok.getToken(0);
 			
-			orbPol.coeffs = new double [nObj][nObj];
+			orbPol.coeffs = new double [nObj+1][nObj+1];
 			for (int i = 0; i < nObj; i++ )
 			{
 				ArrayList<Double> darray = getDoubleArray(additionalLines.get(i));
@@ -473,7 +474,7 @@ public class IOUtils
 				}
 				
 				for (int k = 0; k < nObj; k++)
-					orbPol.coeffs[i][k] = darray.get(k);
+					orbPol.coeffs[i+1][k+1] = darray.get(k);  //Values are stored 1-based indexed
 			}
 			
 			targetOPList.add(orbPol);

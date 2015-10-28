@@ -60,9 +60,10 @@ public class SlaterIntegral
 	}
 	
 	public double calculate()
-	{
-		//TODO
+	{	
 		int i, j, k, l, i1;
+		A = new double[TT+1];
+		B = new double[TT+1];
 
 		logger.info("===========================\n");
 		logger.info("TWO CENTRE OVERLAP INTEGRAL\n");
@@ -305,9 +306,6 @@ public class SlaterIntegral
 		}
 		else
 			sb.append("EP = null\n");
-		
-		
-		
 		
 		return sb.toString();
 	}
