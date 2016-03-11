@@ -49,15 +49,28 @@ public class SlaterIntegral
 	
 	public void loadPredefinedOrbitalPolynomials() throws Exception
 	{	
-		URL resource = this.getClass().getClassLoader().getResource("pu/qm/ABcoeffs.txt");
-		loadOrbitalPolynomials(resource.getFile());
+		String res = "pu/qm/ABcoeffs.txt";
+		URL resource = this.getClass().getClassLoader().getResource(res);
+		if (resource != null)
+			loadOrbitalPolynomials(resource.getFile());
+		else
+			System.out.println("Cannot load the resource " + res);
 	}
 	
-	public void loadOrbitalPolynomials(String fileName) throws Exception
+	public int loadOrbitalPolynomials(String fileName) throws Exception
 	{
 		IOUtils ioUtils = new IOUtils();
 		ArrayList<OrbitalPolynomial> orbPol = ioUtils.loadOrbitalPolynomials(fileName);
-		orbitalPolynomials.addAll(orbPol);
+		if (orbPol == null)
+		{	
+			System.out.println(ioUtils.errors.get(0));
+			return -1;
+		}	
+		else
+		{	
+			orbitalPolynomials.addAll(orbPol);
+			return 0;
+		}	
 	}
 	
 	public double calculate()
@@ -66,8 +79,8 @@ public class SlaterIntegral
 		A = new double[TT+1];
 		B = new double[TT+1];
 
-		logger.info("===========================\n");
-		logger.info("TWO CENTRE OVERLAP INTEGRAL\n");
+		//logger.info("===========================\n");
+		//logger.info("TWO CENTRE OVERLAP INTEGRAL\n");
 		
 		/*
 		printf ("===========================\n\n");
@@ -152,7 +165,7 @@ public class SlaterIntegral
 			S *= Math.sqrt(P1/P2);
 		//printf ("\nOVERLAP INTEGRAL S = %e\n", S);
 		
-		logger.info("OVERLAP INTEGRAL S = " + S);
+		//logger.info("OVERLAP INTEGRAL S = " + S);
 		
 		return S;
 	}

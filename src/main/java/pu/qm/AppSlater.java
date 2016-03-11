@@ -136,7 +136,6 @@ public class AppSlater
 		
 		IOUtils io = new IOUtils();
 		SlaterIntegral sIntergal = io.loadSlaterIntegral(inputFile);
-		sIntergal.loadPredefinedOrbitalPolynomials();
 		
 		if (io.errors.isEmpty())
 		{
@@ -151,6 +150,16 @@ public class AppSlater
 			return;
 		}
 		
+		if (polynomFile == null)		
+			sIntergal.loadPredefinedOrbitalPolynomials();
+		else
+		{	
+			int loadRes = sIntergal.loadOrbitalPolynomials(polynomFile);
+			if (loadRes != 0)
+				return;
+		}	
+		
+		
 		int res = sIntergal.checkOrbitalPolynomial();
 		switch(res)
 		{
@@ -159,18 +168,20 @@ public class AppSlater
 			break;
 		case 1:
 			System.out.println("Oprbital parameter is not set");
-			break;
+			System.out.println(sIntergal.toString());
+			return;
 		case 2:
 			System.out.println("Oprbital polynomial is missing for " + sIntergal.orbital);
-			break;	
+			System.out.println(sIntergal.toString());
+			return;	
 		}
-		
 		
 		System.out.println(sIntergal.toString());
 		
 		System.out.println("Running calculations ...");
 		double result = sIntergal.calculate();
-		System.out.println("Result = " + result);
+		System.out.println();
+		System.out.println("OVERLAP INTEGRAL = " + result);
 		
 	}
 	

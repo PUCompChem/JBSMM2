@@ -114,15 +114,15 @@ public class IOUtils
 		}
 		catch(Exception x)
 		{	
-			errors.add("");
+			errors.add(x.getMessage());
 			return null;
 		}
 					
 		long length = f.length();
 		
 		//This variable should not be needed
-		SlaterIntegral sIntegral = new SlaterIntegral();
-		curSIntegral = sIntegral;
+		//SlaterIntegral sIntegral = new SlaterIntegral();
+		//curSIntegral = sIntegral;
 		
 		ArrayList<OrbitalPolynomial> orbPolList = new ArrayList<OrbitalPolynomial>();
 		targetOPList = orbPolList;
@@ -167,7 +167,7 @@ public class IOUtils
 	
 	
 	int handleLine(String line)
-	{
+	{	
 		additionalLinesNeeded = 0;
 		additionalLines.clear();
 		
@@ -201,6 +201,8 @@ public class IOUtils
 			errors.add("Line " + curLine + " is incorrect: \"" + line +"\"");
 			return -4;
 		}
+		//System.out.println("varName = " + varName + "   varValue = " + varValue);
+		
 		
 		//Handle the slater integral variables
 		
@@ -493,7 +495,7 @@ public class IOUtils
 	}
 	
 	void handleAddionalLines(String line)
-	{
+	{	
 		int pos = line.indexOf("=");
 		if (pos == -1)
 		{	
