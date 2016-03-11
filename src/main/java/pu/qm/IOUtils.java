@@ -26,6 +26,11 @@ public class IOUtils
 	boolean Flag_C1 = false;
 	boolean Flag_C2 = false;
 	boolean Flag_Orbital = false;
+	boolean Flag_P1 = false;
+	boolean Flag_P2 = false;
+	boolean Flag_DI = false;
+	boolean Flag_R = false;
+	boolean Flag_NS = false;
 	
 	/*
 	protected String curSectiionName = null;
@@ -360,6 +365,97 @@ public class IOUtils
 			return 0;
 		}
 		
+		if (varName.equals("P1"))
+		{
+			Double dVal = getDouble(varValue);
+			if (dVal == null)
+			{	
+				errors.add("Line " + curLine + " incorrect parameter P1: \"" + line +"\"");
+				return -23;
+			}			
+			if (dVal <= 0)
+			{	
+				errors.add("Line " + curLine + " incorrect parameter P1 is not positive: \"" + line +"\"");
+				return -24;
+			}			
+			curSIntegral.P1 = dVal;
+			Flag_P1 = true;
+			return 0;
+		}
+		
+		if (varName.equals("P2"))
+		{
+			Double dVal = getDouble(varValue);
+			if (dVal == null)
+			{	
+				errors.add("Line " + curLine + " incorrect parameter P2: \"" + line +"\"");
+				return -25;
+			}			
+			if (dVal <= 0)
+			{	
+				errors.add("Line " + curLine + " incorrect parameter P2 is not positive: \"" + line +"\"");
+				return -26;
+			}			
+			curSIntegral.P2 = dVal;
+			Flag_P2 = true;
+			return 0;
+		}
+		
+		if (varName.equals("DI"))
+		{
+			Double dVal = getDouble(varValue);
+			if (dVal == null)
+			{	
+				errors.add("Line " + curLine + " incorrect parameter DI: \"" + line +"\"");
+				return -27;
+			}			
+			if (dVal <= 0)
+			{	
+				errors.add("Line " + curLine + " incorrect parameter DI is not positive: \"" + line +"\"");
+				return -28;
+			}			
+			curSIntegral.DI = dVal;
+			Flag_DI = true;
+			return 0;
+		}
+		
+		if (varName.equals("R"))
+		{
+			Double dVal = getDouble(varValue);
+			if (dVal == null)
+			{	
+				errors.add("Line " + curLine + " incorrect parameter R: \"" + line +"\"");
+				return -29;
+			}			
+			if (dVal <= 0)
+			{	
+				errors.add("Line " + curLine + " incorrect parameter R is not positive: \"" + line +"\"");
+				return -30;
+			}			
+			curSIntegral.R = dVal;
+			Flag_R = true;
+			return 0;
+		}
+		
+		if (varName.equals("NS"))
+		{
+			Integer iVal = getInteger(varValue);
+			if (iVal == null)
+			{	
+				errors.add("Line " + curLine + " incorrect parameter NS: \"" + line +"\"");
+				return -31;
+			}			
+			if (iVal <= 0)
+			{	
+				errors.add("Line " + curLine + " incorrect parameter NS is not positive: \"" + line +"\"");
+				return -32;
+			}			
+			curSIntegral.NS = iVal;
+			Flag_NS = true;
+			return 0;
+		}
+		
+		
 		if (varName.equals("Orbital"))
 		{				
 			curSIntegral.orbital = varValue;			 
@@ -373,19 +469,19 @@ public class IOUtils
 			if (tok.tokenCount() != 2)
 			{	
 				errors.add("Line " + curLine + " incorrect Polynomial header line: \"" + line +"\"");
-				return -23;
+				return -40;
 			}
 			
 			Integer iVal = getInteger(tok.getToken(1));
 			if (iVal == null)
 			{	
 				errors.add("Line " + curLine + " incorrect Polynomial header line. Incorrect polynom order: \"" + line +"\"");
-				return -24;
+				return -41;
 			}			
 			if (iVal <= 0)
 			{	
 				errors.add("Line " + curLine + " incorrect Polynomial header line. Nagative polynom order: \"" + line +"\"");
-				return -25;
+				return -42;
 			}
 			
 			additionalLinesNeeded = iVal;
@@ -475,6 +571,7 @@ public class IOUtils
 				
 				for (int k = 0; k < nObj; k++)
 					orbPol.coeffs[i+1][k+1] = darray.get(k);  //Values are stored 1-based indexed
+					
 			}
 			
 			targetOPList.add(orbPol);

@@ -29,7 +29,8 @@ public class SlaterIntegral
 	//these are the basic polynomials (from resource file + "-p" option)
 	public ArrayList<OrbitalPolynomial> orbitalPolynomials = new ArrayList<OrbitalPolynomial>(); 
 	
-	public double P, PT, P1, P2, DI, R, NS;
+	public double P, PT, P1, P2, DI, R;
+	public int NS;
 	public double A0, B0;
 	public double S, SP;
 	
@@ -47,7 +48,7 @@ public class SlaterIntegral
 	}
 	
 	public void loadPredefinedOrbitalPolynomials() throws Exception
-	{
+	{	
 		URL resource = this.getClass().getClassLoader().getResource("pu/qm/ABcoeffs.txt");
 		loadOrbitalPolynomials(resource.getFile());
 	}
@@ -99,32 +100,33 @@ public class SlaterIntegral
 		printf ("NS = "); scanf ("%f", &NS);
 		*/
 		
-		S = 0;
+		S = 0.0;
 		
 		for (i = 1; i <= N; i++) 
 		{
 			for (j = 1; j <= M; j++) 
 			{
 				//printf ("I = %d, J = %d\n", i, j);
-				P = ( (Z1[i] + Z2[j]) * R) / 2;
+				P = ( (Z1[i] + Z2[j]) * R) / 2.0;
 				//printf ("P = %e\n", P);
-				PT = ( (Z1[i] - Z2[j]) * R) / 2;
+				PT = ( (Z1[i] - Z2[j]) * R) / 2.0;
 				//printf ("PT = %e\n", PT);
 				A0 = (1/P) * Math.exp (-P);
 				//printf ("A(0) = %e\n", A0);
 				
 				if (PT != 0) 
-					B0 = - Math.exp(-PT) * (1/PT) - Math.exp(PT) * (-1/PT);
+					B0 = - Math.exp(-PT) * (1.0/PT) - Math.exp(PT) * (-1.0/PT);
 				else 
 					B0 = 2;
 				//printf ("B(0) = %e\n", B0);
-				for (l = 1; l <= T; l++) {
+				for (l = 1; l <= T; l++) 
+				{
 					A[l] = slat (P, l, 1);
 					//printf ("A(%d) = %e\n", l, A[l]);
 					if (PT != 0) 
 						B[l] = - slat (PT, l, 1) - slat (PT, l, -1);
 					else 
-						B[l] = (1 + Math.pow(-1, l)) / (l+1);
+						B[l] = (1.0 + Math.pow(-1, l)) / (l+1.0);
 					//printf ("B(%d) = %e\n", l, B[l]);
 				}
 				for (i1 = 1; i1 <= T; i1++) 
@@ -140,12 +142,17 @@ public class SlaterIntegral
 				S += C1[i] * C2[j] * SP;
 			}
 		}
+		
+		//System.out.println("*** " + "R = " + R + "    R/2 = " + R/2 + "    NS = " + NS + "   (R/2)^NS = " +  Math.pow((R/2), NS));
+		
 		S *= Math.pow((R/2), NS);
 		if (DI >= 1) 
 			S *= (P1/P2);
 		else 
 			S *= Math.sqrt(P1/P2);
 		//printf ("\nOVERLAP INTEGRAL S = %e\n", S);
+		
+		logger.info("OVERLAP INTEGRAL S = " + S);
 		
 		return S;
 	}
@@ -171,7 +178,7 @@ public class SlaterIntegral
 			if (L < 0) 
 				AK += Math.pow(L, (NN1 - i)) / (FAKT * Math.pow(PE,i));
 			else 
-				AK += 1 / (Math.pow(PE,i) * FAKT);
+				AK += 1.0 / (Math.pow(PE,i) * FAKT);
 		}
 		return AK * Math.exp (-L * PE) * FAK;
 	}
@@ -207,7 +214,8 @@ public class SlaterIntegral
 	private void setLogger()
 	{
 		if (logger == null)
-		logger = Logger.getAnonymousLogger();
+			logger = Logger.getAnonymousLogger();
+		
 		logger.setUseParentHandlers(false);
 		Handler conHdlr = new ConsoleHandler();
 
@@ -238,7 +246,7 @@ public class SlaterIntegral
 		if (Z1 != null)
 		{	
 			sb.append("Z1 =");
-			for (int i = 0; i < Z1.length; i++)
+			for (int i = 1; i < Z1.length; i++)
 				sb.append(" " + Z1[i]);
 			sb.append("\n");
 		}
@@ -248,7 +256,7 @@ public class SlaterIntegral
 		if (Z2 != null)
 		{	
 			sb.append("Z2 =");
-			for (int i = 0; i < Z2.length; i++)
+			for (int i = 1; i < Z2.length; i++)
 				sb.append(" " + Z2[i]);
 			sb.append("\n");
 		}
@@ -259,7 +267,7 @@ public class SlaterIntegral
 		if (C1 != null)
 		{	
 			sb.append("C1 =");
-			for (int i = 0; i < C1.length; i++)
+			for (int i = 1; i < C1.length; i++)
 				sb.append(" " + C1[i]);
 			sb.append("\n");
 		}
@@ -269,7 +277,7 @@ public class SlaterIntegral
 		if (C2 != null)
 		{	
 			sb.append("C2 =");
-			for (int i = 0; i < C2.length; i++)
+			for (int i = 1; i < C2.length; i++)
 				sb.append(" " + C2[i]);
 			sb.append("\n");
 		}
@@ -292,20 +300,26 @@ public class SlaterIntegral
 		if (EP != null)
 		{	
 			sb.append("EP = \n");
-			for (int i = 0; i < EP.length; i++)
+			for (int i = 1; i < EP.length; i++)
 			{	
 				if (EP[i] == null)
 				{
 					sb.append(" null\n" );
 					continue;
 				}
-				for (int k = 0; k < EP[i].length; k++)
+				for (int k = 1; k < EP[i].length; k++)
 					sb.append(" " + EP[i][k]);
 				sb.append("\n");
 			}
 		}
 		else
 			sb.append("EP = null\n");
+		
+		sb.append("P1 = " + P1 + "\n");
+		sb.append("P2 = " + P2 + "\n");
+		sb.append("DI = " + DI + "\n");
+		sb.append("R = " + R + "\n");
+		sb.append("NS = " + NS + "\n");
 		
 		return sb.toString();
 	}
