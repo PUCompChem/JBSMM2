@@ -107,15 +107,15 @@ public class SlaterIntegral
 			for (j = 1; j <= M; j++) 
 			{
 				//printf ("I = %d, J = %d\n", i, j);
-				P = ( (Z1[i] + Z2[j]) * R) / 2.0;
+				P = ( (Z1[i] + Z2[j]) * R) / 2;
 				//printf ("P = %e\n", P);
-				PT = ( (Z1[i] - Z2[j]) * R) / 2.0;
+				PT = ( (Z1[i] - Z2[j]) * R) / 2;
 				//printf ("PT = %e\n", PT);
 				A0 = (1/P) * Math.exp (-P);
 				//printf ("A(0) = %e\n", A0);
 				
 				if (PT != 0) 
-					B0 = - Math.exp(-PT) * (1.0/PT) - Math.exp(PT) * (-1.0/PT);
+					B0 = - Math.exp(-PT) * (1/PT) - Math.exp(PT) * (-1/PT);
 				else 
 					B0 = 2;
 				//printf ("B(0) = %e\n", B0);
@@ -126,7 +126,7 @@ public class SlaterIntegral
 					if (PT != 0) 
 						B[l] = - slat (PT, l, 1) - slat (PT, l, -1);
 					else 
-						B[l] = (1.0 + Math.pow(-1, l)) / (l+1.0);
+						B[l] = (1 + Math.pow(-1, l)) / (l+1);
 					//printf ("B(%d) = %e\n", l, B[l]);
 				}
 				for (i1 = 1; i1 <= T; i1++) 
@@ -178,7 +178,7 @@ public class SlaterIntegral
 			if (L < 0) 
 				AK += Math.pow(L, (NN1 - i)) / (FAKT * Math.pow(PE,i));
 			else 
-				AK += 1.0 / (Math.pow(PE,i) * FAKT);
+				AK += 1 / (Math.pow(PE,i) * FAKT);
 		}
 		return AK * Math.exp (-L * PE) * FAK;
 	}
