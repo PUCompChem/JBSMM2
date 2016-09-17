@@ -6,7 +6,7 @@ public class TestStructureSetUtils {
 
 	public static void main(String[] args) throws Exception
 	{
-		testDuplications("/temp3/test__1.txt", "/temp3/test__2.txt");
+		testDuplications(args[0], args[1]);
 	}
 	
 	public static void testDuplications(String strFile1, String strFile2) throws Exception

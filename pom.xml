@@ -9,16 +9,36 @@
 	JBSMM2 (Java Based System for Molecular Modeling) - ver. 2. 
 	Chemoinformatics applications and other software functionalities developed by computer chemistry group at the University of Plovdiv
   </description>
+  
   <repositories>
-    <!-- 
-  	<repository>
-        <id>website_ambit</id>
-  		<url>http://ambit.sourceforge.net/jars</url>
-  		<snapshots>
-  			<enabled>false</enabled>
-  		</snapshots>
-  	</repository>
-  	-->
+	<repository>
+		<id>nexus-idea</id>
+		<url>https://nexus.ideaconsult.net/content/repositories/thirdparty</url>
+		<snapshots>
+			<enabled>false</enabled>
+			<updatePolicy>always</updatePolicy>
+		</snapshots>
+	</repository>
+	<repository>
+		<id>nexus-idea-releases</id>
+		<url>https://nexus.ideaconsult.net/content/repositories/releases</url>
+		<snapshots>
+			<enabled>false</enabled>
+		</snapshots>
+		<releases>
+			<enabled>true</enabled>
+		</releases>
+	</repository>
+	<repository>
+		<id>nexus-idea-snapshots</id>
+		<url>https://nexus.ideaconsult.net/content/repositories/snapshots</url>
+		<snapshots>
+			<enabled>true</enabled>
+			<updatePolicy>always</updatePolicy>
+		</snapshots>
+	</repository>
+      
+  	<!--  old repository from University of Plovdiv 
     <repository>
       <id>ambit-plovdiv</id>
       <url>http://ambit.uni-plovdiv.bg:8083/nexus/content/repositories/thirdparty</url>
@@ -41,6 +61,8 @@
         <updatePolicy>always</updatePolicy>
       </snapshots>
     </repository>
+    -->
+    
     <repository>
       <id>mvnrepository</id>
       <name>mvnrepository</name>
@@ -58,26 +80,6 @@
         <enabled>false</enabled>
       </snapshots>
     </repository>
-    <!--
-  	<repository>
-  		<id>ucc-repo</id>
-  		<name>ucc-repo</name>
-  		<url>https://maven.ch.cam.ac.uk/m2repo</url>
-  	</repository>
--->
-    <!-- 
-  	<repository>
-  		<id>CDK repository</id>
-  		<name>CDK repository</name>
-  		<url>http://pele.farmbio.uu.se/maven2/</url>
-  	</repository>  	
-
-  	<repository>
-     	<id>wwmm</id>
-     	<name>UCC Maven Repository</name>
-     	<url>http://wwmm.ch.cam.ac.uk/maven2</url>
-    </repository>
-     -->
   </repositories>
   <dependencies>
     <dependency>
@@ -141,7 +143,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <junit.version>4.8.1</junit.version>    
-    <cdk.version>1.4.11</cdk.version>
-    <ambit.version>2.5.9-SNAPSHOT</ambit.version>
+    <cdk.version>1.5.13</cdk.version>
+    <ambit.version>3.0.3-SNAPSHOT</ambit.version>
   </properties>
 </project>

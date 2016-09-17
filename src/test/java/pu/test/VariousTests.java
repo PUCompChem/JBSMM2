@@ -2,7 +2,9 @@ package pu.test;
 
 import java.util.Stack;
 
-import org.openscience.cdk.interfaces.IMolecule;
+
+import org.openscience.cdk.interfaces.IAtomContainer;
+//import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 import ambit2.smarts.SmartsHelper;
@@ -56,7 +58,7 @@ public class VariousTests
 	
 	public static void boolSearch(String smarts, String smiles) throws Exception
 	{	
-		IMolecule mol = SmartsHelper.getMoleculeFromSmiles(smiles);	
+		IAtomContainer mol = SmartsHelper.getMoleculeFromSmiles(smiles);	
 		
 		man.setQuery(smarts);
 		if (!man.getErrors().equals(""))
