@@ -1,5 +1,6 @@
 package pu.qm.overlapint;
 
-public class OverlapIntegral {
+public class OverlapIntegral 
+{
 
 }
