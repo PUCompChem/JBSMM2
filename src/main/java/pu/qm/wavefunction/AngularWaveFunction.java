@@ -16,7 +16,7 @@ public class AngularWaveFunction implements IAngularWaveFunction
 	}
 	
 	
-	@Override
+	
 	public double Y(double theta, double phi) 
 	{
 		// TODO Auto-generated method stub
