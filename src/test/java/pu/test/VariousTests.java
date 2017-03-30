@@ -1,12 +1,18 @@
 package pu.test;
 
+import java.io.File;
 import java.util.Stack;
+
+
+
 
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 //import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
+import pu.reactor.json.WorkspaceJsonParser;
+import pu.reactor.workspace.Workspace;
 import ambit2.smarts.SmartsHelper;
 import ambit2.smarts.SmartsManager;
 import ambit2.smarts.SMIRKSTransform;
@@ -24,7 +30,9 @@ public class VariousTests
 				
 		//testStack();
 		
-		boolSearch("CCCN", "CCCNCC");
+		//boolSearch("CCCN", "CCCNCC");
+		
+		testReadWorkspaceJson("/test--.json");
 		
 	}
 	
@@ -73,6 +81,14 @@ public class VariousTests
 	public static void dummyTest()
 	{
 		SMIRKSTransform.dummy();
+	}
+	
+	public static void testReadWorkspaceJson(String fileName) throws Exception
+	{
+		WorkspaceJsonParser wsParser = new WorkspaceJsonParser();
+		Workspace ws = wsParser.loadFromJSON(new File(fileName));
+		
+		System.out.println(ws.toJsonString());
 	}
 
 }
