@@ -9,6 +9,7 @@ import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.Console;
 import java.awt.BorderLayout;
 
 import javax.swing.BorderFactory;
@@ -56,6 +57,8 @@ public class ReactorMainFrame extends JFrame
 	JMenu menuFile;	
 	JMenuItem miOpenMolecule;	
 	JMenuItem miExit;
+	JMenuItem miOpenWorkspace;
+	JMenuItem miSaveWorkspace;
 	
 	JMenu menuReact;	
 	JMenuItem miApplyReaction;
@@ -112,7 +115,7 @@ public class ReactorMainFrame extends JFrame
 		workCases.removeWorkCase(3);
 		
 		add2DMolecule(areas.get(2), "CCCCC");
-		
+		//End of testCode
 	}
 	
 	private void createMenus() 
@@ -131,11 +134,35 @@ public class ReactorMainFrame extends JFrame
 		miOpenMolecule.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) 
 			{
-				//miOpenMolecule(evt);
+				System.out.println("OpenMoleculeAction");
+				
 			}
 		});	
 		
 		menuFile.addSeparator();
+		
+		miOpenWorkspace = new JMenuItem ("Open Workspace");
+		menuFile.add(miOpenWorkspace);
+		miOpenWorkspace.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, ActionEvent.CTRL_MASK));
+		miOpenWorkspace.setMnemonic('W');
+		miOpenWorkspace.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) 
+			{
+				//miOpenMolecule(evt);
+			}
+		});	
+		menuFile.addSeparator();
+
+		miSaveWorkspace = new JMenuItem ("Save Workspace");
+		menuFile.add(miSaveWorkspace );
+		miSaveWorkspace .setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
+		miSaveWorkspace .setMnemonic('S');
+		miSaveWorkspace .addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) 
+			{
+				//miOpenMolecule(evt);
+			}
+		});	
 		
 		menuFile.addSeparator();
 		miExit = new JMenuItem ("Exit");
