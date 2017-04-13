@@ -17,14 +17,19 @@ public class Workspace
 		sb.append("{" + endLine);		
 		sb.append("\tGUI_AREAS" + endLine);
 		sb.append("\t{" + endLine);
-		sb.append("\t\t\"TEST\":" + test);
 		
 		
-		
+		sb.append("\t\t\"TEST\":" + test + endLine);
 		sb.append("\t}" + endLine);
 		
 		
 		sb.append("}" + endLine);
 		return sb.toString();
+	}
+	
+	public String guiBinNodeToJson(GUIBinNode guiBinNode, String offset)
+	{
+		//TODO
+		return null;
 	}
 }
