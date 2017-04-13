@@ -32,7 +32,7 @@ public class VariousTests
 		
 		//boolSearch("CCCN", "CCCNCC");
 		
-		testReadWorkspaceJson("/test--.json");
+		testReadWorkspaceJson("/test-workspace.json");
 		
 	}
 	
@@ -87,6 +87,13 @@ public class VariousTests
 	{
 		WorkspaceJsonParser wsParser = new WorkspaceJsonParser();
 		Workspace ws = wsParser.loadFromJSON(new File(fileName));
+		
+		if (!wsParser.getErrors().isEmpty())
+		{	
+			System.out.println("Parsing errors");
+			for (int i = 0; i < wsParser.getErrors().size(); i++)
+				System.out.println(wsParser.getErrors().get(i));
+		}		
 		
 		System.out.println(ws.toJsonString());
 	}

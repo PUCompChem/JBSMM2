@@ -82,6 +82,7 @@ public class WorkspaceJsonParser
 				errors.add("Incorrect AREA_NAME " + jsonUtils.getError());
 			else
 				guiBinNode.setName(name);
+			System.out.println(">> " + name);
 		}
 		else
 			guiBinNode.setName("No name");
@@ -105,17 +106,44 @@ public class WorkspaceJsonParser
 		{	
 			Integer i = jsonUtils.extractIntKeyword(areaNode, "RATIO", false);
 			if (i == null)
-				errors.add("Incorrect RATIOL " + jsonUtils.getError());
+				errors.add("Incorrect RATIO " + jsonUtils.getError());
 			else
 				guiBinNode.setRatio(i);
 		}
 		else
 			guiBinNode.setRatio(50); //default RATIO = 50	
-				
+		
+		//Handle CHILDREN
+		JsonNode childrenNode = areaNode.path("CHILDREN");
+		if (!childrenNode.isMissingNode())
+		{
+			if (childrenNode.isArray())
+			{
+				if (childrenNode.size() != 2)
+				{
+					errors.add("Incorrect: field CHILDREN size is not 2!");
+				}
+				else
+				{
+					//Recursion: handling children nodes
+					GUIBinNode child1 = new GUIBinNode(); 
+					guiBinNode.setChild1(child1);
+					readAreaNode(child1, childrenNode.get(0));
+					
+					GUIBinNode child2 = new GUIBinNode(); 
+					guiBinNode.setChild2(child2);
+					readAreaNode(child2, childrenNode.get(1));
+				}
+			}
+			else
+				errors.add("Incorrect: field CHILDREN is not an array!");
+		}
 		
 	}
 	
-	
-	
+	public List<String> getErrors()
+	{
+		return errors;
+	}
 	
 }
