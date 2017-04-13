@@ -1,9 +1,12 @@
 package pu.reactor.workspace;
 
+import pu.gui.utils.GUIBinNode;
+
 public class Workspace 
 {
 	
 	public boolean test = false;
+	public GUIBinNode rootAreaNode = null;
 	
 	
 	public String toJsonString()

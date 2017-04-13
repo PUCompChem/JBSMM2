@@ -12,6 +12,7 @@ public class GUIBinNode
 	private GUIBinNode child2 = null;
 	private String areaName1 = null;
 	private String areaName2 = null;
+	private String name = null;
 	private boolean isHorizontal = true;
 	private int ratio = 50;
 	public int parseAreaNum = 0;
@@ -108,6 +109,14 @@ public class GUIBinNode
 
 	public void setGuiArea(GUIArea guiArea) {
 		this.guiArea = guiArea;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 }

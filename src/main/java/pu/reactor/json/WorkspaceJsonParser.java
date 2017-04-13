@@ -33,8 +33,8 @@ public class WorkspaceJsonParser
 			try {fin.close();} catch (Exception x) {}	
 		}
 		
-		Workspace workspace = new Workspace();
-		
+		Workspace workspace = new Workspace();		
+		readGUIAreas(workspace);
 		
 		return workspace;
 	}
@@ -42,17 +42,19 @@ public class WorkspaceJsonParser
 	void readGUIAreas(Workspace workspace)
 	{
 		
-		JsonNode curNode = root.path("GUI_AREAS");
-		if (curNode.isMissingNode())
+		JsonNode areaNode = root.path("GUI_AREAS");
+		if (areaNode.isMissingNode())
 		{	
 			errors.add("JSON Section \"DATA_ACCESS\" is missing!");
 			return;
 		}
+		else
+			readAreaNode(workspace, areaNode);
 		
 		//Read field TEST
-		if (!curNode.path("TEST").isMissingNode())
+		if (!areaNode.path("TEST").isMissingNode())
 		{	
-			Boolean b = jsonUtils.extractBooleanKeyword(curNode, "TEST", false);
+			Boolean b = jsonUtils.extractBooleanKeyword(areaNode, "TEST", false);
 			if (b == null)
 				errors.add(jsonUtils.getError());
 			else
@@ -66,6 +68,13 @@ public class WorkspaceJsonParser
 		}
 		
 	}
+	
+	public void readAreaNode(Workspace workspace, JsonNode areaNode)
+	{
+		//TODO
+	}
+	
+	
 	
 	
 }
