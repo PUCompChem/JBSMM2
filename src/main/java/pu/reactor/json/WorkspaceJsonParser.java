@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import pu.gui.utils.GUIArea;
 import pu.gui.utils.GUIBinNode;
 import pu.helpers.json.JsonUtilities;
 import pu.reactor.workspace.Workspace;
@@ -115,8 +116,15 @@ public class WorkspaceJsonParser
 		
 		//Handle CHILDREN
 		JsonNode childrenNode = areaNode.path("CHILDREN");
-		if (!childrenNode.isMissingNode())
+		if (childrenNode.isMissingNode())
 		{
+			//This is a terminal node with associated GUIArea 
+			GUIArea guiArea = new GUIArea();
+			guiBinNode.setGuiArea(guiArea);
+		}
+		else
+		{
+			//Set children nodes
 			if (childrenNode.isArray())
 			{
 				if (childrenNode.size() != 2)
@@ -138,6 +146,7 @@ public class WorkspaceJsonParser
 			else
 				errors.add("Incorrect: field CHILDREN is not an array!");
 		}
+		
 		
 	}
 	
