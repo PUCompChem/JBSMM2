@@ -4,6 +4,9 @@ public class Process
 {
 	public IProcessNode rootNode = null;
 	
+	//TODO mapping/links between Processes and GUI components (JPanesl etc. ) 
+	
+	
 	public String toJsonString()
 	{
 		
