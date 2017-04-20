@@ -8,6 +8,7 @@ public class Workspace
 	public boolean test = false;
 	public GUIBinNode rootAreaNode = null;
 	
+	//TODO add Process list somewhere + connections of Processes to GUI-areas (or tabs in them)
 	
 	public String toJsonString()
 	{

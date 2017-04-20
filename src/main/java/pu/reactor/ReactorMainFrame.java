@@ -115,6 +115,7 @@ public class ReactorMainFrame extends JFrame
 		workCases.removeWorkCase(3);
 		
 		add2DMolecule(areas.get(2), "CCCCC");
+		add2DMolecule(areas.get(2), "CCCCNNC");
 		//End of testCode
 	}
 	
@@ -238,7 +239,7 @@ public class ReactorMainFrame extends JFrame
 	{
 		Panel2D p = new Panel2D();		
 		p.setAtomContainer(struct);
-		p.setBorder(BorderFactory.createLineBorder(Color.black));
+		p.setBorder(BorderFactory.createLineBorder(Color.green));
 		
 		p2dList.add(p);
 		

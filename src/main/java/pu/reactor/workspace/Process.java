@@ -2,6 +2,8 @@ package pu.reactor.workspace;
 
 public class Process 
 {
+	public IProcessNode rootNode = null;
+	
 	public String toJsonString()
 	{
 		
