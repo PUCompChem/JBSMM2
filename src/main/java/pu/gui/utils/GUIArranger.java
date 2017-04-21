@@ -1,11 +1,14 @@
 package pu.gui.utils;
 
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.util.Stack;
 import java.util.HashMap;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
@@ -43,6 +46,8 @@ public class GUIArranger
 		
 		//Splitting the root node
 		this.frame = frame;
+		
+		/*
 		JSplitPane rootSplitPane = new JSplitPane();
 		if (rootNode.isHorizontal())
 			rootSplitPane.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
@@ -50,21 +55,58 @@ public class GUIArranger
 			rootSplitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
 		frame.getContentPane().add(rootSplitPane);
 		rootNode.setSplitter(rootSplitPane);
+		*/
 		
-		//Recursive approach to manage the binary tree 
-		processBinNode(rootNode);
+		//Recursive approach to manage the binary tree of nodes 
+		JComponent component = processBinNode(rootNode);
+		frame.getContentPane().add(component);
+		//setSpliterPositions(rootNode);
 	}
 	
 	private JComponent processBinNode(GUIBinNode node)
 	{	
-		
 		if (node.getGuiArea() != null)
 		{
 			//This is a terminal node
-			//TODO
+			GUIArea area = new GUIArea();
+			area.setCompID(node.getName());
+			area.setPanel(new JPanel());
+			areas.put(node.getName(), area);
+			JLabel lab = new JLabel(); lab.setText(node.getName()); area.getPanel().add(lab);
+			area.getPanel().setBackground(Color.WHITE); 
+			return area.getPanel();
 		}
 		
+		//Set splitter in the node 
+		JSplitPane splitPane = new JSplitPane();			
+		if (node.isHorizontal())
+			splitPane.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
+		else
+			splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
+		node.setSplitter(splitPane);
 		
+		//Handle children recursively
+		if (node.getChild1() != null)
+		{
+			JComponent child1 = processBinNode(node.getChild1());
+			if (node.getSplitter().getOrientation() == JSplitPane.HORIZONTAL_SPLIT)
+				node.getSplitter().setLeftComponent(child1);
+			else
+				node.getSplitter().setTopComponent(child1);
+		}
+		
+		if (node.getChild2() != null)
+		{
+			JComponent child2 = processBinNode(node.getChild2());
+			if (node.getSplitter().getOrientation() == JSplitPane.HORIZONTAL_SPLIT)
+				node.getSplitter().setRightComponent(child2);
+			else
+				node.getSplitter().setBottomComponent(child2);
+		}
+		
+		return splitPane;
+		
+		/* - old code
 		//Creating areas
 		if (node.getChild1() == null)
 		{	
@@ -141,6 +183,7 @@ public class GUIArranger
 		}
 		
 		return null;
+		*/
 	}
 	
 		
@@ -148,34 +191,37 @@ public class GUIArranger
 	{	
 		setSpliterPositions(rootNode);
 		
-		//System.out.println("  w = " + rootNode.getSplitter().getSize().width + "  h = " + rootNode.getSplitter().getSize().height );
+		System.out.println("  w = " + rootNode.getSplitter().getSize().width + "  h = " + rootNode.getSplitter().getSize().height );
 		//rootNode.getSplitter().setDividerLocation(200);
 	}
 	
 	private void setSpliterPositions(GUIBinNode node)
 	{	
 		JSplitPane splitter = node.getSplitter();
+		if (splitter == null)
+			return;
+		
 		if (node.isHorizontal())
 		{
 			int pos = (int) (0.01*node.getRatio()*splitter.getSize().width);
-			//System.out.println("pos = " + pos + "  ratio = " + node.getRatio());
+			System.out.println("pos = " + pos + "  ratio = " + node.getRatio() + "  size = " + splitter.getSize().width + "  area = " + node.getName());
 			splitter.setDividerLocation(pos);
+			//splitter.updateUI();
 		}
 		else
 		{
 			int pos = (int) (0.01*node.getRatio()*splitter.getSize().height);
-			//System.out.println("pos = " + pos + "  ratio = " + node.getRatio());
+			System.out.println("pos = " + pos + "  ratio = " + node.getRatio() + "  size = " + splitter.getSize().height + "  area = " + node.getName());
 			splitter.setDividerLocation(pos);
-		}
-			
+			//splitter.updateUI();
+		}			
 		
-		//recursive approach
+		//recursion
 		if (node.getChild1() != null)
 			setSpliterPositions(node.getChild1());
 		
 		if (node.getChild2() != null)
-			setSpliterPositions(node.getChild2());
-		
+			setSpliterPositions(node.getChild2());		
 	}
 	
 	/*
