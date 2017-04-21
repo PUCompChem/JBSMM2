@@ -4,9 +4,7 @@ package pu.gui.utils;
 import java.util.Stack;
 import java.util.HashMap;
 
-
-
-
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
@@ -57,8 +55,16 @@ public class GUIArranger
 		processBinNode(rootNode);
 	}
 	
-	private void processBinNode(GUIBinNode node)
+	private JComponent processBinNode(GUIBinNode node)
 	{	
+		
+		if (node.getGuiArea() != null)
+		{
+			//This is a terminal node
+			//TODO
+		}
+		
+		
 		//Creating areas
 		if (node.getChild1() == null)
 		{	
@@ -133,6 +139,8 @@ public class GUIArranger
 			//recursion
 			processBinNode(childNode);
 		}
+		
+		return null;
 	}
 	
 		

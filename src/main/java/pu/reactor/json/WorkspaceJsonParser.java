@@ -119,7 +119,7 @@ public class WorkspaceJsonParser
 		if (childrenNode.isMissingNode())
 		{
 			//This is a terminal node with associated GUIArea 
-			GUIArea guiArea = new GUIArea();
+			GUIArea guiArea = new GUIArea();			
 			guiBinNode.setGuiArea(guiArea);
 		}
 		else
