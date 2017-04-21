@@ -191,7 +191,7 @@ public class GUIArranger
 	{	
 		setSpliterPositions(rootNode);
 		
-		System.out.println("  w = " + rootNode.getSplitter().getSize().width + "  h = " + rootNode.getSplitter().getSize().height );
+		//System.out.println("  w = " + rootNode.getSplitter().getSize().width + "  h = " + rootNode.getSplitter().getSize().height );
 		//rootNode.getSplitter().setDividerLocation(200);
 	}
 	
@@ -206,14 +206,14 @@ public class GUIArranger
 			int pos = (int) (0.01*node.getRatio()*splitter.getSize().width);
 			System.out.println("pos = " + pos + "  ratio = " + node.getRatio() + "  size = " + splitter.getSize().width + "  area = " + node.getName());
 			splitter.setDividerLocation(pos);
-			//splitter.updateUI();
+			splitter.updateUI();
 		}
 		else
 		{
 			int pos = (int) (0.01*node.getRatio()*splitter.getSize().height);
 			System.out.println("pos = " + pos + "  ratio = " + node.getRatio() + "  size = " + splitter.getSize().height + "  area = " + node.getName());
 			splitter.setDividerLocation(pos);
-			//splitter.updateUI();
+			splitter.updateUI();
 		}			
 		
 		//recursion

@@ -106,6 +106,7 @@ public class WorkspaceJsonParser
 		if (!areaNode.path("RATIO").isMissingNode())
 		{	
 			Integer i = jsonUtils.extractIntKeyword(areaNode, "RATIO", false);
+			//System.out.println("*** RATIO " + i);
 			if (i == null)
 				errors.add("Incorrect RATIO " + jsonUtils.getError());
 			else
