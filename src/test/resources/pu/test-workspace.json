@@ -1,0 +1,46 @@
+{
+	"GUI_AREAS" :
+	{
+		"AREA_NAME" : "Parent",
+		"IS_HORIZONTAL" : true,
+		"RATIO" : 50,
+		
+		"CHILDREN" : 
+		[
+			{
+				"AREA_NAME" : "LeftArea"
+			},
+			
+			{
+				"AREA_NAME" : "RightArea",
+				"IS_HORIZONTAL" : false,
+				"RATIO" : 30,
+				
+				"CHILDREN" : 
+				[
+					{
+						"AREA_NAME" : "RightUpArea"					
+					},
+					{
+						"AREA_NAME" : "RightDownArea",
+						"IS_HORIZONTAL" : false,
+						"RATIO" : 50,
+						"CHILDREN" : 
+						[
+							{
+								"AREA_NAME" : "Ar1"					
+							},
+							{
+								"AREA_NAME" : "Ar2"					
+							}
+						]
+					}
+				]
+			}
+		],
+		
+		"TEST" : true
+	}
+	
+	
+}
