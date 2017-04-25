@@ -101,7 +101,7 @@
 
 
 	<build>
-		<resources>
+		<!--resources>
 			<resource>
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
@@ -110,7 +110,7 @@
 				<directory>src/test/resources</directory>
 				<filtering>true</filtering>
 			</resource>
-		</resources>
+		</resources-->
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -129,6 +129,77 @@
 		<name>Computer Chemistry Group at the University of Plovdiv/</name>
 		<url>http://www.uni-plovdiv.net</url>
 	</organization>
+	<profiles>
+		<profile>
+			<id>development</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<version>3.2</version>
+						<configuration>
+							<debug>true</debug>
+							<optimize>false</optimize>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>production</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<version>3.2</version>
+						<configuration>
+							<debug>false</debug>
+							<optimize>true</optimize>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>JRE6</id>
+			<activation>
+				<jdk>1.6</jdk>
+			</activation>
+			<properties>
+				<sourceVersion>1.6</sourceVersion>
+			</properties>
+		</profile>
+		<profile>
+			<id>JRE7</id>
+			<activation>
+				<jdk>1.7</jdk>
+			</activation>
+			<properties>
+				<sourceVersion>1.7</sourceVersion>
+			</properties>
+		</profile>
+		<profile>
+			<id>JRE8</id>
+			<activation>
+				<jdk>1.8</jdk>
+			</activation>
+			<properties>
+				<sourceVersion>1.8</sourceVersion>
+			</properties>
+		</profile>
+		<profile>
+			<!-- http://stackoverflow.com/questions/15886209/maven-is-not-working-in-java-8-when-javadoc-tags-are-incomplete -->
+			<id>disable-java8-doclint</id>
+			<activation>
+				<jdk>[1.8,)</jdk>
+			</activation>
+			<properties>
+				<additionalparam>-Xdoclint:none</additionalparam>
+			</properties>
+		</profile>
+	</profiles>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<junit.version>4.8.1</junit.version>
