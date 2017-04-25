@@ -1,7 +1,17 @@
 package pu.test;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.net.URL;
 import java.util.Stack;
+
+
+
+
+
+
 
 
 
@@ -11,6 +21,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 //import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
+import pu.qm.AppSlater;
 import pu.reactor.json.WorkspaceJsonParser;
 import pu.reactor.workspace.Workspace;
 import ambit2.smarts.SmartsHelper;
@@ -33,6 +44,8 @@ public class VariousTests
 		//boolSearch("CCCN", "CCCNCC");
 		
 		testReadWorkspaceJson("/test-workspace.json");
+		
+		//testResources();
 		
 	}
 	
@@ -96,6 +109,23 @@ public class VariousTests
 		}		
 		
 		System.out.println(ws.toJsonString());
+	}
+	
+	public static void testResources() throws Exception
+	{
+		VariousTests vt = new VariousTests();
+		URL resource = vt.getClass().getClassLoader().getResource("pu/test-workspace.json");
+		
+		File file = new File(resource.getFile());
+		
+		RandomAccessFile f = new RandomAccessFile(file,"r");			
+		long length = f.length();
+		while (f.getFilePointer() < length)
+		{	
+			String line = f.readLine();
+			System.out.println(line);
+		}
+		
 	}
 
 }
