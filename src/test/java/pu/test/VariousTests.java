@@ -16,7 +16,9 @@ import java.util.Stack;
 
 
 
+
 import pu.reactor.json.PreferencesJsonParser;
+
 
 
 
@@ -27,6 +29,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import pu.qm.AppSlater;
 import pu.reactor.json.WorkspaceJsonParser;
 import pu.reactor.workspace.Preference;
+import pu.reactor.workspace.Preferences;
 import pu.reactor.workspace.Workspace;
 import ambit2.smarts.SmartsHelper;
 import ambit2.smarts.SmartsManager;
@@ -49,9 +52,11 @@ public class VariousTests
 		
 		//testReadWorkspaceJson("/test-workspace.json");
 		
+		testReadPreferencesJson("/test-preferences.json");
+		
 		//testResources();
 		
-		testPreferencesJsonReading(new File("/TestJson.json"));
+		//testPreferencesJsonReading(new File("/TestJson.json"));
 	
 	   
 
@@ -121,6 +126,21 @@ public class VariousTests
 		System.out.println(ws.toJsonString());
 	}
 	
+	public static void testReadPreferencesJson(String fileName) throws Exception
+	{
+		PreferencesJsonParser prefParser = new PreferencesJsonParser();
+		Preferences pref = prefParser.loadFromJSON(new File(fileName));
+		
+		if (!prefParser.getErrors().isEmpty())
+		{	
+			System.out.println("Parsing errors");
+			for (int i = 0; i < prefParser.getErrors().size(); i++)
+				System.out.println(prefParser.getErrors().get(i));
+		}		
+		
+		System.out.println(pref.toJsonString());
+	}
+	
 	public static void testResources() throws Exception
 	{
 		VariousTests vt = new VariousTests();
@@ -137,11 +157,14 @@ public class VariousTests
 		}
 		
 	}
+	
+	
+	
 	public static void testPreferencesJsonReading(File file) throws Exception
 	{
 		PreferencesJsonParser parser = new PreferencesJsonParser();
-		Preference preference = parser.loadFromJSON(file);
-		System.out.println(preference.ToString());
+		//Preference preference = parser.loadFromJSON(file);
+		//System.out.println(preference.ToString());
 	}
 
 }

@@ -5,6 +5,10 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
  
+
+
+
+import pu.gui.utils.GUIBinNode;
 import pu.helpers.json.JsonUtilities;
 import pu.reactor.workspace.*;
 
@@ -16,7 +20,7 @@ public class PreferencesJsonParser{
 	JsonUtilities jsonUtils = new JsonUtilities();
 	JsonNode root = null;
 	
-	public Preference loadFromJSON(File jsonFile) throws Exception
+	public Preferences loadFromJSON(File jsonFile) throws Exception
 	{
 		FileInputStream fin = new FileInputStream(jsonFile); 
 		ObjectMapper mapper = new ObjectMapper();
@@ -30,13 +34,51 @@ public class PreferencesJsonParser{
 			try {fin.close();} catch (Exception x) {}	
 		}
 		
-		 Preference reference = new Preference();
+		Preferences preferences = new Preferences();
 		
-		 //Read reference json and set the preference class
-		 ReadPreferenceMenus(reference);
-	   	 return reference;
+		//REACTION_DB_PATH
+		JsonNode node = root.path("REACTION_DB_PATH");
+		if (node.isMissingNode())
+		{	
+			errors.add("JSON Section \"REACTION_DB_PATH\" is missing!");
+		}
+		else
+		{	
+			String s = jsonUtils.extractStringKeyword(root, "REACTION_DB_PATH", false);
+			if (s == null)
+				errors.add("Incorrect REACTION_DB_PATH " + jsonUtils.getError());
+			else
+				preferences.reactionDBPath = s;
+		}
+		
+		
+		//STARTING_MATERIALS_PATH
+		node = root.path("STARTING_MATERIALS_PATH");
+		if (node.isMissingNode())
+		{	
+			errors.add("JSON Section \"STARTING_MATERIALS_PATH\" is missing!");
+		}
+		else
+		{	
+			String s = jsonUtils.extractStringKeyword(root, "STARTING_MATERIALS_PATH", false);
+			if (s == null)
+				errors.add("Incorrect STARTING_MATERIALS_PATH " + jsonUtils.getError());
+			else
+				preferences.startingMaterialsPath = s;
+		}
+		
+		
+		 //TODO
+	   	return preferences;
+	}
+	
+	public List<String> getErrors()
+	{
+		return errors;
 	}
 
+	
+	/*
 	private void ReadPreferenceMenus(Preference preference) {
 		JsonNode checkBoxNode = root.path("CheckBox3");
 		if (checkBoxNode.isMissingNode())
@@ -50,5 +92,7 @@ public class PreferencesJsonParser{
 			preference.BoolValueCheckbox3 = b;
 		}	
 	}
+	
+	*/
 }
  
