@@ -1,9 +1,12 @@
 package pu.test;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.io.Reader;
 import java.net.URL;
 import java.util.Stack;
 
@@ -13,7 +16,7 @@ import java.util.Stack;
 
 
 
-
+import pu.reactor.json.PreferencesJsonParser;
 
 
 
@@ -23,6 +26,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 import pu.qm.AppSlater;
 import pu.reactor.json.WorkspaceJsonParser;
+import pu.reactor.workspace.Preference;
 import pu.reactor.workspace.Workspace;
 import ambit2.smarts.SmartsHelper;
 import ambit2.smarts.SmartsManager;
@@ -43,10 +47,16 @@ public class VariousTests
 		
 		//boolSearch("CCCN", "CCCNCC");
 		
-		testReadWorkspaceJson("/test-workspace.json");
+		//testReadWorkspaceJson("/test-workspace.json");
 		
 		//testResources();
 		
+		testPreferencesJsonReading(new File("/TestJson.json"));
+	
+	   
+
+	
+	
 	}
 	
 	
@@ -126,6 +136,12 @@ public class VariousTests
 			System.out.println(line);
 		}
 		
+	}
+	public static void testPreferencesJsonReading(File file) throws Exception
+	{
+		PreferencesJsonParser parser = new PreferencesJsonParser();
+		Preference preference = parser.loadFromJSON(file);
+		System.out.println(preference.ToString());
 	}
 
 }
