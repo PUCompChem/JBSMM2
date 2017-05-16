@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: ambit:ambit2-poi:3.0.3-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/ambit/ambit2-poi/3.0.3-SNAPSHOT/ambit2-poi-3.0.3-20170418.081341-73.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/ambit/ambit2-poi/3.0.3-SNAPSHOT/ambit2-poi-3.0.3-20170418.081341-73-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/ambit/ambit2-poi/3.0.3-SNAPSHOT/ambit2-poi-3.0.3-20170418.081341-73-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
