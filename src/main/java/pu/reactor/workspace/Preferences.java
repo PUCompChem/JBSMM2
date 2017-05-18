@@ -1,10 +1,19 @@
 package pu.reactor.workspace;
 
-public class Preference {
+public class Preferences 
+{
+	public static String reactionDBPath = null;
+	public static String startingMaterialsPath = null;
+
 	public boolean BoolValueCheckbox3 = false;
-		public Preference(){
-			
-		}
-	public String ToString(){
-			return Boolean.toString(BoolValueCheckbox3);}
+	
+	public Preferences()
+	{
+
+	}
+	public String toJsonString(){
+		return Boolean.toString(BoolValueCheckbox3);
+	}
+
+
 }

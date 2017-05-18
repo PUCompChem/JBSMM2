@@ -28,7 +28,6 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 import pu.qm.AppSlater;
 import pu.reactor.json.WorkspaceJsonParser;
-import pu.reactor.workspace.Preference;
 import pu.reactor.workspace.Preferences;
 import pu.reactor.workspace.Workspace;
 import ambit2.smarts.SmartsHelper;
