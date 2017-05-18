@@ -96,9 +96,14 @@
 			<artifactId>ambit2-ui</artifactId>
 			<version>${ambit.version}</version>
 			<type>jar</type>
-		</dependency>
+		</dependency>		
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
 	</dependencies>
-
+	
 
 	<build>
 		<!--resources>
@@ -205,5 +210,6 @@
 		<junit.version>4.8.1</junit.version>
 		<cdk.version>1.5.13</cdk.version>
 		<ambit.version>3.0.3-SNAPSHOT</ambit.version>
+		<jackson.version>2.4.1</jackson.version>
 	</properties>
 </project>
