@@ -6,6 +6,7 @@ public class Preferences
 {
 	public static String reactionDBPath = null;
 	public static String startingMaterialsPath = null;
+	public static boolean checkBoxTest = false;
 	
 	public PreferencesWindow createPreferencesWindow()
 	{
@@ -37,7 +38,16 @@ public class Preferences
 			sb.append("\t\"STARTING_MATERIALS_PATH\" : " + "\"" + startingMaterialsPath + "\"");
 			nFields++;
 		}
-		
+		if (reactionDBPath != null)
+		{
+			if (nFields > 0)
+				sb.append("," + endLine);
+			else
+				sb.append(endLine);
+			
+			sb.append("\t\"checkBoxTest\" : " + "\"" + Boolean.toString(checkBoxTest)+ "\"");
+			nFields++;
+		}
 		sb.append(endLine);
 		
 		sb.append("}" + endLine);

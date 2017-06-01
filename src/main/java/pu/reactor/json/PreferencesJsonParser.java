@@ -67,11 +67,25 @@ public class PreferencesJsonParser{
 				preferences.startingMaterialsPath = s;
 		}
 		
-		
+		//CheckBoxTest
+				node = root.path("checkBoxTest");
+				if (node.isMissingNode())
+				{	
+					errors.add("JSON Section \"checkBoxTest\" is missing!");
+				}
+				else
+				{	
+					String s = jsonUtils.extractStringKeyword(root, "checkBoxTest", false);
+					if (s == null)
+						errors.add("Incorrect checkBoxTest " + jsonUtils.getError());
+					else
+						preferences.checkBoxTest = Boolean.parseBoolean(s);
+				}
+				
 		 //TODO
 	   	return preferences;
 	}
-	
+	 
 	public List<String> getErrors()
 	{
 		return errors;
