@@ -23,6 +23,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 
+import pu.reactor.workspace.Preferences;
 import pu.reactor.workspace.gui.*;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -49,6 +50,8 @@ public class ReactorMainFrame extends JFrame {
 	JTabbedPane workCasesTabPane;
 	ReactionSetTree reactionSetTree;
 	ArrayList<Panel2D> p2dList = new ArrayList<Panel2D>();
+	
+	PreferencesWindow preferencesWindow = null;
 
 	// Menu components
 	JMenuBar menuBar;
@@ -64,13 +67,24 @@ public class ReactorMainFrame extends JFrame {
 	JMenuItem miFindAllReactions;
 
 	JMenuItem menuPreferences;
+	
+	
+	//Data Containers
+	Preferences preferences = null;
+	
+	
 
 	ReactorMainFrame() throws Exception {
 		super();
 		initGUI();
 	}
 
-	private void initGUI() throws Exception {
+	private void initGUI() throws Exception 
+	{
+		preferences = new Preferences();
+		preferencesWindow = new PreferencesWindow(preferences);
+		preferencesWindow.setVisible(false);
+		
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle("JBSMM Reactor");
 		addWindowListener(new WindowAdapter() {
@@ -183,8 +197,7 @@ public class ReactorMainFrame extends JFrame {
 
 		menuPreferences.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				PreferencesWindow prefWindow = new PreferencesWindow();
-				prefWindow.setVisible(true);
+				preferencesWindow.setVisible(true);
 			}
 		});
 		setJMenuBar(menuBar);

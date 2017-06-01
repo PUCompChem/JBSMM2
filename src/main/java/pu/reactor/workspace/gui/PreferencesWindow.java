@@ -33,13 +33,26 @@ public class PreferencesWindow extends JFrame {
 	
 	private JButton button;
 	private JCheckBox JcheckBoxText;
+	
 	/*
 	 * Constructor
 	 * @param no parameters
 	 */
 	public PreferencesWindow() { 
 		this.preferences = new Preferences();  
-		
+		initGUI();
+		fillGUIComponentsData();
+	}
+	
+	public PreferencesWindow(Preferences prefs) { 
+		this.preferences = prefs;  
+		initGUI();
+		fillGUIComponentsData();
+	}
+	
+	
+	void initGUI()
+	{
 		reactionDBPathPanel = new JPanel(new FlowLayout(SwingConstants.LEADING, 10, 10));
 		reactionDBPathPanel.setBounds(5, 5, 280, 50);
 		add(reactionDBPathPanel);
@@ -51,14 +64,16 @@ public class PreferencesWindow extends JFrame {
 		reactionDBPathPanel.add(reactionDBPathField,BorderLayout.SOUTH);
 		 
 		 
-		 
-		 
-		
-		
 		 SettingApplyButton();
 		 CreateCheckBoxTest();
 	     setSize(500, 500);
 	     setVisible(true);
+	}
+	
+	void fillGUIComponentsData()
+	{
+		reactionDBPathField.setText(preferences.reactionDBPath);
+		//TODO
 	}
 	
 	
