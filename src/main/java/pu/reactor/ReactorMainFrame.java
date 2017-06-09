@@ -65,15 +65,21 @@ public class ReactorMainFrame extends JFrame {
 	JMenu menuReact;
 	JMenuItem miApplyReaction;
 	JMenuItem miFindAllReactions;
-
+	
+	JMenu menuSettings; 
 	JMenuItem menuPreferences;
 	
 	
 	//Data Containers
 	Preferences preferences = null;
-	
-	
 
+	private JMenuItem miWorkspaceSettings;
+
+	private JMenu menuProjectSettings;
+
+	private JMenuItem miProjectSettings;
+
+	private JMenuItem miProcessSettings; 
 	ReactorMainFrame() throws Exception {
 		super();
 		initGUI();
@@ -83,6 +89,7 @@ public class ReactorMainFrame extends JFrame {
 	{
 		preferences = new Preferences();
 		preferencesWindow = new PreferencesWindow(preferences);
+		preferencesWindow.setSize(new Dimension(1000,800));
 		preferencesWindow.setVisible(false);
 		
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -126,7 +133,7 @@ public class ReactorMainFrame extends JFrame {
 		// End of testCode
 	}
 
-	private void createMenus() {
+	private void createMenus() { 
 		menuBar = new JMenuBar();
 
 		// menu File -----------------------
@@ -191,15 +198,50 @@ public class ReactorMainFrame extends JFrame {
 			}
 		});
 
-		// menu Preferences
+		// menu Settings 
+		menuSettings = new JMenu("Settings"); 
+		menuBar.add(menuSettings);  
+		
+		miWorkspaceSettings = new JMenuItem("Workspace settings");
+		menuSettings.add(miWorkspaceSettings); 
+		miWorkspaceSettings.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				
+			}
+		});
+		
+	
+		
+		menuSettings.addSeparator();
+		
+		miProjectSettings = new JMenuItem("Project settings");
+		menuSettings.add(miProjectSettings); 
+		miProjectSettings.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				
+			}
+		});
+		
+		menuSettings.addSeparator();
+		
+		miProcessSettings = new JMenuItem("Process settings");
+		menuSettings.add(miProcessSettings); 
+		miProcessSettings.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				
+			}
+		});
+	menuSettings.addSeparator();
+		
 		menuPreferences = new JMenuItem("Preferences");
-		menuBar.add(menuPreferences);
-
+		menuSettings.add(menuPreferences);
+		
 		menuPreferences.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				preferencesWindow.setVisible(true);
 			}
 		});
+		
 		setJMenuBar(menuBar);
 	}
 

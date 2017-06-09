@@ -3,8 +3,11 @@ package pu.gui.utils;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 
+import javax.swing.Icon;
 import javax.swing.JPanel;
 import javax.swing.JTree;
+import javax.swing.UIManager;
+import javax.swing.tree.DefaultTreeCellRenderer;
 
 import ambit2.reactions.sets.ReactionSet;
  
@@ -16,6 +19,9 @@ public class ReactionSetTree extends JPanel
 	private JTree tree = new JTree();
 	private JPanel visualizeCurReaction = null;
 	
+	private Icon loadIcon = UIManager.getIcon("OptionPane.errorIcon");
+	 
+	 
 	public ReactionSetTree()
 	{
 		initGUI();
@@ -24,6 +30,9 @@ public class ReactionSetTree extends JPanel
 	private void initGUI()
 	{
 		this.setLayout(new BorderLayout());
+		
+		   DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer) tree.getCellRenderer();
+		   renderer.setOpenIcon(loadIcon);
 		this.add(tree, BorderLayout.CENTER);
 	}
 	
