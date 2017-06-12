@@ -6,13 +6,14 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.JTree;
 
-import ambit2.reactions.sets.ReactionSet;
+import ambit2.reactions.Reaction;
+
  
 public class ReactionSetTree extends JPanel
 {	
 	private static final long serialVersionUID = -4305046628531992964L;	
 	
-	private ArrayList<ReactionSet> reactionSets = new ArrayList<ReactionSet>();
+	private ArrayList<Reaction> reactions = new ArrayList<Reaction>();
 	private JTree tree = new JTree();
 	private JPanel visualizeCurReaction = null;
 	
@@ -27,19 +28,19 @@ public class ReactionSetTree extends JPanel
 		this.add(tree, BorderLayout.CENTER);
 	}
 	
-	private void reactionSetDataToTree()
+	private void reactionDataToTree()
 	{
 		//TODO
 	}
 	
 
-	public ArrayList<ReactionSet> getReactionSets() {
-		return reactionSets;
+	public ArrayList<Reaction> getReactions() {
+		return reactions;
 	}
 
-	public void setReactionSets(ArrayList<ReactionSet> reactionSets) {
-		this.reactionSets = reactionSets;
-		reactionSetDataToTree();
+	public void setReactions(ArrayList<Reaction> reactions) {
+		this.reactions = reactions;
+		reactionDataToTree();
 	}
 
 	public JTree getTree() {
