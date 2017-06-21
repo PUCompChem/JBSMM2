@@ -1,11 +1,6 @@
 package pu.reactor.workspace.gui;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
@@ -26,23 +21,22 @@ import java.awt.event.*;
 import pu.reactor.workspace.Preferences;
 
 public class PreferencesWindow extends JFrame {
-	 
-	Preferences preferences; 
+
+
+	private Preferences preferences;
+
+
+	JPanel QuitAndSavePanel;
+	JPanel treePanel;
+	JPanel optionsMenuPanel;
 	
-	JPanel mainPanel;
 	
-	JTree tree = new JTree();
-	JPanel TreePanel = new JPanel();
-	JPanel ToolsWindowPanel;
-	private JTextField reactionDBPathField; 
-	private JLabel reactionDBPathLabel;
+	JTree tree;
+	JTextField reactionDBPathField;
 	
-	private JTextField startingMaterialsPathField;	
-	
-	private JButton button;
-	private JButton OKbutton;
-	private JCheckBox JcheckBoxText;
-	
+	JButton applyButton; 
+	JButton okButton;
+	JButton cancelButton;
 	/*
 	 * Constructor
 	 * @param no parameters
@@ -50,58 +44,72 @@ public class PreferencesWindow extends JFrame {
 	public PreferencesWindow() { 
 		this.preferences = new Preferences();  
 		initGUI();
-		fillGUIComponentsData();
+		 fillGUIComponentsData();
 	}
 	
 	public PreferencesWindow(Preferences prefs) { 
 		this.preferences = prefs;  
 		initGUI();
-		fillGUIComponentsData();
+		 fillGUIComponentsData();
 	}
 	
 	
 	void initGUI()
-	{       
-		BorderLayout layout = new BorderLayout(10,10);
-		 
-		JPanel saveAndExitPanel = new JPanel();
-		add(tree);
-		 mainPanel = new JPanel(layout);
-		//Setting ToolsWindowPanel
-		ToolsWindowPanel = new JPanel();
- 	 	ToolsWindowPanel.setLayout(new BoxLayout(ToolsWindowPanel, BoxLayout.Y_AXIS));
- 	 	ToolsWindowPanel.setBackground(Color.WHITE); 
- 	 	TreePanel.add(tree);
-		reactionDBPathLabel = new JLabel("reaction database path:");
-		reactionDBPathField = new JTextField(30);
-		startingMaterialsPathField = new JTextField(30);
-		ToolsWindowPanel.add(reactionDBPathLabel,FlowLayout.LEFT);
-		ToolsWindowPanel.add(reactionDBPathField,FlowLayout.LEFT);
-		ToolsWindowPanel.add(startingMaterialsPathField);
+	{
 		
-		   button = SettingApplyButton(reactionDBPathField, preferences);
-		   OKbutton  = settingOKButton(reactionDBPathField, preferences);
-		   JcheckBoxText = CreateCheckBoxTest(preferences);
-			
-		   saveAndExitPanel.add(button);
-		   saveAndExitPanel.add(OKbutton);
-		   ToolsWindowPanel.add(JcheckBoxText);
-		 mainPanel.add(TreePanel,BorderLayout.WEST);
-		 mainPanel.add(ToolsWindowPanel, BorderLayout.EAST);
-		 mainPanel.add(saveAndExitPanel, BorderLayout.SOUTH);
-		 add(mainPanel);
-	      setSize(500, 500);
-	      setVisible(true);
-	      setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-	      
+		
+		//Setting Tree
+		  treePanel = new JPanel(new BorderLayout(1,2));
+		  treePanel.setBackground(Color.WHITE);
+		  tree = CreateTreeTable();
+		  treePanel.add(tree);
+		  treePanel.setPreferredSize(new Dimension(200, 0));
+
+		//Setting OptionsMenu
+		  reactionDBPathField = new JTextField(20);
+		  optionsMenuPanel = new JPanel(new FlowLayout(20,20,20)); 
+		  optionsMenuPanel.setBackground(Color.WHITE);
+		  optionsMenuPanel.add(reactionDBPathField);
+		 
+		  
+		  //Setting QuitAndSaveMenu
+		  applyButton = SettingApplyButton(reactionDBPathField,preferences);
+		  okButton = settingOKButton(reactionDBPathField,preferences);
+		  cancelButton = settingCancelButton();
+		  
+		  QuitAndSavePanel = new JPanel(new FlowLayout(20,20,20)); 
+		  
+		  QuitAndSavePanel.add(applyButton);
+		  QuitAndSavePanel.add(okButton);
+		  QuitAndSavePanel.add(cancelButton);
+		  
+		  
+		//Main Frame settings
+		  
+		 
+		setLayout(new BorderLayout(100,100));
+		add(optionsMenuPanel, BorderLayout.CENTER);
+		add(treePanel,BorderLayout.WEST);
+		add(QuitAndSavePanel,BorderLayout.SOUTH);
+		
+
+
+
+
+
+
+	      this.setSize(500, 500);
+	      this.setVisible(true);
+	      this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);   //Disable exit command
+
 	}
-	
+
 	void fillGUIComponentsData()
 	{
 		reactionDBPathField.setText(preferences.reactionDBPath);
 		//TODO
 	}
-	
+
 	
 	/*
 	 * create_and_set_apply_button
@@ -143,6 +151,18 @@ public class PreferencesWindow extends JFrame {
 	     });
 	     return button;
 	}
+	private JButton settingCancelButton(){
+		JButton button = new JButton("Cancel");
+		button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e){
+				setVisible(false);
+			}
+			
+		});
+		return button;
+		
+	};
 	private JButton settingOKButton(JTextField reactionDBPathField, Preferences preferences){
 		
 		JButton button = new JButton("OK");
@@ -196,8 +216,8 @@ public class PreferencesWindow extends JFrame {
 		 return JcheckBoxText;
 	}
 	
-	private void CreateTreeTable(){
-		
+	private JTree CreateTreeTable(){
+		return new JTree();
 	}
 
 	 
