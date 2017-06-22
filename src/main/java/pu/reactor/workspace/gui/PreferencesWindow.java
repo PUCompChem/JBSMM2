@@ -26,7 +26,7 @@ public class PreferencesWindow extends JFrame {
 	private Preferences preferences;
 
 
-	JPanel QuitAndSavePanel;
+	JPanel quitAndSavePanel;
 	JPanel treePanel;
 	JPanel optionsMenuPanel;
 	
@@ -61,7 +61,7 @@ public class PreferencesWindow extends JFrame {
 		//Setting Tree
 		  treePanel = new JPanel(new BorderLayout(1,2));
 		  treePanel.setBackground(Color.WHITE);
-		  tree = CreateTreeTable();
+		  tree = createTreeTable();
 		  treePanel.add(tree);
 		  treePanel.setPreferredSize(new Dimension(200, 0));
 
@@ -73,15 +73,15 @@ public class PreferencesWindow extends JFrame {
 		 
 		  
 		  //Setting QuitAndSaveMenu
-		  applyButton = SettingApplyButton(reactionDBPathField);
-		  okButton = settingOKButton(reactionDBPathField);
-		  cancelButton = settingCancelButton();
+		  applyButton = setApplyButton();
+		  okButton = setOKButton();
+		  cancelButton = setCancelButton();
 		  
-		  QuitAndSavePanel = new JPanel(new FlowLayout(20,20,20)); 
+		  quitAndSavePanel = new JPanel(new FlowLayout(20,20,20)); 
 		  
-		  QuitAndSavePanel.add(applyButton);
-		  QuitAndSavePanel.add(okButton);
-		  QuitAndSavePanel.add(cancelButton);
+		  quitAndSavePanel.add(applyButton);
+		  quitAndSavePanel.add(okButton);
+		  quitAndSavePanel.add(cancelButton);
 		  
 		  
 		//Main Frame settings
@@ -90,7 +90,7 @@ public class PreferencesWindow extends JFrame {
 		setLayout(new BorderLayout(100,100));
 		add(optionsMenuPanel, BorderLayout.CENTER);
 		add(treePanel,BorderLayout.WEST);
-		add(QuitAndSavePanel,BorderLayout.SOUTH);
+		add(quitAndSavePanel,BorderLayout.SOUTH);
 		
 
 
@@ -116,7 +116,7 @@ public class PreferencesWindow extends JFrame {
 	 * @param no parameters 
 	 * @return void;
 	 */
-	private JButton SettingApplyButton(JTextField reactionDBPathField){
+	private JButton setApplyButton(){
 		 
 		 JButton button = new JButton("Apply");
 		 JPanel applyButtonPanel = new JPanel(); 
@@ -151,7 +151,7 @@ public class PreferencesWindow extends JFrame {
 	     });
 	     return button;
 	}
-	private JButton settingCancelButton(){
+	private JButton setCancelButton(){
 		JButton button = new JButton("Cancel");
 		button.addActionListener(new ActionListener() {
 			@Override
@@ -163,7 +163,7 @@ public class PreferencesWindow extends JFrame {
 		return button;
 		
 	};
-	private JButton settingOKButton(JTextField reactionDBPathField){
+	private JButton setOKButton(){
 		
 		JButton button = new JButton("OK");
 		 JPanel OKButtonPanel = new JPanel(); 
@@ -201,7 +201,7 @@ public class PreferencesWindow extends JFrame {
 	     });
 	return button;
 	}
-	private JCheckBox CreateCheckBoxTest(){
+	private JCheckBox createCheckBoxTest(){
 		JCheckBox JcheckBoxText = new JCheckBox("checkBoxTest");
 		 add(JcheckBoxText,BorderLayout.PAGE_END);
 		 JcheckBoxText.addItemListener(new ItemListener() {
@@ -216,7 +216,7 @@ public class PreferencesWindow extends JFrame {
 		 return JcheckBoxText;
 	}
 	
-	private JTree CreateTreeTable(){
+	private JTree createTreeTable(){
 		return new JTree();
 	}
 
