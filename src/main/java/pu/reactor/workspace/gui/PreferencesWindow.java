@@ -127,7 +127,7 @@ public class PreferencesWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e){
 				System.out.println("Apply button was clicked"); 
-			Preferences.reactionDBPath = reactionDBPathField.getText();
+			preferences.reactionDBPath = reactionDBPathField.getText();
 			System.out.println(preferences.reactionDBPath);
 			BufferedWriter bw  = null;
 			try {

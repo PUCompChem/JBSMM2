@@ -4,9 +4,9 @@ import pu.reactor.workspace.gui.PreferencesWindow;
 
 public class Preferences 
 {
-	public static String reactionDBPath = "./reaction-database.json";
-	public static String startingMaterialsPath = "./starting-metarials.json";
-	public static boolean checkBoxTest = false;
+	public  String reactionDBPath = "./reaction-database.json";
+	public  String startingMaterialsPath = "./starting-metarials.json";
+	public  boolean checkBoxTest = false;
 	
 	public PreferencesWindow createPreferencesWindow()
 	{
