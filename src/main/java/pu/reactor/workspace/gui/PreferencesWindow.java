@@ -73,8 +73,8 @@ public class PreferencesWindow extends JFrame {
 		 
 		  
 		  //Setting QuitAndSaveMenu
-		  applyButton = SettingApplyButton(reactionDBPathField,preferences);
-		  okButton = settingOKButton(reactionDBPathField,preferences);
+		  applyButton = SettingApplyButton(reactionDBPathField);
+		  okButton = settingOKButton(reactionDBPathField);
 		  cancelButton = settingCancelButton();
 		  
 		  QuitAndSavePanel = new JPanel(new FlowLayout(20,20,20)); 
@@ -116,7 +116,7 @@ public class PreferencesWindow extends JFrame {
 	 * @param no parameters 
 	 * @return void;
 	 */
-	private JButton SettingApplyButton(JTextField reactionDBPathField, Preferences preferences){
+	private JButton SettingApplyButton(JTextField reactionDBPathField){
 		 
 		 JButton button = new JButton("Apply");
 		 JPanel applyButtonPanel = new JPanel(); 
@@ -127,7 +127,7 @@ public class PreferencesWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e){
 				System.out.println("Apply button was clicked"); 
-			preferences.reactionDBPath = reactionDBPathField.getText();
+			Preferences.reactionDBPath = reactionDBPathField.getText();
 			System.out.println(preferences.reactionDBPath);
 			BufferedWriter bw  = null;
 			try {
@@ -163,7 +163,7 @@ public class PreferencesWindow extends JFrame {
 		return button;
 		
 	};
-	private JButton settingOKButton(JTextField reactionDBPathField, Preferences preferences){
+	private JButton settingOKButton(JTextField reactionDBPathField){
 		
 		JButton button = new JButton("OK");
 		 JPanel OKButtonPanel = new JPanel(); 
@@ -201,7 +201,7 @@ public class PreferencesWindow extends JFrame {
 	     });
 	return button;
 	}
-	private JCheckBox CreateCheckBoxTest(Preferences preferences){
+	private JCheckBox CreateCheckBoxTest(){
 		JCheckBox JcheckBoxText = new JCheckBox("checkBoxTest");
 		 add(JcheckBoxText,BorderLayout.PAGE_END);
 		 JcheckBoxText.addItemListener(new ItemListener() {
