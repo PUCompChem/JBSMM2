@@ -95,7 +95,7 @@ public class ReactorMainFrame extends JFrame {
 	private void initGUI() throws Exception 
 	{	
 		setPreferences();
-		preferencesWindow = new PreferencesWindow(preferences);
+		preferencesWindow = new PreferencesWindow(preferences, preferencesFilePath);
 		preferencesWindow.setSize(new Dimension(1000,800));
 		preferencesWindow.setVisible(false);
 		

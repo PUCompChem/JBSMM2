@@ -20,11 +20,12 @@ import java.awt.event.*;
 
 import pu.reactor.workspace.Preferences;
 
-public class PreferencesWindow extends JFrame {
-
+public class PreferencesWindow extends JFrame 
+{
 
 	private Preferences preferences;
-
+	private String preferencesFilePath = null;
+	
 
 	JPanel quitAndSavePanel;
 	JPanel treePanel;
@@ -44,13 +45,14 @@ public class PreferencesWindow extends JFrame {
 	public PreferencesWindow() { 
 		this.preferences = new Preferences();  
 		initGUI();
-		 fillGUIComponentsData();
+		fillGUIComponentsData();
 	}
 	
-	public PreferencesWindow(Preferences prefs) { 
-		this.preferences = prefs;  
+	public PreferencesWindow(Preferences prefs, String preferencesFilePath) { 
+		this.preferences = prefs; 
+		this.preferencesFilePath = preferencesFilePath;
 		initGUI();
-		 fillGUIComponentsData();
+		fillGUIComponentsData();
 	}
 	
 	
@@ -124,30 +126,34 @@ public class PreferencesWindow extends JFrame {
 	     add(applyButtonPanel);
 	     button.addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent e){
-				System.out.println("Apply button was clicked"); 
-			preferences.reactionDBPath = reactionDBPathField.getText();
-			System.out.println(preferences.reactionDBPath);
-			BufferedWriter bw  = null;
-			try {
-			FileWriter fw = new FileWriter("/TestJson.json");
-			 bw = new BufferedWriter(fw);
-				bw.write(preferences.toJsonString());
-			}  
-			catch (IOException ioe) {
-				   ioe.printStackTrace();
-			}
-			finally{ 
-			   try{
-			      if(bw!=null)
-				 bw.close();
-			   }catch(Exception ex){
-			       System.out.println("Error in closing the BufferedWriter"+ex);
-			    }
-			}
-			}
-	    	 
+	    	 @Override
+	    	 public void actionPerformed(ActionEvent e){
+	    		 System.out.println("Apply button was clicked"); 
+	    		 preferences.reactionDBPath = reactionDBPathField.getText();
+	    		 System.out.println(preferences.reactionDBPath);
+
+	    		 if (preferencesFilePath != null)
+	    		 {
+	    			 BufferedWriter bw  = null;
+	    			 try {
+	    				 FileWriter fw = new FileWriter(preferencesFilePath);
+	    				 bw = new BufferedWriter(fw);
+	    				 bw.write(preferences.toJsonString());
+	    			 }  
+	    			 catch (IOException ioe) {
+	    				 ioe.printStackTrace();
+	    			 }
+	    			 finally{ 
+	    				 try{
+	    					 if(bw!=null)
+	    						 bw.close();
+	    				 }catch(Exception ex){
+	    					 System.out.println("Error in closing the BufferedWriter"+ex);
+	    				 }
+	    			 }
+	    		 }
+	    	 }
+
 	     });
 	     return button;
 	}
