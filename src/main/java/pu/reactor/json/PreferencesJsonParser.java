@@ -67,20 +67,22 @@ public class PreferencesJsonParser{
 				preferences.startingMaterialsPath = s;
 		}
 		
+		/*
 		//CheckBoxTest
-				node = root.path("checkBoxTest");
-				if (node.isMissingNode())
-				{	
-					errors.add("JSON Section \"checkBoxTest\" is missing!");
-				}
-				else
-				{	
-					String s = jsonUtils.extractStringKeyword(root, "checkBoxTest", false);
-					if (s == null)
-						errors.add("Incorrect checkBoxTest " + jsonUtils.getError());
-					else
-						preferences.checkBoxTest = Boolean.parseBoolean(s);
-				}
+		node = root.path("checkBoxTest");
+		if (node.isMissingNode())
+		{	
+			errors.add("JSON Section \"checkBoxTest\" is missing!");
+		}
+		else
+		{	
+			String s = jsonUtils.extractStringKeyword(root, "checkBoxTest", false);
+			if (s == null)
+				errors.add("Incorrect checkBoxTest " + jsonUtils.getError());
+			else
+				preferences.checkBoxTest = Boolean.parseBoolean(s);
+		}
+		*/
 				
 		 //TODO
 	   	return preferences;
@@ -90,6 +92,15 @@ public class PreferencesJsonParser{
 	{
 		return errors;
 	}
+	
+	public String getAllErrorsAsString()
+	{
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < errors.size(); i++)
+			sb.append(errors.get(i) + "\n");
+		return sb.toString();
+	}
+	
 
 	
 	/*

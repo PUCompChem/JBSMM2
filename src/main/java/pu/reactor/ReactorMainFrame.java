@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.Console;
+import java.io.File;
 import java.awt.BorderLayout;
 
 import javax.swing.BorderFactory;
@@ -23,6 +24,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 
+import pu.reactor.json.PreferencesJsonParser;
 import pu.reactor.workspace.Preferences;
 import pu.reactor.workspace.gui.*;
 
@@ -69,25 +71,30 @@ public class ReactorMainFrame extends JFrame {
 	JMenu menuSettings; 
 	JMenuItem menuPreferences;
 	
-	
-	//Data Containers
-	Preferences preferences = null;
-
 	private JMenuItem miWorkspaceSettings;
-
 	private JMenu menuProjectSettings;
-
 	private JMenuItem miProjectSettings;
-
-	private JMenuItem miProcessSettings; 
-	ReactorMainFrame() throws Exception {
+	private JMenuItem miProcessSettings;
+	
+	//Data, containers
+	String preferencesFilePath = null;
+	Preferences preferences = null;
+	
+	
+	public ReactorMainFrame() throws Exception {
 		super();
+		initGUI();
+	}
+	
+	public ReactorMainFrame(String preferencesFilePath) throws Exception {
+		super();
+		this.preferencesFilePath = preferencesFilePath;
 		initGUI();
 	}
 
 	private void initGUI() throws Exception 
-	{
-		preferences = new Preferences();
+	{	
+		setPreferences();
 		preferencesWindow = new PreferencesWindow(preferences);
 		preferencesWindow.setSize(new Dimension(1000,800));
 		preferencesWindow.setVisible(false);
@@ -131,6 +138,23 @@ public class ReactorMainFrame extends JFrame {
 		add2DMolecule(areas.get(2), "CCCCC");
 		add2DMolecule(areas.get(2), "CCCCNNC");
 		// End of testCode
+	}
+	
+	void setPreferences() throws Exception
+	{
+		if (preferencesFilePath == null)
+		{	
+			preferences = new Preferences();
+			return;
+		}
+		
+		PreferencesJsonParser prefPar = new PreferencesJsonParser();
+		preferences = prefPar.loadFromJSON(new File(preferencesFilePath));
+		
+		if (!prefPar.getErrors().isEmpty())
+			throw new Exception("Preferences configuration errors:\n" 
+					+ prefPar.getAllErrorsAsString());
+		
 	}
 
 	private void createMenus() { 
