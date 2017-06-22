@@ -2,12 +2,15 @@ package pu.gui.utils;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
+import java.util.Enumeration;
 
 import javax.swing.Icon;
 import javax.swing.JPanel;
 import javax.swing.JTree;
 import javax.swing.UIManager;
+import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
+import javax.swing.tree.DefaultTreeModel;
 
 import ambit2.reactions.Reaction;
 
@@ -20,6 +23,8 @@ public class ReactionSetTree extends JPanel
 	private JTree tree = new JTree();
 	private JPanel visualizeCurReaction = null;
 	
+	private DefaultMutableTreeNode root = new DefaultMutableTreeNode("Root");
+	
 	private Icon loadIcon = UIManager.getIcon("OptionPane.errorIcon");
 	 
 	 
@@ -31,7 +36,7 @@ public class ReactionSetTree extends JPanel
 	private void initGUI()
 	{
 		this.setLayout(new BorderLayout());
-		
+		reactionDataToTree();
 		   DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer) tree.getCellRenderer();
 		   renderer.setOpenIcon(loadIcon);
 		this.add(tree, BorderLayout.CENTER);
@@ -39,7 +44,30 @@ public class ReactionSetTree extends JPanel
 	
 	private void reactionDataToTree()
 	{
-		//TODO
+		  tree.setModel( new DefaultTreeModel(root));
+		for (Reaction reaction : reactions) {
+			String reactionClass = reaction.getReactionClass();
+			String[] levels = reactionClass.split(".");
+			for (int i = 0; i < levels.length; i++) {
+				String currentLevel = levels[i];
+				DefaultMutableTreeNode currentNode = searchNode(currentLevel);
+				 
+				if(i == levels.length-1){
+					
+				}
+			}
+		}
+	}
+	
+	private DefaultMutableTreeNode searchNode(String nodeStr) {
+	    Enumeration e = root.breadthFirstEnumeration();
+	    while (e.hasMoreElements()) {
+	        DefaultMutableTreeNode node = (DefaultMutableTreeNode) e.nextElement();
+	        if (node.getUserObject().toString().toLowerCase().startsWith(nodeStr.toLowerCase())) {
+	            return node;
+	        }
+	    }
+	    return null;
 	}
 	
 
