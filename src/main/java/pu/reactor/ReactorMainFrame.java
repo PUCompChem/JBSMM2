@@ -30,6 +30,7 @@ import pu.reactor.workspace.gui.*;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 
+import ambit2.reactions.ReactionDataBase;
 import ambit2.smarts.SmartsHelper;
 import ambit2.ui.Panel2D;
 import pu.gui.utils.PredefinedArrangements;
@@ -79,6 +80,7 @@ public class ReactorMainFrame extends JFrame {
 	//Data, containers
 	String preferencesFilePath = null;
 	Preferences preferences = null;
+	ReactionDataBase reactionDB = null;
 	
 	
 	public ReactorMainFrame() throws Exception {
@@ -114,9 +116,14 @@ public class ReactorMainFrame extends JFrame {
 		// Setting the splitters and other GUI components
 		prepareGUIAreas();
 
-		reactionSetTree = new ReactionSetTree();
-		areas.get(0).setLayout(new BorderLayout());
-		areas.get(0).add(reactionSetTree, BorderLayout.CENTER);
+		setReactionDB();
+		if (reactionDB != null)
+		{	
+			reactionSetTree = new ReactionSetTree(reactionDB.reactions);
+			areas.get(0).setLayout(new BorderLayout());
+			areas.get(0).add(reactionSetTree, BorderLayout.CENTER);
+		}	
+		
 
 		// Setting the work cases tab pane
 		workCasesTabPane = new JTabbedPane();
@@ -155,6 +162,18 @@ public class ReactorMainFrame extends JFrame {
 			throw new Exception("Preferences configuration errors:\n" 
 					+ prefPar.getAllErrorsAsString());
 		
+	}
+	
+	void setReactionDB()
+	{
+		try
+		{
+			reactionDB = new  ReactionDataBase(new File(preferences.reactionDBPath));
+		}
+		catch (Exception x)
+		{	
+			System.out.println(x.getMessage());
+		}
 	}
 
 	private void createMenus() { 

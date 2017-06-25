@@ -3,6 +3,9 @@ package pu.gui.utils;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.Icon;
 import javax.swing.JPanel;
@@ -19,18 +22,24 @@ public class ReactionSetTree extends JPanel
 {	
 	private static final long serialVersionUID = -4305046628531992964L;	
 	
-	private ArrayList<Reaction> reactions = new ArrayList<Reaction>();
+	private List<Reaction> reactions = new ArrayList<Reaction>();
+	public Map<DefaultMutableTreeNode, Reaction> nodeReactions = new HashMap<DefaultMutableTreeNode, Reaction>();
 	private JTree tree = new JTree();
-	private JPanel visualizeCurReaction = null;
+	public JPanel visualizeCurReaction = null;
 	
-	private DefaultMutableTreeNode root = new DefaultMutableTreeNode("Root");
 	
 	private Icon loadIcon = UIManager.getIcon("OptionPane.errorIcon");
-	 
 	 
 	public ReactionSetTree()
 	{
 		initGUI();
+	}
+	
+	public ReactionSetTree(List<Reaction> reactions)
+	{
+		this.reactions = reactions;
+		initGUI();
+		reactionDataToTree();
 	}
 	
 	private void initGUI()
@@ -44,38 +53,52 @@ public class ReactionSetTree extends JPanel
 	
 	private void reactionDataToTree()
 	{
-		  tree.setModel( new DefaultTreeModel(root));
-		for (Reaction reaction : reactions) {
+		DefaultMutableTreeNode root = new DefaultMutableTreeNode("Root");
+		tree.setModel(new DefaultTreeModel(root));
+		for (Reaction reaction : reactions) 
+		{
 			String reactionClass = reaction.getReactionClass();
 			String[] levels = reactionClass.split(".");
-			for (int i = 0; i < levels.length; i++) {
+			
+			//Find or create reaction class nodes
+			DefaultMutableTreeNode currentLevelNode = root;
+			for (int i = 0; i < levels.length; i++) 
+			{
 				String currentLevel = levels[i];
-				DefaultMutableTreeNode currentNode = searchNode(currentLevel);
-				 
-				if(i == levels.length-1){
-					
+				
+				DefaultMutableTreeNode nextLevelNode =  searchChildrenNode(currentLevel, currentLevelNode);
+				if (nextLevelNode == null)
+				{	
+					nextLevelNode = new DefaultMutableTreeNode(currentLevel);
+					currentLevelNode.add(nextLevelNode);
 				}
+				currentLevelNode = nextLevelNode;
 			}
+			
+			//Add reaction node
+			DefaultMutableTreeNode reactionNode = new DefaultMutableTreeNode(reaction.getName());
+			currentLevelNode.add(reactionNode);
+			nodeReactions.put(reactionNode, reaction);
 		}
 	}
 	
-	private DefaultMutableTreeNode searchNode(String nodeStr) {
-	    Enumeration e = root.breadthFirstEnumeration();
-	    while (e.hasMoreElements()) {
-	        DefaultMutableTreeNode node = (DefaultMutableTreeNode) e.nextElement();
-	        if (node.getUserObject().toString().toLowerCase().startsWith(nodeStr.toLowerCase())) {
-	            return node;
-	        }
-	    }
+	
+	private DefaultMutableTreeNode searchChildrenNode(String nodeObj, DefaultMutableTreeNode node) 
+	{	
+		for (int i = 0; i < node.getChildCount(); i++)
+		{	
+			DefaultMutableTreeNode child = (DefaultMutableTreeNode) node.getChildAt(i);
+			if (nodeObj.equals(child.getUserObject()))
+				return child;
+		}
 	    return null;
 	}
-	
 
-	public ArrayList<Reaction> getReactions() {
+	public List<Reaction> getReactions() {
 		return reactions;
 	}
 
-	public void setReactions(ArrayList<Reaction> reactions) {
+	public void setReactions(List<Reaction> reactions) {
 		this.reactions = reactions;
 		reactionDataToTree();
 	}
