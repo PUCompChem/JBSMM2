@@ -16,6 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.SwingConstants;
+import javax.swing.tree.DefaultMutableTreeNode;
+
 import java.awt.event.*;
 
 import pu.reactor.workspace.Preferences;
@@ -30,6 +32,7 @@ public class PreferencesWindow extends JFrame
 	JPanel quitAndSavePanel;
 	JPanel treePanel;
 	JPanel optionsMenuPanel;
+	JPanel menusCards;
 	
 	
 	JTree tree;
@@ -63,15 +66,25 @@ public class PreferencesWindow extends JFrame
 		//Setting Tree
 		  treePanel = new JPanel(new BorderLayout(1,2));
 		  treePanel.setBackground(Color.WHITE);
-		  tree = createTreeTable();
+		   createTreeTable();
 		  treePanel.add(tree);
 		  treePanel.setPreferredSize(new Dimension(200, 0));
 
+		  //Set MenusCards
+		  menusCards = new JPanel(new CardLayout());
+		  
+		  
 		//Setting OptionsMenu
 		  reactionDBPathField = new JTextField(20);
 		  optionsMenuPanel = new JPanel(new FlowLayout(20,20,20)); 
 		  optionsMenuPanel.setBackground(Color.WHITE);
 		  optionsMenuPanel.add(reactionDBPathField);
+		  menusCards.add(optionsMenuPanel);
+		  
+		  //Setting TestDialogPanel
+		  JPanel testPanel = new JPanel();
+		  testPanel.add(new JTextField(20));
+		  menusCards.add(testPanel,"Card with JButtons");
 		 
 		  
 		  //Setting QuitAndSaveMenu
@@ -90,7 +103,7 @@ public class PreferencesWindow extends JFrame
 		  
 		 
 		setLayout(new BorderLayout(100,100));
-		add(optionsMenuPanel, BorderLayout.CENTER);
+		add(menusCards, BorderLayout.CENTER);
 		add(treePanel,BorderLayout.WEST);
 		add(quitAndSavePanel,BorderLayout.SOUTH);
 		
@@ -222,8 +235,23 @@ public class PreferencesWindow extends JFrame
 		 return JcheckBoxText;
 	}
 	
-	private JTree createTreeTable(){
-		return new JTree();
+	private void createTreeTable(){
+		 DefaultMutableTreeNode top = new DefaultMutableTreeNode("root");
+		 
+		 DefaultMutableTreeNode a = new DefaultMutableTreeNode("Paths");
+		    top.add(a);
+		  
+
+		    DefaultMutableTreeNode b = new DefaultMutableTreeNode("Whatever");
+		    top.add(b);
+		  
+		    tree = new JTree(top);
+		    tree.setRootVisible(false);
+		  
+		    
+	}
+	private void showSpecificMenu(int n){
+		
 	}
 
 	 

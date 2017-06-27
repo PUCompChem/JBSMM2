@@ -1,10 +1,7 @@
 package pu.gui.utils;
 
-import java.awt.BorderLayout;
-
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
+import javax.swing.*;
+import java.awt.*;
 
 public class WorkCasePanel extends JPanel
 {
@@ -19,7 +16,7 @@ public class WorkCasePanel extends JPanel
 	private void initGUI()
 	{
 		this.setLayout( new BorderLayout() );
-		this.add( new JLabel( "Work case panle:" ), BorderLayout.NORTH );
+		this.add( new JLabel( "Work case panel:" ), BorderLayout.NORTH );
 		this.add( new JTextArea(), BorderLayout.CENTER );
 	}
 	

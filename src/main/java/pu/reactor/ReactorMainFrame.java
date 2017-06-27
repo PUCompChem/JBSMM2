@@ -1,43 +1,20 @@
 package pu.reactor;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.Console;
-import java.io.File;
-import java.awt.BorderLayout;
-
-import javax.swing.BorderFactory;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JSplitPane;
-import javax.swing.JTabbedPane;
-import javax.swing.KeyStroke;
-import javax.swing.WindowConstants;
-
-import pu.reactor.json.PreferencesJsonParser;
-import pu.reactor.workspace.Preferences;
-import pu.reactor.workspace.gui.*;
-
-import org.openscience.cdk.interfaces.IAtomContainer;
-
 import ambit2.reactions.ReactionDataBase;
 import ambit2.smarts.SmartsHelper;
 import ambit2.ui.Panel2D;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import pu.gui.utils.PredefinedArrangements;
 import pu.gui.utils.ReactionSetTree;
-import pu.gui.utils.WorkCase;
 import pu.gui.utils.WorkCaseTabSet;
+import pu.reactor.json.PreferencesJsonParser;
+import pu.reactor.workspace.Preferences;
+import pu.reactor.workspace.gui.PreferencesWindow;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.File;
 import java.util.ArrayList;
 
 public class ReactorMainFrame extends JFrame {
@@ -123,7 +100,12 @@ public class ReactorMainFrame extends JFrame {
 			areas.get(0).setLayout(new BorderLayout());
 			areas.get(0).add(reactionSetTree, BorderLayout.CENTER);
 		}	
-		
+
+		//Setting tree lense window
+
+//		TreeLenseMenu treeLenseWindow = new TreeLenseMenu();
+//
+//		areas.get(0).add(treeLenseWindow, BorderLayout.SOUTH);
 
 		// Setting the work cases tab pane
 		workCasesTabPane = new JTabbedPane();

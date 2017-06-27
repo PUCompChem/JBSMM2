@@ -1,21 +1,17 @@
 package pu.gui.utils;
 
-import java.awt.BorderLayout;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import ambit2.reactions.Reaction;
 
-import javax.swing.Icon;
-import javax.swing.JPanel;
-import javax.swing.JTree;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
-
-import ambit2.reactions.Reaction;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
 
  
 public class ReactionSetTree extends JPanel
@@ -24,7 +20,8 @@ public class ReactionSetTree extends JPanel
 	
 	private List<Reaction> reactions = new ArrayList<Reaction>();
 	public Map<DefaultMutableTreeNode, Reaction> nodeReactions = new HashMap<DefaultMutableTreeNode, Reaction>();
-	private JTree tree = new JTree();
+	private JTree tree;
+	
 	public JPanel visualizeCurReaction = null;
 	
 	
@@ -44,21 +41,30 @@ public class ReactionSetTree extends JPanel
 	
 	private void initGUI()
 	{
+		tree = new JTree();
+		TreeLenseMenu treeLenseWindow = new TreeLenseMenu();
+
+		
 		this.setLayout(new BorderLayout());
 		reactionDataToTree();
 		   DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer) tree.getCellRenderer();
 		   renderer.setOpenIcon(loadIcon);
+		   
 		this.add(tree, BorderLayout.CENTER);
+		this.add(treeLenseWindow, BorderLayout.SOUTH);
 	}
 	
 	private void reactionDataToTree()
 	{
+		
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode("Root");
+		 
 		tree.setModel(new DefaultTreeModel(root));
+		  
 		for (Reaction reaction : reactions) 
 		{
 			String reactionClass = reaction.getReactionClass();
-			String[] levels = reactionClass.split(".");
+			String[] levels = reactionClass.split(Pattern.quote("."));
 			
 			//Find or create reaction class nodes
 			DefaultMutableTreeNode currentLevelNode = root;
@@ -67,7 +73,7 @@ public class ReactionSetTree extends JPanel
 				String currentLevel = levels[i];
 				
 				DefaultMutableTreeNode nextLevelNode =  searchChildrenNode(currentLevel, currentLevelNode);
-				if (nextLevelNode == null)
+					if (nextLevelNode == null)
 				{	
 					nextLevelNode = new DefaultMutableTreeNode(currentLevel);
 					currentLevelNode.add(nextLevelNode);
@@ -80,6 +86,7 @@ public class ReactionSetTree extends JPanel
 			currentLevelNode.add(reactionNode);
 			nodeReactions.put(reactionNode, reaction);
 		}
+		
 	}
 	
 	
