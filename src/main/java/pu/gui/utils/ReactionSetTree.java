@@ -42,7 +42,7 @@ public class ReactionSetTree extends JPanel
 	private void initGUI()
 	{
 		tree = new JTree();
-		TreeLenseMenu treeLenseWindow = new TreeLenseMenu();
+		//TreeLenseMenu treeLenseWindow = new TreeLenseMenu();
 
 		
 		this.setLayout(new BorderLayout());
@@ -51,7 +51,7 @@ public class ReactionSetTree extends JPanel
 		   renderer.setOpenIcon(loadIcon);
 		   
 		this.add(tree, BorderLayout.CENTER);
-		this.add(treeLenseWindow, BorderLayout.SOUTH);
+		//this.add(treeLenseWindow, BorderLayout.SOUTH);
 	}
 	
 	private void reactionDataToTree()
