@@ -95,13 +95,21 @@ public class ReactorMainFrame extends JFrame {
 
 		setReactionDB();
 		if (reactionDB != null)
-		{	
+		{
+			JScrollPane scrollBar = new JScrollPane(reactionSetTree);
+			this.add(scrollBar,BorderLayout.WEST);
 			reactionSetTree = new ReactionSetTree(reactionDB.reactions);
+			JScrollPane scroller = new JScrollPane(reactionSetTree);
 			areas.get(0).setLayout(new BorderLayout());
-			areas.get(0).add(reactionSetTree, BorderLayout.CENTER);
-		}	
+			areas.get(0).add(scroller, BorderLayout.CENTER);
 
-		//Setting tree lense window
+
+		}
+
+		//scrollBar.setPreferredSize();
+
+		
+
 
 
 		// Setting the work cases tab pane

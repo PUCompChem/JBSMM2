@@ -23,11 +23,14 @@ public class ReactionSetTree extends JPanel
 	private List<Reaction> reactions = new ArrayList<Reaction>();
 	public Map<DefaultMutableTreeNode, Reaction> nodeReactions = new HashMap<DefaultMutableTreeNode, Reaction>();
 	private JTree tree;
-	
+
+
 	public JPanel visualizeCurReaction = null;
 
-	private Icon chemRectionIcon = new ImageIcon("D:/REACTORGUI");
-	
+ 	private JScrollPane scrollBar;
+
+
+
 
 	ReactionInfoPanel reactionInfoPanel;
 	 
@@ -46,6 +49,7 @@ public class ReactionSetTree extends JPanel
 	private void initGUI()
 	{
 		tree = new JTree();
+		scrollBarSet();
 		reactionInfoPanel = new ReactionInfoPanel();
 		this.setLayout(new BorderLayout());
 		reactionDataToTree();
@@ -53,7 +57,7 @@ public class ReactionSetTree extends JPanel
 		this.add(reactionInfoPanel, BorderLayout.SOUTH);
 
 
-		FromTreeToInfoPane();
+		fromTreeToInfoPane();
 
 	}
 
@@ -130,7 +134,7 @@ public class ReactionSetTree extends JPanel
 		String output = reaction.getName() +"\n"+"Reaction class: "+reaction.getReactionClass() + "Smirks:  " +reaction.getSmirks();
 		return output;
 	}
-	private void FromTreeToInfoPane() {
+	private void fromTreeToInfoPane() {
 		tree.addTreeSelectionListener(new TreeSelectionListener() {
 			public void valueChanged(TreeSelectionEvent e) {
 				DefaultMutableTreeNode node = (DefaultMutableTreeNode)
@@ -145,6 +149,9 @@ public class ReactionSetTree extends JPanel
 
 			}
 		});
+	}
+	private void scrollBarSet(){
+
 	}
 
 
