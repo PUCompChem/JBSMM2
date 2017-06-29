@@ -103,9 +103,6 @@ public class ReactorMainFrame extends JFrame {
 
 		//Setting tree lense window
 
-//		TreeLenseMenu treeLenseWindow = new TreeLenseMenu();
-//
-//		areas.get(0).add(treeLenseWindow, BorderLayout.SOUTH);
 
 		// Setting the work cases tab pane
 		workCasesTabPane = new JTabbedPane();

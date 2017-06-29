@@ -3,8 +3,9 @@ package pu.gui.utils;
 import ambit2.reactions.Reaction;
 
 import javax.swing.*;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import java.awt.*;
 import java.util.ArrayList;
@@ -16,16 +17,19 @@ import java.util.regex.Pattern;
  
 public class ReactionSetTree extends JPanel
 {	
-	private static final long serialVersionUID = -4305046628531992964L;	
+	private static final long serialVersionUID = -4305046628531992964L;
+
 	
 	private List<Reaction> reactions = new ArrayList<Reaction>();
 	public Map<DefaultMutableTreeNode, Reaction> nodeReactions = new HashMap<DefaultMutableTreeNode, Reaction>();
 	private JTree tree;
 	
 	public JPanel visualizeCurReaction = null;
+
+	private Icon chemRectionIcon = new ImageIcon("D:/REACTORGUI");
 	
-	
-	private Icon loadIcon = UIManager.getIcon("OptionPane.errorIcon");
+
+	ReactionInfoPanel reactionInfoPanel;
 	 
 	public ReactionSetTree()
 	{
@@ -42,22 +46,23 @@ public class ReactionSetTree extends JPanel
 	private void initGUI()
 	{
 		tree = new JTree();
-		//TreeLenseMenu treeLenseWindow = new TreeLenseMenu();
-
-		
+		reactionInfoPanel = new ReactionInfoPanel();
 		this.setLayout(new BorderLayout());
 		reactionDataToTree();
-		   DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer) tree.getCellRenderer();
-		   renderer.setOpenIcon(loadIcon);
-		   
 		this.add(tree, BorderLayout.CENTER);
-		//this.add(treeLenseWindow, BorderLayout.SOUTH);
+		this.add(reactionInfoPanel, BorderLayout.SOUTH);
+
+
+		FromTreeToInfoPane();
+
 	}
-	
+
+
+
 	private void reactionDataToTree()
 	{
 		
-		DefaultMutableTreeNode root = new DefaultMutableTreeNode("Root");
+		DefaultMutableTreeNode root = new DefaultMutableTreeNode("Database");
 		 
 		tree.setModel(new DefaultTreeModel(root));
 		  
@@ -120,6 +125,27 @@ public class ReactionSetTree extends JPanel
 
 	public void setVisualizeCurReaction(JPanel visualizeCurReaction) {
 		this.visualizeCurReaction = visualizeCurReaction;
-	}			
-	
+	}
+	public String ReactionToString(Reaction reaction){
+		String output = reaction.getName() +"\n"+"Reaction class: "+reaction.getReactionClass() + "Smirks:  " +reaction.getSmirks();
+		return output;
+	}
+	private void FromTreeToInfoPane() {
+		tree.addTreeSelectionListener(new TreeSelectionListener() {
+			public void valueChanged(TreeSelectionEvent e) {
+				DefaultMutableTreeNode node = (DefaultMutableTreeNode)
+						tree.getLastSelectedPathComponent();
+
+
+				if (node == null) return;
+
+				reactionInfoPanel.ClearText();
+				reactionInfoPanel.WriteText(node.toString());
+
+
+			}
+		});
+	}
+
+
 }
