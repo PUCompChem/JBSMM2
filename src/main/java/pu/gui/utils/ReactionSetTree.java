@@ -64,8 +64,7 @@ public class ReactionSetTree extends JPanel
 
 
 	private void reactionDataToTree()
-	{
-		
+	{	
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode("Database");
 		 
 		tree.setModel(new DefaultTreeModel(root));
@@ -130,29 +129,38 @@ public class ReactionSetTree extends JPanel
 	public void setVisualizeCurReaction(JPanel visualizeCurReaction) {
 		this.visualizeCurReaction = visualizeCurReaction;
 	}
-	public String ReactionToString(Reaction reaction){
-		String output = reaction.getName() +"\n"+"Reaction class: "+reaction.getReactionClass() + "Smirks:  " +reaction.getSmirks();
-		return output;
-	}
+	
 	private void fromTreeToInfoPane() {
 		tree.addTreeSelectionListener(new TreeSelectionListener() {
 			public void valueChanged(TreeSelectionEvent e) {
 				DefaultMutableTreeNode node = (DefaultMutableTreeNode)
 						tree.getLastSelectedPathComponent();
-
-
-				if (node == null) return;
-
+				if (node == null) 
+					return;
 				reactionInfoPanel.ClearText();
-				reactionInfoPanel.WriteText(node.toString());
-
-
+				reactionInfoPanel.WriteText(getNodeInfoText(node));
 			}
 		});
 	}
 	private void scrollBarSet(){
 
 	}
+	
+	String getNodeInfoText(DefaultMutableTreeNode node)
+	{	
+		Reaction r = nodeReactions.get(node);
+		if (r == null)
+			return node.toString();
+		else
+		{
+			StringBuffer sb = new StringBuffer();
+			sb.append(r.getName() + "\n");
+			sb.append("Class: " + r.getReactionClass() + "\n");
+			sb.append(r.getSmirks() + "\n");
+			return sb.toString();
+		}
+	}
+	
 
 
 }

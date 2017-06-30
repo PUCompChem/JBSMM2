@@ -339,7 +339,7 @@ public class ReactorMainFrame extends JFrame {
 		});
 
 		panel.add(p);
-		p.setPreferredSize(panel.getSize());
+		//p.setPreferredSize(panel.getSize());
 		p.updateUI();
 
 	}
