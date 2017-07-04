@@ -49,11 +49,12 @@ public class ReactionSetTree extends JPanel
 	private void initGUI()
 	{
 		tree = new JTree();
-		scrollBarSet();
+		JScrollPane scrollBar = new JScrollPane(tree);
+
 		reactionInfoPanel = new ReactionInfoPanel();
 		this.setLayout(new BorderLayout());
 		reactionDataToTree();
-		this.add(tree, BorderLayout.CENTER);
+		this.add(scrollBar, BorderLayout.CENTER);
 		this.add(reactionInfoPanel, BorderLayout.SOUTH);
 
 

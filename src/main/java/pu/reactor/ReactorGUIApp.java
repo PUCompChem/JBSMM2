@@ -11,7 +11,7 @@ public class ReactorGUIApp
 			{				
 				ReactorMainFrame reactor;
 				try {
-					reactor = new ReactorMainFrame();
+					reactor = new ReactorMainFrame( "./preferencesFile.json");
 					reactor.setVisible(true);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block

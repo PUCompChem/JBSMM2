@@ -58,7 +58,7 @@ public class ReactorMainFrame extends JFrame {
 	String preferencesFilePath = null;
 	Preferences preferences = null;
 	ReactionDataBase reactionDB = null;
-	
+
 	
 	public ReactorMainFrame() throws Exception {
 		super();
@@ -102,11 +102,9 @@ public class ReactorMainFrame extends JFrame {
 			JScrollPane scroller = new JScrollPane(reactionSetTree);
 			areas.get(0).setLayout(new BorderLayout());
 			areas.get(0).add(scroller, BorderLayout.CENTER);
-
-
 		}
 
-		//scrollBar.setPreferredSize();
+
 
 		
 
@@ -133,7 +131,7 @@ public class ReactorMainFrame extends JFrame {
 		add2DMolecule(areas.get(2), "CCCCNNC");
 		// End of testCode
 	}
-	
+
 	void setPreferences() throws Exception
 	{
 		if (preferencesFilePath == null)

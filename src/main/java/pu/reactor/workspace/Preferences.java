@@ -6,7 +6,7 @@ public class Preferences
 {
 	public  String reactionDBPath = "./reaction-database.json";
 	public  String startingMaterialsPath = "./starting-metarials.json";
-	public  boolean checkBoxTest = false;
+
 	
 	public PreferencesWindow createPreferencesWindow()
 	{
@@ -26,10 +26,9 @@ public class Preferences
 		{
 			sb.append("\t\"REACTION_DB_PATH\" : " + "\"" + reactionDBPath + "\"");
 			nFields++;
-		}
+
 		
-		if (reactionDBPath != null)
-		{
+
 			if (nFields > 0)
 				sb.append("," + endLine);
 			else
@@ -37,16 +36,9 @@ public class Preferences
 			
 			sb.append("\t\"STARTING_MATERIALS_PATH\" : " + "\"" + startingMaterialsPath + "\"");
 			nFields++;
-		}
-		if (reactionDBPath != null)
-		{
-			if (nFields > 0)
-				sb.append("," + endLine);
-			else
-				sb.append(endLine);
-			
-			sb.append("\t\"checkBoxTest\" : " + "\"" + Boolean.toString(checkBoxTest)+ "\"");
-			nFields++;
+
+
+
 		}
 		sb.append(endLine);
 		

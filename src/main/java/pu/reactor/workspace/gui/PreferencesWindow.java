@@ -1,26 +1,15 @@
 package pu.reactor.workspace.gui;
 
+import pu.reactor.workspace.Preferences;
+
+import javax.swing.*;
+import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.JTree;
-import javax.swing.SwingConstants;
-import javax.swing.tree.DefaultMutableTreeNode;
-
-import java.awt.event.*;
-
-import pu.reactor.workspace.Preferences;
 
 public class PreferencesWindow extends JFrame 
 {
@@ -37,6 +26,7 @@ public class PreferencesWindow extends JFrame
 	
 	JTree tree;
 	JTextField reactionDBPathField;
+	JTextField startingMaterialsDBPathField;
 	
 	JButton applyButton; 
 	JButton okButton;
@@ -76,9 +66,11 @@ public class PreferencesWindow extends JFrame
 		  
 		//Setting OptionsMenu
 		  reactionDBPathField = new JTextField(20);
+		  startingMaterialsDBPathField = new JTextField(20);
 		  optionsMenuPanel = new JPanel(new FlowLayout(20,20,20)); 
 		  optionsMenuPanel.setBackground(Color.WHITE);
 		  optionsMenuPanel.add(reactionDBPathField);
+		  optionsMenuPanel.add(startingMaterialsDBPathField);
 		  menusCards.add(optionsMenuPanel);
 		  
 		  //Setting TestDialogPanel
@@ -122,7 +114,7 @@ public class PreferencesWindow extends JFrame
 	void fillGUIComponentsData()
 	{
 		reactionDBPathField.setText(preferences.reactionDBPath);
-		//TODO
+		startingMaterialsDBPathField.setText(preferences.startingMaterialsPath);
 	}
 
 	
@@ -143,7 +135,8 @@ public class PreferencesWindow extends JFrame
 	    	 public void actionPerformed(ActionEvent e){
 	    		 System.out.println("Apply button was clicked"); 
 	    		 preferences.reactionDBPath = reactionDBPathField.getText();
-	    		 System.out.println(preferences.reactionDBPath);
+	    		 preferences.startingMaterialsPath = startingMaterialsDBPathField.getText();
+
 
 	    		 if (preferencesFilePath != null)
 	    		 {
@@ -220,20 +213,7 @@ public class PreferencesWindow extends JFrame
 	     });
 	return button;
 	}
-	private JCheckBox createCheckBoxTest(){
-		JCheckBox JcheckBoxText = new JCheckBox("checkBoxTest");
-		 add(JcheckBoxText,BorderLayout.PAGE_END);
-		 JcheckBoxText.addItemListener(new ItemListener() {
-	         public void itemStateChanged(ItemEvent e) {         
-	           if(e.getStateChange()==1){
-	        	   preferences.checkBoxTest = true;
-	           }else{
-	        	   preferences.checkBoxTest = false;
-	           }
-	         }           
-	      });
-		 return JcheckBoxText;
-	}
+
 	
 	private void createTreeTable(){
 		 DefaultMutableTreeNode top = new DefaultMutableTreeNode("root");
