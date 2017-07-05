@@ -53,30 +53,27 @@ public class PreferencesWindow extends JFrame
 	{
 		
 		
-		//Setting Tree
-		  treePanel = new JPanel(new BorderLayout(1,2));
-		  treePanel.setBackground(Color.WHITE);
-		   createTreeTable();
-		  treePanel.add(tree);
-		  treePanel.setPreferredSize(new Dimension(200, 0));
 
 		  //Set MenusCards
 		  menusCards = new JPanel(new CardLayout());
 		  
-		  
+		  //Sett Tabs
+		JTabbedPane	 preferencesTabsPane = new JTabbedPane();
 		//Setting OptionsMenu
 		  reactionDBPathField = new JTextField(20);
 		  startingMaterialsDBPathField = new JTextField(20);
 		  optionsMenuPanel = new JPanel(new FlowLayout(20,20,20)); 
 		  optionsMenuPanel.setBackground(Color.WHITE);
+		  optionsMenuPanel.add(new JLabel("Reaction database path:"));
 		  optionsMenuPanel.add(reactionDBPathField);
+		optionsMenuPanel.add(new JLabel("Starting materials database path:"));
 		  optionsMenuPanel.add(startingMaterialsDBPathField);
-		  menusCards.add(optionsMenuPanel);
+		  preferencesTabsPane.add("Paths",optionsMenuPanel);
 		  
 		  //Setting TestDialogPanel
 		  JPanel testPanel = new JPanel();
 		  testPanel.add(new JTextField(20));
-		  menusCards.add(testPanel,"Card with JButtons");
+		preferencesTabsPane.add("TestMenu",testPanel);
 		 
 		  
 		  //Setting QuitAndSaveMenu
@@ -95,8 +92,8 @@ public class PreferencesWindow extends JFrame
 		  
 		 
 		setLayout(new BorderLayout(100,100));
-		add(menusCards, BorderLayout.CENTER);
-		add(treePanel,BorderLayout.WEST);
+		add(preferencesTabsPane, BorderLayout.CENTER);
+
 		add(quitAndSavePanel,BorderLayout.SOUTH);
 	      this.setSize(500, 500);
 	      this.setVisible(true);

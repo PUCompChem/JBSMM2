@@ -144,9 +144,7 @@ public class ReactionSetTree extends JPanel
 			}
 		});
 	}
-	private void scrollBarSet(){
 
-	}
 	
 	String getNodeInfoText(DefaultMutableTreeNode node)
 	{	
