@@ -4,8 +4,9 @@ import ambit2.reactions.ReactionDataBase;
 import ambit2.smarts.SmartsHelper;
 import ambit2.ui.Panel2D;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import pu.gui.utils.gui.utils.trees.MoleculeSetTree;
 import pu.gui.utils.PredefinedArrangements;
-import pu.gui.utils.ReactionSetTree;
+import pu.gui.utils.gui.utils.trees.ReactionSetTree;
 import pu.gui.utils.WorkCaseTabSet;
 import pu.reactor.json.PreferencesJsonParser;
 import pu.reactor.workspace.Preferences;
@@ -29,6 +30,7 @@ public class ReactorMainFrame extends JFrame {
 	WorkCaseTabSet workCases; // Work cases - all open(active) objects
 	JTabbedPane workCasesTabPane;
 	ReactionSetTree reactionSetTree;
+	MoleculeSetTree moleculeTree;
 	ArrayList<Panel2D> p2dList = new ArrayList<Panel2D>();
 	
 	PreferencesWindow preferencesWindow = null;
@@ -58,7 +60,7 @@ public class ReactorMainFrame extends JFrame {
 	String preferencesFilePath = null;
 	Preferences preferences = null;
 	ReactionDataBase reactionDB = null;
-
+	JTabbedPane treesTabPane;
 	
 	public ReactorMainFrame() throws Exception {
 		super();
@@ -93,13 +95,32 @@ public class ReactorMainFrame extends JFrame {
 		// Setting the splitters and other GUI components
 		prepareGUIAreas();
 
+		//
 		setReactionDB();
+	//	setReactionTree
 		if (reactionDB != null)
 		{
 			reactionSetTree = new ReactionSetTree(reactionDB.reactions);
+			  treesTabPane = new JTabbedPane();
+			treesTabPane.add("reactions",reactionSetTree);
+
+
+
 			areas.get(0).setLayout(new BorderLayout());
-			areas.get(0).add(reactionSetTree, BorderLayout.CENTER);
+			areas.get(0).add( treesTabPane, BorderLayout.CENTER);
 		}
+
+		//set Molecules Tree
+
+			   moleculeTree = new MoleculeSetTree();
+
+			treesTabPane.add("molecules", moleculeTree);
+
+
+
+
+
+
 
 		// Setting the work cases tab pane
 		workCasesTabPane = new JTabbedPane();

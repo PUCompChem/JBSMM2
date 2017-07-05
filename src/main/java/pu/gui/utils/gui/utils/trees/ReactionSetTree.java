@@ -1,17 +1,16 @@
-package pu.gui.utils;
+package pu.gui.utils.gui.utils.trees;
 
 import ambit2.reactions.Reaction;
+import pu.filtering.ColorScheme;
+import pu.filtering.ICode;
+import pu.filtering.IFilter;
+import pu.gui.utils.ReactionInfoPanel;
 
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-
-import pu.filtering.ColorScheme;
-import pu.filtering.ICode;
-import pu.filtering.IFilter;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,7 +43,7 @@ public class ReactionSetTree extends JPanel
 	{
 		this.reactions = reactions;
 		initGUI();
-		reactionDataToTree();
+
 	}
 	
 	private void initGUI()
@@ -55,7 +54,7 @@ public class ReactionSetTree extends JPanel
 		reactionInfoPanel = new ReactionInfoPanel();
 
 		this.setLayout(new BorderLayout());
-		reactionDataToTree();
+		dataToTree();
 		this.add(scrollBar, BorderLayout.CENTER);
 		this.add(reactionInfoPanel, BorderLayout.SOUTH);
 
@@ -66,7 +65,7 @@ public class ReactionSetTree extends JPanel
 
 
 
-	private void reactionDataToTree()
+	private void dataToTree()
 	{	
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode("Database");
 		 
@@ -118,7 +117,7 @@ public class ReactionSetTree extends JPanel
 
 	public void setReactions(List<Reaction> reactions) {
 		this.reactions = reactions;
-		reactionDataToTree();
+		dataToTree();
 	}
 
 	public JTree getTree() {
