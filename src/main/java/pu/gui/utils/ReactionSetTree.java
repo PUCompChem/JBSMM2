@@ -7,6 +7,11 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+
+import pu.filtering.ColorScheme;
+import pu.filtering.ICode;
+import pu.filtering.IFilter;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,13 +28,9 @@ public class ReactionSetTree extends JPanel
 	private List<Reaction> reactions = new ArrayList<Reaction>();
 	public Map<DefaultMutableTreeNode, Reaction> nodeReactions = new HashMap<DefaultMutableTreeNode, Reaction>();
 	private JTree tree;
-
-
+	
 	public JPanel visualizeCurReaction = null;
-
  	private JScrollPane scrollBar;
-
-
 
 
 	ReactionInfoPanel reactionInfoPanel;
@@ -162,6 +163,17 @@ public class ReactionSetTree extends JPanel
 			return sb.toString();
 		}
 	}
+	
+	void applyFilter(IFilter filter)
+	{
+		//TODO
+	}
+	
+	void applyColorScheme(ColorScheme scheme, ICode elementCoding)
+	{
+		//TODO
+	}
+	
 	
 
 
