@@ -52,6 +52,7 @@ public class ReactionSetTree extends JPanel
 		JScrollPane scrollBar = new JScrollPane(tree);
 
 		reactionInfoPanel = new ReactionInfoPanel();
+
 		this.setLayout(new BorderLayout());
 		reactionDataToTree();
 		this.add(scrollBar, BorderLayout.CENTER);

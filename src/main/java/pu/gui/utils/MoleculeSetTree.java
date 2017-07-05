@@ -21,7 +21,7 @@ public class MoleculeSetTree
 
 
 	public void MoleculesToDataTree(){
-		//TODO
+
 	}
 
 	String getMoleculeClass(StructureRecord mol)

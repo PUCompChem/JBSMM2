@@ -98,17 +98,8 @@ public class PreferencesWindow extends JFrame
 		add(menusCards, BorderLayout.CENTER);
 		add(treePanel,BorderLayout.WEST);
 		add(quitAndSavePanel,BorderLayout.SOUTH);
-		
-
-
-
-
-
-
 	      this.setSize(500, 500);
 	      this.setVisible(true);
-	      this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);   //Disable exit command
-
 	}
 
 	void fillGUIComponentsData()
