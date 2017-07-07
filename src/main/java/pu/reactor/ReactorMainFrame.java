@@ -17,6 +17,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.util.List;
 import java.util.ArrayList;
 
 public class ReactorMainFrame extends JFrame {
@@ -115,7 +116,13 @@ public class ReactorMainFrame extends JFrame {
 
 		//set Molecules Tree
 
-			   moleculeTree = new MoleculeSetTree();
+		List<String> smiles = new ArrayList<String>();
+		List<String> molClass = new ArrayList<String>();
+		smiles.add("CCCC");
+		molClass.add("c1");
+		smiles.add("CCCCCCC");
+		molClass.add("c2");
+		moleculeTree = new MoleculeSetTree(smiles, molClass);
 
 			treesTabPane.add("molecules", moleculeTree);
 

@@ -10,6 +10,9 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+
+import org.openscience.cdk.interfaces.IAtomContainer;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,13 +20,30 @@ import java.util.List;
 
 public class MoleculeSetTree extends JPanel
 {
-	private List<StructureRecord> molecules = new ArrayList<StructureRecord>();
+	public static final String moleculeClassProperty = "MoleculeClass";
+	
+	private List<StructureRecord> structureRecords = new ArrayList<StructureRecord>();
+	private List<IAtomContainer> molecules = new ArrayList<IAtomContainer>();
+	
 	private JTree tree;
 	private MoleculeInfoPanel moleculeInfoPanel;
 
-	public MoleculeSetTree()
+	public MoleculeSetTree(List<StructureRecord> structureRecords)
 	{
-		this.molecules = molecules;
+		this.structureRecords = structureRecords;
+		initGUI();
+	}
+	
+	public MoleculeSetTree(List<String> smiles, List<String> moleculeClass)
+	{
+		List<StructureRecord> structureRecords = new ArrayList<StructureRecord>();
+		for (int i = 0; i < smiles.size(); i++)
+		{
+			StructureRecord sr = new StructureRecord();
+			sr.setSmiles(smiles.get(i));
+			sr.setRecordProperty(new Property(moleculeClassProperty), moleculeClass.get(i));
+			structureRecords.add(sr);
+		}
 		initGUI();
 	}
 
@@ -42,7 +62,7 @@ public class MoleculeSetTree extends JPanel
 	private void moleculesToDataTree(){
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode("Starting materials");
 		tree.setModel(new DefaultTreeModel(root));
-		for(StructureRecord molecule : molecules)
+		for(StructureRecord str : structureRecords)
 		{
 
 		}
@@ -50,12 +70,14 @@ public class MoleculeSetTree extends JPanel
 
 	String getMoleculeClass(StructureRecord mol)
 	{
-		Property propMolClass = new Property("MoleculeClass");
+		Property propMolClass = new Property(moleculeClassProperty);
 		return mol.getRecordProperty(propMolClass).toString();
 	}
+	
 	private void dataToTree() {
 		//TODO
 	}
+	
 	private void fromTreeToInfoPane(){
 		tree.addTreeSelectionListener(new TreeSelectionListener() {
 			public void valueChanged(TreeSelectionEvent e) {
