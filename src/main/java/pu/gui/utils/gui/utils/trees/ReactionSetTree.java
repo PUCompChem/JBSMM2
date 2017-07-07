@@ -4,6 +4,7 @@ import ambit2.reactions.Reaction;
 import pu.filtering.ColorScheme;
 import pu.filtering.ICode;
 import pu.filtering.IFilter;
+import pu.filtering.filters.SetFilter;
 import pu.gui.utils.ReactionInfoPanel;
 
 import javax.swing.*;
@@ -11,6 +12,7 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+
 import java.awt.*;
 import java.util.*;
 import java.util.List;
@@ -167,6 +169,19 @@ public class ReactionSetTree extends JPanel
 	void applyColorScheme(ColorScheme scheme, ICode elementCoding)
 	{
 		//TODO
+	}
+	
+	IFilter getReactionUseFilter()
+	{
+		SetFilter filter = new SetFilter();
+		Set<Object> rSet = new HashSet<Object>(); 
+		for (Reaction r : reactions)
+		{
+			if (r.isFlagUse())
+				rSet.add(r);
+		}
+		filter.setObjects(rSet);
+		return filter;
 	}
 
 	public final DefaultMutableTreeNode findNode(String searchString) {
