@@ -161,7 +161,7 @@ public class ReactionSetTree extends JPanel
 	
 	void applyFilter(IFilter filter)
 	{
-
+		
 	}
 	
 	void applyColorScheme(ColorScheme scheme, ICode elementCoding)
