@@ -26,6 +26,7 @@ public class ReactionSetTree extends JPanel
 	
 	private List<Reaction> reactions = new ArrayList<Reaction>();
 	public Map<DefaultMutableTreeNode, Reaction> nodeReactions = new HashMap<DefaultMutableTreeNode, Reaction>();
+	public Map<Reaction, DefaultMutableTreeNode> reactionNodes = new HashMap<Reaction, DefaultMutableTreeNode>();
 	private JTree tree;
 	
 	public JPanel visualizeCurReaction = null;
@@ -59,15 +60,17 @@ public class ReactionSetTree extends JPanel
 		this.add(reactionInfoPanel, BorderLayout.SOUTH);
 
 
-		fromTreeToInfoPane();
-
+		fromTreeToInfoPanel();
 	}
 
 
 
 	private void dataToTree()
 	{	
-		DefaultMutableTreeNode root = new DefaultMutableTreeNode("Database");
+		nodeReactions.clear();
+		reactionNodes.clear();
+		
+		DefaultMutableTreeNode root = new DefaultMutableTreeNode("Reaction set");
 		 
 		tree.setModel(new DefaultTreeModel(root));
 		  
@@ -76,7 +79,8 @@ public class ReactionSetTree extends JPanel
 			String reactionClass = reaction.getReactionClass();
 			String[] levels = reactionClass.split(Pattern.quote("."));
 			
-			//Find or create reaction class nodes
+			//Find or create reaction class nodes and 
+			//mappings between reactions and nodes
 			DefaultMutableTreeNode currentLevelNode = root;
 			for (int i = 0; i < levels.length; i++) 
 			{
@@ -95,6 +99,7 @@ public class ReactionSetTree extends JPanel
 			DefaultMutableTreeNode reactionNode = new DefaultMutableTreeNode(reaction.getName());
 			currentLevelNode.add(reactionNode);
 			nodeReactions.put(reactionNode, reaction);
+			reactionNodes.put(reaction, reactionNode);
 		}
 		
 	}
@@ -132,7 +137,7 @@ public class ReactionSetTree extends JPanel
 		this.visualizeCurReaction = visualizeCurReaction;
 	}
 	
-	private void fromTreeToInfoPane() {
+	private void fromTreeToInfoPanel() {
 		tree.addTreeSelectionListener(new TreeSelectionListener() {
 			public void valueChanged(TreeSelectionEvent e) {
 				DefaultMutableTreeNode node = (DefaultMutableTreeNode)
