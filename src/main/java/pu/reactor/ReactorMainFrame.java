@@ -1,6 +1,7 @@
 package pu.reactor;
 
 import ambit2.reactions.ReactionDataBase;
+import ambit2.reactions.retrosynth.StartingMaterialsDataBase;
 import ambit2.smarts.SmartsHelper;
 import ambit2.ui.Panel2D;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -60,6 +61,7 @@ public class ReactorMainFrame extends JFrame {
 	String preferencesFilePath = null;
 	Preferences preferences = null;
 	ReactionDataBase reactionDB = null;
+	StartingMaterialsDataBase startingMaterialsDataBase = null;
 	JTabbedPane treesTabPane;
 	
 	public ReactorMainFrame() throws Exception {
@@ -97,6 +99,7 @@ public class ReactorMainFrame extends JFrame {
 
 		//
 		setReactionDB();
+		setStartingMaterialsDB();
 	//	setReactionTree
 		if (reactionDB != null)
 		{
@@ -144,6 +147,8 @@ public class ReactorMainFrame extends JFrame {
 		// End of testCode
 	}
 
+
+
 	void setPreferences() throws Exception
 	{
 		if (preferencesFilePath == null)
@@ -169,6 +174,16 @@ public class ReactorMainFrame extends JFrame {
 		}
 		catch (Exception x)
 		{	
+			System.out.println(x.getMessage());
+		}
+	}
+	private void setStartingMaterialsDB() {
+		try
+		{
+			startingMaterialsDataBase = new StartingMaterialsDataBase();
+		}
+		catch (Exception x)
+		{
 			System.out.println(x.getMessage());
 		}
 	}

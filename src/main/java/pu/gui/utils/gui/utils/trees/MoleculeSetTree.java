@@ -9,6 +9,7 @@ import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,21 +23,29 @@ public class MoleculeSetTree extends JPanel
 
 	public MoleculeSetTree()
 	{
+		this.molecules = molecules;
+		initGUI();
+	}
+
+	private void initGUI() {
 		moleculeInfoPanel = new MoleculeInfoPanel();
 		tree = new JTree();
 		this.add(tree);
 		JScrollPane scrollBar = new JScrollPane(tree);
 		this.setLayout(new BorderLayout());
-		 dataToTree();
+		moleculesToDataTree();
 		this.add(scrollBar, BorderLayout.CENTER);
 		this.add(moleculeInfoPanel, BorderLayout.SOUTH);
-
 	}
 
 
+	private void moleculesToDataTree(){
+		DefaultMutableTreeNode root = new DefaultMutableTreeNode("Starting materials");
+		tree.setModel(new DefaultTreeModel(root));
+		for(StructureRecord molecule : molecules)
+		{
 
-	public void MoleculesToDataTree(){
-
+		}
 	}
 
 	String getMoleculeClass(StructureRecord mol)

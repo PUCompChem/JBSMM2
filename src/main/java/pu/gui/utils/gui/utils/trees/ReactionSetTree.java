@@ -12,10 +12,8 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Pattern;
 
  
@@ -163,15 +161,57 @@ public class ReactionSetTree extends JPanel
 	
 	void applyFilter(IFilter filter)
 	{
-		//TODO
+
 	}
 	
 	void applyColorScheme(ColorScheme scheme, ICode elementCoding)
 	{
 		//TODO
 	}
-	
-	
 
+	public final DefaultMutableTreeNode findNode(String searchString) {
+
+		List<DefaultMutableTreeNode> searchNodes = getSearchNodes((DefaultMutableTreeNode)tree.getModel().getRoot());
+		DefaultMutableTreeNode currentNode = (DefaultMutableTreeNode)tree.getLastSelectedPathComponent();
+
+		DefaultMutableTreeNode foundNode = null;
+		int bookmark = -1;
+
+		if( currentNode != null ) {
+			for(int index = 0; index < searchNodes.size(); index++) {
+				if( searchNodes.get(index) == currentNode ) {
+					bookmark = index;
+					break;
+				}
+			}
+		}
+
+		for(int index = bookmark + 1; index < searchNodes.size(); index++) {
+			if(searchNodes.get(index).toString().toLowerCase().contains(searchString.toLowerCase())) {
+				foundNode = searchNodes.get(index);
+				break;
+			}
+		}
+
+		if( foundNode == null ) {
+			for(int index = 0; index <= bookmark; index++) {
+				if(searchNodes.get(index).toString().toLowerCase().contains(searchString.toLowerCase())) {
+					foundNode = searchNodes.get(index);
+					break;
+				}
+			}
+		}
+		return foundNode;
+	}
+
+	private final List<DefaultMutableTreeNode> getSearchNodes(DefaultMutableTreeNode root) {
+		List<DefaultMutableTreeNode> searchNodes = new ArrayList<DefaultMutableTreeNode>();
+
+		Enumeration<?> e = root.preorderEnumeration();
+		while(e.hasMoreElements()) {
+			searchNodes.add((DefaultMutableTreeNode)e.nextElement());
+		}
+		return searchNodes;
+	}
 
 }
