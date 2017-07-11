@@ -28,7 +28,8 @@ public class ReactionSetTree extends JPanel
 	public Map<DefaultMutableTreeNode, Reaction> nodeReactions = new HashMap<DefaultMutableTreeNode, Reaction>();
 	public Map<Reaction, DefaultMutableTreeNode> reactionNodes = new HashMap<Reaction, DefaultMutableTreeNode>();
 	private JTree tree;
-	
+	DefaultMutableTreeNode root;
+
 	public JPanel visualizeCurReaction = null;
  	private JScrollPane scrollBar;
 
@@ -70,7 +71,7 @@ public class ReactionSetTree extends JPanel
 		nodeReactions.clear();
 		reactionNodes.clear();
 		
-		DefaultMutableTreeNode root = new DefaultMutableTreeNode("Reaction set");
+		 root = new DefaultMutableTreeNode("Reaction set");
 		 
 		tree.setModel(new DefaultTreeModel(root));
 		  
@@ -233,5 +234,36 @@ public class ReactionSetTree extends JPanel
 		}
 		return searchNodes;
 	}
+	private void reactionNodesMapping(){
+		for (int i = 0; i < reactions.size(); i++) {
+			Reaction cuurentReaction = reactions.get(i);
+			DefaultMutableTreeNode currentNode = findNode(cuurentReaction.getName());
+			reactionNodes.put(cuurentReaction,currentNode);
+		}
+	}
+	private void nodeReactionsMapping(){
+		iterateTree(root);
 
-}
+		}
+
+		private void iterateTree(DefaultMutableTreeNode currentNode){
+
+				for(Reaction reaction : reactions){
+					if(reaction.getName() == currentNode.toString()){
+						nodeReactions.put(currentNode, reaction);
+						break;
+					};
+				}
+
+
+			for (int i = 0; i < currentNode.getChildCount(); i++) {
+				if(currentNode.getChildCount() == 0){
+					break;
+				}else {
+					iterateTree((DefaultMutableTreeNode) currentNode.getChildAt(i));
+				}
+			}
+		}
+	}
+
+
