@@ -28,6 +28,7 @@ public class MoleculeSetTree extends JPanel
 	private JTree tree;
 	private MoleculeInfoPanel moleculeInfoPanel;
 
+
 	public MoleculeSetTree(List<StructureRecord> structureRecords)
 	{
 		this.structureRecords = structureRecords;

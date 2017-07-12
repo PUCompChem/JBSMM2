@@ -12,22 +12,27 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.*;
 import java.util.List;
 import java.util.regex.Pattern;
 
- 
+
 public class ReactionSetTree extends JPanel
-{	
+{
 	private static final long serialVersionUID = -4305046628531992964L;
 
-	
+
 	private List<Reaction> reactions = new ArrayList<Reaction>();
 	public Map<DefaultMutableTreeNode, Reaction> nodeReactions = new HashMap<DefaultMutableTreeNode, Reaction>();
 	public Map<Reaction, DefaultMutableTreeNode> reactionNodes = new HashMap<Reaction, DefaultMutableTreeNode>();
 	private JTree tree;
+	private JTextField treeSearchBox;
+	private JButton treeSearchButton;
 	DefaultMutableTreeNode root;
 
 	public JPanel visualizeCurReaction = null;
@@ -35,22 +40,23 @@ public class ReactionSetTree extends JPanel
 
 
 	ReactionInfoPanel reactionInfoPanel;
-	 
+
 	public ReactionSetTree()
 	{
 		initGUI();
 	}
-	
+
 	public ReactionSetTree(List<Reaction> reactions)
 	{
 		this.reactions = reactions;
 		initGUI();
 
 	}
-	
+
 	private void initGUI()
 	{
 		tree = new JTree();
+
 		JScrollPane scrollBar = new JScrollPane(tree);
 
 		reactionInfoPanel = new ReactionInfoPanel();
@@ -59,57 +65,86 @@ public class ReactionSetTree extends JPanel
 		dataToTree();
 		this.add(scrollBar, BorderLayout.CENTER);
 		this.add(reactionInfoPanel, BorderLayout.SOUTH);
-
+		searchBoxSet();
+		nodeReactionsMapping();
+		reactionNodesMapping();
 
 		fromTreeToInfoPanel();
 	}
 
+	private void searchBoxSet() {
+		treeSearchBox = new JTextField(13);
+		treeSearchButton = new JButton("Search");
+		JPanel searchPanel = new JPanel();
+		searchPanel.add(treeSearchBox,BorderLayout.WEST);
+		searchPanel.add(treeSearchButton,BorderLayout.EAST);
+		this.add( searchPanel , BorderLayout.NORTH);
+
+		treeSearchButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String search = treeSearchBox.getText();
+				if(search.trim().length() > 0 ) {
+
+					DefaultMutableTreeNode node = findNode(search);
+					if( node != null ) {
+						TreePath path = new TreePath(node.getPath());
+						tree.setSelectionPath(path);
+						tree.scrollPathToVisible(path);
+
+					}
+				}
+			}
+		});
+
+
+	}
 
 
 	private void dataToTree()
-	{	
+	{
 		nodeReactions.clear();
 		reactionNodes.clear();
-		
+
 		 root = new DefaultMutableTreeNode("Reaction set");
-		 
+
 		tree.setModel(new DefaultTreeModel(root));
-		  
-		for (Reaction reaction : reactions) 
+
+		for (Reaction reaction : reactions)
 		{
 			String reactionClass = reaction.getReactionClass();
 			String[] levels = reactionClass.split(Pattern.quote("."));
-			
-			//Find or create reaction class nodes and 
+
+			//Find or create reaction class nodes and
 			//mappings between reactions and nodes
 			DefaultMutableTreeNode currentLevelNode = root;
-			for (int i = 0; i < levels.length; i++) 
+			for (int i = 0; i < levels.length; i++)
 			{
 				String currentLevel = levels[i];
-				
+
 				DefaultMutableTreeNode nextLevelNode =  searchChildrenNode(currentLevel, currentLevelNode);
 					if (nextLevelNode == null)
-				{	
+				{
 					nextLevelNode = new DefaultMutableTreeNode(currentLevel);
 					currentLevelNode.add(nextLevelNode);
 				}
 				currentLevelNode = nextLevelNode;
 			}
-			
+
 			//Add reaction node
 			DefaultMutableTreeNode reactionNode = new DefaultMutableTreeNode(reaction.getName());
 			currentLevelNode.add(reactionNode);
 			nodeReactions.put(reactionNode, reaction);
 			reactionNodes.put(reaction, reactionNode);
 		}
-		
+
 	}
-	
-	
-	private DefaultMutableTreeNode searchChildrenNode(String nodeObj, DefaultMutableTreeNode node) 
-	{	
+
+
+	private DefaultMutableTreeNode searchChildrenNode(String nodeObj, DefaultMutableTreeNode node)
+	{
 		for (int i = 0; i < node.getChildCount(); i++)
-		{	
+		{
 			DefaultMutableTreeNode child = (DefaultMutableTreeNode) node.getChildAt(i);
 			if (nodeObj.equals(child.getUserObject()))
 				return child;
@@ -137,13 +172,13 @@ public class ReactionSetTree extends JPanel
 	public void setVisualizeCurReaction(JPanel visualizeCurReaction) {
 		this.visualizeCurReaction = visualizeCurReaction;
 	}
-	
+
 	private void fromTreeToInfoPanel() {
 		tree.addTreeSelectionListener(new TreeSelectionListener() {
 			public void valueChanged(TreeSelectionEvent e) {
 				DefaultMutableTreeNode node = (DefaultMutableTreeNode)
 						tree.getLastSelectedPathComponent();
-				if (node == null) 
+				if (node == null)
 					return;
 				reactionInfoPanel.ClearText();
 				reactionInfoPanel.WriteText(getNodeInfoText(node));
@@ -151,9 +186,10 @@ public class ReactionSetTree extends JPanel
 		});
 	}
 
-	
+
+
 	String getNodeInfoText(DefaultMutableTreeNode node)
-	{	
+	{
 		Reaction r = nodeReactions.get(node);
 		if (r == null)
 			return node.toString();
@@ -166,21 +202,21 @@ public class ReactionSetTree extends JPanel
 			return sb.toString();
 		}
 	}
-	
+
 	void applyFilter(IFilter filter)
 	{
-		
+
 	}
-	
+
 	void applyColorScheme(ColorScheme scheme, ICode elementCoding)
 	{
 		//TODO
 	}
-	
+
 	IFilter getReactionUseFilter()
 	{
 		SetFilter filter = new SetFilter();
-		Set<Object> rSet = new HashSet<Object>(); 
+		Set<Object> rSet = new HashSet<Object>();
 		for (Reaction r : reactions)
 		{
 			if (r.isFlagUse())
