@@ -3,6 +3,7 @@ package pu.gui.utils.gui.utils.trees;
 import ambit2.base.data.Property;
 import ambit2.base.data.StructureRecord;
 import ambit2.reactions.Reaction;
+import pu.gui.utils.InfoPanel;
 import pu.gui.utils.MoleculeInfoPanel;
 
 import javax.swing.*;
@@ -18,15 +19,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MoleculeSetTree extends JPanel
+public class MoleculeSetTree extends SetTree
 {
 	public static final String moleculeClassProperty = "MoleculeClass";
 	
 	private List<StructureRecord> structureRecords = new ArrayList<StructureRecord>();
 	private List<IAtomContainer> molecules = new ArrayList<IAtomContainer>();
 	
-	private JTree tree;
-	private MoleculeInfoPanel moleculeInfoPanel;
+
+
 
 
 	public MoleculeSetTree(List<StructureRecord> structureRecords)
@@ -49,14 +50,15 @@ public class MoleculeSetTree extends JPanel
 	}
 
 	private void initGUI() {
-		moleculeInfoPanel = new MoleculeInfoPanel();
+		infoPanel = new InfoPanel();
 		tree = new JTree();
 		this.add(tree);
 		JScrollPane scrollBar = new JScrollPane(tree);
 		this.setLayout(new BorderLayout());
 		moleculesToDataTree();
+		searchBoxSet();
 		this.add(scrollBar, BorderLayout.CENTER);
-		this.add(moleculeInfoPanel, BorderLayout.SOUTH);
+		this.add(infoPanel, BorderLayout.SOUTH);
 	}
 
 
@@ -86,8 +88,8 @@ public class MoleculeSetTree extends JPanel
 						tree.getLastSelectedPathComponent();
 				if (node == null)
 					return;
-				moleculeInfoPanel.ClearText();
-				moleculeInfoPanel.WriteText(getNodeInfoText(node));
+				infoPanel.ClearText();
+				infoPanel.WriteText(getNodeInfoText(node));
 			}
 		});
 	}

@@ -5,7 +5,7 @@ import pu.filtering.ColorScheme;
 import pu.filtering.ICode;
 import pu.filtering.IFilter;
 import pu.filtering.filters.SetFilter;
-import pu.gui.utils.ReactionInfoPanel;
+import pu.gui.utils.InfoPanel;
 
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 
-public class ReactionSetTree extends JPanel
+public class ReactionSetTree extends SetTree
 {
 	private static final long serialVersionUID = -4305046628531992964L;
 
@@ -30,7 +30,7 @@ public class ReactionSetTree extends JPanel
 	private List<Reaction> reactions = new ArrayList<Reaction>();
 	public Map<DefaultMutableTreeNode, Reaction> nodeReactions = new HashMap<DefaultMutableTreeNode, Reaction>();
 	public Map<Reaction, DefaultMutableTreeNode> reactionNodes = new HashMap<Reaction, DefaultMutableTreeNode>();
-	private JTree tree;
+
 	private JTextField treeSearchBox;
 	private JButton treeSearchButton;
 	DefaultMutableTreeNode root;
@@ -39,7 +39,7 @@ public class ReactionSetTree extends JPanel
  	private JScrollPane scrollBar;
 
 
-	ReactionInfoPanel reactionInfoPanel;
+	InfoPanel reactionInfoPanel;
 
 	public ReactionSetTree()
 	{
@@ -59,7 +59,7 @@ public class ReactionSetTree extends JPanel
 
 		JScrollPane scrollBar = new JScrollPane(tree);
 
-		reactionInfoPanel = new ReactionInfoPanel();
+		reactionInfoPanel = new InfoPanel();
 
 		this.setLayout(new BorderLayout());
 		dataToTree();
@@ -72,33 +72,7 @@ public class ReactionSetTree extends JPanel
 		fromTreeToInfoPanel();
 	}
 
-	private void searchBoxSet() {
-		treeSearchBox = new JTextField(13);
-		treeSearchButton = new JButton("Search");
-		JPanel searchPanel = new JPanel();
-		searchPanel.add(treeSearchBox,BorderLayout.WEST);
-		searchPanel.add(treeSearchButton,BorderLayout.EAST);
-		this.add( searchPanel , BorderLayout.NORTH);
 
-		treeSearchButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String search = treeSearchBox.getText();
-				if(search.trim().length() > 0 ) {
-
-					DefaultMutableTreeNode node = findNode(search);
-					if( node != null ) {
-						TreePath path = new TreePath(node.getPath());
-						tree.setSelectionPath(path);
-						tree.scrollPathToVisible(path);
-
-					}
-				}
-			}
-		});
-
-
-	}
 
 
 	private void dataToTree()
@@ -141,16 +115,7 @@ public class ReactionSetTree extends JPanel
 	}
 
 
-	private DefaultMutableTreeNode searchChildrenNode(String nodeObj, DefaultMutableTreeNode node)
-	{
-		for (int i = 0; i < node.getChildCount(); i++)
-		{
-			DefaultMutableTreeNode child = (DefaultMutableTreeNode) node.getChildAt(i);
-			if (nodeObj.equals(child.getUserObject()))
-				return child;
-		}
-	    return null;
-	}
+
 
 	public List<Reaction> getReactions() {
 		return reactions;
@@ -161,9 +126,7 @@ public class ReactionSetTree extends JPanel
 		dataToTree();
 	}
 
-	public JTree getTree() {
-		return tree;
-	}
+
 
 	public JPanel getVisualizeCurReaction() {
 		return visualizeCurReaction;
@@ -226,50 +189,7 @@ public class ReactionSetTree extends JPanel
 		return filter;
 	}
 
-	public final DefaultMutableTreeNode findNode(String searchString) {
 
-		List<DefaultMutableTreeNode> searchNodes = getSearchNodes((DefaultMutableTreeNode)tree.getModel().getRoot());
-		DefaultMutableTreeNode currentNode = (DefaultMutableTreeNode)tree.getLastSelectedPathComponent();
-
-		DefaultMutableTreeNode foundNode = null;
-		int bookmark = -1;
-
-		if( currentNode != null ) {
-			for(int index = 0; index < searchNodes.size(); index++) {
-				if( searchNodes.get(index) == currentNode ) {
-					bookmark = index;
-					break;
-				}
-			}
-		}
-
-		for(int index = bookmark + 1; index < searchNodes.size(); index++) {
-			if(searchNodes.get(index).toString().toLowerCase().contains(searchString.toLowerCase())) {
-				foundNode = searchNodes.get(index);
-				break;
-			}
-		}
-
-		if( foundNode == null ) {
-			for(int index = 0; index <= bookmark; index++) {
-				if(searchNodes.get(index).toString().toLowerCase().contains(searchString.toLowerCase())) {
-					foundNode = searchNodes.get(index);
-					break;
-				}
-			}
-		}
-		return foundNode;
-	}
-
-	private final List<DefaultMutableTreeNode> getSearchNodes(DefaultMutableTreeNode root) {
-		List<DefaultMutableTreeNode> searchNodes = new ArrayList<DefaultMutableTreeNode>();
-
-		Enumeration<?> e = root.preorderEnumeration();
-		while(e.hasMoreElements()) {
-			searchNodes.add((DefaultMutableTreeNode)e.nextElement());
-		}
-		return searchNodes;
-	}
 	private void reactionNodesMapping(){
 		for (int i = 0; i < reactions.size(); i++) {
 			Reaction cuurentReaction = reactions.get(i);
