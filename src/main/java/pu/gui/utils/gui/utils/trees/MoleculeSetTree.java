@@ -27,23 +27,22 @@ public class MoleculeSetTree extends SetTree
 	private List<IAtomContainer> molecules = new ArrayList<IAtomContainer>();
 	
 
-
-
-
 	public MoleculeSetTree(List<StructureRecord> structureRecords)
 	{
 		this.structureRecords = structureRecords;
 		initGUI();
 	}
 	
+	
 	public MoleculeSetTree(List<String> smiles, List<String> moleculeClass)
 	{
-		List<StructureRecord> structureRecords = new ArrayList<StructureRecord>();
+		structureRecords.clear();
 		for (int i = 0; i < smiles.size(); i++)
 		{
 			StructureRecord sr = new StructureRecord();
 			sr.setSmiles(smiles.get(i));
-			sr.setRecordProperty(new Property(moleculeClassProperty), moleculeClass.get(i));
+			if (moleculeClass != null)
+				sr.setRecordProperty(new Property(moleculeClassProperty), moleculeClass.get(i));
 			structureRecords.add(sr);
 		}
 		initGUI();
