@@ -1,5 +1,6 @@
 package pu.reactor;
 
+import ambit2.base.data.StructureRecord;
 import ambit2.reactions.ReactionDataBase;
 import ambit2.reactions.retrosynth.StartingMaterialsDataBase;
 import ambit2.smarts.SmartsHelper;
@@ -14,6 +15,9 @@ import pu.reactor.workspace.Preferences;
 import pu.reactor.workspace.gui.PreferencesWindow;
 
 import javax.swing.*;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -118,14 +122,36 @@ public class ReactorMainFrame extends JFrame {
 
 		List<String> smiles = new ArrayList<String>();
 		List<String> molClass = new ArrayList<String>();
-		smiles.add("CCCC");
+		smiles.add("CCCCC");
 		molClass.add("c1");
-		smiles.add("CCCCCCC");
+		smiles.add("CCCCC=O");
+
 		molClass.add("c2");
+
 		moleculeTree = new MoleculeSetTree(smiles, molClass);
+
+
 
 			treesTabPane.add("molecules", moleculeTree);
 
+
+
+		  moleculeTree.getTree().addTreeSelectionListener(new TreeSelectionListener() {
+			public void valueChanged(TreeSelectionEvent e) {
+				DefaultMutableTreeNode node = (DefaultMutableTreeNode)
+						moleculeTree.getTree().getLastSelectedPathComponent();
+
+			List<StructureRecord> strs =  moleculeTree.getStructureRecords();
+			for (StructureRecord str : strs){
+				if (node.toString().equals(Integer.toString(str.getDataEntryID()))){
+					areas.get(2).remove(0);
+					add2DMolecule(areas.get(2), str.getSmiles());
+				}
+			}
+
+
+			}
+		});
 
 
 
@@ -139,19 +165,11 @@ public class ReactorMainFrame extends JFrame {
 		areas.get(1).setLayout(new BorderLayout());
 		areas.get(1).add(workCasesTabPane, BorderLayout.CENTER);
 
-		// some test code (to be removed) -------------------------
-		workCases.addMoleculeCase(null, "Mol 1", null);
-		workCases.addMoleculeCase(null, "Mol 2", null);
-		workCases.addMoleculeCase(null, "Mol 3", "Info for Mol 3");
-		workCases.addMoleculeCase(null, "Mol 4", "Tip for Mol 4");
-		workCases.removeWorkCase(workCases.getWorkCases().get(1));
-		workCases.addMoleculeCase(null, "Mol 5", null);
-		workCases.addMoleculeCase(null, "Mol 6", null);
-		workCases.removeWorkCase(3);
 
-		add2DMolecule(areas.get(2), "CCCCC");
-		add2DMolecule(areas.get(2), "CCCCNNC");
-		// End of testCode
+
+ 	add2DMolecule(areas.get(2), "CC(C)=O");
+ 	//add2DMolecule(areas.get(2), "CCCCNNC");
+
 	}
 
 
