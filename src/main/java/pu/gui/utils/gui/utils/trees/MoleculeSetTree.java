@@ -37,7 +37,7 @@ public class MoleculeSetTree extends SetTree
 		this.structureRecords = structureRecords;
 		initGUI();
 	}
-	
+
 	public MoleculeSetTree(List<String> smiles, List<String> moleculeClass)
 	{
 		//List<StructureRecord> structureRecords = new ArrayList<StructureRecord>();
