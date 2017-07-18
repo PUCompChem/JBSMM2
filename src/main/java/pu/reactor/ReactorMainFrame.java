@@ -130,17 +130,23 @@ public class ReactorMainFrame extends JFrame {
 		 * Test start
 		 */
 		 FileUtilities f = new FileUtilities();
-		smiles = f.readSmilesSetFromFile(new File("./starting-metarials.txt"));
-		List<StructureRecord> structureRecords = new ArrayList<StructureRecord>();
-		for (int i = 0; i < smiles.size(); i++)
-		{
-			StructureRecord sr = new StructureRecord();
-			sr.setDataEntryID(i);
-			sr.setSmiles(smiles.get(i));
 
-			sr.setRecordProperty(new Property(moleculeClassProperty), "class1");
-			structureRecords.add(sr);
+		smiles = f.readSmilesSetFromFile(new File(preferences.startingMaterialsPath));
+		if(smiles == null){
+			smiles = new ArrayList<String>();
+			smiles.add("CCCC");
+			System.out.println("Materials path is wrong");
 		}
+		List<StructureRecord> structureRecords = new ArrayList<StructureRecord>();
+
+			for (int i = 0; i < smiles.size(); i++) {
+				StructureRecord sr = new StructureRecord();
+				sr.setDataEntryID(i);
+				sr.setSmiles(smiles.get(i));
+
+				sr.setRecordProperty(new Property(moleculeClassProperty), "class1");
+				structureRecords.add(sr);
+			}
 
 		moleculeTree = new MoleculeSetTree(structureRecords);
 
