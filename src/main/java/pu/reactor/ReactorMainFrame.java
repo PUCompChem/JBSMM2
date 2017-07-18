@@ -1,5 +1,6 @@
 package pu.reactor;
 
+import ambit2.base.data.Property;
 import ambit2.base.data.StructureRecord;
 import ambit2.reactions.ReactionDataBase;
 import ambit2.reactions.retrosynth.StartingMaterialsDataBase;
@@ -10,6 +11,7 @@ import pu.gui.utils.gui.utils.trees.MoleculeSetTree;
 import pu.gui.utils.PredefinedArrangements;
 import pu.gui.utils.gui.utils.trees.ReactionSetTree;
 import pu.gui.utils.WorkCaseTabSet;
+import pu.io.FileUtilities;
 import pu.reactor.json.PreferencesJsonParser;
 import pu.reactor.workspace.Preferences;
 import pu.reactor.workspace.gui.PreferencesWindow;
@@ -23,6 +25,8 @@ import java.awt.event.*;
 import java.io.File;
 import java.util.List;
 import java.util.ArrayList;
+
+import static pu.gui.utils.gui.utils.trees.MoleculeSetTree.moleculeClassProperty;
 
 public class ReactorMainFrame extends JFrame {
 
@@ -122,21 +126,33 @@ public class ReactorMainFrame extends JFrame {
 
 		List<String> smiles = new ArrayList<String>();
 		List<String> molClass = new ArrayList<String>();
-		smiles.add("CCCCC");
-		molClass.add("c1");
-		smiles.add("CCCCC=O");
+		/**
+		 * Test start
+		 */
+		 FileUtilities f = new FileUtilities();
+		smiles = f.readSmilesSetFromFile(new File("./starting-metarials.txt"));
+		List<StructureRecord> structureRecords = new ArrayList<StructureRecord>();
+		for (int i = 0; i < smiles.size(); i++)
+		{
+			StructureRecord sr = new StructureRecord();
+			sr.setDataEntryID(i);
+			sr.setSmiles(smiles.get(i));
 
-		molClass.add("c2");
+			sr.setRecordProperty(new Property(moleculeClassProperty), "class1");
+			structureRecords.add(sr);
+		}
 
-		moleculeTree = new MoleculeSetTree(smiles, molClass);
+		moleculeTree = new MoleculeSetTree(structureRecords);
 
 
 
 			treesTabPane.add("molecules", moleculeTree);
 
+		/**
+		 * Test End
+		 */
 
-
-		  moleculeTree.getTree().addTreeSelectionListener(new TreeSelectionListener() {
+		moleculeTree.getTree().addTreeSelectionListener(new TreeSelectionListener() {
 			public void valueChanged(TreeSelectionEvent e) {
 				DefaultMutableTreeNode node = (DefaultMutableTreeNode)
 						moleculeTree.getTree().getLastSelectedPathComponent();

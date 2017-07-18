@@ -46,6 +46,7 @@ public class MoleculeSetTree extends SetTree
 			StructureRecord sr = new StructureRecord();
 			sr.setDataEntryID(i);
 			sr.setSmiles(smiles.get(i));
+
 			sr.setRecordProperty(new Property(moleculeClassProperty), moleculeClass.get(i));
 			this.structureRecords.add(sr);
 		}
