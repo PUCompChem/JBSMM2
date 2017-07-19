@@ -3,6 +3,8 @@ package pu.gui.graph2d;
 import java.util.ArrayList;
 import java.util.List;
 
+import pu.gui.graph2d.algorithms.BasicTreeGeometryAlgorithm;
+
 public class Graph2D 
 {
 	public static enum GraphType {
@@ -13,6 +15,22 @@ public class Graph2D
 	protected List<Edge> edges = new ArrayList<Edge>();
 	protected Vertex treeRoot = null;
 	
+	protected GraphType graphType = GraphType.TREE;
+	protected IGeometryAlgorithm algorithm = null;
+	protected EdgeFormat defaultEdgeFormat = null;
+	protected VertexFormat defaultVertexFormat = null;
+	
+	
+	public Graph2D()
+	{
+		init();
+	}
+	
+	void init()
+	{
+		algorithm = new BasicTreeGeometryAlgorithm();
+	}
+	
 	public Vertex getTreeRoot() {
 		return treeRoot;
 	}
@@ -21,10 +39,6 @@ public class Graph2D
 		this.treeRoot = treeRoot;
 	}
 
-	protected GraphType graphType = GraphType.TREE;
-	protected IGeometryAlgorithm algorithm = null;
-	protected EdgeFormat defaultEdgeFormat = null;
-	protected VertexFormat defaultVertexFormat = null;
 	
 	
 	public EdgeFormat getDefaultEdgeFormat() {
@@ -57,6 +71,10 @@ public class Graph2D
 
 	public void setGraphType(GraphType graphType) {
 		this.graphType = graphType;
+	}
+	
+	public void renderGraph() {
+		//TODO
 	}
 	
 	
