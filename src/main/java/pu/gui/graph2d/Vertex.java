@@ -7,6 +7,7 @@ public class Vertex
 {
 	public VertexFormat format = null;
 	public VertexParameters params = null;
+	public VertexZone zone = null;
 	public List<Vertex> childVertices = new ArrayList<Vertex>();
 	public List<Edge> childEdges = new ArrayList<Edge>();
 	
