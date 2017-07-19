@@ -5,19 +5,13 @@ import java.util.List;
 
 public class Vertex 
 {
+	public VertexFormat format = null;
+	public VertexParameters params = null;
 	public List<Vertex> childVertices = new ArrayList<Vertex>();
 	public List<Edge> childEdges = new ArrayList<Edge>();
 	
-	protected Object vertexObject = null;
-
-	public Object getVertexObject() {
-		return vertexObject;
-	}
-
-	public void setVertexObject(Object vertexObject) {
-		this.vertexObject = vertexObject;
-	}
-	
+	public Object vertexObject = null;
+		
 	public void addChild(Vertex v, Edge e)
 	{
 		childVertices.add(v);

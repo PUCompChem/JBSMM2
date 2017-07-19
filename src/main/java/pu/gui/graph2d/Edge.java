@@ -2,14 +2,10 @@ package pu.gui.graph2d;
 
 public class Edge 
 {
-	protected Object edgeObject = null;
-
-	public Object getEdgeObject() {
-		return edgeObject;
-	}
-
-	public void setEdgeObject(Object edgeObject) {
-		this.edgeObject = edgeObject;
-	}
+	public EdgeFormat format = null;
+	public EdgeParameters params = null;	
+	public Object edgeObject = null;
+	public Vertex vertex1 = null;
+	public Vertex vertex2 = null;
 	
 }
