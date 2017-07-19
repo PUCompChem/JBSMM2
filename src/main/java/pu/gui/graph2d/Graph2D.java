@@ -9,8 +9,39 @@ public class Graph2D
 		TREE, DEAFULT
 	}
 	
+	protected List<Vertex> vertices = new ArrayList<Vertex>();
+	protected List<Edge> edges = new ArrayList<Edge>();
+	
 	protected GraphType graphType = GraphType.TREE;
-	protected List<Vertex> vertices = new ArrayList<Vertex>(); 
+	protected IGeometryAlgorithm algorithm = null;
+	protected EdgeFormat defaultEdgeFormat = null;
+	protected VertexFormat defaultVertexFormat = null;
+	
+	//TODO vertex coordinates generation algorithms/strategy
+	
+	public EdgeFormat getDefaultEdgeFormat() {
+		return defaultEdgeFormat;
+	}
+
+	public void setDefaultEdgeFormat(EdgeFormat defaultEdgeFormat) {
+		this.defaultEdgeFormat = defaultEdgeFormat;
+	}
+
+	public VertexFormat getDefaultVertexFormat() {
+		return defaultVertexFormat;
+	}
+
+	public void setDefaultVertexFormat(VertexFormat defaultVertexFormat) {
+		this.defaultVertexFormat = defaultVertexFormat;
+	}
+	
+	public IGeometryAlgorithm getAlgorithm() {
+		return algorithm;
+	}
+
+	public void setAlgorithm(IGeometryAlgorithm algorithm) {
+		this.algorithm = algorithm;
+	}
 
 	public GraphType getGraphType() {
 		return graphType;

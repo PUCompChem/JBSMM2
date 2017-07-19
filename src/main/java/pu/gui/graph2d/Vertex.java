@@ -2,6 +2,8 @@ package pu.gui.graph2d;
 
 public class Vertex 
 {
+	
+	
 	protected Object vertexObject = null;
 
 	public Object getVertexObject() {
