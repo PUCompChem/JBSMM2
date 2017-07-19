@@ -11,13 +11,21 @@ public class Graph2D
 	
 	protected List<Vertex> vertices = new ArrayList<Vertex>();
 	protected List<Edge> edges = new ArrayList<Edge>();
+	protected Vertex treeRoot = null;
 	
+	public Vertex getTreeRoot() {
+		return treeRoot;
+	}
+
+	public void setTreeRoot(Vertex treeRoot) {
+		this.treeRoot = treeRoot;
+	}
+
 	protected GraphType graphType = GraphType.TREE;
 	protected IGeometryAlgorithm algorithm = null;
 	protected EdgeFormat defaultEdgeFormat = null;
 	protected VertexFormat defaultVertexFormat = null;
 	
-	//TODO vertex coordinates generation algorithms/strategy
 	
 	public EdgeFormat getDefaultEdgeFormat() {
 		return defaultEdgeFormat;
@@ -50,5 +58,6 @@ public class Graph2D
 	public void setGraphType(GraphType graphType) {
 		this.graphType = graphType;
 	}
+	
 	
 }
