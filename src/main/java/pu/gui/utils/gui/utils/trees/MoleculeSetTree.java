@@ -98,7 +98,7 @@ public class MoleculeSetTree extends SetTree
 
 				List<StructureRecord> strs =  structureRecords;
 				for (StructureRecord str : strs){
-					if (node.toString().equals(Integer.toString(str.getDataEntryID()))){
+					if (node.toString().equals(getMoleculeName(str))){
 						moleculePanel.removeAll();
 						moleculeDrawer.add2DMolecule(moleculePanel, str.getSmiles());
 					}
@@ -128,7 +128,7 @@ public class MoleculeSetTree extends SetTree
 				}
 				currentLevelNode = nextLevelNode;
 			}
-			DefaultMutableTreeNode moleculeNode = new DefaultMutableTreeNode(structureRecords.get(i).getDataEntryID());
+			DefaultMutableTreeNode moleculeNode = new DefaultMutableTreeNode(getMoleculeName(structureRecords.get(i)));
 			currentLevelNode.add(moleculeNode);
 
 		}
@@ -157,7 +157,8 @@ public class MoleculeSetTree extends SetTree
 		});
 	}
 	String getNodeInfoText(DefaultMutableTreeNode node)
-	{StructureRecord r = null;
+	{
+		StructureRecord r = null;
 
 	for(StructureRecord str : structureRecords){
 		if (node.toString().equals(Integer.toString(str.getDataEntryID())))
@@ -175,6 +176,17 @@ public class MoleculeSetTree extends SetTree
 
 			return sb.toString();
 		}
+	}
+	public String getMoleculeName(StructureRecord structureRecord){
+
+
+		if(structureRecord.getFormula() != null){
+			return structureRecord.getFormula();
+		}else if(structureRecord.getSmiles() != null){
+			return structureRecord.getSmiles();
+		}else return Integer.toString(structureRecord.getDataEntryID());
+
+
 	}
 
 }
