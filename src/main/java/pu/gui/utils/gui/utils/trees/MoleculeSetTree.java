@@ -12,6 +12,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
+import pu.gui.utils.MoleculeDrawing;
+import pu.gui.utils.MoleculePanel;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -25,8 +27,21 @@ public class MoleculeSetTree extends SetTree
 	
 	private List<StructureRecord> structureRecords = new ArrayList<StructureRecord>();
 	private List<IAtomContainer> molecules = new ArrayList<IAtomContainer>();
-	
 
+	private MoleculeDrawing moleculeDrawer = new MoleculeDrawing();
+	private MoleculePanel moleculePanel = new MoleculePanel();
+
+	private String dbFilePath;
+
+
+
+	public String getDbFilePath() {
+	return dbFilePath;
+}
+
+	public void setDbFilePath(String dbFilePath) {
+		this.dbFilePath = dbFilePath;
+	}
 	public List<StructureRecord> getStructureRecords(){
 		return structureRecords;
 	}
@@ -53,18 +68,46 @@ public class MoleculeSetTree extends SetTree
 
 		initGUI();
 	}
+	public MoleculePanel getMoleculePanel() {
+		return moleculePanel;
+	}
 
+	public void setMoleculePanel(MoleculePanel moleculePanel) {
+		this.moleculePanel = moleculePanel;
+	}
 	private void initGUI() {
 		infoPanel = new InfoPanel();
 		tree = new JTree();
 		this.add(tree);
 		JScrollPane scrollBar = new JScrollPane(tree);
 		this.setLayout(new BorderLayout());
+
 		dataToTree();
 		searchBoxSet();
         fromTreeToInfoPane();
+        setMoleculePanel();
 		this.add(scrollBar, BorderLayout.CENTER);
 		this.add(infoPanel, BorderLayout.SOUTH);
+	}
+
+	private void setMoleculePanel() {
+		tree.addTreeSelectionListener(new TreeSelectionListener() {
+			public void valueChanged(TreeSelectionEvent e) {
+				DefaultMutableTreeNode node = (DefaultMutableTreeNode)
+						tree.getLastSelectedPathComponent();
+
+				List<StructureRecord> strs =  structureRecords;
+				for (StructureRecord str : strs){
+					if (node.toString().equals(Integer.toString(str.getDataEntryID()))){
+						moleculePanel.removeAll();
+						moleculeDrawer.add2DMolecule(moleculePanel, str.getSmiles());
+					}
+				}
+
+
+			}
+		});
+
 	}
 
 

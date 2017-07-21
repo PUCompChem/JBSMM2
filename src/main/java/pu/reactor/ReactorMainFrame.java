@@ -72,7 +72,9 @@ public class ReactorMainFrame extends JFrame {
 	ReactionDataBase reactionDB = null;
 	StartingMaterialsDataBase startingMaterialsDataBase = null;
 	JTabbedPane treesTabPane;
-	
+	private JTabbedPane bottomCenterTabbedPanel;
+	private JTextArea consoleFieldPanel;
+
 	public ReactorMainFrame() throws Exception {
 		super();
 		initGUI();
@@ -90,7 +92,7 @@ public class ReactorMainFrame extends JFrame {
 		preferencesWindow = new PreferencesWindow(preferences, preferencesFilePath);
 		preferencesWindow.setSize(new Dimension(1000,800));
 		preferencesWindow.setVisible(false);
-		
+
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle("JBSMM Reactor");
 		addWindowListener(new WindowAdapter() {
@@ -122,13 +124,13 @@ public class ReactorMainFrame extends JFrame {
 			areas.get(0).add( treesTabPane, BorderLayout.CENTER);
 		}
 
-		//set Molecules Tree
+		/**
+		 * set Molecules Tree
+		 */
 
 		List<String> smiles = new ArrayList<String>();
 		List<String> molClass = new ArrayList<String>();
-		/**
-		 * Test start
-		 */
+
 		 FileUtilities f = new FileUtilities();
 
 		smiles = f.readSmilesSetFromFile(new File(preferences.startingMaterialsPath));
@@ -150,35 +152,26 @@ public class ReactorMainFrame extends JFrame {
 
 		moleculeTree = new MoleculeSetTree(structureRecords);
 
+		areas.get(2).setLayout(new BorderLayout());
 
-
-			treesTabPane.add("molecules", moleculeTree);
+		bottomCenterTabbedPanel = new JTabbedPane();
+	 	treesTabPane.add("molecules", moleculeTree);
+		bottomCenterTabbedPanel.add("selected molecule",moleculeTree.getMoleculePanel());
+		areas.get(2).add(bottomCenterTabbedPanel,BorderLayout.CENTER);
 
 		/**
-		 * Test End
+		 * END setMoleculesTree
 		 */
 
-		moleculeTree.getTree().addTreeSelectionListener(new TreeSelectionListener() {
-			public void valueChanged(TreeSelectionEvent e) {
-				DefaultMutableTreeNode node = (DefaultMutableTreeNode)
-						moleculeTree.getTree().getLastSelectedPathComponent();
-
-			List<StructureRecord> strs =  moleculeTree.getStructureRecords();
-			for (StructureRecord str : strs){
-				if (node.toString().equals(Integer.toString(str.getDataEntryID()))){
-					areas.get(2).remove(0);
-					add2DMolecule(areas.get(2), str.getSmiles());
-				}
-			}
-
-
-			}
-		});
-
-
-
-
-
+		/**
+		 * Start  setConsole
+		 */
+		consoleFieldPanel = new JTextArea();
+		consoleFieldPanel.setLayout(new BorderLayout());
+		bottomCenterTabbedPanel.add("Console",consoleFieldPanel);
+				/**
+				 * End setConsole
+				 */
 
 		// Setting the work cases tab pane
 		workCasesTabPane = new JTabbedPane();
@@ -187,10 +180,6 @@ public class ReactorMainFrame extends JFrame {
 		areas.get(1).setLayout(new BorderLayout());
 		areas.get(1).add(workCasesTabPane, BorderLayout.CENTER);
 
-
-
- 	add2DMolecule(areas.get(2), "CC(C)=O");
- 	//add2DMolecule(areas.get(2), "CCCCNNC");
 
 	}
 
@@ -365,56 +354,8 @@ public class ReactorMainFrame extends JFrame {
 
 	// some test utils -------------------------------------
 
-	private void add2DMolecule(JPanel panel, String smiles) {
-		try {
-			IAtomContainer mol = SmartsHelper.getMoleculeFromSmiles(smiles);
-			add2DMolecule(panel, mol);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 
-	private void add2DMolecule(JPanel panel, IAtomContainer struct) {
-		Panel2D p = new Panel2D();
-		p.setAtomContainer(struct);
-		p.setBorder(BorderFactory.createLineBorder(Color.green));
 
-		p2dList.add(p);
-
-		//
-
-		panel.addComponentListener(new ComponentListener() {
-
-			public void componentHidden(ComponentEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			public void componentMoved(ComponentEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			public void componentResized(ComponentEvent arg0) {
-				// TODO Auto-generated method stub
-				System.out.println("componentResized events");
-				Panel2D p = p2dList.get(p2dList.size() - 1);
-				p.setPreferredSize(arg0.getComponent().getSize());
-			}
-
-			public void componentShown(ComponentEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-		});
-
-		panel.add(p);
-		//p.setPreferredSize(panel.getSize());
-		p.updateUI();
-
-	}
 
 }
 
