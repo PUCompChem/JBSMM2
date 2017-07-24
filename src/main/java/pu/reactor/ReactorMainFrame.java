@@ -2,11 +2,13 @@ package pu.reactor;
 
 import ambit2.base.data.Property;
 import ambit2.base.data.StructureRecord;
+import ambit2.reactions.Reaction;
 import ambit2.reactions.ReactionDataBase;
 import ambit2.reactions.retrosynth.StartingMaterialsDataBase;
 import ambit2.smarts.SmartsHelper;
 import ambit2.ui.Panel2D;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import pu.gui.utils.ReactionToolBar;
 import pu.gui.utils.gui.utils.trees.MoleculeSetTree;
 import pu.gui.utils.PredefinedArrangements;
 import pu.gui.utils.gui.utils.trees.ReactionSetTree;
@@ -65,6 +67,8 @@ public class ReactorMainFrame extends JFrame {
 	private JMenu menuProjectSettings;
 	private JMenuItem miProjectSettings;
 	private JMenuItem miProcessSettings;
+
+	private ReactionToolBar reactionToolBar;
 	
 	//Data, containers
 	String preferencesFilePath = null;
@@ -123,6 +127,9 @@ public class ReactorMainFrame extends JFrame {
 			areas.get(0).setLayout(new BorderLayout());
 			areas.get(0).add( treesTabPane, BorderLayout.CENTER);
 		}
+
+		reactionToolBar = new ReactionToolBar();
+		this.add(reactionToolBar, BorderLayout.NORTH);
 
 		/**
 		 * set Molecules Tree
