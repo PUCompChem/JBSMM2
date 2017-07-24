@@ -13,12 +13,14 @@ public class Graph2D
 	
 	protected List<Vertex> vertices = new ArrayList<Vertex>();
 	protected List<Edge> edges = new ArrayList<Edge>();
-	protected Vertex treeRoot = null;
+	protected VertexNode treeRoot = null;
 	
 	protected GraphType graphType = GraphType.TREE;
 	protected IGeometryAlgorithm algorithm = null;
 	protected EdgeFormat defaultEdgeFormat = null;
 	protected VertexFormat defaultVertexFormat = null;
+	
+	protected boolean FlagRegisterFullGraphInfoForTreeGraph = false;
 	
 	
 	public Graph2D()
@@ -31,11 +33,11 @@ public class Graph2D
 		algorithm = new BasicTreeGeometryAlgorithm();
 	}
 	
-	public Vertex getTreeRoot() {
+	public VertexNode getTreeRoot() {
 		return treeRoot;
 	}
 
-	public void setTreeRoot(Vertex treeRoot) {
+	public void setTreeRoot(VertexNode treeRoot) {
 		this.treeRoot = treeRoot;
 	}
 
@@ -71,6 +73,15 @@ public class Graph2D
 
 	public void setGraphType(GraphType graphType) {
 		this.graphType = graphType;
+	}
+	
+	public boolean isFlagRegisterFullGraphInfoForTreeGraph() {
+		return FlagRegisterFullGraphInfoForTreeGraph;
+	}
+
+	public void setFlagRegisterFullGraphInfoForTreeGraph(
+			boolean flagRegisterFullGraphInfoForTreeGraph) {
+		FlagRegisterFullGraphInfoForTreeGraph = flagRegisterFullGraphInfoForTreeGraph;
 	}
 	
 	public void renderGraph() {
