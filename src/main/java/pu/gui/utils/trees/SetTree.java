@@ -1,4 +1,4 @@
-package pu.gui.utils.gui.utils.trees;
+package pu.gui.utils.trees;
 
 import pu.gui.utils.InfoPanel;
 

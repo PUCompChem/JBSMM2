@@ -7,11 +7,13 @@ import ambit2.reactions.ReactionDataBase;
 import ambit2.reactions.retrosynth.StartingMaterialsDataBase;
 import ambit2.smarts.SmartsHelper;
 import ambit2.ui.Panel2D;
+
 import org.openscience.cdk.interfaces.IAtomContainer;
+
 import pu.gui.utils.ReactionToolBar;
-import pu.gui.utils.gui.utils.trees.MoleculeSetTree;
 import pu.gui.utils.PredefinedArrangements;
-import pu.gui.utils.gui.utils.trees.ReactionSetTree;
+import pu.gui.utils.trees.MoleculeSetTree;
+import pu.gui.utils.trees.ReactionSetTree;
 import pu.gui.utils.WorkCaseTabSet;
 import pu.io.FileUtilities;
 import pu.reactor.json.PreferencesJsonParser;
@@ -22,13 +24,14 @@ import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.util.List;
 import java.util.ArrayList;
 
-import static pu.gui.utils.gui.utils.trees.MoleculeSetTree.moleculeClassProperty;
+import static pu.gui.utils.trees.MoleculeSetTree.moleculeClassProperty;
 
 public class ReactorMainFrame extends JFrame {
 

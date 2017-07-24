@@ -1,4 +1,4 @@
-package pu.gui.utils.gui.utils.trees;
+package pu.gui.utils.trees;
 
 import ambit2.base.data.Property;
 import ambit2.base.data.StructureRecord;
