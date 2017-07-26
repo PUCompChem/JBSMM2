@@ -20,7 +20,12 @@ abstract public class SetTree extends JPanel {
     protected JTextField treeSearchBox;
     protected JButton treeSearchButton;
 
-     void searchBoxSet() {
+    public SetTree() {
+
+
+    }
+
+    void searchBoxSet() {
         treeSearchBox = new JTextField(13);
         treeSearchButton = new JButton("Search");
         JPanel searchPanel = new JPanel();
@@ -101,7 +106,15 @@ abstract public class SetTree extends JPanel {
         }
         return searchNodes;
     }
+    protected void expandAllNodes(JTree tree, int startingIndex, int rowCount){
+        for(int i=startingIndex;i<rowCount;++i){
+            tree.expandRow(i);
+        }
 
+        if(tree.getRowCount()!=rowCount){
+            expandAllNodes(tree, rowCount, tree.getRowCount());
+        }
+    }
     public JTree getTree() {
         return tree;
     }

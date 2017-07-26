@@ -13,6 +13,7 @@ import javax.swing.tree.DefaultTreeModel;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 import pu.gui.utils.MoleculeDrawing;
+import pu.gui.utils.MoleculeInfoPanel;
 import pu.gui.utils.MoleculePanel;
 
 import java.awt.*;
@@ -33,6 +34,7 @@ public class MoleculeSetTree extends SetTree
 
 	private String dbFilePath;
 
+	private  TableInfoPanel tableInfoPanel;
 
 
 	public String getDbFilePath() {
@@ -81,13 +83,15 @@ public class MoleculeSetTree extends SetTree
 		this.add(tree);
 		JScrollPane scrollBar = new JScrollPane(tree);
 		this.setLayout(new BorderLayout());
-
+		tableInfoPanel = new TableInfoPanel();
 		dataToTree();
 		searchBoxSet();
         fromTreeToInfoPane();
+		expandAllNodes(tree, 0, tree.getRowCount());
         setMoleculePanel();
+
 		this.add(scrollBar, BorderLayout.CENTER);
-		this.add(infoPanel, BorderLayout.SOUTH);
+		this.add(tableInfoPanel, BorderLayout.SOUTH);
 	}
 
 	private void setMoleculePanel() {
@@ -150,9 +154,10 @@ public class MoleculeSetTree extends SetTree
 				DefaultMutableTreeNode node = (DefaultMutableTreeNode)
 						tree.getLastSelectedPathComponent();
 				if (node == null)
-					return;
-				infoPanel.ClearText();
-				infoPanel.WriteText(getNodeInfoText(node));
+				{return;}
+				else {
+				 tableInfoPanel.Write(getNodeInfoText(node));
+				}
 			}
 		});
 	}
@@ -168,10 +173,11 @@ public class MoleculeSetTree extends SetTree
 		}
 	}
 		if (r == null)
-			return node.toString();
+			return "Name: " + node.toString();
 		else
 		{
 			StringBuffer sb = new StringBuffer();
+			sb.append("Smiles: " );
 			sb.append(r.getSmiles() + "\n");
 
 			return sb.toString();

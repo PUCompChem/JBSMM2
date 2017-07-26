@@ -5,18 +5,14 @@ import pu.filtering.ColorScheme;
 import pu.filtering.ICode;
 import pu.filtering.IFilter;
 import pu.filtering.filters.SetFilter;
-import pu.gui.utils.InfoPanel;
 
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreePath;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.*;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -39,7 +35,7 @@ public class ReactionSetTree extends SetTree
  	private JScrollPane scrollBar;
 
 
-	InfoPanel reactionInfoPanel;
+	TableInfoPanel reactionInfoPanel;
 
 	public ReactionSetTree()
 	{
@@ -59,7 +55,7 @@ public class ReactionSetTree extends SetTree
 
 		JScrollPane scrollBar = new JScrollPane(tree);
 
-		reactionInfoPanel = new InfoPanel();
+		reactionInfoPanel = new TableInfoPanel();
 
 		this.setLayout(new BorderLayout());
 		dataToTree();
@@ -68,7 +64,7 @@ public class ReactionSetTree extends SetTree
 		searchBoxSet();
 		nodeReactionsMapping();
 		reactionNodesMapping();
-
+		expandAllNodes(tree, 0, tree.getRowCount());
 		fromTreeToInfoPanel();
 	}
 
@@ -143,8 +139,8 @@ public class ReactionSetTree extends SetTree
 						tree.getLastSelectedPathComponent();
 				if (node == null)
 					return;
-				reactionInfoPanel.ClearText();
-				reactionInfoPanel.WriteText(getNodeInfoText(node));
+
+				reactionInfoPanel.Write(getNodeInfoText(node));
 			}
 		});
 	}
@@ -159,9 +155,9 @@ public class ReactionSetTree extends SetTree
 		else
 		{
 			StringBuffer sb = new StringBuffer();
-			sb.append(r.getName() + "\n");
+			sb.append("Name: "  + r.getName() + "\n");
 			sb.append("Class: " + r.getReactionClass() + "\n");
-			sb.append(r.getSmirks() + "\n");
+			sb.append("Smirks: " + r.getSmirks() + "\n");
 			return sb.toString();
 		}
 	}

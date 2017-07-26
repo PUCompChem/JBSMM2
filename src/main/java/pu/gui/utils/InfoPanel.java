@@ -25,7 +25,7 @@ public class InfoPanel extends JPanel{
         this.add(textArea, BorderLayout.CENTER);
 
     }
-   public void WriteText(String input){
+   public void Write(String input){
         textArea.append(input);
    }
    public void ClearText(){
