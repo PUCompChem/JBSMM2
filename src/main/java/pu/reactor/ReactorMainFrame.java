@@ -62,7 +62,12 @@ public class ReactorMainFrame extends JFrame {
 	JMenu menuReact;
 	JMenuItem miApplyReaction;
 	JMenuItem miFindAllReactions;
-	
+
+
+	JMenu menuProcess;
+	JMenuItem miWorkspaceProcess;
+
+
 	JMenu menuSettings; 
 	JMenuItem menuPreferences;
 	
@@ -298,6 +303,23 @@ public class ReactorMainFrame extends JFrame {
 				// TODO
 			}
 		});
+
+
+		//menu Process
+		menuProcess = new JMenu("Process");
+		menuBar.add(menuProcess);
+
+		miWorkspaceProcess = new JMenuItem("New Process");
+		menuProcess.add(miWorkspaceProcess);
+		miWorkspaceProcess.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+
+			}
+		});
+
+
+
+		menuProcess.addSeparator();
 
 		// menu Settings 
 		menuSettings = new JMenu("Settings"); 
