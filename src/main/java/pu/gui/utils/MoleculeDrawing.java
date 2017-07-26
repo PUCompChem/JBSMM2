@@ -61,7 +61,7 @@ public class MoleculeDrawing {
         });
 
         panel.add(p);
-        //p.setPreferredSize(panel.getSize());
+      p.setPreferredSize(panel.getSize());
         p.updateUI();
 
     }
