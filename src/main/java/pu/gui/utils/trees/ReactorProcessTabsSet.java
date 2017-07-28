@@ -1,6 +1,6 @@
 package pu.gui.utils.trees;
 
-import pu.gui.utils.BasicReactorProcessPanel;
+import pu.reactor.workspace.gui.BasicReactorProcessPanel;
 
 import javax.swing.*;
 

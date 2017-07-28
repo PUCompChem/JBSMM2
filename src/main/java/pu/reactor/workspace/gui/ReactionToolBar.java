@@ -1,4 +1,4 @@
-package pu.gui.utils;
+package pu.reactor.workspace.gui;
 
 import javax.swing.*;
 import java.awt.*;

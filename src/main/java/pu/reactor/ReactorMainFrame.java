@@ -10,8 +10,6 @@ import ambit2.ui.Panel2D;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 
-import pu.gui.utils.BasicReactorProcessPanel;
-import pu.gui.utils.ReactionToolBar;
 import pu.gui.utils.PredefinedArrangements;
 import pu.gui.utils.trees.MoleculeSetTree;
 import pu.gui.utils.trees.ReactionSetTree;
@@ -20,8 +18,10 @@ import pu.gui.utils.trees.ReactorProcessTabsSet;
 import pu.io.FileUtilities;
 import pu.reactor.json.PreferencesJsonParser;
 import pu.reactor.workspace.Preferences;
+import pu.reactor.workspace.gui.BasicReactorProcessPanel;
 import pu.reactor.workspace.gui.NewProcessWizard;
 import pu.reactor.workspace.gui.PreferencesWindow;
+import pu.reactor.workspace.gui.ReactionToolBar;
 
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
