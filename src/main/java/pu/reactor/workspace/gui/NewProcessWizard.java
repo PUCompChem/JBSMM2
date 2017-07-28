@@ -1,4 +1,4 @@
-package pu.reactor.workspace.gui.ProcessWizard;
+package pu.reactor.workspace.gui;
 
 import javax.swing.*;
 import java.awt.*;

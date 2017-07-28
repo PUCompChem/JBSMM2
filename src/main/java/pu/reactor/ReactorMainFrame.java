@@ -20,8 +20,8 @@ import pu.gui.utils.trees.ReactorProcessTabsSet;
 import pu.io.FileUtilities;
 import pu.reactor.json.PreferencesJsonParser;
 import pu.reactor.workspace.Preferences;
+import pu.reactor.workspace.gui.NewProcessWizard;
 import pu.reactor.workspace.gui.PreferencesWindow;
-import pu.reactor.workspace.gui.ProcessWizard.NewProcessWizard;
 
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
