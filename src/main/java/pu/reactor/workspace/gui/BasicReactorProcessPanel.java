@@ -8,6 +8,8 @@ import javax.swing.*;
 public class BasicReactorProcessPanel extends JPanel{
 
     private String processName;
+    
+    BasicReactorParametersPanel parametersPanel = new BasicReactorParametersPanel();
 
     public BasicReactorProcessPanel() {
 
