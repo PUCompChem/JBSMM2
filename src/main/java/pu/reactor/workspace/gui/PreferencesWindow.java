@@ -96,6 +96,7 @@ public class PreferencesWindow extends JFrame
 
 		add(quitAndSavePanel,BorderLayout.SOUTH);
 	      this.setSize(500, 500);
+
 	      this.setVisible(true);
 	}
 

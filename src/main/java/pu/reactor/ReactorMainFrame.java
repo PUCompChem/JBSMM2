@@ -10,15 +10,18 @@ import ambit2.ui.Panel2D;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 
+import pu.gui.utils.BasicReactorProcessPanel;
 import pu.gui.utils.ReactionToolBar;
 import pu.gui.utils.PredefinedArrangements;
 import pu.gui.utils.trees.MoleculeSetTree;
 import pu.gui.utils.trees.ReactionSetTree;
 import pu.gui.utils.WorkCaseTabSet;
+import pu.gui.utils.trees.ReactorProcessTabsSet;
 import pu.io.FileUtilities;
 import pu.reactor.json.PreferencesJsonParser;
 import pu.reactor.workspace.Preferences;
 import pu.reactor.workspace.gui.PreferencesWindow;
+import pu.reactor.workspace.gui.ProcessWizard.NewProcessWizard;
 
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
@@ -86,6 +89,9 @@ public class ReactorMainFrame extends JFrame {
 	JTabbedPane treesTabPane;
 	private JTabbedPane bottomCenterTabbedPanel;
 	private JTextArea consoleFieldPanel;
+
+	private ReactorProcessTabsSet processesTabs;
+
 
 	public ReactorMainFrame() throws Exception {
 		super();
@@ -189,12 +195,15 @@ public class ReactorMainFrame extends JFrame {
 				 */
 
 		// Setting the work cases tab pane
-		workCasesTabPane = new JTabbedPane();
-		workCases = new WorkCaseTabSet();
-		workCases.setTabbedPane(workCasesTabPane);
-		areas.get(1).setLayout(new BorderLayout());
-		areas.get(1).add(workCasesTabPane, BorderLayout.CENTER);
+//		workCasesTabPane = new JTabbedPane();
+//		workCases = new WorkCaseTabSet();
+//		workCases.setTabbedPane(workCasesTabPane);
+//		areas.get(1).setLayout(new BorderLayout());
+//		areas.get(1).add(workCasesTabPane, BorderLayout.CENTER);
 
+
+		  processesTabs = new ReactorProcessTabsSet();
+		  
 
 	}
 
@@ -313,7 +322,8 @@ public class ReactorMainFrame extends JFrame {
 		menuProcess.add(miWorkspaceProcess);
 		miWorkspaceProcess.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-
+				NewProcessWizard wizard = new NewProcessWizard();
+				 wizard.setVisible(true);
 			}
 		});
 

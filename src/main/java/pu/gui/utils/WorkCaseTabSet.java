@@ -27,8 +27,7 @@ public class WorkCaseTabSet
 	}
 	
 	public void removeWorkCase(int index)
-	{	
-		
+	{
 		workCases.remove(index);
 		tabbedPane.remove(index);
 	}
