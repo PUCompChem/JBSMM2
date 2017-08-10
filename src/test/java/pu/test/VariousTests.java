@@ -17,7 +17,9 @@ import java.util.Stack;
 
 
 
+
 import pu.reactor.json.PreferencesJsonParser;
+
 
 
 
@@ -30,6 +32,7 @@ import pu.qm.AppSlater;
 import pu.reactor.json.WorkspaceJsonParser;
 import pu.reactor.workspace.Preferences;
 import pu.reactor.workspace.Workspace;
+import ambit2.reactions.reactor.Reactor;
 import ambit2.smarts.SmartsHelper;
 import ambit2.smarts.SmartsManager;
 import ambit2.smarts.SMIRKSTransform;
@@ -164,6 +167,12 @@ public class VariousTests
 		PreferencesJsonParser parser = new PreferencesJsonParser();
 		//Preference preference = parser.loadFromJSON(file);
 		//System.out.println(preference.ToString());
+	}
+	
+	public static void testReactor01() throws Exception
+	{
+		Reactor r = new Reactor();
+		r.initializeReactor(null);
 	}
 
 }
