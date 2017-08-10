@@ -17,7 +17,17 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 
 public class SmartChemTable 
 {
+	
 	List<SmartChemTableField> fields = new ArrayList<SmartChemTableField>();
+	
+	
+	public List<SmartChemTableField> getFields() {
+		return fields;
+	}
+
+	public void setFields(List<SmartChemTableField> fields) {
+		this.fields = fields;
+	}
 	
 	public void addTableRow(List<Object> rowFields)
 	{
@@ -38,12 +48,12 @@ public class SmartChemTable
 				if (o instanceof String)
 				{
 					String smi = (String)o;
-					//TODO 2D paint
+					//TODO 2D paint use CompoundImageTools
 				}
 				else
 					if (o instanceof IAtomContainer)
 					{
-						//TODO
+						//TODO  use CompoundImageTools
 					}
 				break;
 			}
