@@ -1,7 +1,10 @@
 package pu.gui.utils;
 
+import ambit2.base.data.StructureRecord;
+import ambit2.rendering.CompoundImageTools;
 import ambit2.smarts.SmartsHelper;
 import ambit2.ui.Panel2D;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 import javax.swing.*;
@@ -13,7 +16,7 @@ import java.util.ArrayList;
 /**
  * Created by gogo on 21.7.2017 г..
  */
-public class MoleculeDrawing {
+public class MoleculeDrawer {
     ArrayList<Panel2D> p2dList = new ArrayList<Panel2D>();
     public void add2DMolecule(JPanel panel, String smiles) {
         try {
@@ -60,10 +63,18 @@ public class MoleculeDrawing {
 
         });
 
+
         panel.add(p);
       p.setPreferredSize(panel.getSize());
         p.updateUI();
 
+    }
+    public StretchIcon getImageFromSmiles(String smi){
+      ;
+        CompoundImageTools imageTools = new CompoundImageTools();
+       Image image = imageTools.getImage(smi);
+        StretchIcon icon = new StretchIcon(image);
+        return icon;
     }
 
 }

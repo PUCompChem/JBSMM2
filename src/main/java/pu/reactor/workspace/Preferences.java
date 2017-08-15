@@ -5,7 +5,7 @@ import pu.reactor.workspace.gui.PreferencesWindow;
 public class Preferences 
 {
 	public  String reactionDBPath = "./reaction-database.json";
-	public  String startingMaterialsPath = "./starting-metarials.json";
+	public  String startingMaterialsPath = "./starting-materials.txt";
 
 	
 	public PreferencesWindow createPreferencesWindow()

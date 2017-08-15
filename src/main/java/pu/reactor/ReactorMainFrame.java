@@ -10,6 +10,7 @@ import ambit2.ui.Panel2D;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 
+import pu.gui.utils.ChemTable.SmartChemTable;
 import pu.gui.utils.PredefinedArrangements;
 import pu.gui.utils.trees.MoleculeSetTree;
 import pu.gui.utils.trees.ReactionSetTree;
@@ -52,7 +53,7 @@ public class ReactorMainFrame extends JFrame {
 	ArrayList<Panel2D> p2dList = new ArrayList<Panel2D>();
 	
 	PreferencesWindow preferencesWindow = null;
-
+    ActionListener actionListener;
 	// Menu components
 	JMenuBar menuBar;
 
@@ -91,6 +92,7 @@ public class ReactorMainFrame extends JFrame {
 	private JTextArea consoleFieldPanel;
 
 	private ReactorProcessTabsSet processesTabs;
+	private SmartChemTable smartChemTable;
 
 
 	public ReactorMainFrame() throws Exception {
@@ -174,11 +176,16 @@ public class ReactorMainFrame extends JFrame {
 		moleculeTree = new MoleculeSetTree(structureRecords);
 
 		areas.get(2).setLayout(new BorderLayout());
+		smartChemTable = new SmartChemTable(structureRecords);
 
 		bottomCenterTabbedPanel = new JTabbedPane();
 	 	treesTabPane.add("molecules", moleculeTree);
 		bottomCenterTabbedPanel.add("selected molecule",moleculeTree.getMoleculePanel());
+		bottomCenterTabbedPanel.add("SmartChemTable",smartChemTable);
 		areas.get(2).add(bottomCenterTabbedPanel,BorderLayout.CENTER);
+
+
+
 
 		/**
 		 * END setMoleculesTree

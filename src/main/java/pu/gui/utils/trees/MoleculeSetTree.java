@@ -2,7 +2,6 @@ package pu.gui.utils.trees;
 
 import ambit2.base.data.Property;
 import ambit2.base.data.StructureRecord;
-import ambit2.reactions.Reaction;
 import pu.gui.utils.InfoPanel;
 
 import javax.swing.*;
@@ -12,8 +11,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
-import pu.gui.utils.MoleculeDrawing;
-import pu.gui.utils.MoleculeInfoPanel;
+import pu.gui.utils.MoleculeDrawer;
 import pu.gui.utils.MoleculePanel;
 
 import java.awt.*;
@@ -29,7 +27,7 @@ public class MoleculeSetTree extends SetTree
 	private List<StructureRecord> structureRecords = new ArrayList<StructureRecord>();
 	private List<IAtomContainer> molecules = new ArrayList<IAtomContainer>();
 
-	private MoleculeDrawing moleculeDrawer = new MoleculeDrawing();
+	private MoleculeDrawer moleculeDrawer = new MoleculeDrawer();
 	private MoleculePanel moleculePanel = new MoleculePanel();
 
 	private String dbFilePath;
@@ -69,6 +67,7 @@ public class MoleculeSetTree extends SetTree
 		}
 
 		initGUI();
+		
 	}
 	public MoleculePanel getMoleculePanel() {
 		return moleculePanel;

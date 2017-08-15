@@ -14,6 +14,14 @@ import java.io.IOException;
 public class PreferencesWindow extends JFrame 
 {
 
+	public Preferences getPreferences() {
+		return preferences;
+	}
+
+	public void setPreferences(Preferences preferences) {
+		this.preferences = preferences;
+	}
+
 	private Preferences preferences;
 	private String preferencesFilePath = null;
 	
@@ -27,8 +35,16 @@ public class PreferencesWindow extends JFrame
 	JTree tree;
 	JTextField reactionDBPathField;
 	JTextField startingMaterialsDBPathField;
-	
-	JButton applyButton; 
+
+	public JButton getApplyButton() {
+		return applyButton;
+	}
+
+	public void setApplyButton(JButton applyButton) {
+		this.applyButton = applyButton;
+	}
+
+	JButton applyButton;
 	JButton okButton;
 	JButton cancelButton;
 	/*
@@ -147,6 +163,7 @@ public class PreferencesWindow extends JFrame
 	    				 }
 	    			 }
 	    		 }
+
 	    	 }
 
 	     });
