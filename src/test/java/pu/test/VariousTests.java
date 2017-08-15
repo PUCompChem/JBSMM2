@@ -1,5 +1,7 @@
 package pu.test;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -18,7 +20,15 @@ import java.util.Stack;
 
 
 
+
+
+
+import javax.swing.ImageIcon;
+
 import pu.reactor.json.PreferencesJsonParser;
+
+
+
 
 
 
@@ -173,6 +183,8 @@ public class VariousTests
 	{
 		Reactor r = new Reactor();
 		r.initializeReactor(null);
+		
+		//ImageIcon icon = new ImageIcon(new BufferedImage(3,3,3));
 	}
 
 }
