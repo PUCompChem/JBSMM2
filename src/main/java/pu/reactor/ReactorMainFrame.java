@@ -67,6 +67,7 @@ public class ReactorMainFrame extends JFrame {
 	JMenuItem miApplyReaction;
 	JMenuItem miFindAllReactions;
 
+	JMenuItem basicReactor;
 
 	JMenu menuProcess;
 	JMenuItem miWorkspaceProcess;
@@ -93,6 +94,7 @@ public class ReactorMainFrame extends JFrame {
 
 	private ReactorProcessTabsSet processesTabs;
 	private SmartChemTable smartChemTable;
+	private JMenuItem singleReaction;
 
 
 	public ReactorMainFrame() throws Exception {
@@ -325,16 +327,13 @@ public class ReactorMainFrame extends JFrame {
 		menuProcess = new JMenu("Process");
 		menuBar.add(menuProcess);
 
-		miWorkspaceProcess = new JMenuItem("New Process");
+		miWorkspaceProcess = new JMenu("New Process");
 		menuProcess.add(miWorkspaceProcess);
-		miWorkspaceProcess.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				NewProcessWizard wizard = new NewProcessWizard();
-				 wizard.setVisible(true);
-			}
-		});
 
-
+		singleReaction = new JMenuItem("Single Reaction");
+		 basicReactor = new JMenuItem("Basic Reactor");
+		miWorkspaceProcess.add(singleReaction);
+		miWorkspaceProcess.add(basicReactor);
 
 		menuProcess.addSeparator();
 
