@@ -9,4 +9,10 @@ public class SmartChemTableField
 	public String name = null;
 	public Type fieldType = Type.TEXT;
 	public boolean FlagConvertSmilesTo2D = true;
+	
+	public SmartChemTableField(String name, Type fieldType)
+	{
+		this.name = name;
+		this.fieldType = fieldType;
+	}
 }

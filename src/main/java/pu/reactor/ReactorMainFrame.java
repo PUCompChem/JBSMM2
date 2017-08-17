@@ -11,6 +11,7 @@ import ambit2.ui.Panel2D;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 import pu.gui.utils.ChemTable.SmartChemTable;
+import pu.gui.utils.ChemTable.SmartChemTableField;
 import pu.gui.utils.PredefinedArrangements;
 import pu.gui.utils.trees.MoleculeSetTree;
 import pu.gui.utils.trees.ReactionSetTree;
@@ -176,7 +177,30 @@ public class ReactorMainFrame extends JFrame {
 		moleculeTree = new MoleculeSetTree(structureRecords);
 
 		areas.get(2).setLayout(new BorderLayout());
-		smartChemTable = new SmartChemTable(structureRecords);
+		
+		List<SmartChemTableField> fields = new ArrayList<SmartChemTableField>();
+		fields.add(new SmartChemTableField("No", SmartChemTableField.Type.VALUE));
+		fields.add(new SmartChemTableField("Name", SmartChemTableField.Type.TEXT));
+		fields.add(new SmartChemTableField("Structure", SmartChemTableField.Type.STRUCTURE));
+		fields.add(new SmartChemTableField("Str2", SmartChemTableField.Type.STRUCTURE));
+		
+		//smartChemTable = new SmartChemTable(structureRecords, true);
+		smartChemTable = new SmartChemTable(fields);
+		
+		List<Object> rowFields = new ArrayList<Object>();
+		rowFields.add(1);
+		rowFields.add("propane");
+		rowFields.add("CCC");
+		rowFields.add("CCCO");
+		smartChemTable.addTableRow(rowFields);
+		
+		rowFields = new ArrayList<Object>();
+		rowFields.add(2);
+		rowFields.add("pentane");
+		rowFields.add("CCCCC");
+		rowFields.add("CCCCCO");
+		smartChemTable.addTableRow(rowFields);
+		
 
 		bottomCenterTabbedPanel = new JTabbedPane();
 	 	treesTabPane.add("molecules", moleculeTree);
