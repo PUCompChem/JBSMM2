@@ -13,6 +13,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import pu.gui.utils.ChemTable.SmartChemTable;
 import pu.gui.utils.ChemTable.SmartChemTableField;
 import pu.gui.utils.PredefinedArrangements;
+import pu.gui.utils.reactionUtils.ReactionPanel;
 import pu.gui.utils.trees.MoleculeSetTree;
 import pu.gui.utils.trees.ReactionSetTree;
 import pu.gui.utils.WorkCaseTabSet;
@@ -98,9 +99,12 @@ public class ReactorMainFrame extends JFrame {
 	private JMenuItem singleReaction;
 
 
+	ReactionPanel reactionPanel = new ReactionPanel();
 	public ReactorMainFrame() throws Exception {
 		super();
 		initGUI();
+		repaint();
+		smartChemTable.updateUI();
 	}
 	
 	public ReactorMainFrame(String preferencesFilePath) throws Exception {
@@ -134,6 +138,11 @@ public class ReactorMainFrame extends JFrame {
 		//
 		setReactionDB();
 		setStartingMaterialsDB();
+
+
+		areas.get(1).setLayout(new BorderLayout());
+		areas.get(1).add(reactionPanel);
+
 	//	setReactionTree
 		if (reactionDB != null)
 		{
@@ -202,7 +211,8 @@ public class ReactorMainFrame extends JFrame {
 		rowFields.add("CCCCC");
 		rowFields.add("CCCCCO");
 		smartChemTable.addTableRow(rowFields);
-		
+
+		smartChemTable.addStructureRecord(structureRecords);
 
 		bottomCenterTabbedPanel = new JTabbedPane();
 	 	treesTabPane.add("molecules", moleculeTree);

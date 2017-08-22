@@ -1,4 +1,4 @@
-package pu.gui.utils;
+package pu.gui.utils.trees;
 
 import javax.swing.*;
 

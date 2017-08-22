@@ -2,7 +2,6 @@ package pu.gui.utils.trees;
 
 import ambit2.base.data.Property;
 import ambit2.base.data.StructureRecord;
-import pu.gui.utils.InfoPanel;
 
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
@@ -12,7 +11,6 @@ import javax.swing.tree.DefaultTreeModel;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 import pu.gui.utils.MoleculeDrawer;
-import pu.gui.utils.MoleculePanel;
 
 import java.awt.*;
 import java.util.ArrayList;

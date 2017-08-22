@@ -1,12 +1,9 @@
 package pu.gui.utils.trees;
 
-import pu.gui.utils.InfoPanel;
-
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 import java.awt.*;
-import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;

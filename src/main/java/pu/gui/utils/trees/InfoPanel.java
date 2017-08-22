@@ -1,14 +1,15 @@
-package pu.gui.utils;
+package pu.gui.utils.trees;
 
 import javax.swing.*;
 import java.awt.*;
 
 /**
- * Created by gogo on 4.7.2017 г..
+ * Created by gogo on 29.6.2017 г..
  */
-public class MoleculeInfoPanel extends JPanel{
+public class InfoPanel extends JPanel{
+
     private JTextArea textArea;
-    public MoleculeInfoPanel()
+    public InfoPanel()
     {
         initGUI();
     }
@@ -16,7 +17,7 @@ public class MoleculeInfoPanel extends JPanel{
     private void initGUI()
     {
         this.setLayout( new BorderLayout() );
-        this.add( new JLabel( "MoleculeInfo:" ), BorderLayout.NORTH );
+        this.add( new JLabel( " Info:" ), BorderLayout.NORTH );
         textArea = new JTextArea(5, 20);
 
         textArea.setEditable(false);
@@ -24,10 +25,10 @@ public class MoleculeInfoPanel extends JPanel{
         this.add(textArea, BorderLayout.CENTER);
 
     }
-    public void WriteText(String input){
+   public void Write(String input){
         textArea.append(input);
-    }
-    public void ClearText(){
-        textArea.setText(null);
-    }
+   }
+   public void ClearText(){
+       textArea.setText(null);
+   }
 }

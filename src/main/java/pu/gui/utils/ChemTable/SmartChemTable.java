@@ -1,6 +1,9 @@
 package pu.gui.utils.ChemTable;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +11,7 @@ import ambit2.base.data.StructureRecord;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 
+import pu.gui.utils.EventsClass;
 import pu.gui.utils.MoleculeDrawer;
 import pu.gui.utils.StretchIcon;
 import pu.gui.utils.ChemTable.SmartChemTableField.Type;
@@ -29,10 +33,32 @@ public class SmartChemTable extends JPanel
 {
 	private static final long serialVersionUID = 13634655675682345L;
 	
-	
+
 	List<SmartChemTableField> fields = new ArrayList<SmartChemTableField>();
 	MoleculeDrawer drawer = new MoleculeDrawer();
 	DefaultTableModel model = new DefaultTableModel(0,4);
+
+
+	static ComponentListener componentListener = new ComponentListener() {
+	public void componentHidden(ComponentEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void componentMoved(ComponentEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+	public void componentResized(ComponentEvent arg0) {
+		System.out.println(arg0.getComponent().getClass());
+
+	}
+
+	public void componentShown(ComponentEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+};
 
 	JTable table;
 
@@ -59,6 +85,9 @@ public class SmartChemTable extends JPanel
 		table.setRowHeight(200);
 		JScrollPane scrollPane = new JScrollPane( table );
 		add(scrollPane);
+
+
+
 	}
 	
 	public void setFields(List<SmartChemTableField> fields)
@@ -91,8 +120,8 @@ public class SmartChemTable extends JPanel
 			case STRUCTURE:
 				if (o instanceof String)
 				{
-					String smi = (String)o;
-					rowData[i] = drawer.getImageFromSmiles(smi);
+							String smi = (String)o;
+							rowData[i] = drawer.getImageFromSmiles(smi,table);
 				}
 				else
 					if (o instanceof IAtomContainer)
@@ -106,22 +135,18 @@ public class SmartChemTable extends JPanel
 		model.addRow(rowData);
 	}
 
-	private void createWitchStructureRecord(List<StructureRecord> structureRecords) {
+
+	public void addStructureRecord(List<StructureRecord> structureRecords) {
 		String[] columnNames =new String[] {"No.", "Name", "Smiles", "Structure"};
-		Object[][] tableMatrix = new Object[structureRecords.size()][4];
-		for (int i = 0; i < structureRecords.size(); i++)
-		{
-			StructureRecord structureRecord = structureRecords.get(i);
-			tableMatrix[i][0] = structureRecord.getDataEntryID();
-			tableMatrix[i][1] = structureRecord.getFormula();
-			tableMatrix[i][2] = structureRecord.getSmiles();
-			tableMatrix[i][3] = drawer.getImageFromSmiles(structureRecord.getSmiles());
-		}
-		model = new DefaultTableModel(tableMatrix, columnNames);
-		this.setLayout(new BorderLayout());
-
-
-
+ 	for(StructureRecord  str: structureRecords)
+ 	{
+		List<Object> rowFields = new ArrayList<Object>();
+		rowFields.add(str.getDataEntryID());
+		rowFields.add(str.getFormula());
+		rowFields.add(str.getSmiles());
+		rowFields.add(drawer.getImageFromSmiles(str.getSmiles()));
+		this.addTableRow(rowFields);
+ 	}
 	}
 
 

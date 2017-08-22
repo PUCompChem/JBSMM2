@@ -70,10 +70,22 @@ public class MoleculeDrawer {
 
     }
     public StretchIcon getImageFromSmiles(String smi){
-      ;
+
         CompoundImageTools imageTools = new CompoundImageTools();
-       Image image = imageTools.getImage(smi);
+
+        Image image = imageTools.getImage(smi);
+
         StretchIcon icon = new StretchIcon(image);
+        return icon;
+    }
+
+    public StretchIcon getImageFromSmiles(String smi, JTable table){
+
+        CompoundImageTools imageTools = new CompoundImageTools();
+
+        Image image = imageTools.getImage(smi);
+        StretchIcon icon = new StretchIcon(image);
+        table.updateUI();
         return icon;
     }
 
