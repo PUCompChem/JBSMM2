@@ -1,6 +1,10 @@
 package pu.reactor.workspace.gui;
 
+import pu.reactor.workspace.BasicReactorProcess;
+
 import javax.swing.*;
+import java.awt.*;
+import java.lang.reflect.Field;
 
 /**
  * Created by gogo on 27.7.2017 г..
@@ -8,11 +12,21 @@ import javax.swing.*;
 public class BasicReactorProcessPanel extends JPanel{
 
     private String processName;
-    
-    BasicReactorParametersPanel parametersPanel = new BasicReactorParametersPanel();
+    private BasicReactorProcess basicReactorProcess;
+    StructurePanel structurePanel;
+    public BasicReactorProcessPanel(BasicReactorProcess basicReactorProcess)  {
+        this.basicReactorProcess = basicReactorProcess;
+        structurePanel = new StructurePanel(basicReactorProcess);
+            initGUI();
+    }
 
-    public BasicReactorProcessPanel() {
 
+
+    private void initGUI() {
+        setBackground(Color.WHITE);
+        setLayout(new BorderLayout());
+        structurePanel.setPreferredSize(new Dimension(500,300));
+        add(structurePanel,BorderLayout.NORTH);
     }
 
     public String getProcessName() {

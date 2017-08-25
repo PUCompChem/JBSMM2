@@ -1,7 +1,10 @@
-package pu.gui.utils.reactionUtils;
+package pu.reactor.workspace.gui;
 
 import ambit2.base.data.StructureRecord;
+import ambit2.reactions.reactor.Reactor;
 import pu.gui.utils.MoleculeDrawer;
+import pu.reactor.workspace.BasicReactorProcess;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,11 +15,16 @@ import java.awt.*;
 public class StructurePanel extends JPanel {
     JPanel strucutre2dPanel = new JPanel();
     JPanel infoPanel = new JPanel();
-    ParametersPanel parametersPanel = new  ParametersPanel();
+
+    BasicReactorProcess reactorProcess;
+
+   BasicReactorParametersPanel parametersPanel;
 
     MoleculeDrawer drawer = new MoleculeDrawer();
 
-    public StructurePanel() {
+    public StructurePanel(BasicReactorProcess reactorProcess){
+        this.reactorProcess = reactorProcess;
+        parametersPanel = new BasicReactorParametersPanel(this.reactorProcess.getStrategy());
         initGUI();
     }
 

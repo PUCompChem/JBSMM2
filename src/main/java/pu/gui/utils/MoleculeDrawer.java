@@ -83,8 +83,10 @@ public class MoleculeDrawer {
 
         CompoundImageTools imageTools = new CompoundImageTools();
 
+        imageTools.setImageSize(new Dimension(400,300));
         Image image = imageTools.getImage(smi);
         StretchIcon icon = new StretchIcon(image);
+
         table.updateUI();
         return icon;
     }

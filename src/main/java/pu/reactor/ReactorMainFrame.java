@@ -13,13 +13,15 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import pu.gui.utils.ChemTable.SmartChemTable;
 import pu.gui.utils.ChemTable.SmartChemTableField;
 import pu.gui.utils.PredefinedArrangements;
-import pu.gui.utils.reactionUtils.ReactionPanel;
+
 import pu.gui.utils.trees.MoleculeSetTree;
 import pu.gui.utils.trees.ReactionSetTree;
 import pu.gui.utils.WorkCaseTabSet;
 import pu.gui.utils.trees.ReactorProcessTabsSet;
 import pu.io.FileUtilities;
 import pu.reactor.json.PreferencesJsonParser;
+import pu.reactor.workspace.BasicReactorProcess;
+import pu.reactor.workspace.IProcess;
 import pu.reactor.workspace.Preferences;
 import pu.reactor.workspace.gui.BasicReactorProcessPanel;
 import pu.reactor.workspace.gui.NewProcessWizard;
@@ -95,11 +97,15 @@ public class ReactorMainFrame extends JFrame {
 	private JTextArea consoleFieldPanel;
 
 	private ReactorProcessTabsSet processesTabs;
+	private List<IProcess> processes = new ArrayList<IProcess>();
 	private SmartChemTable smartChemTable;
 	private JMenuItem singleReaction;
 
 
-	ReactionPanel reactionPanel = new ReactionPanel();
+
+
+	BasicReactorProcess basicReactorProcess = new BasicReactorProcess();
+	BasicReactorProcessPanel reactionPanel = new BasicReactorProcessPanel(basicReactorProcess);
 	public ReactorMainFrame() throws Exception {
 		super();
 		initGUI();

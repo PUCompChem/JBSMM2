@@ -1,6 +1,9 @@
 package pu.reactor.workspace;
 
-public class Process 
+import javax.swing.*;
+import java.io.File;
+
+public class Process implements IProcess
 {
 	public IProcessNode rootNode = null;
 	
@@ -17,5 +20,35 @@ public class Process
 		
 		sb.append("}" + endLine);
 		return sb.toString();
+	}
+
+	@Override
+	public void loadFromJson(File file) {
+
+	}
+
+	@Override
+	public JPanel getPanel() {
+		return null;
+	}
+
+	@Override
+	public void setPanel(JPanel panel) {
+
+	}
+
+	@Override
+	public void initProcess() {
+
+	}
+
+	@Override
+	public void runProcess() {
+
+	}
+
+	@Override
+	public void runProcessSteps(int nSteps) {
+
 	}
 }
