@@ -25,7 +25,7 @@ public class BasicReactorParametersPanel extends JPanel {
 	JTable table;
 	public BasicReactorParametersPanel(ReactorStrategy strategy) {
 		//this.strategy = strategy;
-		initGUI();
+		initGUI2();
 	}
 
 	private void initGUI() {
@@ -72,7 +72,8 @@ public class BasicReactorParametersPanel extends JPanel {
 
 		model.addTableModelListener(new TableModelListener() {
 
-			public void tableChanged(TableModelEvent e) {
+			public void tableChanged(TableModelEvent e) 
+			{	
 				for (int i = 0; i < strategyFields.length; i++) {
 					Field currentField = strategyFields[i];
 					Type currentType = currentField.getType();
@@ -109,7 +110,86 @@ public class BasicReactorParametersPanel extends JPanel {
 		JScrollPane scrollPane = new JScrollPane(table);
 		add(scrollPane,BorderLayout.CENTER);
 	}
+	
+	private void initGUI2() {
+		setLayout(new BorderLayout());
+		
+		Object[] rowData = new Object[2];
+		rowData[0] = "maxNumOfReactions";
+		rowData[1] = strategy.maxNumOfReactions;
+		model.addRow(rowData);
+		
+		rowData = new Object[2];
+		rowData[0] = "maxLevel";
+		rowData[1] = strategy.maxLevel;
+		model.addRow(rowData);
+		
+		//TODO column 0 to be set non-editable !!!!
+		
+		table  = new JTable(model)
+		{
+			/*
+			public Class getColumnClass(int column) {
+				Type ftype = strategyFields[column].getType();
+				if (ftype.toString() == "boolean"){
+					return Boolean.class;
+				}
+				return Object.class;
+			}
+			*/
+		};
+		
+		model.addTableModelListener(new TableModelListener() {
 
+			public void tableChanged(TableModelEvent e) 
+			{	
+				handleTableChange(e);
+			}
+		});
+		
+		table.setRowHeight(18);
+		JScrollPane scrollPane = new JScrollPane(table);
+		add(scrollPane,BorderLayout.CENTER);
+	}
+	
+	
+	private void handleTableChange(TableModelEvent e)
+	{	
+		if (e.getType() != TableModelEvent.UPDATE)
+			return;
+			
+		int row = e.getFirstRow();
+		int column = e.getColumn();
+		
+		Object value = table.getValueAt(row, column);
+		String parameter = (String) table.getValueAt(row,0);
+		
+		if (parameter.equals("maxNumOfReactions"))
+			strategy.maxNumOfReactions = updateIntegerStrategyParameter(strategy.maxNumOfReactions, value, row);
+		else if (parameter.equals("maxLevel"))
+			strategy.maxLevel =updateIntegerStrategyParameter(strategy.maxLevel, value, row);
+			
+		
+	}
+	
+	private int updateIntegerStrategyParameter(int originalValue, Object valueFromTable, int tableRowNum)
+	{
+		System.out.println(valueFromTable.getClass().getName());
+		
+		if (valueFromTable instanceof Integer)
+			return (Integer) valueFromTable;
+		else
+		{	
+			table.setValueAt(originalValue, tableRowNum, 1);
+			return originalValue;
+		}	
+	}
+	
+	
+	
+	
+	
+	
 
 	private boolean StringToBoolean(String str){
 

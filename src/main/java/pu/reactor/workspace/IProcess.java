@@ -1,6 +1,7 @@
 package pu.reactor.workspace;
 
 import javax.swing.*;
+
 import java.io.File;
 
 /**
@@ -11,7 +12,7 @@ public interface IProcess {
     public void loadFromJson(File file);
     public JPanel getPanel();
     public void setPanel(JPanel panel);
-    public void initProcess();
-    public void runProcess();
+    public void initProcess() throws Exception;
+    public void runProcess() throws Exception;
     public void runProcessSteps(int nSteps);
 }
