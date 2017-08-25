@@ -69,6 +69,8 @@ public class MoleculeDrawer {
         p.updateUI();
 
     }
+    
+    
     public StretchIcon getImageFromSmiles(String smi){
 
         CompoundImageTools imageTools = new CompoundImageTools();
@@ -78,17 +80,29 @@ public class MoleculeDrawer {
         StretchIcon icon = new StretchIcon(image);
         return icon;
     }
+    
+    public ImageIcon getImageFromSmiles1(String smi){
+
+        CompoundImageTools imageTools = new CompoundImageTools();
+
+        Image image = imageTools.getImage(smi);
+
+        ImageIcon icon = new ImageIcon(image);
+        return icon;
+    }
 
     public StretchIcon getImageFromSmiles(String smi, JTable table){
 
         CompoundImageTools imageTools = new CompoundImageTools();
 
-        imageTools.setImageSize(new Dimension(400,300));
+        imageTools.setImageSize(new Dimension(700,700));
         Image image = imageTools.getImage(smi);
         StretchIcon icon = new StretchIcon(image);
 
         table.updateUI();
         return icon;
     }
+    
+    
 
 }

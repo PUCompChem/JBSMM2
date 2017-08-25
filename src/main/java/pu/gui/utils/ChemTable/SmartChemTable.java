@@ -121,7 +121,8 @@ public class SmartChemTable extends JPanel
 				if (o instanceof String)
 				{
 							String smi = (String)o;
-							rowData[i] = drawer.getImageFromSmiles(smi,table);
+							//rowData[i] = drawer.getImageFromSmiles(smi,table);
+							rowData[i] = drawer.getImageFromSmiles1(smi);
 				}
 				else
 					if (o instanceof IAtomContainer)
