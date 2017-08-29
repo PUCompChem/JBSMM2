@@ -15,6 +15,11 @@ import java.awt.*;
 public class StructurePanel extends JPanel {
     JPanel strucutre2dPanel = new JPanel();
     JPanel infoPanel = new JPanel();
+    private StructureRecord currentStrucutre = new StructureRecord();
+
+
+
+
 
     BasicReactorProcess reactorProcess;
 
@@ -31,17 +36,12 @@ public class StructurePanel extends JPanel {
 
     private void initGUI() {
         this.setLayout(new GridBagLayout());
+
         GridBagConstraints gc = new GridBagConstraints();
         strucutre2dPanel.setLayout(new BorderLayout());
-        drawer.add2DMolecule(strucutre2dPanel,"CCCC");
+        drawer.add2DMolecule(strucutre2dPanel,currentStrucutre.getSmiles());
 
         cellsDraw(gc);
-
-
-
-
-
-
 
     }
 
@@ -73,6 +73,7 @@ public class StructurePanel extends JPanel {
         this.add(col3, gc);
 
 
+
         gc.fill = GridBagConstraints.BOTH;
         gc.gridx=0;
         gc.gridy=2;
@@ -99,5 +100,7 @@ public class StructurePanel extends JPanel {
         parametersPanel.setOpaque(true);
 
         this.add(parametersPanel, gc);
+
     }
+
 }

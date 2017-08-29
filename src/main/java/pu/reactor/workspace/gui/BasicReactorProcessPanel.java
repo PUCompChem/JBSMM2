@@ -1,5 +1,6 @@
 package pu.reactor.workspace.gui;
 
+import pu.gui.utils.structTable.StructureTable;
 import pu.reactor.workspace.BasicReactorProcess;
 
 import javax.swing.*;
@@ -13,7 +14,8 @@ public class BasicReactorProcessPanel extends JPanel{
 
     private String processName;
     private BasicReactorProcess basicReactorProcess;
-    StructurePanel structurePanel;
+    private StructurePanel structurePanel;
+    private StructureTable structureTable = new StructureTable(5);
     public BasicReactorProcessPanel(BasicReactorProcess basicReactorProcess)  {
         this.basicReactorProcess = basicReactorProcess;
         structurePanel = new StructurePanel(basicReactorProcess);
@@ -23,10 +25,12 @@ public class BasicReactorProcessPanel extends JPanel{
 
 
     private void initGUI() {
-        setBackground(Color.WHITE);
+
         setLayout(new BorderLayout());
         structurePanel.setPreferredSize(new Dimension(500,300));
+
         add(structurePanel,BorderLayout.NORTH);
+        add(structureTable,BorderLayout.CENTER);
     }
 
     public String getProcessName() {

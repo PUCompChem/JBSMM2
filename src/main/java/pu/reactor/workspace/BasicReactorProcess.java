@@ -1,5 +1,6 @@
 package pu.reactor.workspace;
 
+import ambit2.base.data.StructureRecord;
 import ambit2.reactions.ReactionDataBase;
 import ambit2.reactions.reactor.Reactor;
 import ambit2.reactions.reactor.ReactorNode;
@@ -23,6 +24,8 @@ public class BasicReactorProcess implements IProcess {
     ReactorStrategy strategy =  new ReactorStrategy();
     ReactionDataBase reactDB = null;
     IAtomContainer target = null;
+
+    StructureRecord currentStructure = new StructureRecord();
     
     public IAtomContainer getTarget() {
 		return target;

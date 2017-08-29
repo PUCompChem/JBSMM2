@@ -1,7 +1,6 @@
-package pu.gui.utils.ChemTable;
+package pu.gui.utils.chemTable;
 
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.util.ArrayList;
@@ -11,10 +10,9 @@ import ambit2.base.data.StructureRecord;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 
-import pu.gui.utils.EventsClass;
 import pu.gui.utils.MoleculeDrawer;
 import pu.gui.utils.StretchIcon;
-import pu.gui.utils.ChemTable.SmartChemTableField.Type;
+import pu.gui.utils.chemTable.SmartChemTableField.Type;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

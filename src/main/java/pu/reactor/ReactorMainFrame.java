@@ -2,16 +2,12 @@ package pu.reactor;
 
 import ambit2.base.data.Property;
 import ambit2.base.data.StructureRecord;
-import ambit2.reactions.Reaction;
 import ambit2.reactions.ReactionDataBase;
 import ambit2.reactions.retrosynth.StartingMaterialsDataBase;
-import ambit2.smarts.SmartsHelper;
 import ambit2.ui.Panel2D;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
-
-import pu.gui.utils.ChemTable.SmartChemTable;
-import pu.gui.utils.ChemTable.SmartChemTableField;
+import pu.gui.utils.chemTable.SmartChemTable;
+import pu.gui.utils.chemTable.SmartChemTableField;
 import pu.gui.utils.PredefinedArrangements;
 
 import pu.gui.utils.trees.MoleculeSetTree;
@@ -24,14 +20,10 @@ import pu.reactor.workspace.BasicReactorProcess;
 import pu.reactor.workspace.IProcess;
 import pu.reactor.workspace.Preferences;
 import pu.reactor.workspace.gui.BasicReactorProcessPanel;
-import pu.reactor.workspace.gui.NewProcessWizard;
 import pu.reactor.workspace.gui.PreferencesWindow;
 import pu.reactor.workspace.gui.ReactionToolBar;
 
 import javax.swing.*;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.DefaultMutableTreeNode;
 
 import java.awt.*;
 import java.awt.event.*;
