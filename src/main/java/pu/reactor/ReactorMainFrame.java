@@ -20,6 +20,7 @@ import pu.reactor.workspace.BasicReactorProcess;
 import pu.reactor.workspace.IProcess;
 import pu.reactor.workspace.Preferences;
 import pu.reactor.workspace.gui.BasicReactorProcessPanel;
+import pu.reactor.workspace.gui.NewProcessWizard;
 import pu.reactor.workspace.gui.PreferencesWindow;
 import pu.reactor.workspace.gui.ReactionToolBar;
 
@@ -47,7 +48,7 @@ public class ReactorMainFrame extends JFrame {
 	ReactionSetTree reactionSetTree;
 	MoleculeSetTree moleculeTree;
 	ArrayList<Panel2D> p2dList = new ArrayList<Panel2D>();
-	
+
 	PreferencesWindow preferencesWindow = null;
     ActionListener actionListener;
 	// Menu components
@@ -69,16 +70,16 @@ public class ReactorMainFrame extends JFrame {
 	JMenuItem miWorkspaceProcess;
 
 
-	JMenu menuSettings; 
+	JMenu menuSettings;
 	JMenuItem menuPreferences;
-	
+
 	private JMenuItem miWorkspaceSettings;
 	private JMenu menuProjectSettings;
 	private JMenuItem miProjectSettings;
 	private JMenuItem miProcessSettings;
 
 	private ReactionToolBar reactionToolBar;
-	
+
 	//Data, containers
 	String preferencesFilePath = null;
 	Preferences preferences = null;
@@ -98,21 +99,26 @@ public class ReactorMainFrame extends JFrame {
 
 	BasicReactorProcess basicReactorProcess = new BasicReactorProcess();
 	BasicReactorProcessPanel reactionPanel = new BasicReactorProcessPanel(basicReactorProcess);
+	private NewProcessWizard newProcessWizard;
+	private JMenuItem miRun;
+	private JMenuItem miStop;
+	private JMenuItem miNextStep;
+
 	public ReactorMainFrame() throws Exception {
 		super();
 		initGUI();
 		repaint();
 		smartChemTable.updateUI();
 	}
-	
+
 	public ReactorMainFrame(String preferencesFilePath) throws Exception {
 		super();
 		this.preferencesFilePath = preferencesFilePath;
 		initGUI();
 	}
 
-	private void initGUI() throws Exception 
-	{	
+	private void initGUI() throws Exception
+	{
 		setPreferences();
 		preferencesWindow = new PreferencesWindow(preferences, preferencesFilePath);
 		preferencesWindow.setSize(new Dimension(1000,800));
@@ -186,23 +192,23 @@ public class ReactorMainFrame extends JFrame {
 		moleculeTree = new MoleculeSetTree(structureRecords);
 
 		areas.get(2).setLayout(new BorderLayout());
-		
+
 		List<SmartChemTableField> fields = new ArrayList<SmartChemTableField>();
 		fields.add(new SmartChemTableField("No", SmartChemTableField.Type.VALUE));
 		fields.add(new SmartChemTableField("Name", SmartChemTableField.Type.TEXT));
 		fields.add(new SmartChemTableField("Structure", SmartChemTableField.Type.STRUCTURE));
 		fields.add(new SmartChemTableField("Str2", SmartChemTableField.Type.STRUCTURE));
-		
+
 		//smartChemTable = new SmartChemTable(structureRecords, true);
 		smartChemTable = new SmartChemTable(fields);
-		
+
 		List<Object> rowFields = new ArrayList<Object>();
 		rowFields.add(1);
 		rowFields.add("propane");
 		rowFields.add("CCC");
 		rowFields.add("CCCO");
 		smartChemTable.addTableRow(rowFields);
-		
+
 		rowFields = new ArrayList<Object>();
 		rowFields.add(2);
 		rowFields.add("pentane");
@@ -244,7 +250,7 @@ public class ReactorMainFrame extends JFrame {
 
 
 		  processesTabs = new ReactorProcessTabsSet();
-		  
+
 
 	}
 
@@ -253,20 +259,20 @@ public class ReactorMainFrame extends JFrame {
 	void setPreferences() throws Exception
 	{
 		if (preferencesFilePath == null)
-		{	
+		{
 			preferences = new Preferences();
 			return;
 		}
-		
+
 		PreferencesJsonParser prefPar = new PreferencesJsonParser();
 		preferences = prefPar.loadFromJSON(new File(preferencesFilePath));
-		
+
 		if (!prefPar.getErrors().isEmpty())
-			throw new Exception("Preferences configuration errors:\n" 
+			throw new Exception("Preferences configuration errors:\n"
 					+ prefPar.getAllErrorsAsString());
-		
+
 	}
-	
+
 	void setReactionDB()
 	{
 		try
@@ -274,7 +280,7 @@ public class ReactorMainFrame extends JFrame {
 			reactionDB = new  ReactionDataBase(new File(preferences.reactionDBPath));
 		}
 		catch (Exception x)
-		{	
+		{
 			System.out.println(x.getMessage());
 		}
 	}
@@ -289,7 +295,7 @@ public class ReactorMainFrame extends JFrame {
 		}
 	}
 
-	private void createMenus() { 
+	private void createMenus() {
 		menuBar = new JMenuBar();
 
 		// menu File -----------------------
@@ -354,6 +360,32 @@ public class ReactorMainFrame extends JFrame {
 			}
 		});
 
+		miRun = new JMenuItem("Run");
+		menuReact.add(miRun);
+		miRun.setMnemonic(KeyEvent.VK_F5);
+		miRun.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				// TODO
+			}
+		});
+
+		miStop = new JMenuItem("Stop");
+		menuReact.add(miStop);
+		miStop.setMnemonic(KeyEvent.VK_F6);
+		miStop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				// TODO
+			}
+		});
+
+		miNextStep = new JMenuItem("Next Step");
+		menuReact.add(miNextStep);
+		miNextStep.setMnemonic(KeyEvent.VK_F7);
+		miNextStep.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				// TODO
+			}
+		});
 
 		//menu Process
 		menuProcess = new JMenu("Process");
@@ -363,6 +395,15 @@ public class ReactorMainFrame extends JFrame {
 		menuProcess.add(miWorkspaceProcess);
 
 		singleReaction = new JMenuItem("Single Reaction");
+		singleReaction.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+ 				newProcessWizard = new NewProcessWizard();
+
+			}
+		});
+
+
 		 basicReactor = new JMenuItem("Basic Reactor");
 		miWorkspaceProcess.add(singleReaction);
 		miWorkspaceProcess.add(basicReactor);
