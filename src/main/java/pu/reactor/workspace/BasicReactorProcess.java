@@ -17,13 +17,15 @@ import java.util.List;
 /**
  * Created by gogo on 22.8.2017 г..
  */
-public class BasicReactorProcess implements IProcess {
-    BasicReactorProcessPanel panel = new BasicReactorProcessPanel(this);
-
-    Reactor reactor = new Reactor();
-    ReactorStrategy strategy =  new ReactorStrategy();
-    ReactionDataBase reactDB = null;
-    IAtomContainer target = null;
+public class BasicReactorProcess implements IProcess 
+{
+    public BasicReactorProcessPanel panel = new BasicReactorProcessPanel(this);
+    public String name = "new process";
+    
+    public Reactor reactor = new Reactor();
+    public ReactorStrategy strategy =  new ReactorStrategy();
+    public ReactionDataBase reactDB = null;
+    public IAtomContainer target = null;
 
     StructureRecord currentStructure = new StructureRecord();
     
@@ -109,4 +111,10 @@ public class BasicReactorProcess implements IProcess {
 			
 		}
     }
+
+	@Override
+	public JPanel getParametersPanel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

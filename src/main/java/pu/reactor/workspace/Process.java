@@ -1,6 +1,7 @@
 package pu.reactor.workspace;
 
 import javax.swing.*;
+
 import java.io.File;
 
 public class Process implements IProcess
@@ -50,5 +51,11 @@ public class Process implements IProcess
 	@Override
 	public void runProcessSteps(int nSteps) {
 
+	}
+
+	@Override
+	public JPanel getParametersPanel() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

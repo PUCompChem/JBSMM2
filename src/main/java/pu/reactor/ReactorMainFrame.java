@@ -87,16 +87,15 @@ public class ReactorMainFrame extends JFrame {
 	private JTabbedPane bottomCenterTabbedPanel;
 	private JTextArea consoleFieldPanel;
 
-	private ReactorProcessTabsSet processesTabs;
-	private List<IProcess> processes = new ArrayList<IProcess>();
+	private ReactorProcessTabsSet processTabs = new ReactorProcessTabsSet();
+	
 	private SmartChemTable smartChemTable;
 	private JMenuItem singleReaction;
 
 
 
 
-	BasicReactorProcess basicReactorProcess = new BasicReactorProcess();
-	BasicReactorProcessPanel reactionPanel = new BasicReactorProcessPanel(basicReactorProcess);
+	
 	private NewBasicReactorWizard newProcessWizard;
 	private JMenuItem miRun;
 	private JMenuItem miStop;
@@ -143,7 +142,12 @@ public class ReactorMainFrame extends JFrame {
 
 
 		areas.get(1).setLayout(new BorderLayout());
-		areas.get(1).add(reactionPanel);
+		areas.get(1).add(processTabs);
+		
+		
+		BasicReactorProcess basicReactorProcess = new BasicReactorProcess();
+		processTabs.addProcess(basicReactorProcess);
+		
 
 	//	setReactionTree
 		if (reactionDB != null)
@@ -168,7 +172,7 @@ public class ReactorMainFrame extends JFrame {
 		List<String> smiles = new ArrayList<String>();
 		List<String> molClass = new ArrayList<String>();
 
-		 FileUtilities f = new FileUtilities();
+		FileUtilities f = new FileUtilities();
 
 		smiles = f.readSmilesSetFromFile(new File(preferences.startingMaterialsPath));
 		if(smiles == null){
@@ -247,7 +251,7 @@ public class ReactorMainFrame extends JFrame {
 //		areas.get(1).add(workCasesTabPane, BorderLayout.CENTER);
 
 
-		  processesTabs = new ReactorProcessTabsSet();
+		 //processTabs = new ReactorProcessTabsSet();
 
 
 	}
@@ -402,7 +406,7 @@ public class ReactorMainFrame extends JFrame {
 		basicReactor.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
- 				newProcessWizard = new NewBasicReactorWizard();
+ 				newProcessWizard = new NewBasicReactorWizard(processTabs);
 			}
 		});
 		
@@ -445,7 +449,8 @@ public class ReactorMainFrame extends JFrame {
 				
 			}
 		});
-	menuSettings.addSeparator();
+		
+		menuSettings.addSeparator();
 		
 		menuPreferences = new JMenuItem("Preferences");
 		menuSettings.add(menuPreferences);

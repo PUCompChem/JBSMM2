@@ -10,14 +10,15 @@ import java.lang.reflect.Field;
 /**
  * Created by gogo on 27.7.2017 г..
  */
-public class BasicReactorProcessPanel extends JPanel{
-
-    private String processName;
+public class BasicReactorProcessPanel extends JPanel
+{
+   
     private BasicReactorProcess basicReactorProcess;
     private StructurePanel structurePanel;
     private StructureTable structureTable = new StructureTable(5);
+    
     public BasicReactorProcessPanel(BasicReactorProcess basicReactorProcess)  {
-        this.basicReactorProcess = basicReactorProcess;
+        this.setBasicReactorProcess(basicReactorProcess);
         structurePanel = new StructurePanel(basicReactorProcess);
             initGUI();
     }
@@ -33,12 +34,12 @@ public class BasicReactorProcessPanel extends JPanel{
         add(structureTable,BorderLayout.CENTER);
     }
 
-    public String getProcessName() {
-        return processName;
-    }
+	public BasicReactorProcess getBasicReactorProcess() {
+		return basicReactorProcess;
+	}
 
-    public void setProcessName(String processName) {
-        this.processName = processName;
-    }
+	public void setBasicReactorProcess(BasicReactorProcess basicReactorProcess) {
+		this.basicReactorProcess = basicReactorProcess;
+	}
 
 }
