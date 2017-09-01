@@ -362,7 +362,8 @@ public class ReactorMainFrame extends JFrame {
 
 		miRun = new JMenuItem("Run");
 		menuReact.add(miRun);
-		miRun.setMnemonic(KeyEvent.VK_F5);
+		miRun.setMnemonic('R');
+		miRun.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, ActionEvent.CTRL_MASK));
 		miRun.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				// TODO
@@ -371,7 +372,8 @@ public class ReactorMainFrame extends JFrame {
 
 		miStop = new JMenuItem("Stop");
 		menuReact.add(miStop);
-		miStop.setMnemonic(KeyEvent.VK_F6);
+		miStop.setMnemonic('S');
+		miStop.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F6, ActionEvent.CTRL_MASK));
 		miStop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				// TODO
@@ -380,7 +382,8 @@ public class ReactorMainFrame extends JFrame {
 
 		miNextStep = new JMenuItem("Next Step");
 		menuReact.add(miNextStep);
-		miNextStep.setMnemonic(KeyEvent.VK_F7);
+		miNextStep.setMnemonic('N');
+		miNextStep.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F7, ActionEvent.CTRL_MASK));
 		miNextStep.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				// TODO
@@ -395,16 +398,17 @@ public class ReactorMainFrame extends JFrame {
 		menuProcess.add(miWorkspaceProcess);
 
 		singleReaction = new JMenuItem("Single Reaction");
-		singleReaction.addActionListener(new ActionListener() {
+		
+
+		basicReactor = new JMenuItem("Basic Reactor");
+		basicReactor.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
  				newProcessWizard = new NewProcessWizard();
-
 			}
 		});
-
-
-		 basicReactor = new JMenuItem("Basic Reactor");
+		
+		
 		miWorkspaceProcess.add(singleReaction);
 		miWorkspaceProcess.add(basicReactor);
 
