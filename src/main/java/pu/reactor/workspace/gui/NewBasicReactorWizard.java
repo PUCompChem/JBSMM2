@@ -12,7 +12,7 @@ import java.util.Objects;
 /**
  * Created by gogo on 28.7.2017 г..
  */
-public class NewProcessWizard extends JFrame{
+public class NewBasicReactorWizard extends JFrame{
 	private JPanel stageCards;
 	private JPanel firstStepPanel;
 	private JPanel seconStepPanel = new JPanel();
@@ -22,7 +22,7 @@ public class NewProcessWizard extends JFrame{
 	private   JButton pathButton;
 	private JPanel buttonsPanel = new JPanel(new FlowLayout());
 	CardLayout cardLayout =  new CardLayout();
-	public NewProcessWizard() {
+	public NewBasicReactorWizard() {
 		//this.setLayout(new BorderLayout());
 		initGUI();
 		setSize(new Dimension(500,600));

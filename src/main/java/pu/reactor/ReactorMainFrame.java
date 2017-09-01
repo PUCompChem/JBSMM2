@@ -20,7 +20,7 @@ import pu.reactor.workspace.BasicReactorProcess;
 import pu.reactor.workspace.IProcess;
 import pu.reactor.workspace.Preferences;
 import pu.reactor.workspace.gui.BasicReactorProcessPanel;
-import pu.reactor.workspace.gui.NewProcessWizard;
+import pu.reactor.workspace.gui.NewBasicReactorWizard;
 import pu.reactor.workspace.gui.PreferencesWindow;
 import pu.reactor.workspace.gui.ReactionToolBar;
 
@@ -99,7 +99,7 @@ public class ReactorMainFrame extends JFrame {
 
 	BasicReactorProcess basicReactorProcess = new BasicReactorProcess();
 	BasicReactorProcessPanel reactionPanel = new BasicReactorProcessPanel(basicReactorProcess);
-	private NewProcessWizard newProcessWizard;
+	private NewBasicReactorWizard newProcessWizard;
 	private JMenuItem miRun;
 	private JMenuItem miStop;
 	private JMenuItem miNextStep;
@@ -404,7 +404,7 @@ public class ReactorMainFrame extends JFrame {
 		basicReactor.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
- 				newProcessWizard = new NewProcessWizard();
+ 				newProcessWizard = new NewBasicReactorWizard();
 			}
 		});
 		
