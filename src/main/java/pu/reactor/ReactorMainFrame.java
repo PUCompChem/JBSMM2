@@ -5,17 +5,17 @@ import ambit2.base.data.StructureRecord;
 import ambit2.reactions.ReactionDataBase;
 import ambit2.reactions.retrosynth.StartingMaterialsDataBase;
 import ambit2.ui.Panel2D;
-
 import pu.gui.utils.chemTable.SmartChemTable;
 import pu.gui.utils.chemTable.SmartChemTableField;
-import pu.gui.utils.PredefinedArrangements;
 
 import pu.gui.utils.trees.MoleculeSetTree;
 import pu.gui.utils.trees.ReactionSetTree;
+import pu.gui.utils.PredefinedArrangements;
 import pu.gui.utils.WorkCaseTabSet;
 import pu.gui.utils.trees.ReactorProcessTabsSet;
 import pu.io.FileUtilities;
 import pu.reactor.json.PreferencesJsonParser;
+
 import pu.reactor.workspace.BasicReactorProcess;
 import pu.reactor.workspace.IProcess;
 import pu.reactor.workspace.Preferences;
