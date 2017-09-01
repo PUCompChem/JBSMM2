@@ -24,6 +24,9 @@ public class NewBasicReactorWizard extends JFrame
 	private JButton previousButton;
 	private JButton nextButtonSet;
 	private JButton pathButton;
+	JTextField smilesField;
+	JTextField processNameField;
+	
 	private JPanel buttonsPanel = new JPanel(new FlowLayout());
 	CardLayout cardLayout =  new CardLayout();
 	private ReactorProcessTabsSet processTabs = null;
@@ -72,16 +75,16 @@ public class NewBasicReactorWizard extends JFrame
 
 		JLabel smilesInputLabel = new JLabel("Smiles:");
 		smilesInputLabel.setBorder(new EmptyBorder(0, 0, 0, 45));
-		JTextField smilesField = new JTextField(30);
+		smilesField = new JTextField(30);
 		firstStepPanel.add(smilesInputLabel, BorderLayout.WEST);
 		firstStepPanel.add(smilesField);
 
 
 		JLabel processNameLabel = new JLabel("Process Name:");
-		JTextField ProcessNameField = new JTextField(30);
-		ProcessNameField.setText("New Process");
+		processNameField = new JTextField(30);
+		processNameField.setText("New Process");
 		firstStepPanel.add( processNameLabel );
-		firstStepPanel.add(ProcessNameField );
+		firstStepPanel.add(processNameField );
 
 		JLabel loadStrategyLabel = new JLabel("Strategy Path:");
 		loadStrategyLabel.setBorder(new EmptyBorder(0, 0, 0, 7));
@@ -115,7 +118,7 @@ public class NewBasicReactorWizard extends JFrame
 			public void actionPerformed(ActionEvent e) {
 				try{
 					BasicReactorProcess basicReactorProcess = new BasicReactorProcess();
-					basicReactorProcess.name = "---new ";
+					basicReactorProcess.name = processNameField.getText();
 					processTabs.addProcess(basicReactorProcess);
 				}	
 				catch (Exception exp)
