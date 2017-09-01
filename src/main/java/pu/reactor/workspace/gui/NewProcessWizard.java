@@ -19,19 +19,22 @@ public class NewProcessWizard extends JFrame{
     private JButton finishButton;
     private JButton previousButton;
     private JButton nextButtonSet;
-
+    private   JButton pathButton;
     private JPanel buttonsPanel = new JPanel(new FlowLayout());
     CardLayout cardLayout =  new CardLayout();
     public NewProcessWizard() {
-        this.setLayout(new BorderLayout());
+        //this.setLayout(new BorderLayout());
         initGUI();
         setSize(new Dimension(500,600));
+
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     private void initGUI() {
 
-
+        this.setResizable(false);
+        this.setSize(new Dimension(320,50));
+        this.revalidate();
         this.add(buttonsPanel,BorderLayout.SOUTH);
         //Set StageCards
 
@@ -55,10 +58,13 @@ private void FirstStepPanelSet(){
         FlowLayout flowLayout = new FlowLayout();
         flowLayout.setAlignment(3);
         firstStepPanel = new JPanel(flowLayout);
-        firstStepPanel.setBorder(new EmptyBorder(50, 10, 10, 10));
+    firstStepPanel.setSize(new Dimension(100,100));
+
+    firstStepPanel.setBorder(new EmptyBorder(50, 10, 10, 0));
 
 
     JLabel smilesInputLabel = new JLabel("Smiles:");
+    smilesInputLabel.setBorder(new EmptyBorder(0, 0, 0, 45));
     JTextField smilesField = new JTextField(30);
     firstStepPanel.add(smilesInputLabel, BorderLayout.WEST);
     firstStepPanel.add(smilesField);
@@ -66,13 +72,25 @@ private void FirstStepPanelSet(){
 
     JLabel processNameLabel = new JLabel("Process Name:");
     JTextField ProcessNameField = new JTextField(30);
+    ProcessNameField.setText("New Process");
     firstStepPanel.add( processNameLabel );
     firstStepPanel.add(ProcessNameField );
 
     JLabel loadStrategyLabel = new JLabel("Strategy Path:");
+    loadStrategyLabel.setBorder(new EmptyBorder(0, 0, 0, 7));
+    pathButton = new JButton("File...");
+    pathButton.setSize(10,70);
     JTextField loadStrategyField = new JTextField(30);
     firstStepPanel.add( loadStrategyLabel );
+
     firstStepPanel.add( loadStrategyField );
+    firstStepPanel.add(pathButton);
+
+    pathButton.addActionListener(new ActionListener() {
+        public  void actionPerformed(ActionEvent e) {
+            loadStrategyField.setText(SetFileChooser());
+        }
+    } );
 }
     private void SecondStepPanelSet(){
         seconStepPanel = new JPanel();
@@ -112,5 +130,17 @@ private void FirstStepPanelSet(){
 
             }
         } );
+    }
+
+    public String SetFileChooser(){
+        JFileChooser fc = new JFileChooser();
+        fc.setCurrentDirectory(new java.io.File("D:"));
+        fc.setDialogTitle("File Chooser");
+        fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fc.setVisible(true);
+        if (fc.showOpenDialog(pathButton) == JFileChooser.APPROVE_OPTION) {
+            return fc.getSelectedFile().getAbsolutePath();
+        }
+        else return "";
     }
 }
