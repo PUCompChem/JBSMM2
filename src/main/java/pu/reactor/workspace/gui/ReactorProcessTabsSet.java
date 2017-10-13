@@ -18,11 +18,15 @@ public class ReactorProcessTabsSet extends JTabbedPane
 	
 	public void addProcess(IProcess process)
 	{
+		processes.add(process);
+		
 		if (process instanceof BasicReactorProcess)
 		{
 			BasicReactorProcess brp = (BasicReactorProcess) process;
 			this.add(brp.name, brp.panel);
 		}
+		
+		//TODO
 	}
 	
 	/*	

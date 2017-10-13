@@ -41,8 +41,6 @@ public class ReactorMainFrame extends JFrame {
 	ArrayList<JSplitPane> splitter = new ArrayList<JSplitPane>();
 
 	// GUI Components and helper variables
-	WorkCaseTabSet workCases; // Work cases - all open(active) objects
-	JTabbedPane workCasesTabPane;
 	ReactionSetTree reactionSetTree;
 	MoleculeSetTree moleculeTree;
 	ArrayList<Panel2D> p2dList = new ArrayList<Panel2D>();
