@@ -3,14 +3,12 @@ package pu.reactor.workspace.gui;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import pu.gui.utils.ButtonTabComponent;
 import pu.reactor.workspace.BasicReactorProcess;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.Objects;
 
 /**
  * Created by gogo on 28.7.2017 г..
@@ -20,7 +18,7 @@ public class NewBasicReactorWizard extends JFrame
 	private JPanel stageCards;
 	private JPanel firstStepPanel;
 	private JPanel seconStepPanel = new JPanel();
-	private JButton finishButton;
+	private JButton applyButton;
 	private JButton previousButton;
 	private JButton nextButtonSet;
 	private JButton pathButton;
@@ -48,11 +46,10 @@ public class NewBasicReactorWizard extends JFrame
 		this.add(buttonsPanel,BorderLayout.SOUTH);
 		//Set StageCards
 
-		PreviousButtonSet();
-		NextButtonSet();
-		FinishButtonSet();
+
+		ApplyButtonSet();
 		FirstStepPanelSet();
-		SecondStepPanelSet();
+		
 
 		stageCards = new JPanel(cardLayout);
 
@@ -111,15 +108,18 @@ public class NewBasicReactorWizard extends JFrame
 
 
 
-	public void FinishButtonSet(){
-		finishButton = new JButton("Finish");
-		buttonsPanel.add(finishButton);
-		finishButton.addActionListener(new ActionListener() {
+	public void ApplyButtonSet(){
+		applyButton = new JButton("Apply");
+		buttonsPanel.add(applyButton);
+		applyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
 					BasicReactorProcess basicReactorProcess = new BasicReactorProcess();
 					basicReactorProcess.name = processNameField.getText();
 					processTabs.addProcess(basicReactorProcess);
+					int currentPosition = processTabs.getTabCount()-1;
+					processTabs.setTabComponentAt(currentPosition,
+							new ButtonTabComponent(processTabs));
 				}	
 				catch (Exception exp)
 				{}

@@ -86,6 +86,7 @@ public class ReactorMainFrame extends JFrame {
 	private JTextArea consoleFieldPanel;
 
 	private ReactorProcessTabsSet processTabs = new ReactorProcessTabsSet();
+
 	
 	private SmartChemTable smartChemTable;
 	private JMenuItem singleReaction;
@@ -140,8 +141,10 @@ public class ReactorMainFrame extends JFrame {
 
 
 		areas.get(1).setLayout(new BorderLayout());
+
+		processTabs.setTabLayoutPolicy(JTabbedPane.WRAP_TAB_LAYOUT);
 		areas.get(1).add(processTabs);
-		
+
 		
 		BasicReactorProcess basicReactorProcess = new BasicReactorProcess();
 		processTabs.addProcess(basicReactorProcess);
