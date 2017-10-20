@@ -154,7 +154,7 @@ public class ReactorMainFrame extends JFrame {
 		basicReactorProcess.name = "Process 1";
 		basicReactorProcess.createPanel();
 		processTabs.addProcess(basicReactorProcess);
-		
+		*/
 
 	//	setReactionTree
 		if (reactionDB != null)
