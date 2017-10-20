@@ -20,8 +20,8 @@ public class NewBasicReactorWizard extends JFrame
 	private JPanel firstStepPanel;
 	private JPanel seconStepPanel = new JPanel();
 	private JButton applyButton;
-	private JButton previousButton;
-	private JButton nextButtonSet;
+	//private JButton previousButton;
+	//private JButton nextButtonSet;
 	private JButton pathButton;
 	JTextField smilesField;
 	JTextField processNameField;
@@ -74,7 +74,7 @@ public class NewBasicReactorWizard extends JFrame
 		firstStepPanel.setBorder(new EmptyBorder(50, 10, 10, 0));
 
 
-		JLabel smilesInputLabel = new JLabel("Smiles:");
+		JLabel smilesInputLabel = new JLabel("Molecule (Smiles/InChI):");
 		smilesInputLabel.setBorder(new EmptyBorder(0, 0, 0, 45));
 		smilesField = new JTextField(30);
 		firstStepPanel.add(smilesInputLabel, BorderLayout.WEST);
@@ -103,17 +103,20 @@ public class NewBasicReactorWizard extends JFrame
 			}
 		} );
 	}
+	
+	/*
 	private void SecondStepPanelSet(){
 		seconStepPanel = new JPanel();
 		JLabel label = new JLabel ("Advanced Features");
 		seconStepPanel.add(label);
 
 	}
+	*/
 
 
 
 	public void ApplyButtonSet(){
-		applyButton = new JButton("Apply");
+		applyButton = new JButton("Create Process");
 		buttonsPanel.add(applyButton);
 		applyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -121,6 +124,9 @@ public class NewBasicReactorWizard extends JFrame
 				try{
 					BasicReactorProcess basicReactorProcess = new BasicReactorProcess();
 					basicReactorProcess.name = processNameField.getText();
+					basicReactorProcess.inputTagetMoleculeAsString = smilesField.getText();
+					basicReactorProcess.createPanel();
+					//System.out.println(" *** " +  basicReactorProcess.inputTagetMoleculeAsString);
 					processTabs.addProcess(basicReactorProcess);
 					int currentPosition = processTabs.getTabCount()-1;
 					processTabs.setTabComponentAt(currentPosition,
@@ -134,6 +140,7 @@ public class NewBasicReactorWizard extends JFrame
 		} );
 	}
 
+	/*
 	public void PreviousButtonSet(){
 		previousButton = new JButton("Previous");
 		buttonsPanel.add(previousButton);
@@ -154,6 +161,7 @@ public class NewBasicReactorWizard extends JFrame
 			}
 		} );
 	}
+	*/
 
 	public String SetFileChooser(){
 		JFileChooser fc = new JFileChooser();

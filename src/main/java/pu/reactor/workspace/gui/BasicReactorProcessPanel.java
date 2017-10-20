@@ -4,9 +4,11 @@ import ambit2.base.data.StructureRecord;
 import pu.gui.utils.chemTable.SmartChemTable;
 import pu.gui.utils.chemTable.SmartChemTableField;
 import pu.gui.utils.structTable.StructureTable;
+import pu.helpers.StructureSetUtils;
 import pu.reactor.workspace.BasicReactorProcess;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,9 +27,12 @@ public class BasicReactorProcessPanel extends JPanel
     private StructureTable structureTable = new StructureTable(5);
 
     private SmartChemTable smartChemTable = new SmartChemTable();
-    public BasicReactorProcessPanel(BasicReactorProcess basicReactorProcess)  {
+    
+    public BasicReactorProcessPanel(BasicReactorProcess basicReactorProcess)  
+    {
         this.setBasicReactorProcess(basicReactorProcess);
-        structurePanel = new StructurePanel(basicReactorProcess);
+        StructureRecord r = StructureSetUtils.getStructureRecordFromString(basicReactorProcess.inputTagetMoleculeAsString);
+        structurePanel = new StructurePanel(basicReactorProcess, r);
             initGUI();
     }
 
@@ -46,10 +51,6 @@ public class BasicReactorProcessPanel extends JPanel
         setLayout(new BorderLayout());
         structurePanel.setPreferredSize(new Dimension(500,300));
         add(structurePanel,BorderLayout.NORTH);
-
-
-
-
 
 
         /**

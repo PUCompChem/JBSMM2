@@ -147,7 +147,12 @@ public class ReactorMainFrame extends JFrame {
 		areas.get(1).add(processTabs);
 
 		
+		/*
+		//Temporary code
 		BasicReactorProcess basicReactorProcess = new BasicReactorProcess();
+		basicReactorProcess.inputTagetMoleculeAsString = "CCO";
+		basicReactorProcess.name = "Process 1";
+		basicReactorProcess.createPanel();
 		processTabs.addProcess(basicReactorProcess);
 		
 

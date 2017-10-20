@@ -19,15 +19,21 @@ import java.util.List;
  */
 public class BasicReactorProcess implements IProcess 
 {
-    public BasicReactorProcessPanel panel = new BasicReactorProcessPanel(this);
+    public BasicReactorProcessPanel panel = null;
     public String name = "new process";
     
     public Reactor reactor = new Reactor();
     public ReactorStrategy strategy =  new ReactorStrategy();
     public ReactionDataBase reactDB = null;
+    public String inputTagetMoleculeAsString = null;
     public IAtomContainer target = null;
 
     StructureRecord currentStructure = new StructureRecord();
+    
+    public void createPanel()
+    {
+    	panel = new BasicReactorProcessPanel(this);
+    }
     
     public IAtomContainer getTarget() {
 		return target;

@@ -4,6 +4,8 @@ import java.io.RandomAccessFile;
 import java.util.HashSet;
 import java.util.Set;
 
+import ambit2.base.data.StructureRecord;
+
 public class StructureSetUtils 
 {
 	public static int getNumberOfDublicatedNotations(String fileName1, String fileName2) throws Exception
@@ -36,5 +38,13 @@ public class StructureSetUtils
 		f.close();
 		
 		return nDup;
+	}
+	
+	public static StructureRecord getStructureRecordFromString(String str)
+	{
+		StructureRecord r = new StructureRecord();
+		r.setSmiles(str);
+		//TODO recognize str format
+		return r;
 	}
 }
