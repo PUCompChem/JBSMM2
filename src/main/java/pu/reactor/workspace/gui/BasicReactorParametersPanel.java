@@ -7,11 +7,14 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.util.Objects;
 
-public class BasicReactorParametersPanel extends JPanel {
+public class
+BasicReactorParametersPanel extends JPanel {
 	DefaultTableModel model = new DefaultTableModel(0,2);
 	private ReactorStrategy strategy = new ReactorStrategy();
 	JTable table;
@@ -20,6 +23,24 @@ public class BasicReactorParametersPanel extends JPanel {
 	private JPanel visualizationOptions = new JPanel();
 	private JRadioButton radioButton;
 
+	public JRadioButton getStrTableButton() {
+		return strTableButton;
+	}
+
+	public void setStrTableButton(JRadioButton strTableButton) {
+		this.strTableButton = strTableButton;
+	}
+
+	public JRadioButton getChTableButton() {
+		return chTableButton;
+	}
+
+	public void setChTableButton(JRadioButton chTableButton) {
+		this.chTableButton = chTableButton;
+	}
+
+	private JRadioButton strTableButton;
+	private JRadioButton chTableButton;
 
 
 	public BasicReactorParametersPanel(ReactorStrategy strategy) {
@@ -271,21 +292,24 @@ public class BasicReactorParametersPanel extends JPanel {
 	private void setVizualizationOptions(){
 
 
-
-		JRadioButton strTableButton = new JRadioButton("structure table");
+		strTableButton = new JRadioButton("structure table");
 
 		strTableButton.setActionCommand("structure table");
 		strTableButton.setSelected(true);
 
-		JRadioButton chTableButton = new JRadioButton("smart chemical table");
+		 chTableButton = new JRadioButton("smart chemical table");
 		chTableButton.setActionCommand("smart chemical table");
+
+
+
+
+
 
 		ButtonGroup group = new ButtonGroup();
 		group.add(strTableButton);
 		group.add(chTableButton);
 		visualizationOptions.add(strTableButton);
 		visualizationOptions.add(chTableButton);
-
 
 	}
 	private void setTheVariables() {

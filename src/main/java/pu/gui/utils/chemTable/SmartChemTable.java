@@ -65,7 +65,13 @@ public class SmartChemTable extends JPanel
 		setFields(fields);
 		initGUI();
 	}
-	
+	List<SmartChemTableField> f = new ArrayList<SmartChemTableField>();
+	public SmartChemTable(){
+
+		setFields(f);
+		initGUI();
+
+	}
 	private void initGUI() {
 		this.setLayout(new BorderLayout());
 

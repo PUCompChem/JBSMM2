@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import pu.gui.utils.ButtonTabComponent;
+import pu.gui.utils.trees.SetTree;
 import pu.reactor.workspace.BasicReactorProcess;
 
 import java.awt.*;
@@ -28,7 +29,10 @@ public class NewBasicReactorWizard extends JFrame
 	private JPanel buttonsPanel = new JPanel(new FlowLayout());
 	CardLayout cardLayout =  new CardLayout();
 	private ReactorProcessTabsSet processTabs = null;
-	
+
+
+
+
 	public NewBasicReactorWizard(ReactorProcessTabsSet processTabs) {
 		this.processTabs = processTabs;
 		//this.setLayout(new BorderLayout());
@@ -113,6 +117,7 @@ public class NewBasicReactorWizard extends JFrame
 		buttonsPanel.add(applyButton);
 		applyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
 				try{
 					BasicReactorProcess basicReactorProcess = new BasicReactorProcess();
 					basicReactorProcess.name = processNameField.getText();
@@ -120,10 +125,12 @@ public class NewBasicReactorWizard extends JFrame
 					int currentPosition = processTabs.getTabCount()-1;
 					processTabs.setTabComponentAt(currentPosition,
 							new ButtonTabComponent(processTabs));
+					setVisible(false);
 				}	
 				catch (Exception exp)
 				{}
 			}
+
 		} );
 	}
 
@@ -159,4 +166,6 @@ public class NewBasicReactorWizard extends JFrame
 		}
 		else return "";
 	}
+
+
 }

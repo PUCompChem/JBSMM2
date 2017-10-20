@@ -117,7 +117,8 @@ public class ReactorMainFrame extends JFrame {
 	{
 		setPreferences();
 		preferencesWindow = new PreferencesWindow(preferences, preferencesFilePath);
-		preferencesWindow.setSize(new Dimension(1000,800));
+
+
 		preferencesWindow.setVisible(false);
 
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -158,7 +159,6 @@ public class ReactorMainFrame extends JFrame {
 			treesTabPane.add("reactions",reactionSetTree);
 
 
-
 			areas.get(0).setLayout(new BorderLayout());
 			areas.get(0).add( treesTabPane, BorderLayout.CENTER);
 		}
@@ -196,35 +196,12 @@ public class ReactorMainFrame extends JFrame {
 
 		areas.get(2).setLayout(new BorderLayout());
 
-		List<SmartChemTableField> fields = new ArrayList<SmartChemTableField>();
-		fields.add(new SmartChemTableField("No", SmartChemTableField.Type.VALUE));
-		fields.add(new SmartChemTableField("Name", SmartChemTableField.Type.TEXT));
-		fields.add(new SmartChemTableField("Structure", SmartChemTableField.Type.STRUCTURE));
-		fields.add(new SmartChemTableField("Str2", SmartChemTableField.Type.STRUCTURE));
 
-		//smartChemTable = new SmartChemTable(structureRecords, true);
-		smartChemTable = new SmartChemTable(fields);
-
-		List<Object> rowFields = new ArrayList<Object>();
-		rowFields.add(1);
-		rowFields.add("propane");
-		rowFields.add("CCC");
-		rowFields.add("CCCO");
-		smartChemTable.addTableRow(rowFields);
-
-		rowFields = new ArrayList<Object>();
-		rowFields.add(2);
-		rowFields.add("pentane");
-		rowFields.add("CCCCC");
-		rowFields.add("CCCCCO");
-		smartChemTable.addTableRow(rowFields);
-
-		smartChemTable.addStructureRecord(structureRecords);
 
 		bottomCenterTabbedPanel = new JTabbedPane();
 	 	treesTabPane.add("molecules", moleculeTree);
 		bottomCenterTabbedPanel.add("selected molecule",moleculeTree.getMoleculePanel());
-		bottomCenterTabbedPanel.add("SmartChemTable",smartChemTable);
+
 		areas.get(2).add(bottomCenterTabbedPanel,BorderLayout.CENTER);
 
 

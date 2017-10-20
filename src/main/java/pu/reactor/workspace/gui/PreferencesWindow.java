@@ -1,5 +1,6 @@
 package pu.reactor.workspace.gui;
 
+import pu.gui.utils.trees.SetTree;
 import pu.reactor.workspace.Preferences;
 
 import javax.swing.*;
@@ -24,14 +25,25 @@ public class PreferencesWindow extends JFrame
 
 	private Preferences preferences;
 	private String preferencesFilePath = null;
-	
+
+	public JTabbedPane getTabbedPane() {
+		return tabbedPane;
+	}
+
+	public void setTabbedPane(JTabbedPane tabbedPane) {
+		this.tabbedPane = tabbedPane;
+	}
+
+	private JTabbedPane tabbedPane;
+
+
 
 	JPanel quitAndSavePanel;
-	JPanel treePanel;
+
 	JPanel optionsMenuPanel;
-	JPanel menusCards;
-	
-	
+
+
+
 	JTree tree;
 	JTextField reactionDBPathField;
 	JTextField startingMaterialsDBPathField;
@@ -60,6 +72,7 @@ public class PreferencesWindow extends JFrame
 	public PreferencesWindow(Preferences prefs, String preferencesFilePath) { 
 		this.preferences = prefs; 
 		this.preferencesFilePath = preferencesFilePath;
+
 		initGUI();
 		fillGUIComponentsData();
 	}
@@ -67,21 +80,19 @@ public class PreferencesWindow extends JFrame
 	
 	void initGUI()
 	{
-		
-		
-
-		  //Set MenusCards
-		  menusCards = new JPanel(new CardLayout());
-		  
-		  //Sett Tabs
+		this.setSize(new Dimension(500, 700));
+		this.setResizable(false);
+		//Sett Tabs
 		JTabbedPane	 preferencesTabsPane = new JTabbedPane();
 		//Setting OptionsMenu
 		  reactionDBPathField = new JTextField(20);
 		  startingMaterialsDBPathField = new JTextField(20);
-		  optionsMenuPanel = new JPanel(new FlowLayout(20,20,20)); 
+		  optionsMenuPanel = new JPanel(new FlowLayout(20,20,20));
+		  optionsMenuPanel.setSize(100,100);
 		  optionsMenuPanel.setBackground(Color.WHITE);
 		  optionsMenuPanel.add(new JLabel("Reaction database path:"));
 		  optionsMenuPanel.add(reactionDBPathField);
+
 		optionsMenuPanel.add(new JLabel("Starting materials database path:"));
 		  optionsMenuPanel.add(startingMaterialsDBPathField);
 		  preferencesTabsPane.add("Paths",optionsMenuPanel);
@@ -111,7 +122,7 @@ public class PreferencesWindow extends JFrame
 		add(preferencesTabsPane, BorderLayout.CENTER);
 
 		add(quitAndSavePanel,BorderLayout.SOUTH);
-	      this.setSize(500, 500);
+
 
 	      this.setVisible(true);
 	}
