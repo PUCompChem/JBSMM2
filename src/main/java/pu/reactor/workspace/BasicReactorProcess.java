@@ -27,6 +27,7 @@ public class BasicReactorProcess implements IProcess
     public ReactionDataBase reactDB = null;
     public String inputTagetMoleculeAsString = null;
     public IAtomContainer target = null;
+    public int stepSize = 10;
 
     StructureRecord currentStructure = new StructureRecord();
     
@@ -105,7 +106,8 @@ public class BasicReactorProcess implements IProcess
     }
 
     @Override
-    public void runProcessSteps(int nSteps) {
+    public void runProcessNextSteps(int nSteps) throws Exception 
+    {
     	
     	try {
 			List<ReactorNode> nodes = reactor.reactNext(nSteps);
@@ -116,6 +118,12 @@ public class BasicReactorProcess implements IProcess
 		} catch (Exception e) {
 			
 		}
+    }
+    
+    public void runProcessNextSteps() throws Exception 
+    {
+
+    	runProcessNextSteps(stepSize);
     }
 
 	@Override

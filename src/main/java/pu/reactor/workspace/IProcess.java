@@ -15,5 +15,6 @@ public interface IProcess {
     public void setPanel(JPanel panel);
     public void initProcess() throws Exception;
     public void runProcess() throws Exception;
-    public void runProcessSteps(int nSteps);
+    public void runProcessNextSteps(int nSteps) throws Exception;
+    public void runProcessNextSteps() throws Exception;
 }

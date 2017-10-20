@@ -371,7 +371,7 @@ public class ReactorMainFrame extends JFrame {
 		miNextStep.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F7, ActionEvent.CTRL_MASK));
 		miNextStep.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				// TODO
+				miNextStepActionPerformed(evt);
 			}
 		});
 
@@ -462,10 +462,22 @@ public class ReactorMainFrame extends JFrame {
 	private void miExitActionPerformed(ActionEvent evt) {
 		System.exit(0);
 	}
-
+	
+	private void miRunActionPerformed(ActionEvent evt){
+		System.out.println("Run");
+	}
+	
+	private void miStopActionPerformed(ActionEvent evt){
+		System.out.println("Stop");
+	}
+	
+	private void miNextStepActionPerformed(ActionEvent evt){
+		System.out.println("Next Step");
+		// TODO get current ProcessPanel --> current Process . runProcessNextSteps()
+	}
 	// some test utils -------------------------------------
 
-
+	
 
 
 }

@@ -49,8 +49,15 @@ public class Process implements IProcess
 	}
 
 	@Override
-	public void runProcessSteps(int nSteps) {
-
+	public void runProcessNextSteps(int nSteps) throws Exception 
+	{
+		//TODO
+	}
+	
+	@Override
+	public void runProcessNextSteps() throws Exception 
+	{
+		//TODO
 	}
 
 	@Override
