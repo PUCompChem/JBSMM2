@@ -42,7 +42,8 @@ public class ReactorMainFrame extends JFrame {
 
 	PreferencesWindow preferencesWindow = null;
     ActionListener actionListener;
-	// Menu components
+	
+    // Menu components
 	JMenuBar menuBar;
 
 	JMenu menuFile;
@@ -68,8 +69,14 @@ public class ReactorMainFrame extends JFrame {
 	private JMenu menuProjectSettings;
 	private JMenuItem miProjectSettings;
 	private JMenuItem miProcessSettings;
+	
+	
+	private JMenuItem miRun;
+	private JMenuItem miStop;
+	private JMenuItem miNextStep;
 
 	private ReactionToolBar reactionToolBar;
+	private BasicReactorWizard newProcessWizard;
 
 	//Data containers
 	String preferencesFilePath = null;
@@ -82,7 +89,6 @@ public class ReactorMainFrame extends JFrame {
 
 	private ReactorProcessTabsSet processTabs = new ReactorProcessTabsSet();
 
-	
 	private SmartChemTable smartChemTable;
 	private JMenuItem singleReaction;
 
@@ -90,10 +96,7 @@ public class ReactorMainFrame extends JFrame {
 
 
 	
-	private BasicReactorWizard newProcessWizard;
-	private JMenuItem miRun;
-	private JMenuItem miStop;
-	private JMenuItem miNextStep;
+	
 
 	public ReactorMainFrame() throws Exception {
 		super();
