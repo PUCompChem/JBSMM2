@@ -14,6 +14,7 @@ import pu.reactor.json.PreferencesJsonParser;
 import pu.reactor.workspace.Preferences;
 import pu.reactor.workspace.gui.BasicReactorWizard;
 import pu.reactor.workspace.gui.PreferencesWindow;
+import pu.reactor.workspace.gui.ProcessPanel;
 import pu.reactor.workspace.gui.ReactionToolBar;
 import pu.reactor.workspace.gui.ReactorProcessTabsSet;
 
@@ -461,6 +462,20 @@ public class ReactorMainFrame extends JFrame {
 	
 	private void miRunActionPerformed(ActionEvent evt){
 		System.out.println("Run");
+		if (processTabs.getComponentCount() == 0)
+			return;
+		int processIndex = processTabs.getSelectedIndex();
+		ProcessPanel pp = (ProcessPanel)processTabs.getComponentAt(processIndex);
+		try
+		{
+			System.out.println("Run process: " + pp.getProcess().getName());
+			pp.getProcess().runProcess();
+			
+		}
+		catch (Exception x)
+		{
+			System.out.println("Process error: " + x.getMessage());
+		}
 	}
 	
 	private void miStopActionPerformed(ActionEvent evt){
@@ -469,9 +484,20 @@ public class ReactorMainFrame extends JFrame {
 	
 	private void miNextStepActionPerformed(ActionEvent evt){
 		System.out.println("Next Step");
-		//processTabs.
+		if (processTabs.getComponentCount() == 0)
+			return;
+		int processIndex = processTabs.getSelectedIndex();
+		ProcessPanel pp = (ProcessPanel)processTabs.getComponentAt(processIndex);
+		try
+		{
+			System.out.println("Next Steps for process: " + pp.getProcess().getName());
+			pp.getProcess().runProcessNextSteps();
+		}
+		catch (Exception x)
+		{
+			System.out.println("Process error: " + x.getMessage());
+		}
 		
-		// TODO get current ProcessPanel --> current Process . runProcessNextSteps()
 	}
 	// some test utils -------------------------------------
 

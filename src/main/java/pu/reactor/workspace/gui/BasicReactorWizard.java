@@ -129,8 +129,9 @@ public class BasicReactorWizard extends JFrame
 					
 					processTabs.addProcessPanel(brpPanel);
 					int currentPosition = processTabs.getTabCount()-1;
-					processTabs.setTabComponentAt(currentPosition,
-							new ButtonTabComponent(processTabs));
+					processTabs.setTabComponentAt(currentPosition, new ButtonTabComponent(processTabs));
+					processTabs.setSelectedIndex(currentPosition);
+					
 					setVisible(false);
 				}	
 				catch (Exception exp)
