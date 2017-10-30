@@ -61,35 +61,36 @@ public class ReactionSetTree extends SetTree
 /**
  * Setting Icons
  */
-DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer) tree.getCellRenderer();
-		BufferedImage reactionImage = null;
-		try {
-			reactionImage = ImageIO.read(new File("reactionIcon.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		reactionImage = getScaledImage(reactionImage,20,20);
-		ImageIcon reactionIcon = new ImageIcon(reactionImage);
-
-
-		BufferedImage reactionGroupImage = null;
-		try {
-			reactionGroupImage = ImageIO.read(new File("reactionGroup.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		reactionGroupImage = getScaledImage(reactionGroupImage,20,20);
-
-		ImageIcon reactionGroupIcon = new ImageIcon(reactionGroupImage);
-
-
-		renderer.setClosedIcon(reactionGroupIcon);
-		renderer.setOpenIcon(reactionGroupIcon);
-		renderer.setLeafIcon(reactionIcon);
-
-/**
- * End Sestting Icons
- */
+//DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer) tree.getCellRenderer();
+//		new ImageIcon(getClass().getClassLoader().getResource("reactionIcon.png"));
+//		BufferedImage reactionImage = null;
+//		try {
+//			reactionImage = ImageIO.read(getClass().getClassLoader().getResource("reactionIcon.png"));
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		reactionImage = getScaledImage(reactionImage,20,20);
+//		ImageIcon reactionIcon = new ImageIcon(reactionImage);
+//
+//
+//		BufferedImage reactionGroupImage = null;
+//		try {
+//			reactionGroupImage = ImageIO.read(new File("reactionGroup.png"));
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		reactionGroupImage = getScaledImage(reactionGroupImage,20,20);
+//
+//		ImageIcon reactionGroupIcon = new ImageIcon(reactionGroupImage);
+//
+//
+//		renderer.setClosedIcon(reactionGroupIcon);
+//		renderer.setOpenIcon(reactionGroupIcon);
+//		renderer.setLeafIcon(reactionIcon);
+//
+///**
+// * End Sestting Icons
+// */
 
 					JScrollPane scrollBar = new JScrollPane(tree);
 

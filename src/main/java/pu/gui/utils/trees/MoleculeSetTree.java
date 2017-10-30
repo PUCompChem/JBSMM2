@@ -82,38 +82,38 @@ public class MoleculeSetTree extends SetTree
 	private void initGUI() {
 		infoPanel = new InfoPanel();
 		tree = new JTree();
-		/**
-		 * Setting Icons
-		 */
-		DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer) tree.getCellRenderer();
-		BufferedImage reactionImage = null;
-		try {
-			reactionImage = ImageIO.read(new File("molecule.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		reactionImage = getScaledImage(reactionImage,50,50);
-		ImageIcon reactionIcon = new ImageIcon(reactionImage);
-
-
-		BufferedImage reactionGroupImage = null;
-		try {
-			reactionGroupImage = ImageIO.read(new File("periodicTable.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		reactionGroupImage = getScaledImage(reactionGroupImage,50,50);
-
-		ImageIcon reactionGroupIcon = new ImageIcon(reactionGroupImage);
-
-
-		renderer.setClosedIcon(reactionGroupIcon);
-		renderer.setOpenIcon(reactionGroupIcon);
-		renderer.setLeafIcon(reactionIcon);
-
-/**
- * End Sestting Icons
- */
+//		/**
+//		 * Setting Icons
+//		 */
+//		DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer) tree.getCellRenderer();
+//		BufferedImage reactionImage = null;
+//		try {
+//			reactionImage = ImageIO.read(new File("molecule.png"));
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		reactionImage = getScaledImage(reactionImage,50,50);
+//		ImageIcon reactionIcon = new ImageIcon(reactionImage);
+//
+//
+//		BufferedImage reactionGroupImage = null;
+//		try {
+//			reactionGroupImage = ImageIO.read(new File("periodicTable.png"));
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		reactionGroupImage = getScaledImage(reactionGroupImage,50,50);
+//
+//		ImageIcon reactionGroupIcon = new ImageIcon(reactionGroupImage);
+//
+//
+//		renderer.setClosedIcon(reactionGroupIcon);
+//		renderer.setOpenIcon(reactionGroupIcon);
+//		renderer.setLeafIcon(reactionIcon);
+//
+///**
+// * End Sestting Icons
+// */
 
 		this.add(tree);
 		JScrollPane scrollBar = new JScrollPane(tree);
