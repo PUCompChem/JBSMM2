@@ -93,8 +93,6 @@ public class ReactorMainFrame extends JFrame {
 	private JMenuItem singleReaction;
 
 
-
-
 	
 	
 
@@ -471,6 +469,8 @@ public class ReactorMainFrame extends JFrame {
 	
 	private void miNextStepActionPerformed(ActionEvent evt){
 		System.out.println("Next Step");
+		//processTabs.
+		
 		// TODO get current ProcessPanel --> current Process . runProcessNextSteps()
 	}
 	// some test utils -------------------------------------

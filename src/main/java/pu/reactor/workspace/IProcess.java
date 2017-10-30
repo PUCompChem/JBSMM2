@@ -10,9 +10,10 @@ import java.io.File;
 public interface IProcess {
     public String toJsonString();
     public void loadFromJson(File file);
-    public JPanel getPanel();
-    public JPanel getParametersPanel();
-    public void setPanel(JPanel panel);
+    public String getName();
+    //public JPanel getPanel();
+    //public JPanel getParametersPanel();
+    //public void setPanel(JPanel panel);
     public void initProcess() throws Exception;
     public void runProcess() throws Exception;
     public void runProcessNextSteps(int nSteps) throws Exception;

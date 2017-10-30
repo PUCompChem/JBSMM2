@@ -1,7 +1,9 @@
 package pu.reactor.workspace.gui;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.*;
 
@@ -13,25 +15,26 @@ import pu.reactor.workspace.IProcess;
  */
 public class ReactorProcessTabsSet extends JTabbedPane 
 {
-	public List<IProcess> processes = new ArrayList<IProcess>();
+	//public List<IProcess> processes = new ArrayList<IProcess>();
+	public Map<IProcess, ProcessPanel> processes = new HashMap<IProcess, ProcessPanel>();
 	
 	
-	public void addProcess(IProcess process)
-	{
-		processes.add(process);
-		
+	public void addProcessPanel(ProcessPanel panel)
+	{	
+		IProcess process = panel.getProcess();
+		processes.put(process, panel);
+		this.add(process.getName(), panel);
+		/*
 		if (process instanceof BasicReactorProcess)
 		{
 			BasicReactorProcess brp = (BasicReactorProcess) process;
-			this.add(brp.name, brp.panel);
+			this.add(brp.name, brp.panel process.getPanel());
 		}
-		
-		//TODO
+		*/
 	}
 	
-	/*	
-	public void add(BasicReactorProcessPanel processPanel){
-        this.add(processPanel.getProcessName(), processPanel);
-    }
-    */
+	
+	//TODO handle tab delete event and remove element from the process map
+	
+	
 }

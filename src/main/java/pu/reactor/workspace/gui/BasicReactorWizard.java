@@ -125,9 +125,9 @@ public class BasicReactorWizard extends JFrame
 					BasicReactorProcess basicReactorProcess = new BasicReactorProcess();
 					basicReactorProcess.name = processNameField.getText();
 					basicReactorProcess.inputTagetMoleculeAsString = smilesField.getText();
-					basicReactorProcess.createPanel();
-					//System.out.println(" *** " +  basicReactorProcess.inputTagetMoleculeAsString);
-					processTabs.addProcess(basicReactorProcess);
+					BasicReactorProcessPanel brpPanel = new BasicReactorProcessPanel(basicReactorProcess);
+					
+					processTabs.addProcessPanel(brpPanel);
 					int currentPosition = processTabs.getTabCount()-1;
 					processTabs.setTabComponentAt(currentPosition,
 							new ButtonTabComponent(processTabs));

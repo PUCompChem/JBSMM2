@@ -6,6 +6,7 @@ import pu.gui.utils.chemTable.SmartChemTableField;
 import pu.gui.utils.structTable.StructureTable;
 import pu.helpers.StructureSetUtils;
 import pu.reactor.workspace.BasicReactorProcess;
+import pu.reactor.workspace.IProcess;
 
 import javax.swing.*;
 
@@ -19,7 +20,7 @@ import java.util.List;
 /**
  * Created by gogo on 27.7.2017 г..
  */
-public class BasicReactorProcessPanel extends JPanel
+public class BasicReactorProcessPanel extends ProcessPanel
 {
    
     private BasicReactorProcess basicReactorProcess;
@@ -114,6 +115,11 @@ public class BasicReactorProcessPanel extends JPanel
 
 	public void setBasicReactorProcess(BasicReactorProcess basicReactorProcess) {
 		this.basicReactorProcess = basicReactorProcess;
+	}
+
+	@Override
+	public IProcess getProcess() {
+		return basicReactorProcess;
 	}
 
 }

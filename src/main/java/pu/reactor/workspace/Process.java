@@ -28,6 +28,7 @@ public class Process implements IProcess
 
 	}
 
+	/*
 	@Override
 	public JPanel getPanel() {
 		return null;
@@ -37,6 +38,7 @@ public class Process implements IProcess
 	public void setPanel(JPanel panel) {
 
 	}
+	*/
 
 	@Override
 	public void initProcess() {
@@ -61,8 +63,16 @@ public class Process implements IProcess
 	}
 
 	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*	
+	@Override
 	public JPanel getParametersPanel() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	*/
 }
