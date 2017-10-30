@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
 /**
  * Created by gogo on 28.7.2017 г..
  */
-public class NewBasicReactorWizard extends JFrame
+public class BasicReactorWizard extends JFrame
 {
 	private JPanel stageCards;
 	private JPanel firstStepPanel;
@@ -29,15 +29,14 @@ public class NewBasicReactorWizard extends JFrame
 	private JPanel buttonsPanel = new JPanel(new FlowLayout());
 	CardLayout cardLayout =  new CardLayout();
 	private ReactorProcessTabsSet processTabs = null;
+	private JButton cancelButton;
 
 
-
-
-	public NewBasicReactorWizard(ReactorProcessTabsSet processTabs) {
+	public BasicReactorWizard(ReactorProcessTabsSet processTabs) {
 		this.processTabs = processTabs;
 		//this.setLayout(new BorderLayout());
 		initGUI();
-		setSize(new Dimension(500,600));
+		setSize(new Dimension(400,600));
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
@@ -49,8 +48,9 @@ public class NewBasicReactorWizard extends JFrame
 		this.revalidate();
 		this.add(buttonsPanel,BorderLayout.SOUTH);
 		//Set StageCards
+		this.setTitle("Basic Reactor Wizard");
 
-
+		setCancelButton();
 		ApplyButtonSet();
 		FirstStepPanelSet();
 		
@@ -140,6 +140,17 @@ public class NewBasicReactorWizard extends JFrame
 		} );
 	}
 
+
+	private void setCancelButton(){
+		cancelButton = new JButton("Cancel");
+		buttonsPanel.add(cancelButton);
+		cancelButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
+	}
 	/*
 	public void PreviousButtonSet(){
 		previousButton = new JButton("Previous");

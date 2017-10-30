@@ -6,13 +6,18 @@ import pu.filtering.ICode;
 import pu.filtering.IFilter;
 import pu.filtering.filters.SetFilter;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -49,11 +54,44 @@ public class ReactionSetTree extends SetTree
 
 	}
 
-	private void initGUI()
-	{
+	private void initGUI() {
 		tree = new JTree();
 
-		JScrollPane scrollBar = new JScrollPane(tree);
+
+/**
+ * Setting Icons
+ */
+DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer) tree.getCellRenderer();
+		BufferedImage reactionImage = null;
+		try {
+			reactionImage = ImageIO.read(new File("reactionIcon.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		reactionImage = getScaledImage(reactionImage,20,20);
+		ImageIcon reactionIcon = new ImageIcon(reactionImage);
+
+
+		BufferedImage reactionGroupImage = null;
+		try {
+			reactionGroupImage = ImageIO.read(new File("reactionGroup.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		reactionGroupImage = getScaledImage(reactionGroupImage,20,20);
+
+		ImageIcon reactionGroupIcon = new ImageIcon(reactionGroupImage);
+
+
+		renderer.setClosedIcon(reactionGroupIcon);
+		renderer.setOpenIcon(reactionGroupIcon);
+		renderer.setLeafIcon(reactionIcon);
+
+/**
+ * End Sestting Icons
+ */
+
+					JScrollPane scrollBar = new JScrollPane(tree);
 
 		reactionInfoPanel = new TableInfoPanel();
 
@@ -216,6 +254,7 @@ public class ReactionSetTree extends SetTree
 				}
 			}
 		}
+
 	}
 
 

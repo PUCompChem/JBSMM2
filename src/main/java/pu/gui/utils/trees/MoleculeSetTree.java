@@ -3,16 +3,21 @@ package pu.gui.utils.trees;
 import ambit2.base.data.Property;
 import ambit2.base.data.StructureRecord;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 import pu.gui.utils.MoleculeDrawer;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -77,6 +82,39 @@ public class MoleculeSetTree extends SetTree
 	private void initGUI() {
 		infoPanel = new InfoPanel();
 		tree = new JTree();
+		/**
+		 * Setting Icons
+		 */
+		DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer) tree.getCellRenderer();
+		BufferedImage reactionImage = null;
+		try {
+			reactionImage = ImageIO.read(new File("molecule.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		reactionImage = getScaledImage(reactionImage,50,50);
+		ImageIcon reactionIcon = new ImageIcon(reactionImage);
+
+
+		BufferedImage reactionGroupImage = null;
+		try {
+			reactionGroupImage = ImageIO.read(new File("periodicTable.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		reactionGroupImage = getScaledImage(reactionGroupImage,50,50);
+
+		ImageIcon reactionGroupIcon = new ImageIcon(reactionGroupImage);
+
+
+		renderer.setClosedIcon(reactionGroupIcon);
+		renderer.setOpenIcon(reactionGroupIcon);
+		renderer.setLeafIcon(reactionIcon);
+
+/**
+ * End Sestting Icons
+ */
+
 		this.add(tree);
 		JScrollPane scrollBar = new JScrollPane(tree);
 		this.setLayout(new BorderLayout());

@@ -6,18 +6,13 @@ import ambit2.reactions.ReactionDataBase;
 import ambit2.reactions.retrosynth.StartingMaterialsDataBase;
 import ambit2.ui.Panel2D;
 import pu.gui.utils.chemTable.SmartChemTable;
-import pu.gui.utils.chemTable.SmartChemTableField;
 import pu.gui.utils.trees.MoleculeSetTree;
 import pu.gui.utils.trees.ReactionSetTree;
 import pu.gui.utils.PredefinedArrangements;
-import pu.gui.utils.WorkCaseTabSet;
 import pu.io.FileUtilities;
 import pu.reactor.json.PreferencesJsonParser;
-import pu.reactor.workspace.BasicReactorProcess;
-import pu.reactor.workspace.IProcess;
 import pu.reactor.workspace.Preferences;
-import pu.reactor.workspace.gui.BasicReactorProcessPanel;
-import pu.reactor.workspace.gui.NewBasicReactorWizard;
+import pu.reactor.workspace.gui.BasicReactorWizard;
 import pu.reactor.workspace.gui.PreferencesWindow;
 import pu.reactor.workspace.gui.ReactionToolBar;
 import pu.reactor.workspace.gui.ReactorProcessTabsSet;
@@ -95,7 +90,7 @@ public class ReactorMainFrame extends JFrame {
 
 
 	
-	private NewBasicReactorWizard newProcessWizard;
+	private BasicReactorWizard newProcessWizard;
 	private JMenuItem miRun;
 	private JMenuItem miStop;
 	private JMenuItem miNextStep;
@@ -389,7 +384,7 @@ public class ReactorMainFrame extends JFrame {
 		basicReactor.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
- 				newProcessWizard = new NewBasicReactorWizard(processTabs);
+ 				newProcessWizard = new BasicReactorWizard(processTabs);
 			}
 		});
 		

@@ -295,7 +295,7 @@ BasicReactorParametersPanel extends JPanel {
 		strTableButton = new JRadioButton("structure table");
 
 		strTableButton.setActionCommand("structure table");
-		
+
 
 		 chTableButton = new JRadioButton("smart chemical table");
 		chTableButton.setActionCommand("smart chemical table");
