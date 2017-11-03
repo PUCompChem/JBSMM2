@@ -138,11 +138,11 @@ abstract public class SetTree extends JPanel {
     public void setIcons(String leafImagePath, String closeNodeImagePath, String openNodeImagePath) {
         DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer) tree.getCellRenderer();
 
-        renderer.setLeafIcon(FromImageToIcon(leafImagePath));
-        renderer.setClosedIcon(FromImageToIcon(closeNodeImagePath));
-        renderer.setOpenIcon(FromImageToIcon(openNodeImagePath));
+        renderer.setLeafIcon(fromImageToIcon(leafImagePath));
+        renderer.setClosedIcon(fromImageToIcon(closeNodeImagePath));
+        renderer.setOpenIcon(fromImageToIcon(openNodeImagePath));
     }
-    private ImageIcon FromImageToIcon(String path){
+    private ImageIcon fromImageToIcon(String path){
         BufferedImage image = null;
         try {
             image = ImageIO.read(ClassLoader.getSystemResource(path));
@@ -150,7 +150,7 @@ abstract public class SetTree extends JPanel {
             e.printStackTrace();
         }
 
-        image = getScaledImage(image,50,50);
+        image = getScaledImage(image,20,20);
         ImageIcon icon = new ImageIcon(image);
         return icon;
     }
