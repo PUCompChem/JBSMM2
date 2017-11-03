@@ -6,6 +6,7 @@ import javax.swing.border.EmptyBorder;
 import pu.gui.utils.ButtonTabComponent;
 import pu.gui.utils.trees.SetTree;
 import pu.reactor.workspace.BasicReactorProcess;
+import pu.reactor.workspace.ProcessCommonChemData;
 import pu.reactor.workspace.gui.BasicReactorProcessPanel;
 import pu.reactor.workspace.gui.ReactorProcessTabsSet;
 
@@ -31,11 +32,13 @@ public class BasicReactorWizard extends JFrame
 	private JPanel buttonsPanel = new JPanel(new FlowLayout());
 	CardLayout cardLayout =  new CardLayout();
 	private ReactorProcessTabsSet processTabs = null;
+	private ProcessCommonChemData processCommonChemData = null;
 	private JButton cancelButton;
 
 
-	public BasicReactorWizard(ReactorProcessTabsSet processTabs) {
+	public BasicReactorWizard(ReactorProcessTabsSet processTabs, ProcessCommonChemData processCommonChemData) {
 		this.processTabs = processTabs;
+		this.processCommonChemData = processCommonChemData;
 		//this.setLayout(new BorderLayout());
 		initGUI();
 		setSize(new Dimension(400,600));

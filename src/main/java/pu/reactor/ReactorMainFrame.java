@@ -12,6 +12,7 @@ import pu.gui.utils.PredefinedArrangements;
 import pu.io.FileUtilities;
 import pu.reactor.json.PreferencesJsonParser;
 import pu.reactor.workspace.Preferences;
+import pu.reactor.workspace.ProcessCommonChemData;
 import pu.reactor.workspace.gui.ReactionWizards.BasicReactorWizard;
 import pu.reactor.workspace.gui.PreferencesWindow;
 import pu.reactor.workspace.gui.ProcessPanel;
@@ -82,8 +83,11 @@ public class ReactorMainFrame extends JFrame {
 	//Data containers
 	String preferencesFilePath = null;
 	Preferences preferences = null;
-	ReactionDataBase reactionDB = null;
-	StartingMaterialsDataBase startingMaterialsDataBase = null;
+	
+	ProcessCommonChemData processChemData = new ProcessCommonChemData();
+	//ReactionDataBase reactionDB = null;
+	//StartingMaterialsDataBase startingMaterialsDataBase = null;
+	
 	JTabbedPane treesTabPane;
 	private JTabbedPane bottomCenterTabbedPanel;
 	private JTextArea consoleFieldPanel;
@@ -154,9 +158,9 @@ public class ReactorMainFrame extends JFrame {
 		*/
 
 	//	setReactionTree
-		if (reactionDB != null)
+		if (processChemData.getReactionDB() != null)
 		{
-			reactionSetTree = new ReactionSetTree(reactionDB.reactions);
+			reactionSetTree = new ReactionSetTree(processChemData.getReactionDB().reactions);
 			  treesTabPane = new JTabbedPane();
 			treesTabPane.add("reactions",reactionSetTree);
 
@@ -259,7 +263,9 @@ public class ReactorMainFrame extends JFrame {
 	{
 		try
 		{
-			reactionDB = new  ReactionDataBase(new File(preferences.reactionDBPath));
+			 ReactionDataBase reactionDB = new  ReactionDataBase(new File(preferences.reactionDBPath));
+			 processChemData.setReactionDB(reactionDB);
+			
 		}
 		catch (Exception x)
 		{
@@ -269,7 +275,8 @@ public class ReactorMainFrame extends JFrame {
 	private void setStartingMaterialsDB() {
 		try
 		{
-			startingMaterialsDataBase = new StartingMaterialsDataBase();
+			StartingMaterialsDataBase startingMaterialsDataBase = new StartingMaterialsDataBase();
+			processChemData.setStartingMaterialsDataBase(startingMaterialsDataBase);
 		}
 		catch (Exception x)
 		{
@@ -386,7 +393,7 @@ public class ReactorMainFrame extends JFrame {
 		basicReactor.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
- 				newProcessWizard = new BasicReactorWizard(processTabs);
+ 				newProcessWizard = new BasicReactorWizard(processTabs, processChemData);
 			}
 		});
 		

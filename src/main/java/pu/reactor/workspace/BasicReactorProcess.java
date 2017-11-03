@@ -93,6 +93,7 @@ public class BasicReactorProcess implements IProcess
     	
     	try {
 			List<ReactorNode> nodes = reactor.reactNext(nSteps);
+			
 			//TODO
 			//put info into: (1) Console (2) SmartChemTable (3) StrutureTable
 			
