@@ -1,4 +1,4 @@
-package pu.reactor.workspace.gui;
+package pu.reactor.workspace.gui.ReactionWizards;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -6,6 +6,8 @@ import javax.swing.border.EmptyBorder;
 import pu.gui.utils.ButtonTabComponent;
 import pu.gui.utils.trees.SetTree;
 import pu.reactor.workspace.BasicReactorProcess;
+import pu.reactor.workspace.gui.BasicReactorProcessPanel;
+import pu.reactor.workspace.gui.ReactorProcessTabsSet;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -25,7 +27,7 @@ public class BasicReactorWizard extends JFrame
 	private JButton pathButton;
 	JTextField smilesField;
 	JTextField processNameField;
-	
+
 	private JPanel buttonsPanel = new JPanel(new FlowLayout());
 	CardLayout cardLayout =  new CardLayout();
 	private ReactorProcessTabsSet processTabs = null;
@@ -53,7 +55,7 @@ public class BasicReactorWizard extends JFrame
 		setCancelButton();
 		ApplyButtonSet();
 		FirstStepPanelSet();
-		
+
 
 		stageCards = new JPanel(cardLayout);
 
@@ -126,14 +128,14 @@ public class BasicReactorWizard extends JFrame
 					basicReactorProcess.name = processNameField.getText();
 					basicReactorProcess.inputTagetMoleculeAsString = smilesField.getText();
 					BasicReactorProcessPanel brpPanel = new BasicReactorProcessPanel(basicReactorProcess);
-					
+
 					processTabs.addProcessPanel(brpPanel);
 					int currentPosition = processTabs.getTabCount()-1;
 					processTabs.setTabComponentAt(currentPosition, new ButtonTabComponent(processTabs));
 					processTabs.setSelectedIndex(currentPosition);
-					
+
 					setVisible(false);
-				}	
+				}
 				catch (Exception exp)
 				{}
 			}

@@ -1,12 +1,16 @@
 package pu.gui.utils.trees;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -28,17 +32,17 @@ abstract public class SetTree extends JPanel {
         treeSearchButton = new JButton("Search");
         JPanel searchPanel = new JPanel();
         searchPanel.add(treeSearchBox, BorderLayout.WEST);
-        searchPanel.add(treeSearchButton,BorderLayout.EAST);
-        this.add( searchPanel , BorderLayout.NORTH);
+        searchPanel.add(treeSearchButton, BorderLayout.EAST);
+        this.add(searchPanel, BorderLayout.NORTH);
 
         treeSearchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String search = treeSearchBox.getText();
-                if(search.trim().length() > 0 ) {
+                if (search.trim().length() > 0) {
 
                     DefaultMutableTreeNode node = findNode(search);
-                    if( node != null ) {
+                    if (node != null) {
                         TreePath path = new TreePath(node.getPath());
                         tree.setSelectionPath(path);
                         tree.scrollPathToVisible(path);
@@ -50,43 +54,43 @@ abstract public class SetTree extends JPanel {
 
 
     }
-    protected DefaultMutableTreeNode searchChildrenNode(String nodeObj, DefaultMutableTreeNode node)
-    {
-        for (int i = 0; i < node.getChildCount(); i++)
-        {
+
+    protected DefaultMutableTreeNode searchChildrenNode(String nodeObj, DefaultMutableTreeNode node) {
+        for (int i = 0; i < node.getChildCount(); i++) {
             DefaultMutableTreeNode child = (DefaultMutableTreeNode) node.getChildAt(i);
             if (nodeObj.equals(child.getUserObject()))
                 return child;
         }
         return null;
     }
+
     protected DefaultMutableTreeNode findNode(String searchString) {
 
-        java.util.List<DefaultMutableTreeNode> searchNodes = getSearchNodes((DefaultMutableTreeNode)tree.getModel().getRoot());
-        DefaultMutableTreeNode currentNode = (DefaultMutableTreeNode)tree.getLastSelectedPathComponent();
+        java.util.List<DefaultMutableTreeNode> searchNodes = getSearchNodes((DefaultMutableTreeNode) tree.getModel().getRoot());
+        DefaultMutableTreeNode currentNode = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
 
         DefaultMutableTreeNode foundNode = null;
         int bookmark = -1;
 
-        if( currentNode != null ) {
-            for(int index = 0; index < searchNodes.size(); index++) {
-                if( searchNodes.get(index) == currentNode ) {
+        if (currentNode != null) {
+            for (int index = 0; index < searchNodes.size(); index++) {
+                if (searchNodes.get(index) == currentNode) {
                     bookmark = index;
                     break;
                 }
             }
         }
 
-        for(int index = bookmark + 1; index < searchNodes.size(); index++) {
-            if(searchNodes.get(index).toString().toLowerCase().contains(searchString.toLowerCase())) {
+        for (int index = bookmark + 1; index < searchNodes.size(); index++) {
+            if (searchNodes.get(index).toString().toLowerCase().contains(searchString.toLowerCase())) {
                 foundNode = searchNodes.get(index);
                 break;
             }
         }
 
-        if( foundNode == null ) {
-            for(int index = 0; index <= bookmark; index++) {
-                if(searchNodes.get(index).toString().toLowerCase().contains(searchString.toLowerCase())) {
+        if (foundNode == null) {
+            for (int index = 0; index <= bookmark; index++) {
+                if (searchNodes.get(index).toString().toLowerCase().contains(searchString.toLowerCase())) {
                     foundNode = searchNodes.get(index);
                     break;
                 }
@@ -99,24 +103,27 @@ abstract public class SetTree extends JPanel {
         java.util.List<DefaultMutableTreeNode> searchNodes = new ArrayList<DefaultMutableTreeNode>();
 
         Enumeration<?> e = root.preorderEnumeration();
-        while(e.hasMoreElements()) {
-            searchNodes.add((DefaultMutableTreeNode)e.nextElement());
+        while (e.hasMoreElements()) {
+            searchNodes.add((DefaultMutableTreeNode) e.nextElement());
         }
         return searchNodes;
     }
-    protected void expandAllNodes(JTree tree, int startingIndex, int rowCount){
-        for(int i=startingIndex;i<rowCount;++i){
+
+    protected void expandAllNodes(JTree tree, int startingIndex, int rowCount) {
+        for (int i = startingIndex; i < rowCount; ++i) {
             tree.expandRow(i);
         }
 
-        if(tree.getRowCount()!=rowCount){
+        if (tree.getRowCount() != rowCount) {
             expandAllNodes(tree, rowCount, tree.getRowCount());
         }
     }
+
     public JTree getTree() {
         return tree;
     }
-   public static BufferedImage getScaledImage(BufferedImage img, int newW, int newH) {
+
+    public static BufferedImage getScaledImage(BufferedImage img, int newW, int newH) {
         int w = img.getWidth();
         int h = img.getHeight();
         BufferedImage dimg = new BufferedImage(newW, newH, img.getType());
@@ -126,5 +133,25 @@ abstract public class SetTree extends JPanel {
         g.drawImage(img, 0, 0, newW, newH, 0, 0, w, h, null);
         g.dispose();
         return dimg;
+    }
+
+    public void setIcons(String leafImagePath, String closeNodeImagePath, String openNodeImagePath) {
+        DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer) tree.getCellRenderer();
+
+        renderer.setLeafIcon(FromImageToIcon(leafImagePath));
+        renderer.setClosedIcon(FromImageToIcon(closeNodeImagePath));
+        renderer.setOpenIcon(FromImageToIcon(openNodeImagePath));
+    }
+    private ImageIcon FromImageToIcon(String path){
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read(ClassLoader.getSystemResource(path));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        image = getScaledImage(image,50,50);
+        ImageIcon icon = new ImageIcon(image);
+        return icon;
     }
 }

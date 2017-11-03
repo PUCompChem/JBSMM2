@@ -12,7 +12,7 @@ import pu.gui.utils.PredefinedArrangements;
 import pu.io.FileUtilities;
 import pu.reactor.json.PreferencesJsonParser;
 import pu.reactor.workspace.Preferences;
-import pu.reactor.workspace.gui.BasicReactorWizard;
+import pu.reactor.workspace.gui.ReactionWizards.BasicReactorWizard;
 import pu.reactor.workspace.gui.PreferencesWindow;
 import pu.reactor.workspace.gui.ProcessPanel;
 import pu.reactor.workspace.gui.ReactionToolBar;
