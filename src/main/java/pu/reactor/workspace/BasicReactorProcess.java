@@ -5,6 +5,7 @@ import ambit2.reactions.ReactionDataBase;
 import ambit2.reactions.reactor.Reactor;
 import ambit2.reactions.reactor.ReactorNode;
 import ambit2.reactions.reactor.ReactorStrategy;
+import ambit2.smarts.SmartsHelper;
 import pu.reactor.workspace.gui.BasicReactorProcessPanel;
 
 import javax.swing.*;
@@ -25,11 +26,27 @@ public class BasicReactorProcess implements IProcess
     public Reactor reactor = new Reactor();
     public ReactorStrategy strategy =  new ReactorStrategy();
     public ReactionDataBase reactDB = null;
-    public String inputTagetMoleculeAsString = null;
-    public IAtomContainer target = null;
+    String targetInputString = null;
+    IAtomContainer target = null;
     public int stepSize = 10;
 
     StructureRecord currentStructure = new StructureRecord();
+    
+    public void setTargetInputString(String targetInputString)
+    {
+    	this.targetInputString = targetInputString;
+    	try
+    	{
+    		target = SmartsHelper.getMoleculeFromSmiles(targetInputString);
+    	}
+    	catch (Exception x)
+    	{}
+    }
+    
+    public String getTargetInputString()
+    {
+    	return targetInputString;
+    }
     
     public IAtomContainer getTarget() {
 		return target;
@@ -93,6 +110,7 @@ public class BasicReactorProcess implements IProcess
     	
     	try {
 			List<ReactorNode> nodes = reactor.reactNext(nSteps);
+			System.out.println("--Handled " + nodes.size() + " nodes");
 			
 			//TODO
 			//put info into: (1) Console (2) SmartChemTable (3) StrutureTable

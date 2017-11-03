@@ -32,7 +32,7 @@ public class BasicReactorProcessPanel extends ProcessPanel
     public BasicReactorProcessPanel(BasicReactorProcess basicReactorProcess)  
     {
         this.setBasicReactorProcess(basicReactorProcess);
-        StructureRecord r = StructureSetUtils.getStructureRecordFromString(basicReactorProcess.inputTagetMoleculeAsString);
+        StructureRecord r = StructureSetUtils.getStructureRecordFromString(basicReactorProcess.getTargetInputString());
         structurePanel = new StructurePanel(basicReactorProcess, r);
             initGUI();
     }

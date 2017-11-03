@@ -128,9 +128,11 @@ public class BasicReactorWizard extends JFrame
 
 				try{
 					BasicReactorProcess basicReactorProcess = new BasicReactorProcess();
+					basicReactorProcess.reactDB = processCommonChemData.getReactionDB();				
 					basicReactorProcess.name = processNameField.getText();
-					basicReactorProcess.inputTagetMoleculeAsString = smilesField.getText();
+					basicReactorProcess.setTargetInputString(smilesField.getText());					
 					BasicReactorProcessPanel brpPanel = new BasicReactorProcessPanel(basicReactorProcess);
+					basicReactorProcess.initProcess();
 
 					processTabs.addProcessPanel(brpPanel);
 					int currentPosition = processTabs.getTabCount()-1;
