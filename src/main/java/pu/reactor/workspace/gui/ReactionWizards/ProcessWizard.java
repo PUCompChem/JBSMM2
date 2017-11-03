@@ -11,7 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static com.sun.glass.ui.Cursor.setVisible;
+
 
 /**
  * Created by gogo on 3.11.2017 г..
