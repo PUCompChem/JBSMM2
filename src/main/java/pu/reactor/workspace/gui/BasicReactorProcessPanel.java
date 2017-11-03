@@ -122,4 +122,10 @@ public class BasicReactorProcessPanel extends ProcessPanel
 		return basicReactorProcess;
 	}
 
+	@Override
+	public void updatePanel() {
+		// TODO 
+		
+	}
+
 }

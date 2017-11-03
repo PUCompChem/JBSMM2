@@ -7,4 +7,5 @@ import pu.reactor.workspace.IProcess;
 public abstract class ProcessPanel extends JPanel 
 {
 	public abstract IProcess getProcess();
+	public abstract void updatePanel();
 }

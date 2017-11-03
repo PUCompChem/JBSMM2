@@ -31,13 +31,6 @@ public class BasicReactorProcess implements IProcess
 
     StructureRecord currentStructure = new StructureRecord();
     
-    /*
-    public void createPanel()
-    {
-    	panel = new BasicReactorProcessPanel(this);
-    }
-    */
-    
     public IAtomContainer getTarget() {
 		return target;
 	}
@@ -79,22 +72,6 @@ public class BasicReactorProcess implements IProcess
 
     }
 
-    /*
-    @Override
-    public JPanel getPanel() {
-        return this.panel;
-    }
-    
-    
-    @Override
-    public void setPanel(JPanel panel) {
-        if(panel instanceof BasicReactorProcessPanel){
-            this.panel = (BasicReactorProcessPanel)panel;
-        }
-
-    }
-    */
-
     @Override
     public void initProcess() throws Exception
     {
@@ -135,12 +112,5 @@ public class BasicReactorProcess implements IProcess
 	public String getName() {
 		return name;
 	}
-
-	/*
-    @Override
-	public JPanel getParametersPanel() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	*/
+	
 }

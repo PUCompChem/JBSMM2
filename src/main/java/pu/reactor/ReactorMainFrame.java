@@ -492,6 +492,7 @@ public class ReactorMainFrame extends JFrame {
 		{
 			System.out.println("Next Steps for process: " + pp.getProcess().getName());
 			pp.getProcess().runProcessNextSteps();
+			pp.updatePanel();
 		}
 		catch (Exception x)
 		{
