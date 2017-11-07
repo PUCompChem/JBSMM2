@@ -26,7 +26,6 @@ public class BasicReactorProcessPanel extends ProcessPanel
     private BasicReactorProcess basicReactorProcess;
     private StructurePanel structurePanel;
     private StructureTable structureTable = new StructureTable(5);
-
     private SmartChemTable smartChemTable = new SmartChemTable();
     
     public BasicReactorProcessPanel(BasicReactorProcess basicReactorProcess)  

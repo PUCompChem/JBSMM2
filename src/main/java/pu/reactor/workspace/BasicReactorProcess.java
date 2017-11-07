@@ -37,7 +37,7 @@ public class BasicReactorProcess implements IProcess
     	this.targetInputString = targetInputString;
     	try
     	{
-    		target = SmartsHelper.getMoleculeFromSmiles(targetInputString);
+    		target = SmartsHelper.getMoleculeFromSmiles(targetInputString,true);
     	}
     	catch (Exception x)
     	{}
@@ -92,10 +92,29 @@ public class BasicReactorProcess implements IProcess
     @Override
     public void initProcess() throws Exception
     {
-    	reactDB.configureReactions(reactor.getSMIRKSManager());
+    		reactDB.configureReactions(reactor.getSMIRKSManager());
 		reactor.setReactionDataBase(reactDB);
 		reactor.setStrategy(strategy);
+		
+		strategy.FlagStoreFailedNodes = true;
+		strategy.FlagStoreSuccessNodes = true;
+		strategy.maxNumOfSuccessNodes = 0;  //if 0 then the reactor will stop after the first success node
+		
+		strategy.FlagCheckNodeDuplicationOnPush = true;
+		strategy.FlagTraceReactionPath = true;
+		strategy.FlagLogMainReactionFlow = true;
+		strategy.FlagLogReactionPath = true;
+		strategy.FlagLogNameInReactionPath = false;
+		strategy.FlagLogExplicitHToImplicit = true;
+		
 		reactor.initializeReactor(target); //TODO
+		
+		//Setup Smirks manager
+		reactor.getSMIRKSManager().setFlagProcessResultStructures(true);
+		reactor.getSMIRKSManager().setFlagClearImplicitHAtomsBeforeResultProcess(false);
+		reactor.getSMIRKSManager().setFlagAddImplicitHAtomsOnResultProcess(false);
+		reactor.getSMIRKSManager().setFlagConvertExplicitHToImplicitOnResultProcess(false);
+
     }
 
     @Override
@@ -111,6 +130,11 @@ public class BasicReactorProcess implements IProcess
     	try {
 			List<ReactorNode> nodes = reactor.reactNext(nSteps);
 			System.out.println("--Handled " + nodes.size() + " nodes");
+			for (int i = 0; i < nodes.size(); i++)
+			{
+				ReactorNode node = nodes.get(i);
+				System.out.println(node.toString(reactor));
+			}
 			
 			//TODO
 			//put info into: (1) Console (2) SmartChemTable (3) StrutureTable
