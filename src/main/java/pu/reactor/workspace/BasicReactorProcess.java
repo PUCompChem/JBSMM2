@@ -29,6 +29,7 @@ public class BasicReactorProcess implements IProcess
     String targetInputString = null;
     IAtomContainer target = null;
     public int stepSize = 10;
+    public List<ReactorNode> resultNodes = null;
 
     StructureRecord currentStructure = new StructureRecord();
     
@@ -129,6 +130,7 @@ public class BasicReactorProcess implements IProcess
     	
     	try {
 			List<ReactorNode> nodes = reactor.reactNext(nSteps);
+			resultNodes = nodes;
 			System.out.println("--Handled " + nodes.size() + " nodes");
 			for (int i = 0; i < nodes.size(); i++)
 			{
