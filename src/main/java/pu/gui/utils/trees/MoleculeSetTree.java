@@ -82,6 +82,7 @@ public class MoleculeSetTree extends SetTree
 	private void initGUI() {
 		infoPanel = new InfoPanel();
 		tree = new JTree();
+		setIcons("pu/images/molecule.png");
 
 
 		this.add(tree);

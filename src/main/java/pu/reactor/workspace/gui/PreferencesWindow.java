@@ -149,7 +149,7 @@ public class PreferencesWindow extends JFrame
 
 	    	 @Override
 	    	 public void actionPerformed(ActionEvent e){
-	    		 System.out.println("Apply button was clicked"); 
+	    		 System.out.println("Apply button was clicked");
 	    		 preferences.reactionDBPath = reactionDBPathField.getText();
 	    		 preferences.startingMaterialsPath = startingMaterialsDBPathField.getText();
 
@@ -161,11 +161,11 @@ public class PreferencesWindow extends JFrame
 	    				 FileWriter fw = new FileWriter(preferencesFilePath);
 	    				 bw = new BufferedWriter(fw);
 	    				 bw.write(preferences.toJsonString());
-	    			 }  
+	    			 }
 	    			 catch (IOException ioe) {
 	    				 ioe.printStackTrace();
 	    			 }
-	    			 finally{ 
+	    			 finally{
 	    				 try{
 	    					 if(bw!=null)
 	    						 bw.close();
@@ -251,6 +251,11 @@ public class PreferencesWindow extends JFrame
 		
 	}
 
-	 
+	public JButton getOkButton() {
+		return okButton;
+	}
 
+	public void setOkButton(JButton okButton) {
+		this.okButton = okButton;
+	}
 }

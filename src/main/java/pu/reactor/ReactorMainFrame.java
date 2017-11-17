@@ -17,6 +17,7 @@ import pu.reactor.workspace.gui.ReactionWizards.BasicReactorWizard;
 import pu.reactor.workspace.gui.PreferencesWindow;
 import pu.reactor.workspace.gui.ProcessPanel;
 import pu.reactor.workspace.gui.ReactionToolBar;
+import pu.reactor.workspace.gui.ReactionWizards.SingleReactionWizard;
 import pu.reactor.workspace.gui.ReactorProcessTabsSet;
 
 import javax.swing.*;
@@ -96,10 +97,8 @@ public class ReactorMainFrame extends JFrame {
 
 	private SmartChemTable smartChemTable;
 	private JMenuItem singleReaction;
+	private SingleReactionWizard newSingleProcessWizard;
 
-
-	
-	
 
 	public ReactorMainFrame() throws Exception {
 		super();
@@ -117,6 +116,7 @@ public class ReactorMainFrame extends JFrame {
 	private void initGUI() throws Exception
 	{
 		setPreferences();
+		setReactionDB();
 		preferencesWindow = new PreferencesWindow(preferences, preferencesFilePath);
 
 
@@ -162,7 +162,7 @@ public class ReactorMainFrame extends JFrame {
 		{
 			reactionSetTree = new ReactionSetTree(processChemData.getReactionDB().reactions);
 			  treesTabPane = new JTabbedPane();
-			treesTabPane.add("reactions",reactionSetTree);
+			  treesTabPane.add("reactions",reactionSetTree);
 
 
 			areas.get(0).setLayout(new BorderLayout());
@@ -205,7 +205,7 @@ public class ReactorMainFrame extends JFrame {
 
 
 		bottomCenterTabbedPanel = new JTabbedPane();
-	 	treesTabPane.add("molecules", moleculeTree);
+    	treesTabPane.add("molecules", moleculeTree);
 		bottomCenterTabbedPanel.add("selected molecule",moleculeTree.getMoleculePanel());
 
 		areas.get(2).add(bottomCenterTabbedPanel,BorderLayout.CENTER);
@@ -227,15 +227,6 @@ public class ReactorMainFrame extends JFrame {
 				 * End setConsole
 				 */
 
-		// Setting the work cases tab pane
-//		workCasesTabPane = new JTabbedPane();
-//		workCases = new WorkCaseTabSet();
-//		workCases.setTabbedPane(workCasesTabPane);
-//		areas.get(1).setLayout(new BorderLayout());
-//		areas.get(1).add(workCasesTabPane, BorderLayout.CENTER);
-
-
-		 //processTabs = new ReactorProcessTabsSet();
 
 
 	}
@@ -246,12 +237,14 @@ public class ReactorMainFrame extends JFrame {
 	{
 		if (preferencesFilePath == null)
 		{
+
 			preferences = new Preferences();
 			return;
 		}
 
 		PreferencesJsonParser prefPar = new PreferencesJsonParser();
 		preferences = prefPar.loadFromJSON(new File(preferencesFilePath));
+
 
 		if (!prefPar.getErrors().isEmpty())
 			throw new Exception("Preferences configuration errors:\n"
@@ -269,14 +262,16 @@ public class ReactorMainFrame extends JFrame {
 		}
 		catch (Exception x)
 		{
+			System.out.println("ReactionDB path is not valid");
 			System.out.println(x.getMessage());
+
 		}
 	}
 	private void setStartingMaterialsDB() {
 		try
 		{
-			StartingMaterialsDataBase startingMaterialsDataBase = new StartingMaterialsDataBase();
-			processChemData.setStartingMaterialsDataBase(startingMaterialsDataBase);
+			//StartingMaterialsDataBase startingMaterialsDataBase = new StartingMaterialsDataBase();
+			//processChemData.setStartingMaterialsDataBase(startingMaterialsDataBase);
 		}
 		catch (Exception x)
 		{
@@ -387,7 +382,13 @@ public class ReactorMainFrame extends JFrame {
 		menuProcess.add(miWorkspaceProcess);
 
 		singleReaction = new JMenuItem("Single Reaction");
-		
+		singleReaction.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				newSingleProcessWizard = new SingleReactionWizard();
+			}
+		});
+
 
 		basicReactor = new JMenuItem("Basic Reactor");
 		basicReactor.addActionListener(new ActionListener() {

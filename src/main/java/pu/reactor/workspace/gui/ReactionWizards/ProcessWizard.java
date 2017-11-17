@@ -17,10 +17,10 @@ import java.awt.event.ActionListener;
  * Created by gogo on 3.11.2017 г..
  */
 public class ProcessWizard extends JFrame {
-    private JPanel stageCards;
-    private JPanel firstStepPanel;
-    private JPanel seconStepPanel = new JPanel();
-    private JButton applyButton;
+    protected JPanel stageCards;
+    protected JPanel firstStepPanel;
+    protected JPanel seconStepPanel = new JPanel();
+    protected JButton applyButton;
     //private JButton previousButton;
     //private JButton nextButtonSet;
 
@@ -35,15 +35,12 @@ public class ProcessWizard extends JFrame {
 
 
 
-    private void initGUI() {
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(new Dimension(400,600));
+    protected void initGUI() {
         this.setResizable(false);
-        this.setSize(new Dimension(320,50));
+        this.setSize(new Dimension(400,600));
         this.revalidate();
         this.add(buttonsPanel,BorderLayout.SOUTH);
         //Set StageCards
-        this.setTitle("Basic Reactor Wizard");
 
         setCancelButton();
         ApplyButtonSet();
@@ -69,18 +66,6 @@ public class ProcessWizard extends JFrame {
         firstStepPanel.setBorder(new EmptyBorder(50, 10, 10, 0));
 
 
-        JLabel smilesInputLabel = new JLabel("Molecule (Smiles/InChI):");
-        smilesInputLabel.setBorder(new EmptyBorder(0, 0, 0, 45));
-        smilesField = new JTextField(30);
-        firstStepPanel.add(smilesInputLabel, BorderLayout.WEST);
-        firstStepPanel.add(smilesField);
-
-
-        JLabel processNameLabel = new JLabel("Process Name:");
-        processNameField = new JTextField(30);
-        processNameField.setText("New Process");
-        firstStepPanel.add(processNameLabel);
-        firstStepPanel.add(processNameField);
 
 
 	/*

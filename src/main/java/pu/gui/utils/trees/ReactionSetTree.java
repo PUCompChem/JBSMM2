@@ -58,7 +58,7 @@ public class ReactionSetTree extends SetTree
 		tree = new JTree();
 
 
-		setIcons("pu/images/reactionIcon.png","pu/images/reactionIcon.png","pu/images/reactionIcon.png" );
+		setIcons("pu/images/reactionIcon.png","pu/images/reactionGroup.png","pu/images/reactionGroup.png" );
 
 		JScrollPane scrollBar = new JScrollPane(tree);
 

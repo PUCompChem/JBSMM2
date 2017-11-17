@@ -142,6 +142,13 @@ abstract public class SetTree extends JPanel {
         renderer.setClosedIcon(fromImageToIcon(closeNodeImagePath));
         renderer.setOpenIcon(fromImageToIcon(openNodeImagePath));
     }
+
+
+    public void setIcons(String leafImagePath){
+        DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer) tree.getCellRenderer();
+
+        renderer.setLeafIcon(fromImageToIcon(leafImagePath));
+    }
     private ImageIcon fromImageToIcon(String path){
         BufferedImage image = null;
         try {

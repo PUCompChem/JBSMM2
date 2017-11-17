@@ -90,7 +90,7 @@ public class BasicReactorWizard extends JFrame
 		processNameField = new JTextField(30);
 		processNameField.setText("New Process");
 		firstStepPanel.add( processNameLabel );
-		firstStepPanel.add(processNameField );
+		firstStepPanel.add(processNameField);
 
 		JLabel loadStrategyLabel = new JLabel("Strategy Path:");
 		loadStrategyLabel.setBorder(new EmptyBorder(0, 0, 0, 7));
@@ -159,28 +159,8 @@ public class BasicReactorWizard extends JFrame
 			}
 		});
 	}
-	/*
-	public void PreviousButtonSet(){
-		previousButton = new JButton("Previous");
-		buttonsPanel.add(previousButton);
-		previousButton.addActionListener(new ActionListener() {
-			public  void actionPerformed(ActionEvent e) {
-				cardLayout.previous(stageCards);
-			}
-		} );
-	}
-	public void NextButtonSet(){
-		nextButtonSet = new JButton("Next");
-		buttonsPanel.add(nextButtonSet);
-		nextButtonSet.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
 
-				cardLayout.next(stageCards);
 
-			}
-		} );
-	}
-	*/
 
 	public String SetFileChooser(){
 		JFileChooser fc = new JFileChooser();
