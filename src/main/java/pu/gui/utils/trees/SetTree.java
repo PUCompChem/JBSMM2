@@ -5,6 +5,9 @@ import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
+
+import pu.gui.utils.GenericContextMenu;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,13 +24,23 @@ abstract public class SetTree extends JPanel {
     protected InfoPanel infoPanel;
     protected JTextField treeSearchBox;
     protected JButton treeSearchButton;
+    protected GenericContextMenu contextMenu = null;
 
     public SetTree() {
 
 
     }
 
-    void searchBoxSet() {
+    public GenericContextMenu getContextMenu() {
+		return contextMenu;
+	}
+
+	public void setContextMenu(GenericContextMenu contextMenu) {
+		this.contextMenu = contextMenu;
+		//TODO ?? link event handling here or within inherited class instance 
+	}
+
+	void searchBoxSet() {
         treeSearchBox = new JTextField(13);
         treeSearchButton = new JButton("Search");
         JPanel searchPanel = new JPanel();
