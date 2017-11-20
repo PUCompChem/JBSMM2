@@ -10,12 +10,9 @@ import pu.helpers.StructureSetUtils;
 import pu.reactor.workspace.BasicReactorProcess;
 import pu.reactor.workspace.IProcess;
 
-import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Field;
 import java.util.*;
 import java.util.List;
 
@@ -26,7 +23,7 @@ public class BasicReactorProcessPanel extends ProcessPanel
 {
 
 	private BasicReactorProcess basicReactorProcess;
-	private StructurePanel structurePanel;
+	private BasicReactorStatusPanel structurePanel;
 	private StructureTable structureTable = new StructureTable(5);
 	private SmartChemTable smartChemTable = new SmartChemTable();
 
@@ -34,7 +31,7 @@ public class BasicReactorProcessPanel extends ProcessPanel
 	{
 		this.setBasicReactorProcess(basicReactorProcess);
 		StructureRecord r = StructureSetUtils.getStructureRecordFromString(basicReactorProcess.getTargetInputString());
-		structurePanel = new StructurePanel(basicReactorProcess, r);
+		structurePanel = new BasicReactorStatusPanel(basicReactorProcess, r);
 		initGUI();
 	}
 
@@ -50,7 +47,7 @@ public class BasicReactorProcessPanel extends ProcessPanel
 
 		setLayout(new BorderLayout());
 		structurePanel.setPreferredSize(new Dimension(500,300));
-		add(structurePanel,BorderLayout.NORTH);
+		add(structurePanel,BorderLayout.EAST);
 		List<StructureRecord> structureRecords = new ArrayList<StructureRecord>();
 		java.util.List<SmartChemTableField> fields = new ArrayList<SmartChemTableField>();
 		//fields.add(new SmartChemTableField("No", SmartChemTableField.Type.VALUE));
@@ -60,23 +57,7 @@ public class BasicReactorProcessPanel extends ProcessPanel
 
 		smartChemTable = new SmartChemTable(fields);
 
-		/* 
-        List<Object> rowFields = new ArrayList<Object>();
-        rowFields.add(1);
-        rowFields.add("propane");
-        rowFields.add("CCC");
-        rowFields.add("CCCO");
-        smartChemTable.addTableRow(rowFields);
 
-        rowFields = new ArrayList<Object>();
-        rowFields.add(2);
-        rowFields.add("pentane");
-        rowFields.add("CCCCC");
-        rowFields.add("CCCCCO");
-        smartChemTable.addTableRow(rowFields);
-
-        smartChemTable.addStructureRecord(structureRecords);
-		 */
 
 		add(structureTable,BorderLayout.CENTER);
 		add(smartChemTable,BorderLayout.CENTER);
