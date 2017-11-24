@@ -23,7 +23,7 @@ public class BasicReactorProcessPanel extends ProcessPanel
 {
 
 	private BasicReactorProcess basicReactorProcess;
-	private BasicReactorStatusPanel structurePanel;
+	private BasicReactorStatusPanel statusPanel;
 	private StructureTable structureTable = new StructureTable(5);
 	private SmartChemTable smartChemTable = new SmartChemTable();
 
@@ -31,7 +31,7 @@ public class BasicReactorProcessPanel extends ProcessPanel
 	{
 		this.setBasicReactorProcess(basicReactorProcess);
 		StructureRecord r = StructureSetUtils.getStructureRecordFromString(basicReactorProcess.getTargetInputString());
-		structurePanel = new BasicReactorStatusPanel(basicReactorProcess, r);
+		statusPanel = new BasicReactorStatusPanel(basicReactorProcess, r);
 		initGUI();
 	}
 
@@ -46,8 +46,8 @@ public class BasicReactorProcessPanel extends ProcessPanel
 	private void initGUI() {
 
 		setLayout(new BorderLayout());
-		structurePanel.setPreferredSize(new Dimension(500,300));
-		add(structurePanel,BorderLayout.EAST);
+		statusPanel.setPreferredSize(new Dimension(300,300));
+		add(statusPanel,BorderLayout.EAST);
 		List<StructureRecord> structureRecords = new ArrayList<StructureRecord>();
 		java.util.List<SmartChemTableField> fields = new ArrayList<SmartChemTableField>();
 		//fields.add(new SmartChemTableField("No", SmartChemTableField.Type.VALUE));
@@ -63,7 +63,7 @@ public class BasicReactorProcessPanel extends ProcessPanel
 		add(smartChemTable,BorderLayout.CENTER);
 
 
-		structurePanel.parametersPanel.getChTableButton().addActionListener(new ActionListener() {
+		statusPanel.parametersPanel.getChTableButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
@@ -72,7 +72,7 @@ public class BasicReactorProcessPanel extends ProcessPanel
 				structureTable.setVisible(false);
 			}
 		});
-		structurePanel.parametersPanel.getStrTableButton().addActionListener(new ActionListener() {
+		statusPanel.parametersPanel.getStrTableButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				smartChemTable.setVisible(false);
