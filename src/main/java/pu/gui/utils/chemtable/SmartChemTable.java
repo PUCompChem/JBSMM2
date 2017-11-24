@@ -1,4 +1,4 @@
-package pu.gui.utils.chemTable;
+package pu.gui.utils.chemtable;
 
 import java.awt.*;
 import java.awt.event.ComponentEvent;
@@ -12,7 +12,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 
 import pu.gui.utils.MoleculeDrawer;
 import pu.gui.utils.StretchIcon;
-import pu.gui.utils.chemTable.SmartChemTableField.Type;
+import pu.gui.utils.chemtable.SmartChemTableField.Type;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

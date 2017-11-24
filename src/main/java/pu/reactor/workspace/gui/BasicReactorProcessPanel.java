@@ -3,8 +3,8 @@ package pu.reactor.workspace.gui;
 import ambit2.base.data.StructureRecord;
 import ambit2.reactions.reactor.Reactor;
 import ambit2.reactions.reactor.ReactorNode;
-import pu.gui.utils.chemTable.SmartChemTable;
-import pu.gui.utils.chemTable.SmartChemTableField;
+import pu.gui.utils.chemtable.SmartChemTable;
+import pu.gui.utils.chemtable.SmartChemTableField;
 import pu.gui.utils.structTable.StructureTable;
 import pu.helpers.StructureSetUtils;
 import pu.reactor.workspace.BasicReactorProcess;
@@ -54,20 +54,14 @@ public class BasicReactorProcessPanel extends ProcessPanel
 		fields.add(new SmartChemTableField("Info", SmartChemTableField.Type.TEXT));
 		fields.add(new SmartChemTableField("Structure", SmartChemTableField.Type.STRUCTURE));
 
-
 		smartChemTable = new SmartChemTable(fields);
-
-
 
 		add(structureTable,BorderLayout.CENTER);
 		add(smartChemTable,BorderLayout.CENTER);
 
-
 		statusPanel.parametersPanel.getChTableButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-
 				smartChemTable.setVisible(true);
 				structureTable.setVisible(false);
 			}
@@ -117,6 +111,8 @@ public class BasicReactorProcessPanel extends ProcessPanel
 	        rowFields.add(prodSmi);
 	        rowFields.add(prodSmi);	        
 	        smartChemTable.addTableRow(rowFields);
+	        structureTable.addMoleculeAsString(prodSmi);
+	        
 		}
 	}
 

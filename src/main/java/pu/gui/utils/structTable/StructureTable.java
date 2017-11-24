@@ -34,28 +34,19 @@ public class StructureTable extends JPanel {
 //
 //        gc.gridwidth = 1;
 
-        this.Add("CCCC=O");
-        this.Add("CCCC=C");
-        this.Add("C=O=C");
-        this.Add("C=O=C");
-        this.Add("C=O=C");
-        this.Add("C=O=C");
-        this.Add("C=O=C");
-        this.Add("C=O=C");
-        this.Add("C=O=C");
-        this.Add("C=O=C");
-        this.Add("C=O=C");
-        this.Add("C=O=C");
-        this.Add("C=O=C");
+     
+        this.addMoleculeAsString("CCCC=O");
+        this.addMoleculeAsString("CCCC=C");
+     
         Draw();
     }
 
-    public void Add(String smiles){
+    public void addMoleculeAsString(String molString){
         StructureRecord structureRecord = new StructureRecord();
-        structureRecord.setSmiles(smiles);
+        structureRecord.setSmiles(molString);
         Add(structureRecord);
-
     }
+    
     public void Add(StructureRecord structureRecord){
             JPanel currentPanel = new JPanel(new BorderLayout());
 

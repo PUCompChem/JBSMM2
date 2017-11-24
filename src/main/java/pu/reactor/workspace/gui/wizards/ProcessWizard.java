@@ -1,4 +1,4 @@
-package pu.reactor.workspace.gui.ReactionWizards;
+package pu.reactor.workspace.gui.wizards;
 
 import pu.gui.utils.ButtonTabComponent;
 import pu.reactor.workspace.BasicReactorProcess;

@@ -1,4 +1,4 @@
-package pu.gui.utils.chemTable;
+package pu.gui.utils.chemtable;
 
 public class SmartChemTableField 
 {

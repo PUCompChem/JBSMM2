@@ -6,7 +6,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
 
-import pu.gui.utils.ContextMenus.GenericContextMenu;
+import pu.gui.utils.contextmenus.GenericContextMenu;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

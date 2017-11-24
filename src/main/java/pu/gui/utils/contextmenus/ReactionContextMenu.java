@@ -1,4 +1,4 @@
-package pu.gui.utils.ContextMenus;
+package pu.gui.utils.contextmenus;
 
 import javax.swing.*;
 import javax.swing.tree.TreePath;

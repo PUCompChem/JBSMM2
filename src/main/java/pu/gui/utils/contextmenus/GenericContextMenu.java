@@ -1,4 +1,4 @@
-package pu.gui.utils.ContextMenus;
+package pu.gui.utils.contextmenus;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

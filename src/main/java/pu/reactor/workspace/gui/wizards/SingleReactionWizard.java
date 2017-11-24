@@ -1,4 +1,4 @@
-package pu.reactor.workspace.gui.ReactionWizards;
+package pu.reactor.workspace.gui.wizards;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

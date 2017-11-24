@@ -5,7 +5,7 @@ import pu.filtering.ColorScheme;
 import pu.filtering.ICode;
 import pu.filtering.IFilter;
 import pu.filtering.filters.SetFilter;
-import pu.gui.utils.ContextMenus.ReactionContextMenu;
+import pu.gui.utils.contextmenus.ReactionContextMenu;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
