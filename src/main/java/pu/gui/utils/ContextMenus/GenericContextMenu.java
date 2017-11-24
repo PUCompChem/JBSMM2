@@ -1,18 +1,20 @@
-package pu.gui.utils;
+package pu.gui.utils.ContextMenus;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JPopupMenu;
 
-public abstract class GenericContextMenu implements MouseListener
+public abstract class GenericContextMenu extends MouseAdapter
 {
-	
+
 	List<Object> guiObjects = new ArrayList<Object>();
-	
+
 	JPopupMenu popMenu = null;
-	
+
 	//public abstract void handleEvent();
 
 	public List<Object> getGuiObjects() {
@@ -30,4 +32,6 @@ public abstract class GenericContextMenu implements MouseListener
 	public void setPopMenu(JPopupMenu popMenu) {
 		this.popMenu = popMenu;
 	}
+
+
 }

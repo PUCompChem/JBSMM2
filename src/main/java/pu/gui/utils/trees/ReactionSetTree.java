@@ -5,6 +5,7 @@ import pu.filtering.ColorScheme;
 import pu.filtering.ICode;
 import pu.filtering.IFilter;
 import pu.filtering.filters.SetFilter;
+import pu.gui.utils.ContextMenus.ReactionContextMenu;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -13,8 +14,12 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -57,6 +62,7 @@ public class ReactionSetTree extends SetTree
 	private void initGUI() {
 		tree = new JTree();
 
+			 tree.addMouseListener(new ReactionContextMenu(this.tree));
 
 		setIcons("pu/images/reactionIcon.png","pu/images/reactionGroup.png","pu/images/reactionGroup.png" );
 
@@ -103,6 +109,7 @@ public class ReactionSetTree extends SetTree
 					if (nextLevelNode == null)
 				{
 					nextLevelNode = new DefaultMutableTreeNode(currentLevel);
+
 					currentLevelNode.add(nextLevelNode);
 				}
 				currentLevelNode = nextLevelNode;
