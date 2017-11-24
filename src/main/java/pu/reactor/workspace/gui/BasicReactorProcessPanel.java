@@ -5,7 +5,8 @@ import ambit2.reactions.reactor.Reactor;
 import ambit2.reactions.reactor.ReactorNode;
 import pu.gui.utils.chemtable.SmartChemTable;
 import pu.gui.utils.chemtable.SmartChemTableField;
-import pu.gui.utils.structTable.StructureTable;
+import pu.gui.utils.chemtable.StructureTable;
+//import pu.gui.utils.structTable.StructureTable;
 import pu.helpers.StructureSetUtils;
 import pu.reactor.workspace.BasicReactorProcess;
 import pu.reactor.workspace.IProcess;
@@ -24,7 +25,8 @@ public class BasicReactorProcessPanel extends ProcessPanel
 
 	private BasicReactorProcess basicReactorProcess;
 	private BasicReactorStatusPanel statusPanel;
-	private StructureTable structureTable = new StructureTable(5);
+	//private StructureTable structureTable = new StructureTable(5);
+	private StructureTable structureTable = new StructureTable(3);
 	private SmartChemTable smartChemTable = new SmartChemTable();
 
 	public BasicReactorProcessPanel(BasicReactorProcess basicReactorProcess)  
@@ -56,9 +58,9 @@ public class BasicReactorProcessPanel extends ProcessPanel
 
 		smartChemTable = new SmartChemTable(fields);
 
-		add(structureTable,BorderLayout.CENTER);
 		add(smartChemTable,BorderLayout.CENTER);
-
+		add(structureTable,BorderLayout.CENTER);
+		
 		statusPanel.parametersPanel.getChTableButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -112,7 +114,6 @@ public class BasicReactorProcessPanel extends ProcessPanel
 	        rowFields.add(prodSmi);	        
 	        smartChemTable.addTableRow(rowFields);
 	        structureTable.addMoleculeAsString(prodSmi);
-	        
 		}
 	}
 

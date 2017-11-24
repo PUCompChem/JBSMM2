@@ -72,7 +72,7 @@ public class SmartChemTable extends JPanel
 		initGUI();
 
 	}
-	private void initGUI() {
+	void initGUI() {
 		this.setLayout(new BorderLayout());
 
 		table = new JTable(model)
