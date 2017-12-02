@@ -17,6 +17,7 @@ import pu.reactor.workspace.gui.PreferencesWindow;
 import pu.reactor.workspace.gui.ProcessPanel;
 import pu.reactor.workspace.gui.ReactionToolBar;
 import pu.reactor.workspace.gui.wizards.BasicReactorWizard;
+import pu.reactor.workspace.gui.wizards.ReactionSequenceWizard;
 import pu.reactor.workspace.gui.wizards.SingleReactionWizard;
 import pu.reactor.workspace.gui.ReactorProcessTabsSet;
 
@@ -58,12 +59,17 @@ public class ReactorMainFrame extends JFrame {
 	JMenu menuReact;
 	JMenuItem miApplyReaction;
 	JMenuItem miFindAllReactions;
+	JMenuItem miRun;
+	JMenuItem miStop;
+	JMenuItem miNextStep;
 
-	JMenuItem basicReactor;
-
+	
 	JMenu menuProcess;
+	JMenuItem miSingleReaction;
+	JMenuItem miBasicReactor;
+	JMenuItem miReactionSequence;
+	
 	JMenuItem miWorkspaceProcess;
-
 
 	JMenu menuSettings;
 	JMenuItem menuPreferences;
@@ -74,9 +80,7 @@ public class ReactorMainFrame extends JFrame {
 	private JMenuItem miProcessSettings;
 	
 	
-	private JMenuItem miRun;
-	private JMenuItem miStop;
-	private JMenuItem miNextStep;
+	
 
 	private ReactionToolBar reactionToolBar;
 	//private BasicReactorWizard newProcessWizard;
@@ -96,10 +100,8 @@ public class ReactorMainFrame extends JFrame {
 	private ReactorProcessTabsSet processTabs = new ReactorProcessTabsSet();
 
 	private SmartChemTable smartChemTable;
-	private JMenuItem singleReaction;
-	private SingleReactionWizard newSingleProcessWizard;
-
-
+	
+	
 	public ReactorMainFrame() throws Exception {
 		super();
 		initGUI();
@@ -381,27 +383,38 @@ public class ReactorMainFrame extends JFrame {
 		miWorkspaceProcess = new JMenu("New Process");
 		menuProcess.add(miWorkspaceProcess);
 
-		singleReaction = new JMenuItem("Single Reaction");
-		singleReaction.addActionListener(new ActionListener() {
+		miSingleReaction = new JMenuItem("Single Reaction");
+		miSingleReaction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				newSingleProcessWizard = new SingleReactionWizard();
+				SingleReactionWizard wizard = new SingleReactionWizard();
 			}
 		});
 
 
-		basicReactor = new JMenuItem("Basic Reactor");
-		basicReactor.addActionListener(new ActionListener() {
+		miBasicReactor = new JMenuItem("Basic Reactor");
+		miBasicReactor.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				BasicReactorWizard newProcessWizard 
+				BasicReactorWizard wizard 
 					= new BasicReactorWizard(processTabs, processChemData);
 			}
 		});
 		
 		
-		miWorkspaceProcess.add(singleReaction);
-		miWorkspaceProcess.add(basicReactor);
+		miReactionSequence = new JMenuItem("Reaction Sequence");
+		miReactionSequence.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ReactionSequenceWizard wizard 
+					= new ReactionSequenceWizard(processTabs, processChemData);
+			}
+		});
+		
+		miWorkspaceProcess.add(miSingleReaction);
+		miWorkspaceProcess.add(miBasicReactor);
+		miWorkspaceProcess.add(miReactionSequence);
+
 
 		menuProcess.addSeparator();
 
