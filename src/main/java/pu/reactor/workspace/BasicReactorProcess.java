@@ -31,7 +31,7 @@ public class BasicReactorProcess implements IProcess
 	public int stepSize = 10;
 	public List<ReactorNode> resultNodes = null;
 
-	StructureRecord currentStructure = new StructureRecord();
+	//StructureRecord currentStructure = new StructureRecord();
 
 	public void setTargetInputString(String targetInputString)
 	{

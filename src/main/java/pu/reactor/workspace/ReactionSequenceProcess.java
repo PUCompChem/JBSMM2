@@ -8,8 +8,7 @@ import ambit2.reactions.ReactionDataBase;
 import ambit2.smarts.SmartsHelper;
 
 public class ReactionSequenceProcess implements IProcess
-{
-	
+{	
 	String name = "new reaction sequence";
 	String targetInputString = null;
 	ReactionDataBase reactDB = null;

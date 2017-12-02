@@ -50,7 +50,7 @@ public class BasicReactorProcessPanel extends ProcessPanel
 		setLayout(new BorderLayout());
 		statusPanel.setPreferredSize(new Dimension(300,300));
 		add(statusPanel,BorderLayout.EAST);
-		List<StructureRecord> structureRecords = new ArrayList<StructureRecord>();
+		//List<StructureRecord> structureRecords = new ArrayList<StructureRecord>();
 		java.util.List<SmartChemTableField> fields = new ArrayList<SmartChemTableField>();
 		//fields.add(new SmartChemTableField("No", SmartChemTableField.Type.VALUE));
 		fields.add(new SmartChemTableField("Info", SmartChemTableField.Type.TEXT));
