@@ -79,7 +79,7 @@ public class ReactorMainFrame extends JFrame {
 	private JMenuItem miNextStep;
 
 	private ReactionToolBar reactionToolBar;
-	private BasicReactorWizard newProcessWizard;
+	//private BasicReactorWizard newProcessWizard;
 
 	//Data containers
 	String preferencesFilePath = null;
@@ -394,7 +394,8 @@ public class ReactorMainFrame extends JFrame {
 		basicReactor.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
- 				newProcessWizard = new BasicReactorWizard(processTabs, processChemData);
+				BasicReactorWizard newProcessWizard 
+					= new BasicReactorWizard(processTabs, processChemData);
 			}
 		});
 		
