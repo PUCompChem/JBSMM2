@@ -20,36 +20,36 @@ import java.util.List;
  */
 public class BasicReactorProcess implements IProcess 
 {
-    //public BasicReactorProcessPanel panel = null;
-    public String name = "new process";
-    
-    public Reactor reactor = new Reactor();
-    public ReactorStrategy strategy =  new ReactorStrategy();
-    public ReactionDataBase reactDB = null;
-    String targetInputString = null;
-    IAtomContainer target = null;
-    public int stepSize = 10;
-    public List<ReactorNode> resultNodes = null;
+	//public BasicReactorProcessPanel panel = null;
+	public String name = "new process";
 
-    StructureRecord currentStructure = new StructureRecord();
-    
-    public void setTargetInputString(String targetInputString)
-    {
-    	this.targetInputString = targetInputString;
-    	try
-    	{
-    		target = SmartsHelper.getMoleculeFromSmiles(targetInputString,true);
-    	}
-    	catch (Exception x)
-    	{}
-    }
-    
-    public String getTargetInputString()
-    {
-    	return targetInputString;
-    }
-    
-    public IAtomContainer getTarget() {
+	public Reactor reactor = new Reactor();
+	public ReactorStrategy strategy =  new ReactorStrategy();
+	public ReactionDataBase reactDB = null;
+	String targetInputString = null;
+	IAtomContainer target = null;
+	public int stepSize = 10;
+	public List<ReactorNode> resultNodes = null;
+
+	StructureRecord currentStructure = new StructureRecord();
+
+	public void setTargetInputString(String targetInputString)
+	{
+		this.targetInputString = targetInputString;
+		try
+		{
+			target = SmartsHelper.getMoleculeFromSmiles(targetInputString,true);
+		}
+		catch (Exception x)
+		{}
+	}
+
+	public String getTargetInputString()
+	{
+		return targetInputString;
+	}
+
+	public IAtomContainer getTarget() {
 		return target;
 	}
 
@@ -58,10 +58,10 @@ public class BasicReactorProcess implements IProcess
 	}
 
 	public ReactorStrategy getStrategy() {
-        return strategy;
-    }
+		return strategy;
+	}
 
-    public ReactionDataBase getReactDB() {
+	public ReactionDataBase getReactDB() {
 		return reactDB;
 	}
 
@@ -70,65 +70,65 @@ public class BasicReactorProcess implements IProcess
 	}
 
 	public void setStrategy(ReactorStrategy strategy) {
-        this.strategy = strategy;
-    }
-    
-    
+		this.strategy = strategy;
+	}
 
-    public BasicReactorProcess() throws Exception {
-    	
-    }
-    
 
-    @Override
-    public String toJsonString() {
-        return null;
-    }
 
-    @Override
-    public void loadFromJson(File file) {
+	public BasicReactorProcess() throws Exception {
 
-    }
+	}
 
-    @Override
-    public void initProcess() throws Exception
-    {
-    		reactDB.configureReactions(reactor.getSMIRKSManager());
+
+	@Override
+	public String toJsonString() {
+		return null;
+	}
+
+	@Override
+	public void loadFromJson(File file) {
+
+	}
+
+	@Override
+	public void initProcess() throws Exception
+	{
+		reactDB.configureReactions(reactor.getSMIRKSManager());
 		reactor.setReactionDataBase(reactDB);
 		reactor.setStrategy(strategy);
-		
+
 		strategy.FlagStoreFailedNodes = true;
 		strategy.FlagStoreSuccessNodes = true;
 		strategy.maxNumOfSuccessNodes = 0;  //if 0 then the reactor will stop after the first success node
-		
+
 		strategy.FlagCheckNodeDuplicationOnPush = true;
 		strategy.FlagTraceReactionPath = true;
 		strategy.FlagLogMainReactionFlow = true;
 		strategy.FlagLogReactionPath = true;
 		strategy.FlagLogNameInReactionPath = false;
 		strategy.FlagLogExplicitHToImplicit = true;
-		
+
 		reactor.initializeReactor(target); //TODO
-		
+
 		//Setup Smirks manager
 		reactor.getSMIRKSManager().setFlagProcessResultStructures(true);
 		reactor.getSMIRKSManager().setFlagClearImplicitHAtomsBeforeResultProcess(false);
 		reactor.getSMIRKSManager().setFlagAddImplicitHAtomsOnResultProcess(false);
 		reactor.getSMIRKSManager().setFlagConvertExplicitHToImplicitOnResultProcess(false);
 
-    }
+	}
 
-    @Override
-    public void runProcess() 
-    {
-    	
-    }
+	@Override
+	public void runProcess() 
+	{
 
-    @Override
-    public void runProcessNextSteps(int nSteps) throws Exception 
-    {
-    	
-    	try {
+	}
+
+	@Override
+	public void runProcessNextSteps(int nSteps) throws Exception 
+	{
+
+		try {
 			List<ReactorNode> nodes = reactor.reactNext(nSteps);
 			resultNodes = nodes;
 			System.out.println("--Handled " + nodes.size() + " nodes");
@@ -137,25 +137,25 @@ public class BasicReactorProcess implements IProcess
 				ReactorNode node = nodes.get(i);
 				System.out.println(node.toString(reactor));
 			}
-			
+
 			//TODO
 			//put info into: (1) Console (2) SmartChemTable (3) StrutureTable
-			
-			
-		} catch (Exception e) {
-			
-		}
-    }
-    
-    public void runProcessNextSteps() throws Exception 
-    {
 
-    	runProcessNextSteps(stepSize);
-    }
+
+		} catch (Exception e) {
+
+		}
+	}
+
+	public void runProcessNextSteps() throws Exception 
+	{
+
+		runProcessNextSteps(stepSize);
+	}
 
 	@Override
 	public String getName() {
 		return name;
 	}
-	
+
 }

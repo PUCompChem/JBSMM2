@@ -37,14 +37,14 @@ public class BasicReactorProcessPanel extends ProcessPanel
 		initGUI();
 	}
 
-
+/*
 	public ActionListener chemTableRadioButtonListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
 		}
 	};
-
+*/
 	private void initGUI() {
 
 		setLayout(new BorderLayout());
