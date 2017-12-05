@@ -8,8 +8,10 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 import pu.gui.utils.ButtonTabComponent;
 import pu.reactor.workspace.ProcessCommonChemData;
@@ -23,10 +25,11 @@ public class ReactionSequenceWizard extends JFrame
 	private ProcessCommonChemData processCommonChemData = null;
 	
 	JButton applyButton;
+	JButton cancelButton;
 	JTextField smilesField;
 	JTextField processNameField;
-	JPanel buttonsPanel = new JPanel(new FlowLayout());
-	JButton cancelButton;
+	JPanel inputPanel;	
+	JPanel buttonsPanel;	
 	
 	public ReactionSequenceWizard(ReactorProcessTabsSet processTabs, ProcessCommonChemData processCommonChemData) {
 		this.processTabs = processTabs;
@@ -42,10 +45,14 @@ public class ReactionSequenceWizard extends JFrame
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.revalidate();
-		this.setTitle("New Reaction Sequence");
+		this.setTitle("New Reaction Sequence");		
+		buttonsPanel = new JPanel(new FlowLayout());
 		this.add(buttonsPanel,BorderLayout.SOUTH);
 		setCancelButton();
 		setApplyButton();
+		
+		setInputPanel();
+		this.add(inputPanel,BorderLayout.CENTER);
 		
 		this.setVisible(true);
 	}	
@@ -69,10 +76,9 @@ public class ReactionSequenceWizard extends JFrame
 
 				try{
 					ReactionSequenceProcess rsp = new ReactionSequenceProcess();
-					rsp.setReactDB(processCommonChemData.getReactionDB());				
-					//rsp.name = processNameField.getText();
-					rsp.setName("Reaction Sequence");
-					rsp.setTargetInputString("CCCCC"); //smilesField.getText();
+					rsp.setReactDB(processCommonChemData.getReactionDB());
+					rsp.setName(processNameField.getText());
+					rsp.setTargetInputString(smilesField.getText()); 
 					
 					ReactionSequenceProcessPanel rspPanel = new ReactionSequenceProcessPanel(rsp);
 					rsp.initProcess();
@@ -88,5 +94,26 @@ public class ReactionSequenceWizard extends JFrame
 			}
 
 		} );
-	}	
+	}
+	
+	private void setInputPanel()
+	{
+		FlowLayout flowLayout = new FlowLayout();
+		flowLayout.setAlignment(3);
+		inputPanel = new JPanel(flowLayout);
+		inputPanel.setSize(new Dimension(100,100));
+		inputPanel.setBorder(new EmptyBorder(50, 10, 10, 0));
+
+		JLabel smilesInputLabel = new JLabel("Molecule (Smiles/InChI):");
+		smilesInputLabel.setBorder(new EmptyBorder(0, 0, 0, 45));
+		smilesField = new JTextField(30);
+		inputPanel.add(smilesInputLabel, BorderLayout.WEST);
+		inputPanel.add(smilesField);
+
+		JLabel processNameLabel = new JLabel("Process Name:");
+		processNameField = new JTextField(30);
+		processNameField.setText("New Process");
+		inputPanel.add( processNameLabel );
+		inputPanel.add(processNameField);
+	}
 }
