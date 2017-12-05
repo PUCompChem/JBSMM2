@@ -36,41 +36,76 @@ public class ReactionToolBar extends JToolBar {
     }
 
     private void initGUI() {
-        GoButton();
+
         comboBox = new JComboBox();
         comboBox.setEditable(true);
 
         StartButton();
         NextButton();
-        PreviousButton();
-        this.add(comboBox,BorderLayout.CENTER);
-
+        StopButton();
+        comboBox.setSize(new Dimension(28,25));
+        this.add(comboBox);
+        GoButton();
     }
 
 
-    private void  PreviousButton(){
+    private void  StopButton(){
         stopButton = new JButton();
         ReactionToolBar.this.add(stopButton, BorderLayout.EAST);
         try {
-            Image img = ImageIO.read(getClass().getResource("pu/images/stop.jpg"));
+            Image img = ImageIO.read(ClassLoader.getSystemResource("pu/images/stop.png"));
             stopButton.setIcon(new ImageIcon(img));
+
         } catch (Exception ex) {
             System.out.println(ex);
         }
 
     }
     private void StartButton() {
+
         startButton = new JButton();
+        try {
+            Image img = ImageIO.read( ClassLoader.getSystemResource("pu/images/play.png"));
+            startButton.setIcon(new ImageIcon(img));
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+
         ReactionToolBar.this.add(startButton, BorderLayout.EAST);
     }
+
+    public JButton getGoButton() {
+        return goButton;
+    }
+
+    public void setGoButton(JButton goButton) {
+        this.goButton = goButton;
+    }
+
+    public JButton getNextButton() {
+        return nextButton;
+    }
+
+    public void setNextButton(JButton nextButton) {
+        this.nextButton = nextButton;
+    }
+
     private void NextButton() {
         nextButton = new JButton();
+        try {
+            Image img = ImageIO.read( ClassLoader.getSystemResource("pu/images/next.png"));
+            nextButton.setIcon(new ImageIcon(img));
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+
         ReactionToolBar.this.add(nextButton, BorderLayout.EAST);
     }
 
     private void GoButton(){
-            goButton = new JButton("Go");
-            ReactionToolBar.this.add(goButton, BorderLayout.WEST);
+        goButton = new JButton("Go");
+        ReactionToolBar.this.add(goButton, BorderLayout.EAST);
+
     }
 
 }

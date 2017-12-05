@@ -63,6 +63,7 @@ public class ReactorMainFrame extends JFrame {
 	JMenuItem miStop;
 	JMenuItem miNextStep;
 
+	private ActionListener nextButtonActionListener;
 	
 	JMenu menuProcess;
 	JMenuItem miSingleReaction;
@@ -83,6 +84,8 @@ public class ReactorMainFrame extends JFrame {
 	
 
 	private ReactionToolBar reactionToolBar;
+
+
 	//private BasicReactorWizard newProcessWizard;
 
 	//Data containers
@@ -172,6 +175,8 @@ public class ReactorMainFrame extends JFrame {
 		}
 
 		reactionToolBar = new ReactionToolBar();
+		reactionToolBar.getNextButton().addActionListener(nextButtonActionListener);
+		miNextStep.addActionListener(nextButtonActionListener);
 		this.add(reactionToolBar, BorderLayout.NORTH);
 
 		/**
@@ -370,11 +375,14 @@ public class ReactorMainFrame extends JFrame {
 		menuReact.add(miNextStep);
 		miNextStep.setMnemonic('N');
 		miNextStep.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F7, ActionEvent.CTRL_MASK));
-		miNextStep.addActionListener(new ActionListener() {
+		nextButtonActionListener = (new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				miNextStepActionPerformed(evt);
 			}
 		});
+
+		miNextStep.addActionListener(nextButtonActionListener);
+
 
 		//menu Process
 		menuProcess = new JMenu("Process");
@@ -492,7 +500,6 @@ public class ReactorMainFrame extends JFrame {
 		{
 			System.out.println("Run process: " + pp.getProcess().getName());
 			pp.getProcess().runProcess();
-			
 		}
 		catch (Exception x)
 		{
