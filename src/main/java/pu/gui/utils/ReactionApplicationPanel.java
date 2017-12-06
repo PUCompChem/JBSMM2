@@ -30,11 +30,21 @@ public class ReactionApplicationPanel extends JPanel
 	public ReactionApplicationPanel()
 	{
 		initGUI();
+		
+		try {
+			IAtomContainer mol = SmartsHelper.getMoleculeFromSmiles("CCCc1ccccc1N");
+			panel2d.setAtomContainer(mol);
+		} catch (Exception e) {}
+		
+		structureTable.addMoleculeAsString("CCCC");
+		structureTable.addMoleculeAsString("CCC(N)CO");
+		structureTable.addMoleculeAsString("CCCCC");
+		structureTable.addMoleculeAsString("CCCCCCC");
+		structureTable.addMoleculeAsString("CCCCNCCO");
 	}
 	
 	private void initGUI()
-	{
-		//this.setSize(new Dimension(800,1000));
+	{	
 		this.setLayout(new BorderLayout());
 		
 		//Target panel
@@ -47,14 +57,9 @@ public class ReactionApplicationPanel extends JPanel
 		smilesPanel.add(smilesInputLabel);
 		smilesPanel.add(smilesField);
 		targetPanel.add(smilesPanel, BorderLayout.NORTH);
-		
 		panel2d = new Panel2D();
 		panel2d.setPreferredSize(new Dimension(200,200));
 		targetPanel.add(panel2d, BorderLayout.CENTER);
-		try {
-			IAtomContainer mol = SmartsHelper.getMoleculeFromSmiles("CCCc1ccccc1N");
-			panel2d.setAtomContainer(mol);
-		} catch (Exception e) {}
 		
 		//Reaction panel
 		reactionPanel = new JPanel(new BorderLayout());
@@ -75,19 +80,11 @@ public class ReactionApplicationPanel extends JPanel
 		productsPanel.add(structureTable, BorderLayout.CENTER);
 		reactionPanel.add(productsPanel, BorderLayout.CENTER);
 		
-		structureTable.addMoleculeAsString("CCCC");
-		structureTable.addMoleculeAsString("CCC(N)CO");
-		structureTable.addMoleculeAsString("CCCCC");
-		structureTable.addMoleculeAsString("CCCCCCC");
-		structureTable.addMoleculeAsString("CCCCNCCO");
-		
 		//Buttons panel
 		buttonsPanel = new JPanel(new BorderLayout());
 		this.add(buttonsPanel, BorderLayout.SOUTH);
 		reactionPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 		StructureTable structureTable = new StructureTable(3);
-		
-		
 
 	}
 	
