@@ -20,27 +20,12 @@ BasicReactorParametersPanel extends JPanel {
 	JTable table;
 
 	// visualizationOptions
-	private JPanel visualizationOptions = new JPanel();
-	private JRadioButton radioButton;
 
-	public JRadioButton getStrTableButton() {
-		return strTableButton;
-	}
 
-	public void setStrTableButton(JRadioButton strTableButton) {
-		this.strTableButton = strTableButton;
-	}
 
-	public JRadioButton getChTableButton() {
-		return chTableButton;
-	}
 
-	public void setChTableButton(JRadioButton chTableButton) {
-		this.chTableButton = chTableButton;
-	}
 
-	private JRadioButton strTableButton;
-	private JRadioButton chTableButton;
+
 
 
 	public BasicReactorParametersPanel(ReactorStrategy strategy) {
@@ -73,7 +58,6 @@ BasicReactorParametersPanel extends JPanel {
 			model.addRow(rowData);
 
 		}
-
 
 
 		table  = new JTable(model)
@@ -137,7 +121,7 @@ BasicReactorParametersPanel extends JPanel {
 		setLayout(new BorderLayout());
 		
 		setTheVariables();
-		setVizualizationOptions();
+
 
 		
 		//TODO column 0 to be set non-editable !!!!
@@ -177,7 +161,7 @@ BasicReactorParametersPanel extends JPanel {
 		JScrollPane scrollPane = new JScrollPane(table);
 
 		add(scrollPane,BorderLayout.CENTER);
-		add(visualizationOptions,BorderLayout.SOUTH);
+
 	}
 
 	private void handleTableChange(TableModelEvent e)
@@ -289,29 +273,7 @@ BasicReactorParametersPanel extends JPanel {
 		throw new Exception();
 	}
 
-	private void setVizualizationOptions(){
 
-
-		strTableButton = new JRadioButton("structure table");
-
-		strTableButton.setActionCommand("structure table");
-
-
-		 chTableButton = new JRadioButton("smart chemical table");
-		chTableButton.setActionCommand("smart chemical table");
-		chTableButton.setSelected(true);
-
-
-
-
-
-		ButtonGroup group = new ButtonGroup();
-		group.add(strTableButton);
-		group.add(chTableButton);
-		visualizationOptions.add(strTableButton);
-		visualizationOptions.add(chTableButton);
-
-	}
 	private void setTheVariables() {
 		Object[] rowData = new Object[2];
 		rowData[0] = "maxNumOfReactions";

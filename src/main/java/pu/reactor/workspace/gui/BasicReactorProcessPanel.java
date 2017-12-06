@@ -29,7 +29,7 @@ public class BasicReactorProcessPanel extends ProcessPanel
 	private StructureTable structureTable = new StructureTable(3);
 	private SmartChemTable smartChemTable = new SmartChemTable();
 
-	public BasicReactorProcessPanel(BasicReactorProcess basicReactorProcess)  
+	public BasicReactorProcessPanel(BasicReactorProcess basicReactorProcess)
 	{
 		this.setBasicReactorProcess(basicReactorProcess);
 		StructureRecord r = StructureSetUtils.getStructureRecordFromString(basicReactorProcess.getTargetInputString());
@@ -60,15 +60,15 @@ public class BasicReactorProcessPanel extends ProcessPanel
 
 		add(smartChemTable,BorderLayout.CENTER);
 		add(structureTable,BorderLayout.CENTER);
-		
-		statusPanel.parametersPanel.getChTableButton().addActionListener(new ActionListener() {
+
+		statusPanel.getChTableButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				smartChemTable.setVisible(true);
 				structureTable.setVisible(false);
 			}
 		});
-		statusPanel.parametersPanel.getStrTableButton().addActionListener(new ActionListener() {
+		statusPanel.getStrTableButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				smartChemTable.setVisible(false);
@@ -92,26 +92,26 @@ public class BasicReactorProcessPanel extends ProcessPanel
 	}
 
 	@Override
-	public void updatePanel() 
-	{	
+	public void updatePanel()
+	{
 		List<ReactorNode> resultNodes = 	basicReactorProcess.resultNodes;
 		if (resultNodes == null)
 			return;
-		
+
 		Reactor reactor = basicReactorProcess.reactor;
-		
+
 		for (int i = 0; i < resultNodes.size(); i++)
 		{
 			ReactorNode node = resultNodes.get(i);
 			if (node.finalizedProducts.isEmpty())
 				continue;
-			
+
 			List<Object> rowFields = new ArrayList<Object>();
-	        
+
 	        String prodSmi = reactor.molToSmiles(
 	        			node.finalizedProducts.getAtomContainer(0));
 	        rowFields.add(prodSmi);
-	        rowFields.add(prodSmi);	        
+	        rowFields.add(prodSmi);
 	        smartChemTable.addTableRow(rowFields);
 	        structureTable.addMoleculeAsString(prodSmi);
 		}
