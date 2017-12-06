@@ -13,6 +13,7 @@ import javax.swing.border.EtchedBorder;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 
+import pu.gui.utils.chemtable.StructureTable;
 import ambit2.smarts.SmartsHelper;
 import ambit2.ui.Panel2D;
 
@@ -21,8 +22,10 @@ public class ReactionApplicationPanel extends JPanel
 	
 	private static final long serialVersionUID = 112332423349877L;
 	
-	JPanel targetPanel, matchPanel, reactionPanel;
+	JPanel targetPanel, matchPanel, reactionPanel, buttonsPanel;
+	JTextField smilesField, smirksField;
 	Panel2D panel2d;
+	StructureTable structureTable;
 	
 	public ReactionApplicationPanel()
 	{
@@ -31,7 +34,7 @@ public class ReactionApplicationPanel extends JPanel
 	
 	private void initGUI()
 	{
-		this.setSize(new Dimension(800,1000));
+		//this.setSize(new Dimension(800,1000));
 		this.setLayout(new BorderLayout());
 		
 		//Target panel
@@ -40,7 +43,7 @@ public class ReactionApplicationPanel extends JPanel
 		targetPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 		JPanel smilesPanel = new JPanel(new FlowLayout());
 		JLabel smilesInputLabel = new JLabel("Molecule (Smiles/InChI): ");
-		JTextField smilesField = new JTextField(30);
+		smilesField = new JTextField(30);
 		smilesPanel.add(smilesInputLabel);
 		smilesPanel.add(smilesField);
 		targetPanel.add(smilesPanel, BorderLayout.NORTH);
@@ -60,7 +63,7 @@ public class ReactionApplicationPanel extends JPanel
 		
 		JPanel smirksPanel = new JPanel(new FlowLayout());
 		JLabel smirksLabel = new JLabel("SMIRKS: ");
-		JTextField smirksField = new JTextField(30);
+		smirksField = new JTextField(30);
 		smirksPanel.add(smirksLabel);
 		smirksPanel.add(smirksField);
 		reactionPanel.add(smirksPanel, BorderLayout.NORTH);
@@ -68,7 +71,22 @@ public class ReactionApplicationPanel extends JPanel
 		JPanel productsPanel = new JPanel(new BorderLayout());
 		JLabel productsLabel = new JLabel("Reaction products:");
 		productsPanel.add(productsLabel, BorderLayout.NORTH);
+		structureTable = new StructureTable(3);
+		productsPanel.add(structureTable, BorderLayout.CENTER);
 		reactionPanel.add(productsPanel, BorderLayout.CENTER);
+		
+		structureTable.addMoleculeAsString("CCCC");
+		structureTable.addMoleculeAsString("CCC(N)CO");
+		structureTable.addMoleculeAsString("CCCCC");
+		structureTable.addMoleculeAsString("CCCCCCC");
+		structureTable.addMoleculeAsString("CCCCNCCO");
+		
+		//Buttons panel
+		buttonsPanel = new JPanel(new BorderLayout());
+		this.add(buttonsPanel, BorderLayout.SOUTH);
+		reactionPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+		StructureTable structureTable = new StructureTable(3);
+		
 		
 
 	}

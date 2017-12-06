@@ -39,12 +39,16 @@ public class TestReactionApplicationPanel extends JFrame
 	private void initGUI() throws Exception
 	{
 		setSize(new Dimension(1000,800));
+		setResizable(false);
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		revalidate();
 		setTitle("Test ReactionApplicationPanel");	
 		setLayout(new FlowLayout());
-		add(new ReactionApplicationPanel());
+		ReactionApplicationPanel rap = new ReactionApplicationPanel();
+		rap.setPreferredSize(new Dimension(1000,800));
+		add(rap);
+		
 		
 	}
 }
