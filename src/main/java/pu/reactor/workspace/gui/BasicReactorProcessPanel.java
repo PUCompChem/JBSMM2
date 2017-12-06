@@ -11,6 +11,8 @@ import pu.helpers.StructureSetUtils;
 import pu.reactor.workspace.BasicReactorProcess;
 import pu.reactor.workspace.IProcess;
 
+import javax.smartcardio.Card;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,6 +30,7 @@ public class BasicReactorProcessPanel extends ProcessPanel
 	//private StructureTable structureTable = new StructureTable(5);
 	private StructureTable structureTable = new StructureTable(3);
 	private SmartChemTable smartChemTable = new SmartChemTable();
+	private JPanel tablesPanel;
 
 	public BasicReactorProcessPanel(BasicReactorProcess basicReactorProcess)
 	{
@@ -37,14 +40,7 @@ public class BasicReactorProcessPanel extends ProcessPanel
 		initGUI();
 	}
 
-/*
-	public ActionListener chemTableRadioButtonListener = new ActionListener() {
-		@Override
-		public void actionPerformed(ActionEvent e) {
 
-		}
-	};
-*/
 	private void initGUI() {
 
 		setLayout(new BorderLayout());
@@ -56,10 +52,26 @@ public class BasicReactorProcessPanel extends ProcessPanel
 		fields.add(new SmartChemTableField("Info", SmartChemTableField.Type.TEXT));
 		fields.add(new SmartChemTableField("Structure", SmartChemTableField.Type.STRUCTURE));
 
-		smartChemTable = new SmartChemTable(fields);
 
-		add(smartChemTable,BorderLayout.CENTER);
-		add(structureTable,BorderLayout.CENTER);
+		/**
+		 * setting up smartChemTable and structureTable
+		 */
+		SetUpSmartChemTableAndStrTable(fields);
+
+	}
+
+	/**
+	 * @name SetUpSmartChemTableAndStrTable
+	 * @param fields
+	 * @return void
+	 */
+	private void SetUpSmartChemTableAndStrTable(List<SmartChemTableField> fields) {
+		CardLayout cardLayout = new CardLayout();
+		tablesPanel = new JPanel(cardLayout);
+		smartChemTable = new SmartChemTable(fields);
+		add(tablesPanel,BorderLayout.CENTER);
+		tablesPanel.add(smartChemTable);
+		tablesPanel.add(structureTable);
 
 		statusPanel.getChTableButton().addActionListener(new ActionListener() {
 			@Override
@@ -75,7 +87,6 @@ public class BasicReactorProcessPanel extends ProcessPanel
 				structureTable.setVisible(true);
 			}
 		});
-
 	}
 
 	public BasicReactorProcess getBasicReactorProcess() {

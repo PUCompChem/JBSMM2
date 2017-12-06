@@ -19,7 +19,7 @@ public class BasicReactorStatusPanel extends JPanel
 	private StructureRecord currentStrucutre = new StructureRecord();
 
 	private JPanel visualizationOptions = new JPanel();
-	private JRadioButton radioButton;
+
 	private JRadioButton strTableButton;
 	private JRadioButton chTableButton;
 	public JRadioButton getStrTableButton() {
