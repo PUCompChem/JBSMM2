@@ -38,8 +38,8 @@ public class TestReactionApplicationPanel extends JFrame
 	
 	private void initGUI() throws Exception
 	{
-		setSize(new Dimension(1000,800));
-		setResizable(false);
+		setSize(new Dimension(1005,900));
+		//setResizable(false);
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		revalidate();
