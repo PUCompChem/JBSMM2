@@ -11,6 +11,8 @@ import pu.helpers.StructureSetUtils;
 import pu.reactor.workspace.BasicReactorProcess;
 import pu.reactor.workspace.IProcess;
 
+import javax.smartcardio.Card;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,8 +30,9 @@ public class BasicReactorProcessPanel extends ProcessPanel
 	//private StructureTable structureTable = new StructureTable(5);
 	private StructureTable structureTable = new StructureTable(3);
 	private SmartChemTable smartChemTable = new SmartChemTable();
+	private JPanel tablesPanel;
 
-	public BasicReactorProcessPanel(BasicReactorProcess basicReactorProcess)  
+	public BasicReactorProcessPanel(BasicReactorProcess basicReactorProcess)
 	{
 		this.setBasicReactorProcess(basicReactorProcess);
 		StructureRecord r = StructureSetUtils.getStructureRecordFromString(basicReactorProcess.getTargetInputString());
@@ -37,14 +40,7 @@ public class BasicReactorProcessPanel extends ProcessPanel
 		initGUI();
 	}
 
-/*
-	public ActionListener chemTableRadioButtonListener = new ActionListener() {
-		@Override
-		public void actionPerformed(ActionEvent e) {
 
-		}
-	};
-*/
 	private void initGUI() {
 
 		setLayout(new BorderLayout());
@@ -56,26 +52,41 @@ public class BasicReactorProcessPanel extends ProcessPanel
 		fields.add(new SmartChemTableField("Info", SmartChemTableField.Type.TEXT));
 		fields.add(new SmartChemTableField("Structure", SmartChemTableField.Type.STRUCTURE));
 
-		smartChemTable = new SmartChemTable(fields);
 
-		add(smartChemTable,BorderLayout.CENTER);
-		add(structureTable,BorderLayout.CENTER);
-		
-		statusPanel.parametersPanel.getChTableButton().addActionListener(new ActionListener() {
+		/**
+		 * setting up smartChemTable and structureTable
+		 */
+		SetUpSmartChemTableAndStrTable(fields);
+
+	}
+
+	/**
+	 * @name SetUpSmartChemTableAndStrTable
+	 * @param fields
+	 * @return void
+	 */
+	private void SetUpSmartChemTableAndStrTable(List<SmartChemTableField> fields) {
+		CardLayout cardLayout = new CardLayout();
+		tablesPanel = new JPanel(cardLayout);
+		smartChemTable = new SmartChemTable(fields);
+		add(tablesPanel,BorderLayout.CENTER);
+		tablesPanel.add(smartChemTable);
+		tablesPanel.add(structureTable);
+
+		statusPanel.getChTableButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				smartChemTable.setVisible(true);
 				structureTable.setVisible(false);
 			}
 		});
-		statusPanel.parametersPanel.getStrTableButton().addActionListener(new ActionListener() {
+		statusPanel.getStrTableButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				smartChemTable.setVisible(false);
 				structureTable.setVisible(true);
 			}
 		});
-
 	}
 
 	public BasicReactorProcess getBasicReactorProcess() {
@@ -92,26 +103,26 @@ public class BasicReactorProcessPanel extends ProcessPanel
 	}
 
 	@Override
-	public void updatePanel() 
-	{	
+	public void updatePanel()
+	{
 		List<ReactorNode> resultNodes = 	basicReactorProcess.resultNodes;
 		if (resultNodes == null)
 			return;
-		
+
 		Reactor reactor = basicReactorProcess.reactor;
-		
+
 		for (int i = 0; i < resultNodes.size(); i++)
 		{
 			ReactorNode node = resultNodes.get(i);
 			if (node.finalizedProducts.isEmpty())
 				continue;
-			
+
 			List<Object> rowFields = new ArrayList<Object>();
-	        
+
 	        String prodSmi = reactor.molToSmiles(
 	        			node.finalizedProducts.getAtomContainer(0));
 	        rowFields.add(prodSmi);
-	        rowFields.add(prodSmi);	        
+	        rowFields.add(prodSmi);
 	        smartChemTable.addTableRow(rowFields);
 	        structureTable.addMoleculeAsString(prodSmi);
 		}

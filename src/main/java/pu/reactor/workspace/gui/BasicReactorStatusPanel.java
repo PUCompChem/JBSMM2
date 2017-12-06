@@ -18,6 +18,27 @@ public class BasicReactorStatusPanel extends JPanel
 	JPanel infoPanel = new JPanel();
 	private StructureRecord currentStrucutre = new StructureRecord();
 
+	private JPanel visualizationOptions = new JPanel();
+
+	private JRadioButton strTableButton;
+	private JRadioButton chTableButton;
+	public JRadioButton getStrTableButton() {
+		return strTableButton;
+	}
+
+	public void setStrTableButton(JRadioButton strTableButton) {
+		this.strTableButton = strTableButton;
+	}
+
+	public JRadioButton getChTableButton() {
+		return chTableButton;
+	}
+
+	public void setChTableButton(JRadioButton chTableButton) {
+		this.chTableButton = chTableButton;
+	}
+
+
 
 	BasicReactorProcess reactorProcess;
 
@@ -35,7 +56,7 @@ public class BasicReactorStatusPanel extends JPanel
 
 	private void initGUI() {
 		this.setLayout(new GridBagLayout());
-
+		setVizualizationOptions();
 		GridBagConstraints gc = new GridBagConstraints();
 		strucutre2dPanel.setLayout(new BorderLayout());
 		drawer.add2DMolecule(strucutre2dPanel, currentStrucutre.getSmiles());
@@ -98,7 +119,33 @@ public class BasicReactorStatusPanel extends JPanel
 		parametersPanel.setOpaque(true);
 
 		this.add(parametersPanel, gc);
+		gc.weighty = 0;
+		gc.gridx=0;
+		gc.gridy=6;
+
+		this.add(visualizationOptions, gc);
+	}
+	private void setVizualizationOptions(){
+
+
+		strTableButton = new JRadioButton("structure table");
+
+		strTableButton.setActionCommand("structure table");
+
+
+		chTableButton = new JRadioButton("smart chemical table");
+		chTableButton.setActionCommand("smart chemical table");
+		chTableButton.setSelected(true);
+
+
+
+
+
+		ButtonGroup group = new ButtonGroup();
+		group.add(strTableButton);
+		group.add(chTableButton);
+		visualizationOptions.add(strTableButton);
+		visualizationOptions.add(chTableButton);
 
 	}
-
 }
