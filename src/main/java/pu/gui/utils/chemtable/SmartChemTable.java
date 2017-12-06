@@ -30,7 +30,7 @@ import javax.swing.table.DefaultTableModel;
 public class SmartChemTable extends JPanel
 {
 	private static final long serialVersionUID = 13634655675682345L;
-	
+
 
 	List<SmartChemTableField> fields = new ArrayList<SmartChemTableField>();
 	MoleculeDrawer drawer = new MoleculeDrawer();
@@ -38,25 +38,25 @@ public class SmartChemTable extends JPanel
 
 
 	static ComponentListener componentListener = new ComponentListener() {
-	public void componentHidden(ComponentEvent arg0) {
-		// TODO Auto-generated method stub
+		public void componentHidden(ComponentEvent arg0) {
+			// TODO Auto-generated method stub
 
-	}
+		}
 
-	public void componentMoved(ComponentEvent arg0) {
-		// TODO Auto-generated method stub
+		public void componentMoved(ComponentEvent arg0) {
+			// TODO Auto-generated method stub
 
-	}
-	public void componentResized(ComponentEvent arg0) {
-		System.out.println(arg0.getComponent().getClass());
+		}
+		public void componentResized(ComponentEvent arg0) {
+			System.out.println(arg0.getComponent().getClass());
 
-	}
+		}
 
-	public void componentShown(ComponentEvent arg0) {
-		// TODO Auto-generated method stub
+		public void componentShown(ComponentEvent arg0) {
+			// TODO Auto-generated method stub
 
-	}
-};
+		}
+	};
 
 	JTable table;
 
@@ -93,20 +93,20 @@ public class SmartChemTable extends JPanel
 
 
 	}
-	
+
 	public void setFields(List<SmartChemTableField> fields)
 	{
 		this.fields = fields;
 		model = new DefaultTableModel();
 		for (int i = 0; i < fields.size(); i++)
 			model.addColumn(fields.get(i).name);
-		
+
 	}
 
 	public void addTableRow(List<Object> rowFields)
 	{
 		Object rowData[] = new Object[fields.size()]; 
-		
+
 		for (int i = 0; i < rowFields.size(); i++)
 		{	
 			Object o = rowFields.get(i);
@@ -124,9 +124,9 @@ public class SmartChemTable extends JPanel
 			case STRUCTURE:
 				if (o instanceof String)
 				{
-							String smi = (String)o;
-							//rowData[i] = drawer.getImageFromSmiles(smi,table);
-							rowData[i] = drawer.getImageFromSmiles1(smi);
+					String smi = (String)o;
+					//rowData[i] = drawer.getImageFromSmiles(smi,table);
+					rowData[i] = drawer.getImageFromSmiles1(smi);
 				}
 				else
 					if (o instanceof IAtomContainer)
@@ -136,22 +136,37 @@ public class SmartChemTable extends JPanel
 				break;
 			}
 		}
-		
+
 		model.addRow(rowData);
 	}
 
 
 	public void addStructureRecord(List<StructureRecord> structureRecords) {
 		String[] columnNames =new String[] {"No.", "Name", "Smiles", "Structure"};
- 	for(StructureRecord  str: structureRecords)
- 	{
-		List<Object> rowFields = new ArrayList<Object>();
-		rowFields.add(str.getDataEntryID());
-		rowFields.add(str.getFormula());
-		rowFields.add(str.getSmiles());
-		rowFields.add(drawer.getImageFromSmiles(str.getSmiles()));
-		this.addTableRow(rowFields);
- 	}
+		for(StructureRecord  str: structureRecords)
+		{
+			List<Object> rowFields = new ArrayList<Object>();
+			rowFields.add(str.getDataEntryID());
+			rowFields.add(str.getFormula());
+			rowFields.add(str.getSmiles());
+			rowFields.add(drawer.getImageFromSmiles(str.getSmiles()));
+			this.addTableRow(rowFields);
+		}
+	}
+	
+	public void clearTable()
+	{	
+		/*
+		DefaultTableModel dm = (DefaultTableModel)table.getModel();
+		dm.getDataVector().removeAllElements();
+		dm.fireTableDataChanged(); // notifies the JTable that the model has changed
+		*/
+		
+		//while(model.getRowCount() > 0)
+		//	model.removeRow(0);
+		
+		model.setRowCount(0);		
+		table.revalidate();
 	}
 
 

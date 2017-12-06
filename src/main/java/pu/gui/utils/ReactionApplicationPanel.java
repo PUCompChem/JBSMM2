@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
+import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -51,6 +52,7 @@ public class ReactionApplicationPanel extends JPanel
 	//Chem data
 	SMIRKSManager smrkMan = new SMIRKSManager(SilentChemObjectBuilder.getInstance());
 	IAtomContainer targetMol = null;
+	IAtomContainerSet result = null;
 	
 	ReactionOperation FlagReactionOperation = ReactionOperation.SingleCopyForEachPos;
 	
@@ -169,10 +171,21 @@ public class ReactionApplicationPanel extends JPanel
 		catch (Exception x) {
 			System.out.println("Error while applying reaction: " + x.getMessage());
 		}
+		
+		structureTable.clearTable();
+		
+		if (result != null)
+		{	
+			for (IAtomContainer mol: result.atomContainers())
+				structureTable.addMolecule(mol);
+		}
+			
+		
 	}
 
 	private void applySMIRKSReaction(String smirks, IAtomContainer target) throws Exception
 	{
+		result = null;
 		smrkMan.setFlagSSMode(FlagSSMode);
 
 		// Product processing flags
@@ -225,43 +238,43 @@ public class ReactionApplicationPanel extends JPanel
 				System.out.println("Reaction application: " + targetSmiles
 						+ "  -->  " + transformedSmiles + "    abs. smiles res " + 
 						SmilesGenerator.absolute().create(target));
-				*/		
+				*/	
+				IAtomContainerSet resSet = new AtomContainerSet();
+				resSet.addAtomContainer(target);
 			}	
 			else
 				System.out.println("Reaction not appicable!");
 			break;
 
 		case CombinedOverlappedPos:
-			IAtomContainerSet resSet = smrkMan
-			.applyTransformationWithCombinedOverlappedPos(target, null,
+			result = smrkMan	.applyTransformationWithCombinedOverlappedPos(target, null,
 					reaction);
-			if (resSet == null)
+			if (result == null)
 				System.out.println("Reaction not appicable!");
 			else {
 				System.out
 				.println("Reaction application With Combined Overlapped Positions: ");
-				for (int i = 0; i < resSet.getAtomContainerCount(); i++)
+				for (int i = 0; i < result.getAtomContainerCount(); i++)
 					System.out.println(SmartsHelper.moleculeToSMILES(
-							resSet.getAtomContainer(i), true));
+							result.getAtomContainer(i), true));
 			}
 			break;
 
 		case SingleCopyForEachPos:
-			IAtomContainerSet resSet2 = smrkMan
-			.applyTransformationWithSingleCopyForEachPos(target, null,
+			result = smrkMan	.applyTransformationWithSingleCopyForEachPos(target, null,
 					reaction, FlagSSModeForSingleCopyForEachPos);
-			if (resSet2 == null)
+			
+			if (result == null)
 				System.out.println("Reaction not appicable!");
 			else {
 				System.out
 				.println("Reaction application With Single Copy For Each Position: ");
-				for (int i = 0; i < resSet2.getAtomContainerCount(); i++)
+				for (int i = 0; i < result.getAtomContainerCount(); i++)
 					System.out.println(SmartsHelper.moleculeToSMILES(
-							resSet2.getAtomContainer(i), true));
+							result.getAtomContainer(i), true));
 			}
 			break;
 		}
-
 	}
 
 	public void preProcess(IAtomContainer mol) throws Exception

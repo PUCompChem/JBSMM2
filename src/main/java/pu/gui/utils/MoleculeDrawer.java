@@ -90,6 +90,16 @@ public class MoleculeDrawer {
         ImageIcon icon = new ImageIcon(image);
         return icon;
     }
+    
+    public ImageIcon getImage1(IAtomContainer mol){
+
+        CompoundImageTools imageTools = new CompoundImageTools();
+
+        Image image = imageTools.getImage(mol);
+
+        ImageIcon icon = new ImageIcon(image);
+        return icon;
+    }
 
     public StretchIcon getImageFromSmiles(String smi, JTable table){
 

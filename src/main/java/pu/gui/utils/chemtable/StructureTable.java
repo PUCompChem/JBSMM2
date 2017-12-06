@@ -5,6 +5,8 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 
+import org.openscience.cdk.interfaces.IAtomContainer;
+
 import ambit2.base.data.StructureRecord;
 
 public class StructureTable extends SmartChemTable
@@ -43,6 +45,31 @@ public class StructureTable extends SmartChemTable
 		model.setValueAt(icon, currentRow, currentColumn);
 		currentColumn++;
 	}
+	
+	public void addMolecule(IAtomContainer mol)
+	{
+		ImageIcon icon = drawer.getImage1(mol);
+		if (currentColumn == numberOfColumns)
+		{
+			//new row is created
+			currentRow++;
+			Object rowData[] = new Object[fields.size()]; 
+			model.addRow(rowData);
+			currentColumn = 0;
+		}
+		
+		model.setValueAt(icon, currentRow, currentColumn);
+		currentColumn++;
+	}
+	
+	public void clearTable()
+	{
+		super.clearTable();		
+		currentRow = -1;
+		currentColumn = numberOfColumns;
+	}
+	
+	
 	
 	
 	public void setMoleculeAsStringAtPos(String molString, int row, int column)
