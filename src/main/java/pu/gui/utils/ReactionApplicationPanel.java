@@ -11,7 +11,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
 
 import org.openscience.cdk.CDKConstants;
@@ -55,19 +54,19 @@ public class ReactionApplicationPanel extends JPanel
 	
 	ReactionOperation FlagReactionOperation = ReactionOperation.SingleCopyForEachPos;
 	
-	boolean FlagClearAromaticityBeforePreProcess = true;
-	boolean FlagCheckAromaticityOnTargetPreProcess = true;
-	boolean FlagTargetPreprocessing = false;
-	boolean FlagExplicitHAtoms = false;  
+	boolean FlagClearAromaticityBeforeProcess = true;
+	boolean FlagCheckAromaticityOnTargetProcess = true;
+	boolean FlagTargetProcessing = true;
+	boolean FlagExplicitHAtoms = true;  
 	boolean FlagPrintAtomAttributes = false;
 	boolean FlagPrintTransformationData = false;
 
-	boolean FlagProductPreprocessing = true;
-	boolean FlagClearImplicitHAtomsBeforeProductPreProcess = false;
-	boolean FlagClearHybridizationOnProductPreProcess = true;
-	boolean FlagAddImplicitHAtomsOnProductPreProcess = false;
-	boolean FlagImplicitHToExplicitOnProductPreProcess = false;
-	boolean FlagExplicitHToImplicitOnProductPreProcess = false;
+	boolean FlagProductProcessing = true;
+	boolean FlagClearImplicitHAtomsBeforeProductProcess = false;
+	boolean FlagClearHybridizationOnProductProcess = true;
+	boolean FlagAddImplicitHAtomsOnProductProcess = false;
+	boolean FlagImplicitHToExplicitOnProductProcess = false;
+	boolean FlagExplicitHToImplicitOnProductProcess = true;
 
 	boolean FlagApplyStereoTransformation = false;
 	boolean FlagHAtomsTransformation = false;
@@ -177,13 +176,13 @@ public class ReactionApplicationPanel extends JPanel
 		smrkMan.setFlagSSMode(FlagSSMode);
 
 		// Product processing flags
-		smrkMan.setFlagProcessResultStructures(FlagProductPreprocessing);
-		smrkMan.setFlagClearHybridizationBeforeResultProcess(FlagClearHybridizationOnProductPreProcess);
-		smrkMan.setFlagClearImplicitHAtomsBeforeResultProcess(this.FlagClearImplicitHAtomsBeforeProductPreProcess);
-		smrkMan.setFlagClearAromaticityBeforeResultProcess(this.FlagClearAromaticityBeforePreProcess);
-		smrkMan.setFlagAddImplicitHAtomsOnResultProcess(this.FlagAddImplicitHAtomsOnProductPreProcess);
-		smrkMan.setFlagConvertAddedImplicitHToExplicitOnResultProcess(this.FlagImplicitHToExplicitOnProductPreProcess);
-		smrkMan.setFlagConvertExplicitHToImplicitOnResultProcess(this.FlagExplicitHToImplicitOnProductPreProcess);
+		smrkMan.setFlagProcessResultStructures(FlagProductProcessing);
+		smrkMan.setFlagClearHybridizationBeforeResultProcess(FlagClearHybridizationOnProductProcess);
+		smrkMan.setFlagClearImplicitHAtomsBeforeResultProcess(FlagClearImplicitHAtomsBeforeProductProcess);
+		smrkMan.setFlagClearAromaticityBeforeResultProcess(FlagClearAromaticityBeforeProcess);
+		smrkMan.setFlagAddImplicitHAtomsOnResultProcess(FlagAddImplicitHAtomsOnProductProcess);
+		smrkMan.setFlagConvertAddedImplicitHToExplicitOnResultProcess(FlagImplicitHToExplicitOnProductProcess);
+		smrkMan.setFlagConvertExplicitHToImplicitOnResultProcess(FlagExplicitHToImplicitOnProductProcess);
 		smrkMan.setFlagApplyStereoTransformation(FlagApplyStereoTransformation);
 		smrkMan.setFlagHAtomsTransformation(FlagHAtomsTransformation);
 		smrkMan.setFlagHAtomsTransformationMode(FlagHAtomsTransformationMode);
@@ -198,7 +197,7 @@ public class ReactionApplicationPanel extends JPanel
 			return;
 		}
 
-		if (FlagTargetPreprocessing)
+		if (FlagTargetProcessing)
 			this.preProcess(target);
 		
 		switch (FlagReactionOperation) 
@@ -267,7 +266,7 @@ public class ReactionApplicationPanel extends JPanel
 
 	public void preProcess(IAtomContainer mol) throws Exception
 	{
-		if (FlagClearAromaticityBeforePreProcess) {
+		if (FlagClearAromaticityBeforeProcess) {
 			for (IAtom atom : mol.atoms())
 				if (atom.getFlag(CDKConstants.ISAROMATIC))
 					atom.setFlag(CDKConstants.ISAROMATIC, false);
@@ -284,7 +283,7 @@ public class ReactionApplicationPanel extends JPanel
 		if (FlagExplicitHAtoms)
 			MoleculeTools.convertImplicitToExplicitHydrogens(mol);
 
-		if (FlagCheckAromaticityOnTargetPreProcess)	
+		if (FlagCheckAromaticityOnTargetProcess)	
 			CDKHueckelAromaticityDetector.detectAromaticity(mol);
 	}
 
