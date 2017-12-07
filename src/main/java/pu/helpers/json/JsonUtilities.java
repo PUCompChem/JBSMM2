@@ -1,5 +1,16 @@
 package pu.helpers.json;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.openscience.cdk.inchi.InChIGeneratorFactory;
+
+import net.sf.jniinchi.INCHI_OPTION;
+import ambit2.base.data.StructureRecord;
+import ambit2.reactions.reactor.ReactorStrategy;
+import ambit2.rules.json.JSONParsingUtils;
+import ambit2.rules.json.JSONParsingUtils.STRUCTURE_RECORD_INPUT_INFO;
+
 import com.fasterxml.jackson.databind.JsonNode;
 
 public class JsonUtilities 
@@ -267,5 +278,43 @@ public class JsonUtilities
 		}
 		sb.append("]");
 		return sb.toString();
+	}
+	
+	public static ReactorStrategy readReactorStrategyFromJsonNode(JsonNode node, ReactorStrategy reactorStrategy) throws Exception
+	{
+		ReactorStrategy strategy = reactorStrategy;
+		if (strategy == null)		
+			strategy = new ReactorStrategy();
+		
+		strategy.maxNumOfReactions = JSONParsingUtils.extractIntKeyword(node, "MAX_NUM_OF_REACTIONS", true);
+		strategy.maxLevel = JSONParsingUtils.extractIntKeyword(node, "MAX_LEVEL", true);
+		
+		strategy.allowedProducts =  JSONParsingUtils.getStructureRecords(node, 
+							"ALLOWED_PRODUCTS_SMILES", STRUCTURE_RECORD_INPUT_INFO.smiles, false);
+		
+		strategy.forbiddenProducts =  JSONParsingUtils.getStructureRecords(node, 
+				"FORBIDDEN_PRODUCTS_SMILES", STRUCTURE_RECORD_INPUT_INFO.smiles, false);
+		
+		
+		List<INCHI_OPTION> options = new ArrayList<INCHI_OPTION>();
+		options.add(INCHI_OPTION.FixedH);
+		options.add(INCHI_OPTION.SAbs);
+		options.add(INCHI_OPTION.SAsXYZ);
+		options.add(INCHI_OPTION.SPXYZ);
+		options.add(INCHI_OPTION.FixSp3Bug);
+		InChIGeneratorFactory igf = InChIGeneratorFactory.getInstance();
+		
+		/*
+		//Configure products
+		if (strategy.allowedProducts != null)
+			for (StructureRecord sr : strategy.allowedProducts)
+				configureStructureRecord (sr, igf, options);
+		
+		if (strategy.forbiddenProducts != null)
+			for (StructureRecord sr : strategy.forbiddenProducts)
+				configureStructureRecord (sr, igf, options);
+		*/
+		
+		return strategy;
 	}
 }
