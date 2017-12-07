@@ -98,12 +98,15 @@ public class AtomContainerHightlights implements IAtomContainerHighlights
 		final IAtomContainer selectedMol = MoleculeTools
 				.newMolecule(SilentChemObjectBuilder.getInstance());
 		
+		
 		for (Integer i : indexList)
-			if (i < mol.getAtomCount())
+		{	
+			if (i.intValue() < mol.getAtomCount())
 			{
-				IAtom at = mol.getAtom(i);
+				IAtom at = mol.getAtom(i.intValue());
 				selectedMol.addAtom(at);
 			}
+		}	
 		
 		if (highlightBonds)
 		{

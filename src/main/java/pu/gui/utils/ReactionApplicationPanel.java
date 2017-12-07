@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -22,6 +24,9 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.renderer.selection.IChemObjectSelection;
+import org.openscience.cdk.renderer.selection.SingleSelection;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
@@ -30,12 +35,14 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import pu.gui.utils.chemtable.StructureTable;
 import ambit2.core.data.MoleculeTools;
 import ambit2.core.helper.CDKHueckelAromaticityDetector;
+import ambit2.rendering.IAtomContainerHighlights;
 import ambit2.smarts.SMIRKSManager;
 import ambit2.smarts.SMIRKSReaction;
 import ambit2.smarts.SmartsConst;
 import ambit2.smarts.SmartsHelper;
 import ambit2.smarts.SmartsConst.HandleHAtoms;
 import ambit2.ui.Panel2D;
+import net.idea.modbcum.i.exceptions.AmbitException;
 
 public class ReactionApplicationPanel extends JPanel
 {
@@ -113,21 +120,26 @@ public class ReactionApplicationPanel extends JPanel
 	SmartsConst.SSM_MODE FlagSSModeForSingleCopyForEachPos = SmartsConst.SSM_MODE.SSM_NON_IDENTICAL;
 
 
-	public ReactionApplicationPanel()
+	public ReactionApplicationPanel() throws Exception
 	{
 		initGUI();
 
 		//Setup initial demo chem data
 		try {
-			targetMol = SmartsHelper.getMoleculeFromSmiles("c1ccccc1");
+			targetMol = SmartsHelper.getMoleculeFromSmiles("c1ccncc1");
 			panel2d.setAtomContainer(targetMol);
 		} catch (Exception e) {}
-		smilesField.setText("c1ccccc1");
+		smilesField.setText("c1ccncc1");
 		smirksField.setText("[c:1][H]>>[c:1]O[H]");
 		
-		panel2dMatch.setAtomContainer(targetMol);
-
-		
+		AtomContainerHightlights selector = new AtomContainerHightlights();
+		List<Integer> atomList = new ArrayList<Integer>();
+		atomList.add(0);
+		atomList.add(1);
+		atomList.add(2);
+		selector.setIndexList(atomList);
+		panel2dMatch.setAtomContainer(targetMol.clone());
+		panel2dMatch.setSelector(selector);
 	}
 
 	private void initGUI()

@@ -149,7 +149,7 @@ public class SmartChemTable extends JPanel
 			rowFields.add(str.getDataEntryID());
 			rowFields.add(str.getFormula());
 			rowFields.add(str.getSmiles());
-			rowFields.add(drawer.getImageFromSmiles(str.getSmiles()));
+			rowFields.add(drawer.getImageFromSmiles1(str.getSmiles()));
 			this.addTableRow(rowFields);
 		}
 	}
