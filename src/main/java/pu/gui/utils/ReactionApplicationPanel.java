@@ -93,12 +93,7 @@ public class ReactionApplicationPanel extends JPanel
 		} catch (Exception e) {}
 		smilesField.setText("c1ccccc1");
 		smirksField.setText("[c:1][H]>>[c:1]O[H]");
-
-		structureTable.addMoleculeAsString("CCCC");
-		structureTable.addMoleculeAsString("CCC(N)CO");
-		structureTable.addMoleculeAsString("CCCCC");
-		structureTable.addMoleculeAsString("CCCCCCC");
-		structureTable.addMoleculeAsString("CCCCNCCO");
+		
 	}
 
 	private void initGUI()
