@@ -1,20 +1,65 @@
 package pu.gui.utils;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.renderer.selection.IChemObjectSelection;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.renderer.selection.IChemObjectSelection;
+import org.openscience.cdk.renderer.selection.SingleSelection;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
+
+import ambit2.core.data.MoleculeTools;
 import ambit2.rendering.IAtomContainerHighlights;
 
 public class AtomContainerHightlights implements IAtomContainerHighlights
 {	
-	public static enum HightlightsMetod {
+	private static final long serialVersionUID = 2387697863334234L;
+	
+	public static enum SelectionMetod {
 		ATOM_INDEX_LIST, ATOM_LIST
 	}
 	
-	private static final long serialVersionUID = 2387697863334234L;
-	
 	boolean enabled = true;
+	boolean highlightBonds = false;
+	SelectionMetod selectionMethod = SelectionMetod.ATOM_INDEX_LIST;
+	List<Integer> indexList = new ArrayList<Integer>();
+	List<Integer> atomList = new ArrayList<Integer>();
 	
+		
+	public boolean isHighlightBonds() {
+		return highlightBonds;
+	}
+
+	public void setHighlightBonds(boolean highlightBonds) {
+		this.highlightBonds = highlightBonds;
+	}
+
+	public SelectionMetod getSelectionMethod() {
+		return selectionMethod;
+	}
+
+	public void setSelectionMethod(SelectionMetod selectionMethod) {
+		this.selectionMethod = selectionMethod;
+	}
+	
+	public List<Integer> getIndexList() {
+		return indexList;
+	}
+
+	public void setIndexList(List<Integer> indexList) {
+		this.indexList = indexList;
+	}
+
+	public List<Integer> getAtomList() {
+		return atomList;
+	}
+
+	public void setAtomList(List<Integer> atomList) {
+		this.atomList = atomList;
+	}
+
 	@Override
 	public void close() throws Exception {		
 	}
@@ -34,10 +79,46 @@ public class AtomContainerHightlights implements IAtomContainerHighlights
 	}
 
 	@Override
-	public IChemObjectSelection process(IAtomContainer arg0) throws Exception {
-		// TODO Auto-generated method stub
+	public IChemObjectSelection process(IAtomContainer mol) throws Exception 
+	{
+		
+		switch (selectionMethod)
+		{
+		case ATOM_INDEX_LIST:
+			return getIndexListSelection(mol);
+		case ATOM_LIST:
+			return getAtomListSelection(mol);
+		}
+		
 		return null;
 	}
+	
+	IChemObjectSelection getIndexListSelection(IAtomContainer mol)
+	{
+		final IAtomContainer selectedMol = MoleculeTools
+				.newMolecule(SilentChemObjectBuilder.getInstance());
+		
+		for (Integer i : indexList)
+			if (i < mol.getAtomCount())
+			{
+				IAtom at = mol.getAtom(i);
+				selectedMol.addAtom(at);
+			}
+		
+		if (highlightBonds)
+		{
+			//TODO
+		}
+		
+		return new SingleSelection<IChemObject>(selectedMol);
+	}
+	
+	IChemObjectSelection getAtomListSelection(IAtomContainer mol)
+	{
+		//TODO
+		return null;
+	}
+	
 
 	@Override
 	public void setEnabled(boolean arg0) {
