@@ -10,6 +10,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
@@ -43,9 +44,11 @@ public class ReactionApplicationPanel extends JPanel
 	private static final long serialVersionUID = 112332423349877L;
 
 	//GUI components
-	JPanel targetPanel, matchPanel, reactionPanel, buttonsPanel;
+	JPanel leftArea, rightArea;
+	JPanel targetPanel, matchPanel, reactionPanel, buttonsPanel, statusPanel;
 	JTextField smilesField, smirksField;
 	Panel2D panel2d;
+	Panel2D panel2dMatch;
 	StructureTable structureTable;
 	JButton applyButton;
 
@@ -94,29 +97,48 @@ public class ReactionApplicationPanel extends JPanel
 		smilesField.setText("c1ccccc1");
 		smirksField.setText("[c:1][H]>>[c:1]O[H]");
 		
+		panel2dMatch.setAtomContainer(targetMol);
+
+		
 	}
 
 	private void initGUI()
 	{	
 		this.setLayout(new BorderLayout());
-
+		leftArea = new JPanel(new BorderLayout());
+		rightArea = new JPanel(new BorderLayout());
+		this.add(leftArea, BorderLayout.CENTER);
+		this.add(rightArea, BorderLayout.EAST);
+		
 		//Target panel
 		targetPanel = new JPanel(new BorderLayout());
-		this.add(targetPanel, BorderLayout.NORTH);	
+		//this.add(targetPanel, BorderLayout.NORTH);
+		leftArea.add(targetPanel, BorderLayout.NORTH);
 		targetPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 		JPanel smilesPanel = new JPanel(new FlowLayout());
 		JLabel smilesInputLabel = new JLabel("Target molecule (Smiles/InChI): ");
 		smilesField = new JTextField(30);
 		smilesPanel.add(smilesInputLabel);
-		smilesPanel.add(smilesField);
+		smilesPanel.add(smilesField);		
 		targetPanel.add(smilesPanel, BorderLayout.NORTH);
 		panel2d = new Panel2D();
 		panel2d.setPreferredSize(new Dimension(150,150));
 		targetPanel.add(panel2d, BorderLayout.CENTER);
+		
+		//Match Panel is within target panel
+		matchPanel = new JPanel(new BorderLayout());
+		matchPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+		targetPanel.add(matchPanel,BorderLayout.EAST);
+		panel2dMatch = new Panel2D();
+		panel2dMatch.setPreferredSize(new Dimension(150,150));
+		matchPanel.add(panel2dMatch,BorderLayout.CENTER);
+		JLabel matchLabel = new JLabel("Reaction match sites: ");
+		matchPanel.add(matchLabel,BorderLayout.NORTH);
 
 		//Reaction panel
 		reactionPanel = new JPanel(new BorderLayout());
-		this.add(reactionPanel, BorderLayout.CENTER);
+		//this.add(reactionPanel, BorderLayout.CENTER);
+		leftArea.add(reactionPanel, BorderLayout.CENTER);
 		//reactionPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 
 		JPanel smirksPanel = new JPanel(new FlowLayout());
@@ -133,9 +155,10 @@ public class ReactionApplicationPanel extends JPanel
 		productsPanel.add(structureTable, BorderLayout.CENTER);
 		reactionPanel.add(productsPanel, BorderLayout.CENTER);
 
-		//Buttons panel
+		//Buttons panel (is put within target panel)
 		buttonsPanel = new JPanel(new FlowLayout());
-		this.add(buttonsPanel, BorderLayout.SOUTH);
+		//this.add(buttonsPanel, BorderLayout.SOUTH);
+		targetPanel.add(buttonsPanel, BorderLayout.SOUTH);
 		buttonsPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 
 		applyButton = new JButton("Apply");
@@ -146,6 +169,12 @@ public class ReactionApplicationPanel extends JPanel
 				handleApplyButton(e);	
 			}
 		});
+		
+		
+		//Status panel is within rightArea
+		rightArea.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+		JLabel labelFlags = new JLabel("Flags                         ");
+		rightArea.add(labelFlags,BorderLayout.CENTER);
 
 	}
 
