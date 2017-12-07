@@ -11,7 +11,7 @@ import pu.helpers.StructureSetUtils;
 import pu.reactor.workspace.BasicReactorProcess;
 import pu.reactor.workspace.IProcess;
 
-import javax.smartcardio.Card;
+//import javax.smartcardio.Card;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
