@@ -220,13 +220,7 @@ public class ReactorMainFrame extends JFrame {
 
 
 
-		/**
-		 * END setMoleculesTree
-		 */
 
-		/**
-		 * Start  setConsole
-		 */
 		consoleFieldPanel = new JTextArea();
 		consoleFieldPanel.setLayout(new BorderLayout());
 		bottomCenterTabbedPanel.add("Console",consoleFieldPanel);
@@ -470,7 +464,8 @@ public class ReactorMainFrame extends JFrame {
 				preferencesWindow.setVisible(true);
 			}
 		});
-		
+
+
 		setJMenuBar(menuBar);
 	}
 

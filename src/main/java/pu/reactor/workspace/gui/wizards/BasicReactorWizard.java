@@ -17,7 +17,7 @@ import java.awt.event.ActionListener;
 /**
  * Created by gogo on 28.7.2017 г..
  */
-public class BasicReactorWizard extends JFrame
+public class BasicReactorWizard extends ProcessWizard
 {
 	private JPanel stageCards;
 	private JPanel firstStepPanel;
@@ -29,9 +29,9 @@ public class BasicReactorWizard extends JFrame
 	JTextField smilesField;
 	JTextField processNameField;
 
-	private JPanel buttonsPanel = new JPanel(new FlowLayout());
+
 	CardLayout cardLayout =  new CardLayout();
-	private ReactorProcessTabsSet processTabs = null;
+
 	private ProcessCommonChemData processCommonChemData = null;
 	private JButton cancelButton;
 
@@ -39,6 +39,7 @@ public class BasicReactorWizard extends JFrame
 	public BasicReactorWizard(ReactorProcessTabsSet processTabs, ProcessCommonChemData processCommonChemData) {
 		this.processTabs = processTabs;
 		this.processCommonChemData = processCommonChemData;
+
 		//this.setLayout(new BorderLayout());
 		initGUI();
 		setSize(new Dimension(400,600));
@@ -46,17 +47,17 @@ public class BasicReactorWizard extends JFrame
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 
-	private void initGUI() {
+	protected void initGUI() {
 
-		this.setResizable(false);
+
 		this.setSize(new Dimension(320,50));
 		this.revalidate();
 		this.add(buttonsPanel,BorderLayout.SOUTH);
 		//Set StageCards
 		this.setTitle("Basic Reactor Wizard");
-
+	    BasicApplyButtonSet();
 		setCancelButton();
-		ApplyButtonSet();
+
 		FirstStepPanelSet();
 
 
@@ -120,7 +121,7 @@ public class BasicReactorWizard extends JFrame
 
 
 
-	public void ApplyButtonSet(){
+	public void BasicApplyButtonSet(){
 		applyButton = new JButton("Create Process");
 		buttonsPanel.add(applyButton);
 		applyButton.addActionListener(new ActionListener() {
@@ -149,16 +150,7 @@ public class BasicReactorWizard extends JFrame
 	}
 
 
-	private void setCancelButton(){
-		cancelButton = new JButton("Cancel");
-		buttonsPanel.add(cancelButton);
-		cancelButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-			}
-		});
-	}
+
 
 
 

@@ -24,13 +24,14 @@ public class ProcessWizard extends JFrame {
     //private JButton previousButton;
     //private JButton nextButtonSet;
 
+
     JTextField smilesField;
     JTextField processNameField;
 
-    private JPanel buttonsPanel = new JPanel(new FlowLayout());
+    protected JPanel buttonsPanel = new JPanel(new FlowLayout());
     CardLayout cardLayout =  new CardLayout();
-    private ReactorProcessTabsSet processTabs = null;
-    private JButton cancelButton;
+    protected ReactorProcessTabsSet processTabs = null;
+    protected JButton cancelButton;
 
 
 
@@ -87,9 +88,10 @@ ActionListener applyButtonActionListener;
     }
 
 
-    private void setCancelButton(){
+    protected void setCancelButton(){
         cancelButton = new JButton("Cancel");
         buttonsPanel.add(cancelButton);
+
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

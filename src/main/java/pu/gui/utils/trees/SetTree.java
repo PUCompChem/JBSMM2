@@ -4,6 +4,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
+import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
 import pu.gui.utils.contextmenus.GenericContextMenu;
@@ -172,5 +173,12 @@ abstract public class SetTree extends JPanel {
         image = getScaledImage(image,20,20);
         ImageIcon icon = new ImageIcon(image);
         return icon;
+    }
+
+    public void RefreshTree(){
+        DefaultTreeModel model = (DefaultTreeModel)tree.getModel();
+        DefaultMutableTreeNode root = (DefaultMutableTreeNode)model.getRoot();
+        root.add(new DefaultMutableTreeNode("another_child"));
+        model.reload(root);
     }
 }

@@ -37,12 +37,11 @@ public class ReactionSetTree extends SetTree
 	public Map<DefaultMutableTreeNode, Reaction> nodeReactions = new HashMap<DefaultMutableTreeNode, Reaction>();
 	public Map<Reaction, DefaultMutableTreeNode> reactionNodes = new HashMap<Reaction, DefaultMutableTreeNode>();
 
-	private JTextField treeSearchBox;
-	private JButton treeSearchButton;
+
 	DefaultMutableTreeNode root;
 
 	public JPanel visualizeCurReaction = null;
- 	private JScrollPane scrollBar;
+
 
 
 	TableInfoPanel reactionInfoPanel;
