@@ -7,7 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
@@ -45,13 +47,34 @@ public class ReactionApplicationPanel extends JPanel
 
 	//GUI components
 	JPanel leftArea, rightArea;
-	JPanel targetPanel, matchPanel, reactionPanel, buttonsPanel, statusPanel;
+	JPanel targetPanel, matchPanel, reactionPanel, buttonsPanel, configPanel;
 	JTextField smilesField, smirksField;
 	Panel2D panel2d;
 	Panel2D panel2dMatch;
 	StructureTable structureTable;
 	JButton applyButton;
+	
+	JCheckBox checkboxClearAromaticityBeforeProcess;
+	JCheckBox checkboxCheckAromaticityOnTargetProcess;
+	JCheckBox checkboxTargetProcessing;
+	JCheckBox checkboxExplicitHAtoms;  
+	JCheckBox checkboxPrintAtomAttributes;
+	JCheckBox checkboxPrintTransformationData;
+	
+	JCheckBox checkboxProductProcessing;
+	JCheckBox checkboxClearImplicitHAtomsBeforeProductProcess;
+	JCheckBox checkboxClearHybridizationOnProductProcess;
+	JCheckBox checkboxAddImplicitHAtomsOnProductProcess;
+	JCheckBox checkboxImplicitHToExplicitOnProductProcess;
+	JCheckBox checkboxExplicitHToImplicitOnProductProcess;
+	
+	JCheckBox checkboxApplyStereoTransformation;
+	JCheckBox checkboxHAtomsTransformation;	
+	JCheckBox checkboxAromaticityTransformation;
 
+	JCheckBox checkboxSingleBondAromaticityNotSpecified;
+	JCheckBox checkboxDoubleBondAromaticityNotSpecified;
+	
 	//Chem data
 	SMIRKSManager smrkMan = new SMIRKSManager(SilentChemObjectBuilder.getInstance());
 	IAtomContainer targetMol = null;
@@ -59,9 +82,13 @@ public class ReactionApplicationPanel extends JPanel
 	
 	ReactionOperation FlagReactionOperation = ReactionOperation.SingleCopyForEachPos;
 	
+	boolean FlagPrintAtomAttributes = false;
+	boolean FlagPrintTransformationData = false;
+	
+	/*
+	boolean FlagTargetProcessing = true;
 	boolean FlagClearAromaticityBeforeProcess = true;
 	boolean FlagCheckAromaticityOnTargetProcess = true;
-	boolean FlagTargetProcessing = true;
 	boolean FlagExplicitHAtoms = true;  
 	boolean FlagPrintAtomAttributes = false;
 	boolean FlagPrintTransformationData = false;
@@ -74,13 +101,14 @@ public class ReactionApplicationPanel extends JPanel
 	boolean FlagExplicitHToImplicitOnProductProcess = true;
 
 	boolean FlagApplyStereoTransformation = false;
-	boolean FlagHAtomsTransformation = false;
-	HandleHAtoms FlagHAtomsTransformationMode = HandleHAtoms.IMPLICIT; 
+	boolean FlagHAtomsTransformation = false;	
 	boolean FlagAromaticityTransformation = false;
 
 	boolean FlagSingleBondAromaticityNotSpecified = false;
 	boolean FlagDoubleBondAromaticityNotSpecified = false;
-
+	*/	
+	
+	HandleHAtoms FlagHAtomsTransformationMode = HandleHAtoms.IMPLICIT; 
 	SmartsConst.SSM_MODE FlagSSMode = SmartsConst.SSM_MODE.SSM_NON_OVERLAPPING;
 	SmartsConst.SSM_MODE FlagSSModeForSingleCopyForEachPos = SmartsConst.SSM_MODE.SSM_NON_IDENTICAL;
 
@@ -171,11 +199,122 @@ public class ReactionApplicationPanel extends JPanel
 		});
 		
 		
-		//Status panel is within rightArea
+		//Config panel is within rightArea
 		rightArea.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
-		JLabel labelFlags = new JLabel("Flags                         ");
-		rightArea.add(labelFlags,BorderLayout.CENTER);
+		configPanel = new JPanel();
+		configPanel.setLayout(new BoxLayout(configPanel, BoxLayout.PAGE_AXIS)); 
+		rightArea.add(configPanel, BorderLayout.CENTER);
+		JLabel labelConfig = new JLabel("Config");
+		configPanel.add(labelConfig);
+		setupCheckBoxes();
+	}
+	
+	void setupCheckBoxes()
+	{
+		checkboxTargetProcessing = 
+				new JCheckBox("TargetProcessing");
+		checkboxTargetProcessing.setSelected(true);
+		configPanel.add(checkboxTargetProcessing);
+		
+		checkboxClearAromaticityBeforeProcess = 
+				new JCheckBox("ClearAromaticityBeforeProcess");
+		checkboxClearAromaticityBeforeProcess.setSelected(true);
+		configPanel.add(checkboxClearAromaticityBeforeProcess);
+		
+		checkboxCheckAromaticityOnTargetProcess = 
+				new JCheckBox("CheckAromaticityOnTargetProcess");
+		checkboxCheckAromaticityOnTargetProcess.setSelected(true);
+		configPanel.add(checkboxCheckAromaticityOnTargetProcess);
+		
+		
+		
+		checkboxExplicitHAtoms = 
+				new JCheckBox("ExplicitHAtoms");
+		checkboxExplicitHAtoms.setSelected(true);
+		configPanel.add(checkboxExplicitHAtoms);
+		
+		/*
+		checkboxPrintAtomAttributes = 
+				new JCheckBox("PrintAtomAttributes");
+		checkboxPrintAtomAttributes.setSelected(false);
+		configPanel.add(checkboxPrintAtomAttributes);
+		
+		checkboxPrintTransformationData = 
+				new JCheckBox("PrintTransformationData");
+		checkboxPrintTransformationData.setSelected(false);
+		configPanel.add(checkboxPrintTransformationData);
+		*/
+		
+		
+		checkboxProductProcessing = 
+				new JCheckBox("ProductProcessing");
+		checkboxProductProcessing.setSelected(true);
+		configPanel.add(checkboxProductProcessing);
+		
+		checkboxClearImplicitHAtomsBeforeProductProcess = 
+				new JCheckBox("ClearImplicitHAtomsBeforeProductProcess");
+		checkboxClearImplicitHAtomsBeforeProductProcess.setSelected(false);
+		configPanel.add(checkboxClearImplicitHAtomsBeforeProductProcess);
+		
+		
+		//This control should be always true therefore not added
+		checkboxClearHybridizationOnProductProcess = 
+				new JCheckBox("ClearHybridizationOnProductProcess");
+		checkboxClearHybridizationOnProductProcess.setSelected(true);
+		configPanel.add(checkboxClearHybridizationOnProductProcess);
+		checkboxClearHybridizationOnProductProcess.setEnabled(false);
+		
+		checkboxAddImplicitHAtomsOnProductProcess = 
+				new JCheckBox("AddImplicitHAtomsOnProductProcess");
+		checkboxAddImplicitHAtomsOnProductProcess.setSelected(false);
+		configPanel.add(checkboxAddImplicitHAtomsOnProductProcess);
+		
+		checkboxImplicitHToExplicitOnProductProcess = 
+				new JCheckBox("ImplicitHToExplicitOnProductProcess");
+		checkboxImplicitHToExplicitOnProductProcess.setSelected(false);
+		configPanel.add(checkboxImplicitHToExplicitOnProductProcess);
+		
+		checkboxExplicitHToImplicitOnProductProcess = 
+				new JCheckBox("ExplicitHToImplicitOnProductProcess");
+		checkboxExplicitHToImplicitOnProductProcess.setSelected(true);
+		configPanel.add(checkboxExplicitHToImplicitOnProductProcess);
+		
+		checkboxApplyStereoTransformation = 
+				new JCheckBox("ApplyStereoTransformation");
+		checkboxApplyStereoTransformation.setSelected(false);
+		configPanel.add(checkboxApplyStereoTransformation);
+		
+		checkboxHAtomsTransformation = 
+				new JCheckBox("HAtomsTransformation");
+		checkboxHAtomsTransformation.setSelected(false);
+		configPanel.add(checkboxHAtomsTransformation);
+		
+		checkboxAromaticityTransformation = 
+				new JCheckBox("AromaticityTransformation");
+		checkboxAromaticityTransformation.setSelected(false);
+		configPanel.add(checkboxAromaticityTransformation);
+		
+		checkboxSingleBondAromaticityNotSpecified = 
+				new JCheckBox("SingleBondAromaticityNotSpecified");
+		checkboxSingleBondAromaticityNotSpecified.setSelected(false);
+		configPanel.add(checkboxSingleBondAromaticityNotSpecified);
+		
+		checkboxDoubleBondAromaticityNotSpecified = 
+				new JCheckBox("DoubleBondAromaticityNotSpecified");
+		checkboxDoubleBondAromaticityNotSpecified.setSelected(false);
+		configPanel.add(checkboxDoubleBondAromaticityNotSpecified);
+		
+		/*
+		checkbox = 
+				new JCheckBox("");
+		checkbox.setSelected();
+		configPanel.add(checkbox);
+	
+	HandleHAtoms FlagHAtomsTransformationMode = HandleHAtoms.IMPLICIT; 
+	SmartsConst.SSM_MODE FlagSSMode = SmartsConst.SSM_MODE.SSM_NON_OVERLAPPING;
+	SmartsConst.SSM_MODE FlagSSModeForSingleCopyForEachPos = SmartsConst.SSM_MODE.SSM_NON_IDENTICAL;
 
+		 */
 	}
 
 	private void handleApplyButton(ActionEvent e)
@@ -213,20 +352,20 @@ public class ReactionApplicationPanel extends JPanel
 		smrkMan.setFlagSSMode(FlagSSMode);
 
 		// Product processing flags
-		smrkMan.setFlagProcessResultStructures(FlagProductProcessing);
-		smrkMan.setFlagClearHybridizationBeforeResultProcess(FlagClearHybridizationOnProductProcess);
-		smrkMan.setFlagClearImplicitHAtomsBeforeResultProcess(FlagClearImplicitHAtomsBeforeProductProcess);
-		smrkMan.setFlagClearAromaticityBeforeResultProcess(FlagClearAromaticityBeforeProcess);
-		smrkMan.setFlagAddImplicitHAtomsOnResultProcess(FlagAddImplicitHAtomsOnProductProcess);
-		smrkMan.setFlagConvertAddedImplicitHToExplicitOnResultProcess(FlagImplicitHToExplicitOnProductProcess);
-		smrkMan.setFlagConvertExplicitHToImplicitOnResultProcess(FlagExplicitHToImplicitOnProductProcess);
-		smrkMan.setFlagApplyStereoTransformation(FlagApplyStereoTransformation);
-		smrkMan.setFlagHAtomsTransformation(FlagHAtomsTransformation);
+		smrkMan.setFlagProcessResultStructures(checkboxProductProcessing.isSelected());
+		smrkMan.setFlagClearHybridizationBeforeResultProcess(checkboxClearHybridizationOnProductProcess.isSelected());
+		smrkMan.setFlagClearImplicitHAtomsBeforeResultProcess(checkboxClearImplicitHAtomsBeforeProductProcess.isSelected());
+		smrkMan.setFlagClearAromaticityBeforeResultProcess(checkboxClearAromaticityBeforeProcess.isSelected());
+		smrkMan.setFlagAddImplicitHAtomsOnResultProcess(checkboxAddImplicitHAtomsOnProductProcess.isSelected());
+		smrkMan.setFlagConvertAddedImplicitHToExplicitOnResultProcess(checkboxImplicitHToExplicitOnProductProcess.isSelected());
+		smrkMan.setFlagConvertExplicitHToImplicitOnResultProcess(checkboxExplicitHToImplicitOnProductProcess.isSelected());
+		smrkMan.setFlagApplyStereoTransformation(checkboxApplyStereoTransformation.isSelected());
+		smrkMan.setFlagHAtomsTransformation(checkboxHAtomsTransformation.isSelected());
 		smrkMan.setFlagHAtomsTransformationMode(FlagHAtomsTransformationMode);
-		smrkMan.setFlagAromaticityTransformation(FlagAromaticityTransformation);
+		smrkMan.setFlagAromaticityTransformation(checkboxAromaticityTransformation.isSelected());
 
-		smrkMan.getSmartsParser().mSupportSingleBondAromaticityNotSpecified = FlagSingleBondAromaticityNotSpecified;
-		smrkMan.getSmartsParser().mSupportDoubleBondAromaticityNotSpecified = FlagDoubleBondAromaticityNotSpecified;
+		smrkMan.getSmartsParser().mSupportSingleBondAromaticityNotSpecified = checkboxSingleBondAromaticityNotSpecified.isSelected();
+		smrkMan.getSmartsParser().mSupportDoubleBondAromaticityNotSpecified = checkboxDoubleBondAromaticityNotSpecified.isSelected();
 
 		SMIRKSReaction reaction = smrkMan.parse(smirks);
 		if (!smrkMan.getErrors().equals("")) {
@@ -234,7 +373,7 @@ public class ReactionApplicationPanel extends JPanel
 			return;
 		}
 
-		if (FlagTargetProcessing)
+		if (checkboxTargetProcessing.isSelected())
 			this.preProcess(target);
 		
 		switch (FlagReactionOperation) 
@@ -303,7 +442,7 @@ public class ReactionApplicationPanel extends JPanel
 
 	public void preProcess(IAtomContainer mol) throws Exception
 	{
-		if (FlagClearAromaticityBeforeProcess) {
+		if (checkboxClearAromaticityBeforeProcess.isSelected()) {
 			for (IAtom atom : mol.atoms())
 				if (atom.getFlag(CDKConstants.ISAROMATIC))
 					atom.setFlag(CDKConstants.ISAROMATIC, false);
@@ -317,10 +456,10 @@ public class ReactionApplicationPanel extends JPanel
 		CDKHydrogenAdder adder = CDKHydrogenAdder
 				.getInstance(SilentChemObjectBuilder.getInstance());
 		adder.addImplicitHydrogens(mol);
-		if (FlagExplicitHAtoms)
+		if (checkboxExplicitHAtoms.isSelected())
 			MoleculeTools.convertImplicitToExplicitHydrogens(mol);
 
-		if (FlagCheckAromaticityOnTargetProcess)	
+		if (checkboxCheckAromaticityOnTargetProcess.isSelected())	
 			CDKHueckelAromaticityDetector.detectAromaticity(mol);
 	}
 

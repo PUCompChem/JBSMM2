@@ -25,7 +25,6 @@ public class AmbitSmirksGUI extends JFrame
 				}					
 			}
 		});
-
 	}
 	
 	public AmbitSmirksGUI() throws Exception 
@@ -37,14 +36,14 @@ public class AmbitSmirksGUI extends JFrame
 	private void initGUI() throws Exception
 	{
 		setSize(new Dimension(1100,750));
-		//setResizable(false);
+		setResizable(false);
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		revalidate();
 		setTitle("Ambit SMIRKS");	
 		setLayout(new FlowLayout());
 		ReactionApplicationPanel rap = new ReactionApplicationPanel();
-		rap.setPreferredSize(new Dimension(1000,700));
+		rap.setPreferredSize(new Dimension(1100,700));
 		add(rap);
 	}
 
