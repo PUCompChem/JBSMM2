@@ -21,6 +21,8 @@ import pu.reactor.workspace.gui.ReactorProcessTabsSet;
 
 public class ReactionSequenceWizard extends JFrame
 {
+	private static final long serialVersionUID = -6840013958453114880L;
+	
 	private ReactorProcessTabsSet processTabs = null;
 	private ProcessCommonChemData processCommonChemData = null;
 	
