@@ -137,7 +137,9 @@ public class ReactionApplicationPanel extends JPanel
 		atomList.add(0);
 		atomList.add(1);
 		atomList.add(2);
+		atomList.add(3);
 		selector.setIndexList(atomList);
+		selector.setHighlightBonds(true);
 		panel2dMatch.setAtomContainer(targetMol.clone());
 		panel2dMatch.setSelector(selector);
 	}
