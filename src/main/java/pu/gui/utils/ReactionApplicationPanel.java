@@ -163,7 +163,7 @@ public class ReactionApplicationPanel extends JPanel
 		matchPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 		targetPanel.add(matchPanel,BorderLayout.EAST);
 		panel2dMatch = new Panel2D();
-		panel2dMatch.setPreferredSize(new Dimension(150,150));
+		panel2dMatch.setPreferredSize(new Dimension(250,150));
 		matchPanel.add(panel2dMatch,BorderLayout.CENTER);
 		JLabel matchLabel = new JLabel("Reaction match sites: ");
 		matchPanel.add(matchLabel,BorderLayout.NORTH);
@@ -439,7 +439,7 @@ public class ReactionApplicationPanel extends JPanel
 			break;
 		}
 		
-		//setMatchPanelSelection(target);
+		setMatchPanelSelection(target);
 	}
 
 	public void preProcess(IAtomContainer mol) throws Exception

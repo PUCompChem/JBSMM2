@@ -35,7 +35,7 @@ public class AmbitSmirksGUI extends JFrame
 	
 	private void initGUI() throws Exception
 	{
-		setSize(new Dimension(1100,750));
+		setSize(new Dimension(1100,795));
 		setResizable(false);
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -43,7 +43,7 @@ public class AmbitSmirksGUI extends JFrame
 		setTitle("Ambit SMIRKS");	
 		setLayout(new FlowLayout());
 		ReactionApplicationPanel rap = new ReactionApplicationPanel();
-		rap.setPreferredSize(new Dimension(1100,700));
+		rap.setPreferredSize(new Dimension(1100,760));
 		add(rap);
 	}
 
