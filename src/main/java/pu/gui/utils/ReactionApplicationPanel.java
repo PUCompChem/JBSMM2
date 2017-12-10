@@ -32,6 +32,7 @@ import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
+import pu.gui.utils.AtomContainerHightlights.SelectionMetod;
 import pu.gui.utils.chemtable.StructureTable;
 import ambit2.core.data.MoleculeTools;
 import ambit2.core.helper.CDKHueckelAromaticityDetector;
@@ -116,7 +117,7 @@ public class ReactionApplicationPanel extends JPanel
 	*/	
 	
 	HandleHAtoms FlagHAtomsTransformationMode = HandleHAtoms.IMPLICIT; 
-	SmartsConst.SSM_MODE FlagSSMode = SmartsConst.SSM_MODE.SSM_NON_OVERLAPPING;
+	SmartsConst.SSM_MODE FlagSSMode = SmartsConst.SSM_MODE.SSM_NON_IDENTICAL;
 	SmartsConst.SSM_MODE FlagSSModeForSingleCopyForEachPos = SmartsConst.SSM_MODE.SSM_NON_IDENTICAL;
 
 
@@ -131,7 +132,7 @@ public class ReactionApplicationPanel extends JPanel
 		} catch (Exception e) {}
 		smilesField.setText("c1ccncc1");
 		smirksField.setText("[c:1][H]>>[c:1]O[H]");
-		
+		/*
 		AtomContainerHightlights selector = new AtomContainerHightlights();
 		List<Integer> atomList = new ArrayList<Integer>();
 		atomList.add(0);
@@ -140,8 +141,9 @@ public class ReactionApplicationPanel extends JPanel
 		atomList.add(3);
 		selector.setIndexList(atomList);
 		selector.setHighlightBonds(true);
+		*/
 		panel2dMatch.setAtomContainer(targetMol.clone());
-		panel2dMatch.setSelector(selector);
+		//panel2dMatch.setSelector(selector);
 	}
 
 	private void initGUI()
@@ -354,10 +356,10 @@ public class ReactionApplicationPanel extends JPanel
 		if (result != null)
 		{	
 			for (IAtomContainer mol: result.atomContainers())
+			{	
 				structureTable.addMolecule(mol);
+			}	
 		}
-			
-		
 	}
 
 	private void applySMIRKSReaction(String smirks, IAtomContainer target) throws Exception
@@ -452,6 +454,8 @@ public class ReactionApplicationPanel extends JPanel
 			}
 			break;
 		}
+		
+		//setMatchPanelSelection(target);
 	}
 
 	public void preProcess(IAtomContainer mol) throws Exception
@@ -475,6 +479,32 @@ public class ReactionApplicationPanel extends JPanel
 
 		if (checkboxCheckAromaticityOnTargetProcess.isSelected())	
 			CDKHueckelAromaticityDetector.detectAromaticity(mol);
+	}
+	
+	void setMatchPanelSelection(IAtomContainer target) throws Exception
+	{
+		AtomContainerHightlights selector = new AtomContainerHightlights();
+		selector.setSelectionMethod(SelectionMetod.FRAGMENT_ATOMS_LIST);
+		//Reaction information is within smrkMan object 
+		List<List<IAtom>> maps = smrkMan.getNonIdenticalMappings(target);
+		List<List<Integer>> mapsIndices = new ArrayList<List<Integer>>();
+		for (List<IAtom> map: maps)
+		{	
+			List<Integer> mi = AtomContainerHightlights.calcIndexList(target, map);
+			mapsIndices.add(mi);
+		}
+		//Calculate clone and clone mappings:
+		IAtomContainer targetClone = target.clone();
+		List<List<IAtom>> cloneMaps = new ArrayList<List<IAtom>>();
+		for (List<Integer> mi : mapsIndices)
+		{	
+			List<IAtom> map = AtomContainerHightlights.calcAtomList(targetClone, mi);
+			cloneMaps.add(map);
+		}
+		selector.setFragmentAtomsList(cloneMaps);
+		selector.setHighlightBonds(true);
+		panel2dMatch.setAtomContainer(targetClone);
+		panel2dMatch.setSelector(selector);
 	}
 
 }

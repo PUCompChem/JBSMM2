@@ -63,6 +63,22 @@ public class AtomContainerHightlights implements IAtomContainerHighlights
 	public void setAtomList(List<IAtom> atomList) {
 		this.atomList = atomList;
 	}
+	
+	public List<List<Integer>> getFragmentIndicesList() {
+		return fragmentIndicesList;
+	}
+
+	public void setFragmentIndicesList(List<List<Integer>> fragmentIndicesList) {
+		this.fragmentIndicesList = fragmentIndicesList;
+	}
+
+	public List<List<IAtom>> getFragmentAtomsList() {
+		return fragmentAtomsList;
+	}
+
+	public void setFragmentAtomsList(List<List<IAtom>> fragmentAtomsList) {
+		this.fragmentAtomsList = fragmentAtomsList;
+	}
 
 	@Override
 	public void close() throws Exception {		
@@ -84,16 +100,18 @@ public class AtomContainerHightlights implements IAtomContainerHighlights
 
 	@Override
 	public IChemObjectSelection process(IAtomContainer mol) throws Exception 
-	{
-		
+	{		
 		switch (selectionMethod)
 		{
 		case ATOM_INDEX_LIST:
 			return getIndexListSelection(mol);
 		case ATOM_LIST:
 			return getAtomListSelection(mol);
+		//case FRAGMENT_INDICES_LIST:
+		//	return null;
+		case FRAGMENT_ATOMS_LIST:
+			return getFragmentAtomsListSelection(mol);
 		}
-		
 		return null;
 	}
 	
@@ -147,7 +165,30 @@ public class AtomContainerHightlights implements IAtomContainerHighlights
 		return new SingleSelection<IChemObject>(selectedMol);
 	}
 	
-	List<IAtom> calcAtomList(IAtomContainer mol, List<Integer> indList)
+	IChemObjectSelection getFragmentAtomsListSelection(IAtomContainer mol)
+	{
+		final IAtomContainer selectedMol = MoleculeTools
+				.newMolecule(SilentChemObjectBuilder.getInstance());
+		
+		for (List<IAtom> fragAtList : fragmentAtomsList)
+		{	
+			for (IAtom at : fragAtList)
+			{	
+				selectedMol.addAtom(at);
+			}	
+
+			if (highlightBonds)
+			{
+				List<IBond> boList = calcBondList(mol, fragAtList);
+				for (IBond bo : boList)
+					selectedMol.addBond(bo);
+			}
+		}
+		
+		return new SingleSelection<IChemObject>(selectedMol);
+	}
+	
+	public static List<IAtom> calcAtomList(IAtomContainer mol, List<Integer> indList)
 	{
 		List<IAtom> atList = new ArrayList<IAtom>();
 		for (Integer i : indList)
@@ -161,7 +202,17 @@ public class AtomContainerHightlights implements IAtomContainerHighlights
 		return atList;
 	}
 	
-	List<IBond> calcBondList(IAtomContainer mol, List<IAtom> atList)
+	public static List<Integer> calcIndexList(IAtomContainer mol, List<IAtom> atList)
+	{
+		List<Integer> indList = new ArrayList<Integer>();
+		for (IAtom at : atList)
+		{	
+			indList.add(mol.getAtomNumber(at));
+		}
+		return indList;
+	}
+	
+	public static List<IBond> calcBondList(IAtomContainer mol, List<IAtom> atList)
 	{
 		List<IBond> boList = new ArrayList<IBond>();
 		for (IAtom at : atList)

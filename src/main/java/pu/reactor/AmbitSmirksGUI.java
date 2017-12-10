@@ -9,7 +9,8 @@ import javax.swing.SwingUtilities;
 import pu.gui.utils.ReactionApplicationPanel;
 
 public class AmbitSmirksGUI extends JFrame 
-{
+{	
+	private static final long serialVersionUID = -9216569317812583387L;
 
 	public static void main(String[] args) 
 	{
@@ -20,7 +21,6 @@ public class AmbitSmirksGUI extends JFrame
 					AmbitSmirksGUI asg = new AmbitSmirksGUI();
 					asg.setVisible(true);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}					
 			}
