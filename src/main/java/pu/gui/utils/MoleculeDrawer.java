@@ -19,8 +19,7 @@ import java.util.ArrayList;
 public class MoleculeDrawer 
 {
 	ArrayList<Panel2D> p2dList = new ArrayList<Panel2D>();
-	CompoundImageTools imageTools = new CompoundImageTools();
-	
+		
 	public void add2DMolecule(JPanel panel, String smiles) {
 		try {
 			IAtomContainer mol = SmartsHelper.getMoleculeFromSmiles(smiles);
@@ -87,7 +86,7 @@ public class MoleculeDrawer
 
 	public ImageIcon getImageFromSmiles1(String smi){
 
-		//CompoundImageTools imageTools = new CompoundImageTools();
+		CompoundImageTools imageTools = new CompoundImageTools();
 
 		Image image = imageTools.getImage(smi);
 
@@ -97,7 +96,7 @@ public class MoleculeDrawer
 
 	public ImageIcon getImage1(IAtomContainer mol){
 
-		//CompoundImageTools imageTools = new CompoundImageTools();
+		CompoundImageTools imageTools = new CompoundImageTools();
 
 		Image image = imageTools.getImage(mol);
 

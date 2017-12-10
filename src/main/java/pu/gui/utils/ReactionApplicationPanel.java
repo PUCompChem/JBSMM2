@@ -132,18 +132,7 @@ public class ReactionApplicationPanel extends JPanel
 		} catch (Exception e) {}
 		smilesField.setText("c1ccncc1");
 		smirksField.setText("[c:1][H]>>[c:1]O[H]");
-		/*
-		AtomContainerHightlights selector = new AtomContainerHightlights();
-		List<Integer> atomList = new ArrayList<Integer>();
-		atomList.add(0);
-		atomList.add(1);
-		atomList.add(2);
-		atomList.add(3);
-		selector.setIndexList(atomList);
-		selector.setHighlightBonds(true);
-		*/
 		panel2dMatch.setAtomContainer(targetMol.clone());
-		//panel2dMatch.setSelector(selector);
 	}
 
 	private void initGUI()
@@ -321,11 +310,6 @@ public class ReactionApplicationPanel extends JPanel
 		configPanel.add(checkboxDoubleBondAromaticityNotSpecified);
 		
 		/*
-		checkbox = 
-				new JCheckBox("");
-		checkbox.setSelected();
-		configPanel.add(checkbox);
-	
 	HandleHAtoms FlagHAtomsTransformationMode = HandleHAtoms.IMPLICIT; 
 	SmartsConst.SSM_MODE FlagSSMode = SmartsConst.SSM_MODE.SSM_NON_OVERLAPPING;
 	SmartsConst.SSM_MODE FlagSSModeForSingleCopyForEachPos = SmartsConst.SSM_MODE.SSM_NON_IDENTICAL;
