@@ -35,7 +35,7 @@ public class AmbitSmirksGUI extends JFrame
 	
 	private void initGUI() throws Exception
 	{
-		setSize(new Dimension(1100,795));
+		setSize(new Dimension(1110,795));
 		setResizable(false);
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

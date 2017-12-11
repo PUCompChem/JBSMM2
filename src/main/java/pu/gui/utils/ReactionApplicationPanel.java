@@ -1,6 +1,7 @@
 package pu.gui.utils;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -14,8 +15,12 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JSplitPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
 import org.openscience.cdk.AtomContainerSet;
@@ -57,6 +62,7 @@ public class ReactionApplicationPanel extends JPanel
 	JPanel leftArea, rightArea;
 	JPanel targetPanel, matchPanel, reactionPanel, buttonsPanel, configPanel;
 	JTextField smilesField, smirksField;
+	JTextArea resultTextArea;
 	Panel2D panel2d;
 	Panel2D panel2dMatch;
 	StructureTable structureTable;
@@ -211,11 +217,29 @@ public class ReactionApplicationPanel extends JPanel
 		rightArea.add(configPanel, BorderLayout.CENTER);
 		JLabel labelConfig = new JLabel("Config");
 		configPanel.add(labelConfig);
+		
 		setupCheckBoxes();
+		
+		JLabel labelEmpty = new JLabel(" ");
+		configPanel.add(labelEmpty);
+		JLabel labelResult = new JLabel("Result");
+		configPanel.add(labelResult);
+		
+		resultTextArea = new JTextArea();
+		resultTextArea.setEditable(false);
+		resultTextArea.setLineWrap(true);
+		
+		JScrollPane scroll = new JScrollPane (resultTextArea);
+		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		//configPanel.add(resultTextArea);
+		scroll.setPreferredSize(new Dimension(10,10));
+		configPanel.add(scroll);
+		
 	}
 	
 	void setupCheckBoxes()
-	{
+	{	
 		checkboxTargetProcessing = 
 				new JCheckBox("TargetProcessing");
 		checkboxTargetProcessing.setSelected(true);
@@ -250,6 +274,9 @@ public class ReactionApplicationPanel extends JPanel
 		configPanel.add(checkboxPrintTransformationData);
 		*/
 		
+		//JSeparator separator = new JSeparator();
+		//separator.setMaximumSize(size);
+		//configPanel.add(separator);
 		
 		checkboxProductProcessing = 
 				new JCheckBox("ProductProcessing");
@@ -336,13 +363,26 @@ public class ReactionApplicationPanel extends JPanel
 		}
 		
 		structureTable.clearTable();
-		
+		resultTextArea.setText("");
 		if (result != null)
 		{	
 			for (IAtomContainer mol: result.atomContainers())
-			{	
 				structureTable.addMolecule(mol);
-			}	
+			
+			StringBuffer sb = new StringBuffer();
+			for (int i = 0; i < result.getAtomContainerCount(); i++)
+			{	
+				try {
+					sb.append(SmartsHelper.moleculeToSMILES(result.getAtomContainer(i), true));
+				} catch (Exception e1) {
+				}
+				sb.append("\n");
+			}
+			resultTextArea.setText(sb.toString());
+		}
+		else
+		{
+			resultTextArea.setText("Reaction is not applicable for this target!");
 		}
 	}
 
