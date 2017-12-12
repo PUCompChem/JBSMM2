@@ -11,6 +11,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import ambit2.reactions.Reaction;
 import ambit2.reactions.ReactionDataBase;
 import pu.gui.utils.chemtable.SmartChemTable;
+import pu.gui.utils.chemtable.SmartChemTableField;
 
 public class ReactionBrowser extends JFrame 
 {
@@ -26,6 +27,7 @@ public class ReactionBrowser extends JFrame
 	
 	BrowserMode mode = BrowserMode.REACTION_APPLICATION;
 	SmartChemTable chemTable = null;
+	List<SmartChemTableField> fields = new ArrayList<SmartChemTableField>();
 	IAtomContainer target = null;
 	String targetString = "";
 	ReactionDataBase reactionDB = null;
@@ -34,11 +36,11 @@ public class ReactionBrowser extends JFrame
 	
 	//Table columns config
 	boolean showRowNumber = true;
-	boolean showReactionName = true;
 	boolean showReactionSmirks = true;
 	boolean showTarget = true;
 	boolean showProducts = true;
 	boolean showReactionScore = true;
+	boolean showReactionScoreDetails = false;
 	boolean showReactionDepiction = false;
 	
 	public ReactionBrowser() 
@@ -52,12 +54,37 @@ public class ReactionBrowser extends JFrame
 	
 	private void initGUI() 
 	{
-		//TODO
+		configTable();
 	}
 	
 	private void configTable()
 	{
-		//TODO
+		fields.clear();
+		
+		if (showRowNumber)
+			fields.add(new SmartChemTableField("No", SmartChemTableField.Type.VALUE));
+		fields.add(new SmartChemTableField("Reaction info", SmartChemTableField.Type.TEXT));
+		//if (showReactionDepiction)
+		//	fields.add(new SmartChemTableField("Structure", SmartChemTableField.Type.STRUCTURE));
+		
+		switch(mode)
+		{
+		case REACTION_ONLY:
+			break;
+			
+		case REACTION_APPLICATION:
+			if (showTarget)
+				fields.add(new SmartChemTableField("Target structure", SmartChemTableField.Type.STRUCTURE));
+			if (showProducts)
+				fields.add(new SmartChemTableField("Products", SmartChemTableField.Type.STRUCTURE));
+			if (showReactionScore)
+				fields.add(new SmartChemTableField("Score", SmartChemTableField.Type.TEXT));
+			if (showReactionScoreDetails)
+				fields.add(new SmartChemTableField("Score details", SmartChemTableField.Type.TEXT));
+			break;
+		}
+		
+		chemTable = new SmartChemTable(fields);
 	}
 	
 	private void fillTable()
@@ -121,15 +148,7 @@ public class ReactionBrowser extends JFrame
 	public void setShowRowNumber(boolean showRowNumber) {
 		this.showRowNumber = showRowNumber;
 	}
-
-	public boolean isShowReactionName() {
-		return showReactionName;
-	}
-
-	public void setShowReactionName(boolean showReactionName) {
-		this.showReactionName = showReactionName;
-	}
-
+	
 	public boolean isShowReactionSmirks() {
 		return showReactionSmirks;
 	}
