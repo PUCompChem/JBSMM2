@@ -1,5 +1,6 @@
 package pu.reactor.workspace.gui;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,20 +45,22 @@ public class ReactionBrowser extends JFrame
 	boolean showReactionDepiction = false;
 	
 	public ReactionBrowser() 
-	{
-		//this.setLayout(new BorderLayout());
+	{	
 		initGUI();
-		setSize(new Dimension(400,600));
-
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 	
 	private void initGUI() 
 	{
-		configTable();
+		setLayout(new BorderLayout());
+		setSize(new Dimension(400,600));
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		configTableFields();
+		chemTable = new SmartChemTable(fields);
+		add(chemTable, BorderLayout.CENTER);
 	}
 	
-	private void configTable()
+	private void configTableFields()
 	{
 		fields.clear();
 		
