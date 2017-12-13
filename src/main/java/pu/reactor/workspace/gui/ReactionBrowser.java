@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 import ambit2.reactions.Reaction;
@@ -24,6 +25,8 @@ public class ReactionBrowser extends JFrame
 	
 	class BrowseItem {
 		public Reaction reaction = null;
+		public double score = 80.0;
+		public List<IAtom> reactionInstance = null;
 	}
 	
 	BrowserMode mode = BrowserMode.REACTION_APPLICATION;
@@ -34,6 +37,7 @@ public class ReactionBrowser extends JFrame
 	ReactionDataBase reactionDB = null;
 	List<BrowseItem> browseItems = new ArrayList<BrowseItem>();
 	List<Integer> itemSelection = null;
+	int numTableColumns = 0;
 	
 	//Table columns config
 	boolean showRowNumber = true;
@@ -92,9 +96,52 @@ public class ReactionBrowser extends JFrame
 	
 	private void fillTable()
 	{
-		//TODO
+		switch(mode)
+		{
+		case REACTION_ONLY:
+			fillTableWithReactionsOnly();
+			break;
+		case REACTION_APPLICATION:
+			fillTableWithReactionAppliations(); 
+			break;
+		}
 	}
 	
+	private void fillTableWithReactionsOnly()
+	{
+		if (reactionDB != null) //ReactionDB takes precedence
+		{
+			if (itemSelection == null)
+			{
+				for (int i = 0; i < itemSelection.size(); i++)
+					;
+			}
+			else
+			{
+				
+			}
+		}
+		else
+		{
+			if (itemSelection == null)
+			{
+				
+			}
+			else
+			{
+				
+			}
+		}
+		
+		List<Object> rowFields = new ArrayList<Object>();
+		//TODO
+		chemTable.addTableRow(rowFields);
+	}
+	
+	private void fillTableWithReactionAppliations()
+	{
+		List<Object> rowFields = new ArrayList<Object>();
+	}
 
 	public BrowserMode getMode() {
 		return mode;
