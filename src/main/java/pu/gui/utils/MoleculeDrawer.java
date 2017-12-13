@@ -107,13 +107,11 @@ public class MoleculeDrawer
 		return icon;
 	}
 	
-	public ImageIcon getImage(IAtomContainer mol, IAtomContainerHighlights selection){
+	public ImageIcon getImage(IAtomContainer mol, IAtomContainerHighlights selector){
 
 		CompoundImageTools imageTools = new CompoundImageTools();
 		
-		//TODO
-
-		Image image = imageTools.getImage(mol);
+		Image image = imageTools.getImage(mol, selector, false, false); 
 
 		ImageIcon icon = new ImageIcon(image);
 		return icon;
