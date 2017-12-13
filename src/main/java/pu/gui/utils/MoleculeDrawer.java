@@ -2,12 +2,15 @@ package pu.gui.utils;
 
 import ambit2.base.data.StructureRecord;
 import ambit2.rendering.CompoundImageTools;
+import ambit2.rendering.IAtomContainerHighlights;
 import ambit2.smarts.SmartsHelper;
 import ambit2.ui.Panel2D;
+
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
@@ -97,6 +100,18 @@ public class MoleculeDrawer
 	public ImageIcon getImage1(IAtomContainer mol){
 
 		CompoundImageTools imageTools = new CompoundImageTools();
+
+		Image image = imageTools.getImage(mol);
+
+		ImageIcon icon = new ImageIcon(image);
+		return icon;
+	}
+	
+	public ImageIcon getImage(IAtomContainer mol, IAtomContainerHighlights selection){
+
+		CompoundImageTools imageTools = new CompoundImageTools();
+		
+		//TODO
 
 		Image image = imageTools.getImage(mol);
 
