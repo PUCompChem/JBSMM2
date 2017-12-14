@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ambit2.base.data.StructureRecord;
+import ambit2.rendering.IAtomContainerHighlights;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 
@@ -30,8 +31,7 @@ import javax.swing.table.DefaultTableModel;
 public class SmartChemTable extends JPanel
 {
 	private static final long serialVersionUID = 13634655675682345L;
-
-
+		
 	List<SmartChemTableField> fields = new ArrayList<SmartChemTableField>();
 	MoleculeDrawer drawer = new MoleculeDrawer();
 	DefaultTableModel model = new DefaultTableModel(0,4);
@@ -125,14 +125,26 @@ public class SmartChemTable extends JPanel
 				if (o instanceof String)
 				{
 					String smi = (String)o;
-					//rowData[i] = drawer.getImageFromSmiles(smi,table);
 					rowData[i] = drawer.getImageFromSmiles1(smi);
 				}
-				else
-					if (o instanceof IAtomContainer)
+				else if (o instanceof IAtomContainer)
+				{
+					rowData[i] = drawer.getImage1((IAtomContainer)o);
+				}
+				else if (o instanceof Object[])
+				{
+					Object obj[] = (Object[])o;
+					if (obj.length == 2)
 					{
-						//TODO
+						if ((obj[0] instanceof IAtomContainer) &&
+								(obj[1] instanceof IAtomContainerHighlights))
+						{
+							drawer.getImage((IAtomContainer)obj[0], 
+									(IAtomContainerHighlights)obj[1]);
+						}	
 					}
+				}
+				
 				break;
 			}
 		}
