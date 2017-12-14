@@ -26,6 +26,7 @@ public class ReactionBrowserPanel extends JPanel
 		public Reaction reaction = null;
 		public double score = 80.0;
 		public List<IAtom> reactionInstance = null;
+		public IAtomContainer products = null;
 	}
 	
 	BrowserMode mode = BrowserMode.REACTION_APPLICATION;
@@ -52,7 +53,7 @@ public class ReactionBrowserPanel extends JPanel
 		initGUI();
 	}
 	
-	private void initGUI() 
+	void initGUI() 
 	{
 		setLayout(new BorderLayout());
 		configTableFields();
@@ -60,7 +61,7 @@ public class ReactionBrowserPanel extends JPanel
 		add(chemTable, BorderLayout.CENTER);
 	}
 	
-	private void configTableFields()
+	void configTableFields()
 	{
 		fields.clear();
 		
@@ -77,7 +78,7 @@ public class ReactionBrowserPanel extends JPanel
 			
 		case REACTION_APPLICATION:
 			if (showTarget)
-				fields.add(new SmartChemTableField("Target structure", SmartChemTableField.Type.STRUCTURE));
+				fields.add(new SmartChemTableField("Target", SmartChemTableField.Type.STRUCTURE));
 			if (showProducts)
 				fields.add(new SmartChemTableField("Products", SmartChemTableField.Type.STRUCTURE));
 			if (showReactionScore)
@@ -90,55 +91,64 @@ public class ReactionBrowserPanel extends JPanel
 		chemTable = new SmartChemTable(fields);
 	}
 	
-	private void fillTable()
+	void fillTable()
 	{
-		switch(mode)
+		if (itemSelection == null)
 		{
-		case REACTION_ONLY:
-			fillTableWithReactionsOnly();
-			break;
-		case REACTION_APPLICATION:
-			fillTableWithReactionAppliations(); 
-			break;
-		}
-	}
-	
-	private void fillTableWithReactionsOnly()
-	{
-		if (reactionDB != null) //ReactionDB takes precedence
-		{
-			if (itemSelection == null)
+			for (int i = 0; i < itemSelection.size(); i++)
 			{
-				for (int i = 0; i < itemSelection.size(); i++)
-					;
-			}
-			else
-			{
-				
-			}
+				BrowseItem item = browseItems.get(itemSelection.get(i));
+				List<Object> rowFields = getTableRowFields(item, (i+1));
+				chemTable.addTableRow(rowFields);
+			}	
 		}
 		else
 		{
-			if (itemSelection == null)
+			for (int i = 0; i < browseItems.size(); i++)
 			{
-				
-			}
-			else
-			{
-				
-			}
+				BrowseItem item = browseItems.get(i);
+				List<Object> rowFields = getTableRowFields(item, (i+1));
+				chemTable.addTableRow(rowFields);
+			}	
 		}
-		
-		List<Object> rowFields = new ArrayList<Object>();
-		//TODO
-		chemTable.addTableRow(rowFields);
 	}
 	
-	private void fillTableWithReactionAppliations()
+	private List<Object> getTableRowFields(BrowseItem item, int num)
 	{
 		List<Object> rowFields = new ArrayList<Object>();
+		if(showRowNumber)
+			rowFields.add(new Integer(num));
+		String info = getReactionInfoString(item.reaction);
+		rowFields.add(info);
+		
+		switch(mode)
+		{
+		case REACTION_ONLY:
+			break;
+		case REACTION_APPLICATION:
+			if (showTarget)
+				rowFields.add(target);
+			if (showProducts)
+				rowFields.add(item.products);
+			if (showReactionScore)
+				rowFields.add(item.score);
+			if (showReactionScoreDetails)
+				rowFields.add("Score details");
+			break;
+		}
+		
+		chemTable.addTableRow(rowFields);
+		return rowFields;
 	}
-
+	
+	private String getReactionInfoString(Reaction reaction)
+	{
+		String s = reaction.getName();
+		if (showReactionSmirks)
+			s = s + "  " + reaction.getSmirks();
+		return s;
+	}
+	
 	public BrowserMode getMode() {
 		return mode;
 	}
