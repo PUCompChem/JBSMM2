@@ -125,11 +125,11 @@ public class SmartChemTable extends JPanel
 				if (o instanceof String)
 				{
 					String smi = (String)o;
-					rowData[i] = drawer.getImageFromSmiles1(smi);
+					rowData[i] = drawer.getImageFromSmiles(smi);
 				}
 				else if (o instanceof IAtomContainer)
 				{
-					rowData[i] = drawer.getImage1((IAtomContainer)o);
+					rowData[i] = drawer.getImage((IAtomContainer)o);
 				}
 				else if (o instanceof Object[])
 				{
@@ -161,7 +161,7 @@ public class SmartChemTable extends JPanel
 			rowFields.add(str.getDataEntryID());
 			rowFields.add(str.getFormula());
 			rowFields.add(str.getSmiles());
-			rowFields.add(drawer.getImageFromSmiles1(str.getSmiles()));
+			rowFields.add(drawer.getImageFromSmiles(str.getSmiles()));
 			this.addTableRow(rowFields);
 		}
 	}

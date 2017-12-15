@@ -32,7 +32,7 @@ public class StructureTable extends SmartChemTable
 	
 	public void addMoleculeAsString(String molString)
 	{
-		ImageIcon icon = drawer.getImageFromSmiles1(molString);
+		ImageIcon icon = drawer.getImageFromSmiles(molString);
 		if (currentColumn == numberOfColumns)
 		{
 			//new row is created
@@ -48,7 +48,7 @@ public class StructureTable extends SmartChemTable
 	
 	public void addMolecule(IAtomContainer mol)
 	{
-		ImageIcon icon = drawer.getImage1(mol);
+		ImageIcon icon = drawer.getImage(mol);
 		if (currentColumn == numberOfColumns)
 		{
 			//new row is created

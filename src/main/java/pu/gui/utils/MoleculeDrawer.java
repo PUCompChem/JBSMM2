@@ -87,7 +87,7 @@ public class MoleculeDrawer
     }
 	 */
 
-	public ImageIcon getImageFromSmiles1(String smi){
+	public ImageIcon getImageFromSmiles(String smi){
 
 		CompoundImageTools imageTools = new CompoundImageTools();
 
@@ -97,7 +97,7 @@ public class MoleculeDrawer
 		return icon;
 	}
 
-	public ImageIcon getImage1(IAtomContainer mol){
+	public ImageIcon getImage(IAtomContainer mol){
 
 		CompoundImageTools imageTools = new CompoundImageTools();
 
