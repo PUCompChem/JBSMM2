@@ -2,11 +2,18 @@ package pu.test;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import org.openscience.cdk.interfaces.IAtomContainer;
+
+import ambit2.reactions.Reaction;
+import ambit2.smarts.SmartsHelper;
 import pu.reactor.workspace.gui.ReactionBrowserPanel;
+import pu.reactor.workspace.gui.ReactionBrowserPanel.BrowseItem;
 
 
 public class TestReactionBrowserPanel extends JFrame
@@ -48,7 +55,31 @@ public class TestReactionBrowserPanel extends JFrame
 		rbp.setPreferredSize(new Dimension(1000,700));
 		add(rbp);
 		
+		//Setup test info
+		IAtomContainer target = SmartsHelper.getMoleculeFromSmiles("CCCCCC");
+		rbp.setTarget(target);
 		
+		Reaction r = new Reaction(); 
+		r.setSmirks("[C:1][H]>>[C:1]O[H]");
+		r.setName("aliphatic hydroxilation");
+		r.setReactionClass("A");
+		
+		List<BrowseItem> browseItems = new ArrayList<BrowseItem>();
+		
+		BrowseItem bi = new BrowseItem();
+		bi.reaction = r;
+		bi.score = 70;
+		bi.products = SmartsHelper.getMoleculeFromSmiles("CCC.CCC");
+		browseItems.add(bi);
+		
+		bi = new BrowseItem();
+		bi.reaction = r;
+		bi.score = 78;
+		bi.products = SmartsHelper.getMoleculeFromSmiles("NCCC.CCCO");
+		browseItems.add(bi);
+		
+		rbp.setBrowseItems(browseItems);	
+		rbp.fillTable();
 	}
 
 }

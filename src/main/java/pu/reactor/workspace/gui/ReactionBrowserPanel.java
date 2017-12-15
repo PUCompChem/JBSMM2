@@ -22,7 +22,7 @@ public class ReactionBrowserPanel extends JPanel
 		REACTION_ONLY, REACTION_APPLICATION
 	}
 	
-	class BrowseItem {
+	public static class BrowseItem {
 		public Reaction reaction = null;
 		public double score = 80.0;
 		public List<IAtom> reactionInstance = null;
@@ -91,9 +91,9 @@ public class ReactionBrowserPanel extends JPanel
 		chemTable = new SmartChemTable(fields);
 	}
 	
-	void fillTable()
+	public void fillTable()
 	{
-		if (itemSelection == null)
+		if (itemSelection != null)
 		{
 			for (int i = 0; i < itemSelection.size(); i++)
 			{
@@ -137,7 +137,6 @@ public class ReactionBrowserPanel extends JPanel
 			break;
 		}
 		
-		chemTable.addTableRow(rowFields);
 		return rowFields;
 	}
 	
@@ -145,7 +144,7 @@ public class ReactionBrowserPanel extends JPanel
 	{
 		String s = reaction.getName();
 		if (showReactionSmirks)
-			s = s + "  " + reaction.getSmirks();
+			s = s + "\n" + reaction.getSmirks();
 		return s;
 	}
 	
@@ -243,5 +242,13 @@ public class ReactionBrowserPanel extends JPanel
 
 	public void setShowReactionDepiction(boolean showReactionDepiction) {
 		this.showReactionDepiction = showReactionDepiction;
+	}
+	
+	Object[] getCouple(Object a, Object b)
+	{
+		Object o[] = new Object[2];
+		o[0] = a;
+		o[1] = b;
+		return o;
 	}
 }
