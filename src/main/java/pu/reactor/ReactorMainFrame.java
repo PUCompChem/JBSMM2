@@ -10,6 +10,7 @@ import pu.gui.utils.trees.MoleculeSetTree;
 import pu.gui.utils.trees.ReactionSetTree;
 import pu.gui.utils.PredefinedArrangements;
 import pu.io.FileUtilities;
+import pu.reactor.helpinfo.ReactorAboutWindow;
 import pu.reactor.json.PreferencesJsonParser;
 import pu.reactor.workspace.Preferences;
 import pu.reactor.workspace.ProcessCommonChemData;
@@ -479,7 +480,7 @@ public class ReactorMainFrame extends JFrame {
 		miAbout.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				AboutWindow aboutWindow = new AboutWindow();
+				ReactorAboutWindow aboutWindow = new ReactorAboutWindow();
 				aboutWindow.setVisible(true);
 			}
 		});
