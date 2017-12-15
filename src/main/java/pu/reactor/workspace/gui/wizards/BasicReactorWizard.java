@@ -139,7 +139,7 @@ public class BasicReactorWizard extends ProcessWizard
 					int currentPosition = processTabs.getTabCount()-1;
 					processTabs.setTabComponentAt(currentPosition, new ButtonTabComponent(processTabs));
 					processTabs.setSelectedIndex(currentPosition);
-
+					System.out.println(basicReactorProcess.toJsonString());
 					setVisible(false);
 				}
 				catch (Exception exp)

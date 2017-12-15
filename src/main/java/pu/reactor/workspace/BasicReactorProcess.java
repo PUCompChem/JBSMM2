@@ -82,7 +82,17 @@ public class BasicReactorProcess implements IProcess
 
 	@Override
 	public String toJsonString() {
-		return null;
+
+		String endLine = "\n";
+		StringBuffer sb = new StringBuffer();
+		int nFields = 0;
+		sb.append("{" + endLine);
+		String strategyJSON = strategy.toJSONString("\t");
+		sb.append(strategyJSON);
+		sb.append(endLine);
+
+		sb.append("}" + endLine);
+		return sb.toString();
 	}
 
 	@Override

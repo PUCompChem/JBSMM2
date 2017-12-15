@@ -75,11 +75,16 @@ public class ReactorMainFrame extends JFrame {
 	JMenu menuSettings;
 	JMenuItem menuPreferences;
 
-	private JMenuItem miWorkspaceSettings;
+
 	private JMenu menuProjectSettings;
+	private JMenuItem miWorkspaceSettings;
 	private JMenuItem miProjectSettings;
 	private JMenuItem miProcessSettings;
-	
+
+	private JMenu menuHelp;
+	private JMenuItem miAbout;
+
+
 	
 	
 
@@ -466,6 +471,18 @@ public class ReactorMainFrame extends JFrame {
 		});
 
 
+		menuHelp = new JMenu("Help");
+		menuBar.add(menuHelp);
+		miAbout = new JMenuItem("About");
+		menuHelp.add(miAbout);
+
+		miAbout.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AboutWindow aboutWindow = new AboutWindow();
+				aboutWindow.setVisible(true);
+			}
+		});
 		setJMenuBar(menuBar);
 	}
 
