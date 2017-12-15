@@ -37,7 +37,7 @@ import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import pu.gui.utils.AtomContainerHightlights.SelectionMetod;
+import pu.gui.utils.AtomContainerHighlights.SelectionMetod;
 import pu.gui.utils.chemtable.StructureTable;
 import ambit2.core.data.MoleculeTools;
 import ambit2.core.helper.CDKHueckelAromaticityDetector;
@@ -507,14 +507,14 @@ public class ReactionApplicationPanel extends JPanel
 	
 	void setMatchPanelSelection(IAtomContainer target) throws Exception
 	{
-		AtomContainerHightlights selector = new AtomContainerHightlights();
+		AtomContainerHighlights selector = new AtomContainerHighlights();
 		selector.setSelectionMethod(SelectionMetod.FRAGMENT_ATOMS_LIST);
 		//Reaction information is within smrkMan object 
 		List<List<IAtom>> maps = smrkMan.getNonIdenticalMappings(target);
 		List<List<Integer>> mapsIndices = new ArrayList<List<Integer>>();
 		for (List<IAtom> map: maps)
 		{	
-			List<Integer> mi = AtomContainerHightlights.calcIndexList(target, map);
+			List<Integer> mi = AtomContainerHighlights.calcIndexList(target, map);
 			mapsIndices.add(mi);
 		}
 		//Calculate clone and clone mappings:
@@ -522,7 +522,7 @@ public class ReactionApplicationPanel extends JPanel
 		List<List<IAtom>> cloneMaps = new ArrayList<List<IAtom>>();
 		for (List<Integer> mi : mapsIndices)
 		{	
-			List<IAtom> map = AtomContainerHightlights.calcAtomList(targetClone, mi);
+			List<IAtom> map = AtomContainerHighlights.calcAtomList(targetClone, mi);
 			cloneMaps.add(map);
 		}
 		selector.setFragmentAtomsList(cloneMaps);

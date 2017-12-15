@@ -14,7 +14,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import ambit2.core.data.MoleculeTools;
 import ambit2.rendering.IAtomContainerHighlights;
 
-public class AtomContainerHightlights implements IAtomContainerHighlights
+public class AtomContainerHighlights implements IAtomContainerHighlights
 {	
 	private static final long serialVersionUID = 2387697863334234L;
 	
