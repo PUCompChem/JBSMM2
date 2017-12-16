@@ -103,7 +103,7 @@ public class BasicReactorProcess implements IProcess
 	@Override
 	public void initProcess() throws Exception
 	{
-		reactDB.configureReactions(reactor.getSMIRKSManager());
+		reactDB.configureGenericReactions(reactor.getSMIRKSManager());
 		reactor.setReactionDataBase(reactDB);
 		reactor.setStrategy(strategy);
 
