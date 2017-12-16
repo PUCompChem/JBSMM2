@@ -11,9 +11,9 @@ import javax.swing.SwingUtilities;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 import ambit2.reactions.GenericReaction;
+import ambit2.reactions.GenericReactionInstance;
 import ambit2.smarts.SmartsHelper;
 import pu.reactor.workspace.gui.ReactionBrowserPanel;
-import pu.reactor.workspace.gui.ReactionBrowserPanel.BrowseItem;
 
 
 public class TestReactionBrowserPanel extends JFrame
@@ -64,21 +64,21 @@ public class TestReactionBrowserPanel extends JFrame
 		r.setName("aliphatic hydroxilation");
 		r.setReactionClass("A");
 		
-		List<BrowseItem> browseItems = new ArrayList<BrowseItem>();
+		List<GenericReactionInstance> reactInstances = new ArrayList<GenericReactionInstance>();
 		
-		BrowseItem bi = new BrowseItem();
+		GenericReactionInstance bi = new GenericReactionInstance();
 		bi.reaction = r;
 		bi.score = 70;
 		bi.products = SmartsHelper.getMoleculeFromSmiles("CCC.CCC");
-		browseItems.add(bi);
+		reactInstances.add(bi);
 		
-		bi = new BrowseItem();
+		bi = new GenericReactionInstance();
 		bi.reaction = r;
 		bi.score = 78;
 		bi.products = SmartsHelper.getMoleculeFromSmiles("NCCC.CCCO");
-		browseItems.add(bi);
+		reactInstances.add(bi);
 		
-		rbp.setBrowseItems(browseItems);	
+		rbp.setReactionInstances(reactInstances);	
 		rbp.fillTable();
 	}
 

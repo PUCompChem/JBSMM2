@@ -9,6 +9,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 import ambit2.reactions.GenericReaction;
+import ambit2.reactions.GenericReactionInstance;
 import ambit2.reactions.ReactionDataBase;
 import pu.gui.utils.chemtable.SmartChemTable;
 import pu.gui.utils.chemtable.SmartChemTableField;
@@ -22,12 +23,6 @@ public class ReactionBrowserPanel extends JPanel
 		REACTION_ONLY, REACTION_APPLICATION
 	}
 	
-	public static class BrowseItem {
-		public GenericReaction reaction = null;
-		public double score = 80.0;
-		public List<IAtom> reactionInstance = null;
-		public IAtomContainer products = null;
-	}
 	
 	BrowserMode mode = BrowserMode.REACTION_APPLICATION;
 	SmartChemTable chemTable = null;
@@ -35,7 +30,7 @@ public class ReactionBrowserPanel extends JPanel
 	IAtomContainer target = null;
 	String targetString = "";
 	ReactionDataBase reactionDB = null;
-	List<BrowseItem> browseItems = new ArrayList<BrowseItem>();
+	List<GenericReactionInstance> reactionInstances = new ArrayList<GenericReactionInstance>();
 	List<Integer> itemSelection = null;
 	int numTableColumns = 0;
 	
@@ -97,28 +92,28 @@ public class ReactionBrowserPanel extends JPanel
 		{
 			for (int i = 0; i < itemSelection.size(); i++)
 			{
-				BrowseItem item = browseItems.get(itemSelection.get(i));
-				List<Object> rowFields = getTableRowFields(item, (i+1));
+				GenericReactionInstance inst = reactionInstances.get(itemSelection.get(i));
+				List<Object> rowFields = getTableRowFields(inst, (i+1));
 				chemTable.addTableRow(rowFields);
 			}	
 		}
 		else
 		{
-			for (int i = 0; i < browseItems.size(); i++)
+			for (int i = 0; i < reactionInstances.size(); i++)
 			{
-				BrowseItem item = browseItems.get(i);
-				List<Object> rowFields = getTableRowFields(item, (i+1));
+				GenericReactionInstance inst = reactionInstances.get(i);
+				List<Object> rowFields = getTableRowFields(inst, (i+1));
 				chemTable.addTableRow(rowFields);
 			}	
 		}
 	}
 	
-	private List<Object> getTableRowFields(BrowseItem item, int num)
+	private List<Object> getTableRowFields(GenericReactionInstance instance, int num)
 	{
 		List<Object> rowFields = new ArrayList<Object>();
 		if(showRowNumber)
 			rowFields.add(new Integer(num));
-		String info = getReactionInfoString(item.reaction);
+		String info = getReactionInfoString(instance.reaction);
 		rowFields.add(info);
 		
 		switch(mode)
@@ -129,9 +124,9 @@ public class ReactionBrowserPanel extends JPanel
 			if (showTarget)
 				rowFields.add(target);
 			if (showProducts)
-				rowFields.add(item.products);
+				rowFields.add(instance.products);
 			if (showReactionScore)
-				rowFields.add(item.score);
+				rowFields.add(instance.score);
 			if (showReactionScoreDetails)
 				rowFields.add("Score details");
 			break;
@@ -180,12 +175,12 @@ public class ReactionBrowserPanel extends JPanel
 		this.targetString = targetString;
 	}
 	
-	public List<BrowseItem> getBrowseItems() {
-		return browseItems;
+	public List<GenericReactionInstance> getReactionInstances() {
+		return reactionInstances;
 	}
 
-	public void setBrowseItems(List<BrowseItem> browseItems) {
-		this.browseItems = browseItems;
+	public void setReactionInstances(List<GenericReactionInstance> reactionInstances) {
+		this.reactionInstances = reactionInstances;
 	}
 
 	public List<Integer> getItemSelection() {
@@ -244,11 +239,4 @@ public class ReactionBrowserPanel extends JPanel
 		this.showReactionDepiction = showReactionDepiction;
 	}
 	
-	Object[] getCouple(Object a, Object b)
-	{
-		Object o[] = new Object[2];
-		o[0] = a;
-		o[1] = b;
-		return o;
-	}
 }
