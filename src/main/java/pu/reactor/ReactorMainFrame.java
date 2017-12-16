@@ -171,7 +171,7 @@ public class ReactorMainFrame extends JFrame {
 	//	setReactionTree
 		if (processChemData.getReactionDB() != null)
 		{
-			reactionSetTree = new ReactionSetTree(processChemData.getReactionDB().reactions);
+			reactionSetTree = new ReactionSetTree(processChemData.getReactionDB().genericReactions);
 			  treesTabPane = new JTabbedPane();
 			  treesTabPane.add("reactions",reactionSetTree);
 

@@ -1,6 +1,6 @@
 package pu.gui.utils.trees;
 
-import ambit2.reactions.Reaction;
+import ambit2.reactions.GenericReaction;
 import pu.filtering.ColorScheme;
 import pu.filtering.ICode;
 import pu.filtering.IFilter;
@@ -33,9 +33,9 @@ public class ReactionSetTree extends SetTree
 	private static final long serialVersionUID = -4305046628531992964L;
 
 
-	private List<Reaction> reactions = new ArrayList<Reaction>();
-	public Map<DefaultMutableTreeNode, Reaction> nodeReactions = new HashMap<DefaultMutableTreeNode, Reaction>();
-	public Map<Reaction, DefaultMutableTreeNode> reactionNodes = new HashMap<Reaction, DefaultMutableTreeNode>();
+	private List<GenericReaction> reactions = new ArrayList<GenericReaction>();
+	public Map<DefaultMutableTreeNode, GenericReaction> nodeReactions = new HashMap<DefaultMutableTreeNode, GenericReaction>();
+	public Map<GenericReaction, DefaultMutableTreeNode> reactionNodes = new HashMap<GenericReaction, DefaultMutableTreeNode>();
 
 
 	DefaultMutableTreeNode root;
@@ -51,7 +51,7 @@ public class ReactionSetTree extends SetTree
 		initGUI();
 	}
 
-	public ReactionSetTree(List<Reaction> reactions)
+	public ReactionSetTree(List<GenericReaction> reactions)
 	{
 		this.reactions = reactions;
 		initGUI();
@@ -92,7 +92,7 @@ public class ReactionSetTree extends SetTree
 
 		tree.setModel(new DefaultTreeModel(root));
 
-		for (Reaction reaction : reactions)
+		for (GenericReaction reaction : reactions)
 		{
 			String reactionClass = reaction.getReactionClass();
 			String[] levels = reactionClass.split(Pattern.quote("."));
@@ -126,11 +126,11 @@ public class ReactionSetTree extends SetTree
 
 
 
-	public List<Reaction> getReactions() {
+	public List<GenericReaction> getReactions() {
 		return reactions;
 	}
 
-	public void setReactions(List<Reaction> reactions) {
+	public void setReactions(List<GenericReaction> reactions) {
 		this.reactions = reactions;
 		dataToTree();
 	}
@@ -162,7 +162,7 @@ public class ReactionSetTree extends SetTree
 
 	String getNodeInfoText(DefaultMutableTreeNode node)
 	{
-		Reaction r = nodeReactions.get(node);
+		GenericReaction r = nodeReactions.get(node);
 		if (r == null)
 			return node.toString();
 		else
@@ -189,7 +189,7 @@ public class ReactionSetTree extends SetTree
 	{
 		SetFilter filter = new SetFilter();
 		Set<Object> rSet = new HashSet<Object>();
-		for (Reaction r : reactions)
+		for (GenericReaction r : reactions)
 		{
 			if (r.isFlagUse())
 				rSet.add(r);
@@ -201,7 +201,7 @@ public class ReactionSetTree extends SetTree
 
 	private void reactionNodesMapping(){
 		for (int i = 0; i < reactions.size(); i++) {
-			Reaction cuurentReaction = reactions.get(i);
+			GenericReaction cuurentReaction = reactions.get(i);
 			DefaultMutableTreeNode currentNode = findNode(cuurentReaction.getName());
 			reactionNodes.put(cuurentReaction,currentNode);
 		}
@@ -213,7 +213,7 @@ public class ReactionSetTree extends SetTree
 
 		private void iterateTree(DefaultMutableTreeNode currentNode){
 
-				for(Reaction reaction : reactions){
+				for(GenericReaction reaction : reactions){
 					if(reaction.getName() == currentNode.toString()){
 						nodeReactions.put(currentNode, reaction);
 						break;

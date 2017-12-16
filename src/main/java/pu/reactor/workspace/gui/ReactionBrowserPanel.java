@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
-import ambit2.reactions.Reaction;
+import ambit2.reactions.GenericReaction;
 import ambit2.reactions.ReactionDataBase;
 import pu.gui.utils.chemtable.SmartChemTable;
 import pu.gui.utils.chemtable.SmartChemTableField;
@@ -23,7 +23,7 @@ public class ReactionBrowserPanel extends JPanel
 	}
 	
 	public static class BrowseItem {
-		public Reaction reaction = null;
+		public GenericReaction reaction = null;
 		public double score = 80.0;
 		public List<IAtom> reactionInstance = null;
 		public IAtomContainer products = null;
@@ -140,7 +140,7 @@ public class ReactionBrowserPanel extends JPanel
 		return rowFields;
 	}
 	
-	private String getReactionInfoString(Reaction reaction)
+	private String getReactionInfoString(GenericReaction reaction)
 	{
 		String s = reaction.getName();
 		if (showReactionSmirks)

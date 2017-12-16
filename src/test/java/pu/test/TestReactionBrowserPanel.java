@@ -10,7 +10,7 @@ import javax.swing.SwingUtilities;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 
-import ambit2.reactions.Reaction;
+import ambit2.reactions.GenericReaction;
 import ambit2.smarts.SmartsHelper;
 import pu.reactor.workspace.gui.ReactionBrowserPanel;
 import pu.reactor.workspace.gui.ReactionBrowserPanel.BrowseItem;
@@ -59,7 +59,7 @@ public class TestReactionBrowserPanel extends JFrame
 		IAtomContainer target = SmartsHelper.getMoleculeFromSmiles("CCCCCC");
 		rbp.setTarget(target);
 		
-		Reaction r = new Reaction(); 
+		GenericReaction r = new GenericReaction(); 
 		r.setSmirks("[C:1][H]>>[C:1]O[H]");
 		r.setName("aliphatic hydroxilation");
 		r.setReactionClass("A");
