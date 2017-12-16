@@ -13,6 +13,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 import ambit2.core.data.MoleculeTools;
 import ambit2.rendering.IAtomContainerHighlights;
+import pu.helpers.Helpers;
 
 public class AtomContainerHighlights implements IAtomContainerHighlights
 {	
@@ -137,8 +138,8 @@ public class AtomContainerHighlights implements IAtomContainerHighlights
 		
 		if (highlightBonds)
 		{
-			List<IAtom> atList = calcAtomList(mol, indexList);
-			List<IBond> boList = calcBondList(mol, atList);
+			List<IAtom> atList = Helpers.calcAtomList(mol, indexList);
+			List<IBond> boList = Helpers.calcBondList(mol, atList);
 			for (IBond bo : boList)
 				selectedMol.addBond(bo);
 		}
@@ -157,7 +158,7 @@ public class AtomContainerHighlights implements IAtomContainerHighlights
 		
 		if (highlightBonds)
 		{
-			List<IBond> boList = calcBondList(mol, atomList);
+			List<IBond> boList = Helpers.calcBondList(mol, atomList);
 			for (IBond bo : boList)
 				selectedMol.addBond(bo);
 		}
@@ -179,7 +180,7 @@ public class AtomContainerHighlights implements IAtomContainerHighlights
 
 			if (highlightBonds)
 			{
-				List<IBond> boList = calcBondList(mol, fragAtList);
+				List<IBond> boList = Helpers.calcBondList(mol, fragAtList);
 				for (IBond bo : boList)
 					selectedMol.addBond(bo);
 			}
@@ -188,53 +189,6 @@ public class AtomContainerHighlights implements IAtomContainerHighlights
 		return new SingleSelection<IChemObject>(selectedMol);
 	}
 	
-	public static List<IAtom> calcAtomList(IAtomContainer mol, List<Integer> indList)
-	{
-		List<IAtom> atList = new ArrayList<IAtom>();
-		for (Integer i : indList)
-		{	
-			if (i.intValue() < mol.getAtomCount())
-			{
-				IAtom at = mol.getAtom(i.intValue());
-				atList.add(at);
-			}
-		}
-		return atList;
-	}
 	
-	public static List<Integer> calcIndexList(IAtomContainer mol, List<IAtom> atList)
-	{
-		List<Integer> indList = new ArrayList<Integer>();
-		for (IAtom at : atList)
-		{	
-			indList.add(mol.getAtomNumber(at));
-		}
-		return indList;
-	}
-	
-	public static List<IBond> calcBondList(IAtomContainer mol, List<IAtom> atList)
-	{
-		List<IBond> boList = new ArrayList<IBond>();
-		for (IAtom at : atList)
-		{
-			List<IBond> conBoList =  mol.getConnectedBondsList(at);
-			for (IBond bo : conBoList)
-			{
-				if (bo.getAtom(0) == at)
-				{
-					if (atList.contains(bo.getAtom(1)))
-						if (!boList.contains(bo))
-							boList.add(bo);
-				}
-				else //bo.getAtom(1) == at
-				{
-					if (atList.contains(bo.getAtom(0)))
-						if (!boList.contains(bo))
-							boList.add(bo);
-				}
-			}
-		}
-		return boList;
-	}	
 
 }

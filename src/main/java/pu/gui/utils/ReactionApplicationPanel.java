@@ -39,6 +39,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import pu.gui.utils.AtomContainerHighlights.SelectionMetod;
 import pu.gui.utils.chemtable.StructureTable;
+import pu.helpers.Helpers;
 import ambit2.core.data.MoleculeTools;
 import ambit2.core.helper.CDKHueckelAromaticityDetector;
 import ambit2.rendering.IAtomContainerHighlights;
@@ -514,7 +515,7 @@ public class ReactionApplicationPanel extends JPanel
 		List<List<Integer>> mapsIndices = new ArrayList<List<Integer>>();
 		for (List<IAtom> map: maps)
 		{	
-			List<Integer> mi = AtomContainerHighlights.calcIndexList(target, map);
+			List<Integer> mi = Helpers.calcIndexList(target, map);
 			mapsIndices.add(mi);
 		}
 		//Calculate clone and clone mappings:
@@ -522,7 +523,7 @@ public class ReactionApplicationPanel extends JPanel
 		List<List<IAtom>> cloneMaps = new ArrayList<List<IAtom>>();
 		for (List<Integer> mi : mapsIndices)
 		{	
-			List<IAtom> map = AtomContainerHighlights.calcAtomList(targetClone, mi);
+			List<IAtom> map = Helpers.calcAtomList(targetClone, mi);
 			cloneMaps.add(map);
 		}
 		selector.setFragmentAtomsList(cloneMaps);

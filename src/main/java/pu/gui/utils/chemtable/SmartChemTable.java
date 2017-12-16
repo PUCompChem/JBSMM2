@@ -132,14 +132,14 @@ public class SmartChemTable extends JPanel
 					rowData[i] = drawer.getImage((IAtomContainer)o);
 				}
 				else if (o instanceof Object[])
-				{
+				{	
 					Object obj[] = (Object[])o;
 					if (obj.length == 2)
-					{
+					{	
 						if ((obj[0] instanceof IAtomContainer) &&
 								(obj[1] instanceof IAtomContainerHighlights))
-						{
-							drawer.getImage((IAtomContainer)obj[0], 
+						{	
+							rowData[i] = drawer.getImage((IAtomContainer)obj[0], 
 									(IAtomContainerHighlights)obj[1]);
 						}	
 					}

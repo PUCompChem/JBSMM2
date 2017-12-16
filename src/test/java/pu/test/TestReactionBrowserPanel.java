@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 import ambit2.reactions.GenericReaction;
@@ -44,7 +45,7 @@ public class TestReactionBrowserPanel extends JFrame
 	
 	private void initGUI() throws Exception
 	{
-		setSize(new Dimension(1000,700));
+		setSize(new Dimension(1000,800));
 		//setResizable(false);
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -52,7 +53,7 @@ public class TestReactionBrowserPanel extends JFrame
 		setTitle("Test ReactionApplicationPanel");	
 		setLayout(new FlowLayout());
 		ReactionBrowserPanel rbp = new ReactionBrowserPanel();
-		rbp.setPreferredSize(new Dimension(1000,700));
+		rbp.setPreferredSize(new Dimension(1000,800));
 		add(rbp);
 		
 		//Setup test info
@@ -65,18 +66,46 @@ public class TestReactionBrowserPanel extends JFrame
 		r.setReactionClass("A");
 		
 		List<GenericReactionInstance> reactInstances = new ArrayList<GenericReactionInstance>();
+				
+		GenericReactionInstance ri = new GenericReactionInstance();
+		ri.reaction = r;
+		//ri.target = target;
+		ri.score = 70;
+		ri.products = SmartsHelper.getMoleculeFromSmiles("CCC.CCC");
+		ri.instanceAtoms = new ArrayList<IAtom>();
+		ri.instanceAtoms.add(target.getAtom(0));
+		ri.instanceAtoms.add(target.getAtom(1));
+		reactInstances.add(ri);
 		
-		GenericReactionInstance bi = new GenericReactionInstance();
-		bi.reaction = r;
-		bi.score = 70;
-		bi.products = SmartsHelper.getMoleculeFromSmiles("CCC.CCC");
-		reactInstances.add(bi);
+		ri = new GenericReactionInstance();	
+		ri.reaction = r;
+		//ri.target = target;
+		ri.score = 47;
+		ri.products = SmartsHelper.getMoleculeFromSmiles("NCCC.CCCO");
+		//ri.instanceAtoms = new ArrayList<IAtom>();
+		//ri.instanceAtoms.add(target.getAtom(2));
+		//ri.instanceAtoms.add(target.getAtom(3));
+		reactInstances.add(ri);
 		
-		bi = new GenericReactionInstance();
-		bi.reaction = r;
-		bi.score = 78;
-		bi.products = SmartsHelper.getMoleculeFromSmiles("NCCC.CCCO");
-		reactInstances.add(bi);
+		ri = new GenericReactionInstance();	
+		ri.reaction = r;
+		//ri.target = target;
+		ri.score = 78;
+		ri.products = SmartsHelper.getMoleculeFromSmiles("NCCC.C1CCO1");
+		ri.instanceAtoms = new ArrayList<IAtom>();
+		ri.instanceAtoms.add(target.getAtom(4));
+		ri.instanceAtoms.add(target.getAtom(5));
+		reactInstances.add(ri);
+		
+		ri = new GenericReactionInstance();	
+		ri.reaction = r;
+		//ri.target = target;
+		ri.score = 88;
+		ri.products = SmartsHelper.getMoleculeFromSmiles("NCCC.C1CCCC1");
+		//ri.instanceAtoms = new ArrayList<IAtom>();
+		//ri.instanceAtoms.add(target.getAtom(2));
+		//ri.instanceAtoms.add(target.getAtom(3));
+		reactInstances.add(ri);
 		
 		rbp.setReactionInstances(reactInstances);	
 		rbp.fillTable();

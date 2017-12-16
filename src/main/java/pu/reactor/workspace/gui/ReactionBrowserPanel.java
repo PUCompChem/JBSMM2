@@ -11,8 +11,11 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import ambit2.reactions.GenericReaction;
 import ambit2.reactions.GenericReactionInstance;
 import ambit2.reactions.ReactionDataBase;
+import pu.gui.utils.AtomContainerHighlights;
+import pu.gui.utils.AtomContainerHighlights.SelectionMetod;
 import pu.gui.utils.chemtable.SmartChemTable;
 import pu.gui.utils.chemtable.SmartChemTableField;
+import pu.helpers.Helpers;
 
 
 public class ReactionBrowserPanel extends JPanel
@@ -122,7 +125,20 @@ public class ReactionBrowserPanel extends JPanel
 			break;
 		case REACTION_APPLICATION:
 			if (showTarget)
-				rowFields.add(target);
+			{	
+				try {
+					if (instance.instanceAtoms != null)
+					{	
+						AtomContainerHighlights selection = new AtomContainerHighlights();
+						selection.setSelectionMethod(SelectionMetod.ATOM_INDEX_LIST);
+						selection.setIndexList(Helpers.calcIndexList(target, instance.instanceAtoms));
+						rowFields.add(Helpers.getCouple(target.clone(), selection));
+					}
+					else
+						rowFields.add(target);
+				}
+				catch (Exception e) {}
+			}	
 			if (showProducts)
 				rowFields.add(instance.products);
 			if (showReactionScore)
