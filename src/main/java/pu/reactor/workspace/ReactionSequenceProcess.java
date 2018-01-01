@@ -5,6 +5,7 @@ import java.io.File;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 import ambit2.reactions.ReactionDataBase;
+import ambit2.reactions.retrosynth.ReactionSequence;
 import ambit2.smarts.SmartsHelper;
 
 public class ReactionSequenceProcess implements IProcess
@@ -13,6 +14,7 @@ public class ReactionSequenceProcess implements IProcess
 	String targetInputString = null;
 	ReactionDataBase reactDB = null;
 	IAtomContainer target = null;
+	ReactionSequence reactSeq = new ReactionSequence();
 	
 	public void setTargetInputString(String targetInputString)
 	{

@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -23,6 +25,8 @@ public class ReactionSequenceProcessPanel extends ProcessPanel
 	boolean useAdditionalInfoColumn = false;
 	List<Integer> levelFirstRowIndex = new ArrayList<Integer>();
 	List<Integer> levelNumRows = new ArrayList<Integer>();
+	//GUI elements
+	JPanel configPanel;
 	
 	
 	public ReactionSequenceProcessPanel(ReactionSequenceProcess reactionSequenceProcess)
@@ -37,6 +41,12 @@ public class ReactionSequenceProcessPanel extends ProcessPanel
 		List<SmartChemTableField> fields = getTableFields();
 		smartChemTable = new SmartChemTable(fields);
 		add(smartChemTable,BorderLayout.CENTER);
+		
+		configPanel = new JPanel();
+		configPanel.setLayout(new BoxLayout(configPanel, BoxLayout.PAGE_AXIS)); 
+		add(configPanel, BorderLayout.EAST);
+		JLabel labelConfig = new JLabel("Config");
+		configPanel.add(labelConfig);
 	}
 	
 	List<SmartChemTableField> getTableFields()
