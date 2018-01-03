@@ -10,21 +10,28 @@ import javax.swing.JPanel;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 
+import ambit2.reactions.retrosynth.IReactionSequenceHandler;
+import ambit2.reactions.retrosynth.ReactionSequence;
 import pu.gui.utils.chemtable.SmartChemTable;
 import pu.gui.utils.chemtable.SmartChemTableField;
 import pu.reactor.workspace.IProcess;
 import pu.reactor.workspace.ReactionSequenceProcess;
 
-public class ReactionSequenceProcessPanel extends ProcessPanel
+public class ReactionSequenceProcessPanel extends ProcessPanel implements IReactionSequenceHandler
 {
 	private static final long serialVersionUID = 6823629188783402290L;
+	
+	class LevelData {
+		int firstRowIndex = 0;
+		int numRows = 1;
+	}
 	
 	ReactionSequenceProcess reactionSequenceProcess = null;
 	SmartChemTable smartChemTable = new SmartChemTable();
 	int nStructureColumns = 4;
 	boolean useAdditionalInfoColumn = false;
-	List<Integer> levelFirstRowIndex = new ArrayList<Integer>();
-	List<Integer> levelNumRows = new ArrayList<Integer>();
+	List<LevelData> levels = new ArrayList<LevelData>();
+	
 	//GUI elements
 	JPanel configPanel;
 	
@@ -85,17 +92,16 @@ public class ReactionSequenceProcessPanel extends ProcessPanel
 		//TODO update structure table and data model
 	}
 	
-	void insertNewRowInLevel(int level)
+	void insertNewRowInLevel(int levelIndex)
 	{
-		if (level >= levelFirstRowIndex.size())
+		if (levelIndex >= levels.size())
 			return;
-		int nr = levelNumRows.get(level);
-		levelNumRows.set(level, (nr+1));
+		levels.get(levelIndex).numRows++;
+		
 		//Update the all higher levels
-		for (int i = (level+1); i < levelFirstRowIndex.size(); i++)
+		for (int i = (levelIndex+1); i < levels.size(); i++)
 		{
-			int fri = levelFirstRowIndex.get(i);
-			levelFirstRowIndex.set(i, (fri+1));
+			levels.get(i).firstRowIndex++;
 		}
 		
 		//TODO update table
@@ -109,6 +115,22 @@ public class ReactionSequenceProcessPanel extends ProcessPanel
 	void addStructureToLevel(int level, IAtomContainer mol)
 	{
 		//TODO
+	}
+
+	@Override
+	public ReactionSequence getReactionSequence() {
+		return reactionSequenceProcess.getReactSeq();
+	}
+
+	@Override
+	public void setReactionSequence(ReactionSequence sequence) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void addMoleculeToLevelEvent(IAtomContainer mol, int levelIndex) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
