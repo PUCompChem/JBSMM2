@@ -28,7 +28,7 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 	
 	ReactionSequenceProcess reactionSequenceProcess = null;
 	SmartChemTable smartChemTable = new SmartChemTable();
-	int nStructureColumns = 4;
+	int numStructureColumns = 4;
 	boolean useAdditionalInfoColumn = false;
 	List<LevelData> levels = new ArrayList<LevelData>();
 	
@@ -60,7 +60,7 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 	{
 		List<SmartChemTableField> fields = new ArrayList<SmartChemTableField>();
 		fields.add(new SmartChemTableField("Level", SmartChemTableField.Type.TEXT));
-		for (int i = 0; i < nStructureColumns; i++)
+		for (int i = 0; i < numStructureColumns; i++)
 			fields.add(new SmartChemTableField("Structure", SmartChemTableField.Type.STRUCTURE));
 		return fields;
 	}
@@ -74,12 +74,12 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 	public void updatePanel() {
 	}
 	
-	public int getnStructureColumns() {
-		return nStructureColumns;
+	public int getNumStructureColumns() {
+		return numStructureColumns;
 	}
 
-	public void setnStructureColumns(int nStructureColumns) {
-		this.nStructureColumns = nStructureColumns;
+	public void setNumStructureColumns(int numStructureColumns) {
+		this.numStructureColumns = numStructureColumns;
 		//TODO update structure table and data model
 	}
 
