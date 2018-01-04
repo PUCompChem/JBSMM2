@@ -128,9 +128,9 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 	}
 
 	@Override
-	public void addMoleculeToLevelEvent(IAtomContainer mol, int levelIndex) {
+	public void registerEvent(RSEvent event) {
 		// TODO Auto-generated method stub
 		
-	}
+	}	
 
 }
