@@ -103,11 +103,14 @@ public class ReactionSequenceProcess implements IProcess
 
 	@Override
 	public void initProcess() throws Exception {
+				
 		//Temporary test code
 		List<String> smirks = new ArrayList<String>();
 		smirks.add("[C:1]Cl>>[C:1]");		
 		smirks.add("[H][C:1][C:2][H]>>[H][C:1][H].[H][C:2][H]");
 		ReactionDataBase rdb = new ReactionDataBase(smirks);
+		reactSeq.setReactDB(rdb);
+		reactSeq.setTarget(target);
 		
 		//setup smrkMan
 		SMIRKSManager smrkMan = reactSeq.getSmrkMan();

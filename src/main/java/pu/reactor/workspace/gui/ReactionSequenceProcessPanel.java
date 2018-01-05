@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -12,6 +13,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 
 import ambit2.reactions.retrosynth.IReactionSequenceHandler;
 import ambit2.reactions.retrosynth.ReactionSequence;
+import ambit2.smarts.SmartsHelper;
 import pu.gui.utils.chemtable.SmartChemTable;
 import pu.gui.utils.chemtable.SmartChemTableField;
 import pu.reactor.workspace.IProcess;
@@ -25,6 +27,14 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		int firstRowIndex = 0;
 		int numRows = 1;
 		int numMolecules = 0;
+		
+		int[] getMoleculePos(int molIndex)
+		{
+			int pos[] = new int[2];
+			pos[0] = firstRowIndex + molIndex/numStructureColumns;
+			pos[1] = (molIndex % numStructureColumns) + 1; 
+			return pos;
+		}
 	}
 	
 	ReactionSequenceProcess reactionSequenceProcess = null;
@@ -60,6 +70,17 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		addLevel();
 		addLevel();
 		
+		IAtomContainer target = reactionSequenceProcess.getReactSeq().getTarget();
+		addStructureToLevel(0,target);
+		
+		/*
+		LevelData ld = levels.get(1);
+		for (int i = 0; i < 15; i++)
+		{
+			int p[] = ld.getMoleculePos(i);
+			System.out.println(" " + i + "  " + p[0] + "  " + p[1]);
+		}
+		*/
 	}
 	
 	List<SmartChemTableField> getTableFields()
@@ -141,8 +162,14 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 	}
 	
 	public void addStructureToLevel(int level, IAtomContainer mol)
-	{
-		//TODO
+	{	
+		ImageIcon icon = smartChemTable.getDrawer().getImage(mol);
+		LevelData ld = levels.get(level);
+		int pos[] = ld.getMoleculePos(ld.numMolecules);
+		ld.numMolecules++;
+		//TODO update ld.numRows 
+		smartChemTable.getModel().setValueAt(icon, pos[0], pos[1]);
+		smartChemTable.getModel().fireTableDataChanged();
 	}
 
 	@Override

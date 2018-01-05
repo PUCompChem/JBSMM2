@@ -81,10 +81,9 @@ public class ReactionSequenceWizard extends JFrame
 					rsp.setReactDB(processCommonChemData.getReactionDB());
 					rsp.setName(processNameField.getText());
 					rsp.setTargetInputString(smilesField.getText()); 
-					
-					ReactionSequenceProcessPanel rspPanel = new ReactionSequenceProcessPanel(rsp);
 					rsp.initProcess();
-
+					ReactionSequenceProcessPanel rspPanel = new ReactionSequenceProcessPanel(rsp);
+					
 					processTabs.addProcessPanel(rspPanel);
 					int currentPosition = processTabs.getTabCount()-1;
 					processTabs.setTabComponentAt(currentPosition, new ButtonTabComponent(processTabs));

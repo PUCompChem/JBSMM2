@@ -80,7 +80,7 @@ public class SmartChemTable extends JPanel
 			public Class getColumnClass(int column) {
 				Type ftype = fields.get(column).fieldType;
 				if (ftype == Type.STRUCTURE || ftype == Type.REACTION) 
-					return StretchIcon.class;
+					return ImageIcon.class;  //StretchIcon
 				return Object.class;
 			}
 		};
@@ -89,11 +89,8 @@ public class SmartChemTable extends JPanel
 		table.setRowHeight(200);
 		JScrollPane scrollPane = new JScrollPane( table );
 		add(scrollPane);
-
-
-
 	}
-
+	
 	public void setFields(List<SmartChemTableField> fields)
 	{
 		this.fields = fields;
@@ -103,6 +100,15 @@ public class SmartChemTable extends JPanel
 
 	}
 
+	public DefaultTableModel getModel() {
+		return model;
+	}
+	public void setModel(DefaultTableModel model) {
+		this.model = model;
+	}
+	public MoleculeDrawer getDrawer() {
+		return drawer;
+	}
 	public void addTableRow(List<Object> rowFields)
 	{
 		Object rowData[] = new Object[fields.size()]; 
