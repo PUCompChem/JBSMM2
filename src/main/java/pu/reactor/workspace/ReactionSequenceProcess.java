@@ -1,7 +1,9 @@
 package pu.reactor.workspace;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -9,6 +11,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import ambit2.reactions.ReactionDataBase;
 import ambit2.reactions.retrosynth.ReactionSequence;
 import ambit2.reactions.retrosynth.SyntheticStrategy;
+import ambit2.smarts.SMIRKSManager;
 import ambit2.smarts.SmartsHelper;
 
 public class ReactionSequenceProcess implements IProcess
@@ -100,7 +103,25 @@ public class ReactionSequenceProcess implements IProcess
 
 	@Override
 	public void initProcess() throws Exception {
+		//Temporary test code
+		List<String> smirks = new ArrayList<String>();
+		smirks.add("[C:1]Cl>>[C:1]");		
+		smirks.add("[H][C:1][C:2][H]>>[H][C:1][H].[H][C:2][H]");
+		ReactionDataBase rdb = new ReactionDataBase(smirks);
 		
+		//setup smrkMan
+		SMIRKSManager smrkMan = reactSeq.getSmrkMan();
+		smrkMan.setFlagProcessResultStructures(true);
+		smrkMan.setFlagClearHybridizationBeforeResultProcess(true);
+		smrkMan.setFlagClearImplicitHAtomsBeforeResultProcess(false);
+		smrkMan.setFlagClearAromaticityBeforeResultProcess(true);
+		smrkMan.setFlagAddImplicitHAtomsOnResultProcess(false);
+		smrkMan.setFlagConvertAddedImplicitHToExplicitOnResultProcess(false);
+		smrkMan.setFlagConvertExplicitHToImplicitOnResultProcess(false);
+		smrkMan.setFlagApplyStereoTransformation(false);
+		smrkMan.setFlagHAtomsTransformation(false);
+		//smrkMan.setFlagHAtomsTransformationMode(FlagHAtomsTransformationMode);
+		smrkMan.setFlagAromaticityTransformation(false);
 	}
 
 	@Override

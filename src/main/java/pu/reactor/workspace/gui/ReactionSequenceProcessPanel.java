@@ -59,6 +59,7 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		//Test code
 		addLevel();
 		addLevel();
+		
 	}
 	
 	List<SmartChemTableField> getTableFields()
