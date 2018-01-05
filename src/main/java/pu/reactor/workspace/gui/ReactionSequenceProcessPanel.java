@@ -24,6 +24,7 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 	class LevelData {
 		int firstRowIndex = 0;
 		int numRows = 1;
+		int numMolecules = 0;
 	}
 	
 	ReactionSequenceProcess reactionSequenceProcess = null;
@@ -54,6 +55,10 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		add(configPanel, BorderLayout.EAST);
 		JLabel labelConfig = new JLabel("Config");
 		configPanel.add(labelConfig);
+		
+		//Test code
+		addLevel();
+		addLevel();
 	}
 	
 	List<SmartChemTableField> getTableFields()
@@ -107,12 +112,34 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		//TODO update table
 	}
 	
-	void removeEmptyRowFromLevel(int level, int localLevelIndex)
+	public void addLevel()
+	{
+		LevelData ldata = new LevelData();
+		
+		if (levels.isEmpty())		
+			ldata.firstRowIndex = 0;
+		else
+		{
+			LevelData ld = levels.get(levels.size()-1);
+			ldata.firstRowIndex = ld.firstRowIndex + ld.numRows;
+		}
+		levels.add(ldata);
+		addEmptyRow(levels.size()-1);
+	}
+	
+	public void addEmptyRow(int level)
+	{
+		List<Object> rowFields = new ArrayList<Object>();
+		rowFields.add("Level " + level);
+		smartChemTable.addTableRow(rowFields);
+	}
+	
+	public void removeEmptyRowFromLevel(int level, int localLevelIndex)
 	{
 		//TODO
 	}
 	
-	void addStructureToLevel(int level, IAtomContainer mol)
+	public void addStructureToLevel(int level, IAtomContainer mol)
 	{
 		//TODO
 	}
