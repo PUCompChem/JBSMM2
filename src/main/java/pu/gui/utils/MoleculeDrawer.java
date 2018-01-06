@@ -21,6 +21,19 @@ import java.util.ArrayList;
  */
 public class MoleculeDrawer 
 {
+	public static class DrawTextData {
+		public String text = null;
+		public int xpos = 0;
+		public int ypos = 0;
+		public int fontSize = 10;
+		public Color textColor = Color.blue;
+		public Color backgroundColor = Color.white;
+		public int backgroundXPos = 0;
+		public int backgroundYPos = 0;
+		public int backgroundXSize = -1;
+		public int backgroundYSize = -1;
+	}
+	
 	ArrayList<Panel2D> p2dList = new ArrayList<Panel2D>();
 		
 	public void add2DMolecule(JPanel panel, String smiles) {
@@ -131,7 +144,23 @@ public class MoleculeDrawer
 		return icon;
 	}
 	*/
-
-
+	
+	public static void addTextToImage(Image image, DrawTextData dtd)
+	{
+		Graphics g = image.getGraphics();
+		//Draw background
+		if (dtd.backgroundXSize > 0)
+		{
+			g.setColor(dtd.backgroundColor);
+			g.fillRect(dtd.backgroundXPos, dtd.backgroundYPos, 
+							dtd.backgroundXSize, dtd.backgroundYSize);
+		}
+		//Draw text
+		if (dtd.text != null)
+		{	
+			g.setColor(dtd.textColor);
+			g.drawString(dtd.text, dtd.xpos, dtd.ypos);
+		}
+	}
 
 }

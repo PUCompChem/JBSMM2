@@ -1,6 +1,7 @@
 package pu.reactor.workspace.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,10 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 
 import ambit2.reactions.retrosynth.IReactionSequenceHandler;
 import ambit2.reactions.retrosynth.ReactionSequence;
+import ambit2.reactions.retrosynth.ReactionSequence.MoleculeStatus;
 import ambit2.smarts.SmartsHelper;
+import pu.gui.utils.MoleculeDrawer;
+import pu.gui.utils.MoleculeDrawer.DrawTextData;
 import pu.gui.utils.chemtable.SmartChemTable;
 import pu.gui.utils.chemtable.SmartChemTableField;
 import pu.reactor.workspace.IProcess;
@@ -45,6 +49,7 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 	
 	//GUI elements
 	JPanel configPanel;
+	DrawTextData dtd;
 	
 	
 	public ReactionSequenceProcessPanel(ReactionSequenceProcess reactionSequenceProcess)
@@ -53,8 +58,19 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		initGUI();
 	}
 	
-	private void initGUI() {
-
+	private void initGUI() 
+	{
+		//Setup DrawTextData
+		dtd = new DrawTextData(); 
+		dtd.xpos = 0;
+		dtd.ypos = 15;
+		dtd.textColor = Color.blue;
+		dtd.backgroundColor = Color.white;
+		dtd.backgroundXPos = 0;
+		dtd.backgroundYPos = 0;
+		dtd.backgroundXSize = 200;
+		dtd.backgroundYSize = 18;
+		
 		setLayout(new BorderLayout());
 		List<SmartChemTableField> fields = getTableFields();
 		smartChemTable = new SmartChemTable(fields);
@@ -72,6 +88,9 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		
 		IAtomContainer target = reactionSequenceProcess.getReactSeq().getTarget();
 		addStructureToLevel(0,target);
+		addStructureToLevel(1,target);
+		addStructureToLevel(1,target);
+		
 		
 		/*
 		LevelData ld = levels.get(1);
@@ -167,6 +186,12 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		LevelData ld = levels.get(level);
 		int pos[] = ld.getMoleculePos(ld.numMolecules);
 		ld.numMolecules++;
+		
+		dtd.text = "M" + level + "." + ld.numMolecules + " " + 
+				MoleculeStatus.getShortString((MoleculeStatus)
+						mol.getProperty(ReactionSequence.MoleculeStatusProperty))	;		
+		MoleculeDrawer.addTextToImage(icon.getImage(), dtd);
+		
 		//TODO update ld.numRows 
 		smartChemTable.getModel().setValueAt(icon, pos[0], pos[1]);
 		smartChemTable.getModel().fireTableDataChanged();
