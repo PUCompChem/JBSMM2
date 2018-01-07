@@ -83,6 +83,11 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		//Test code
 		addLevel();
 		addLevel();
+		addLevel();
+		insertNewRowInLevel(0);
+		insertNewRowInLevel(1);
+		insertNewRowInLevel(1);
+		
 		
 		IAtomContainer target = reactionSequenceProcess.getReactSeq().getTarget();
 		addStructureToLevel(0,target);
@@ -140,7 +145,8 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 	{
 		if (levelIndex >= levels.size())
 			return;
-		levels.get(levelIndex).numRows++;
+		LevelData ld = levels.get(levelIndex);
+		ld.numRows++;
 		
 		//Update the all higher levels
 		for (int i = (levelIndex+1); i < levels.size(); i++)
@@ -149,6 +155,8 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		}
 		
 		//TODO update table
+		int rowNum = ld.firstRowIndex + ld.numRows -1;
+		insertEmptyRowInTable(levelIndex, rowNum);
 	}
 	
 	public void addLevel()
@@ -163,15 +171,24 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 			ldata.firstRowIndex = ld.firstRowIndex + ld.numRows;
 		}
 		levels.add(ldata);
-		addEmptyRow(levels.size()-1);
+		addEmptyRowInTable(levels.size()-1);
 	}
 	
-	public void addEmptyRow(int level)
+	public void addEmptyRowInTable(int level)
 	{
 		List<Object> rowFields = new ArrayList<Object>();
 		rowFields.add("Level " + level);
 		smartChemTable.addTableRow(rowFields);
 	}
+	
+	public void insertEmptyRowInTable(int level, int rowNum)
+	{
+		List<Object> rowFields = new ArrayList<Object>();
+		rowFields.add("Level " + level);
+		smartChemTable.getModel().insertRow(rowNum, rowFields.toArray());
+		smartChemTable.getModel().fireTableDataChanged();
+	}
+	
 	
 	public void removeEmptyRowFromLevel(int level, int localLevelIndex)
 	{
