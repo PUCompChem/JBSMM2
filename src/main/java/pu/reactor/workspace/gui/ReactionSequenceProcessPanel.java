@@ -16,10 +16,9 @@ import ambit2.reactions.retrosynth.IReactionSequenceHandler;
 import ambit2.reactions.retrosynth.ReactionSequence;
 import ambit2.reactions.retrosynth.ReactionSequence.MoleculeStatus;
 import ambit2.smarts.SmartsHelper;
-import pu.gui.utils.MoleculeDrawer;
-import pu.gui.utils.MoleculeDrawer.DrawTextData;
 import pu.gui.utils.chemtable.SmartChemTable;
 import pu.gui.utils.chemtable.SmartChemTableField;
+import pu.gui.utils.drawing.DrawTextElement;
 import pu.reactor.workspace.IProcess;
 import pu.reactor.workspace.ReactionSequenceProcess;
 
@@ -49,8 +48,7 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 	
 	//GUI elements
 	JPanel configPanel;
-	DrawTextData dtd;
-	
+	DrawTextElement dte;
 	
 	public ReactionSequenceProcessPanel(ReactionSequenceProcess reactionSequenceProcess)
 	{
@@ -61,15 +59,15 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 	private void initGUI() 
 	{
 		//Setup DrawTextData
-		dtd = new DrawTextData(); 
-		dtd.xpos = 0;
-		dtd.ypos = 15;
-		dtd.textColor = Color.blue;
-		dtd.backgroundColor = Color.white;
-		dtd.backgroundXPos = 0;
-		dtd.backgroundYPos = 0;
-		dtd.backgroundXSize = 200;
-		dtd.backgroundYSize = 18;
+		dte = new DrawTextElement(); 
+		dte.xpos = 0;
+		dte.ypos = 15;
+		dte.textColor = Color.blue;
+		dte.backgroundColor = Color.white;
+		dte.backgroundXPos = 0;
+		dte.backgroundYPos = 0;
+		dte.backgroundXSize = 200;
+		dte.backgroundYSize = 18;
 		
 		setLayout(new BorderLayout());
 		List<SmartChemTableField> fields = getTableFields();
@@ -187,10 +185,11 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		int pos[] = ld.getMoleculePos(ld.numMolecules);
 		ld.numMolecules++;
 		
-		dtd.text = "M" + level + "." + ld.numMolecules + " " + 
+		dte.text = "M" + level + "." + ld.numMolecules + " " + 
 				MoleculeStatus.getShortString((MoleculeStatus)
 						mol.getProperty(ReactionSequence.MoleculeStatusProperty))	;		
-		MoleculeDrawer.addTextToImage(icon.getImage(), dtd);
+		
+		dte.draw(icon.getImage().getGraphics());
 		
 		//TODO update ld.numRows 
 		smartChemTable.getModel().setValueAt(icon, pos[0], pos[1]);
