@@ -30,13 +30,15 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		int firstRowIndex = 0;
 		int numRows = 1;
 		int numMolecules = 0;
-		
-		int[] getMoleculePos(int molIndex)
-		{
+		int[] getMoleculePos(int molIndex){
 			int pos[] = new int[2];
 			pos[0] = firstRowIndex + molIndex/numStructureColumns;
 			pos[1] = (molIndex % numStructureColumns) + 1; 
 			return pos;
+		}
+		public String toString() {
+			return "firstRowIndex=" + firstRowIndex + " numRows=" + numRows + 
+					" numMolecules" + numMolecules;
 		}
 	}
 	
@@ -94,8 +96,22 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		addStructureToLevel(1,target);
 		addStructureToLevel(1,target);
 		
-		
 		/*
+		for (int i = 0; i < levels.size(); i++)
+		{
+			LevelData ld = levels.get(i);
+			System.out.println("Level" + i + ": " + ld.toString());
+		}
+		
+		removeRowFromLevel(1,2);
+		
+		for (int i = 0; i < levels.size(); i++)
+		{
+			LevelData ld = levels.get(i);
+			System.out.println("Level" + i + ": " + ld.toString());
+		}
+		
+		
 		LevelData ld = levels.get(1);
 		for (int i = 0; i < 15; i++)
 		{
@@ -150,12 +166,10 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		
 		//Update the all higher levels
 		for (int i = (levelIndex+1); i < levels.size(); i++)
-		{
 			levels.get(i).firstRowIndex++;
-		}
 		
-		//TODO update table
-		int rowNum = ld.firstRowIndex + ld.numRows -1;
+		//update table
+		int rowNum = ld.firstRowIndex + ld.numRows - 1;
 		insertEmptyRowInTable(levelIndex, rowNum);
 	}
 	
@@ -174,25 +188,40 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		addEmptyRowInTable(levels.size()-1);
 	}
 	
-	public void addEmptyRowInTable(int level)
+	public void addEmptyRowInTable(int levelIndex)
 	{
 		List<Object> rowFields = new ArrayList<Object>();
-		rowFields.add("Level " + level);
+		rowFields.add("Level " + levelIndex);
 		smartChemTable.addTableRow(rowFields);
 	}
 	
-	public void insertEmptyRowInTable(int level, int rowNum)
+	public void insertEmptyRowInTable(int levelIndex, int rowNum)
 	{
+		//rowNum is calculated outside this function
 		List<Object> rowFields = new ArrayList<Object>();
-		rowFields.add("Level " + level);
+		rowFields.add("Level " + levelIndex);
 		smartChemTable.getModel().insertRow(rowNum, rowFields.toArray());
 		smartChemTable.getModel().fireTableDataChanged();
 	}
 	
 	
-	public void removeEmptyRowFromLevel(int level, int localLevelIndex)
+	public void removeRowFromLevel(int levelIndex, int rowLevelIndex)
 	{
-		//TODO
+		if (levelIndex >= levels.size())
+			return;
+		LevelData ld = levels.get(levelIndex);
+		if (rowLevelIndex >= ld.numRows)
+			return;
+		ld.numRows--;
+		
+		//Update the all higher levels
+		for (int i = (levelIndex+1); i < levels.size(); i++)		
+			levels.get(i).firstRowIndex--;
+		
+		//update table
+		int rowNum = ld.firstRowIndex + rowLevelIndex;
+		smartChemTable.getModel().removeRow(rowNum);
+		smartChemTable.getModel().fireTableDataChanged();
 	}
 	
 	public void addStructureToLevel(int level, IAtomContainer mol)
