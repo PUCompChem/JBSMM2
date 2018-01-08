@@ -13,8 +13,17 @@ public class TableInfoPanel extends JPanel {
 
     public TableInfoPanel() {
         this.setLayout(new BorderLayout());
-        model = new DefaultTableModel(3, 2);
+        model = new DefaultTableModel(3, 2) {
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                //all cells false
+                return false;
+            }
+        };
+
         table = new JTable(model);
+
         this.add(table, BorderLayout.CENTER);
         table.setTableHeader(null);
     }

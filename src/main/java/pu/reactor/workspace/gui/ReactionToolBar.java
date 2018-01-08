@@ -53,7 +53,9 @@ public class ReactionToolBar extends JToolBar {
         stopButton = new JButton();
         ReactionToolBar.this.add(stopButton, BorderLayout.EAST);
         try {
+
             Image img = ImageIO.read(ClassLoader.getSystemResource("pu/images/stop.png"));
+
             stopButton.setIcon(new ImageIcon(img));
 
         } catch (Exception ex) {

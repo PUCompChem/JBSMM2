@@ -17,15 +17,25 @@ public class StructureTable extends SmartChemTable
 	
 	public StructureTable(int numberOfColumns) 
 	{
+		model = new DefaultTableModel(0,numberOfColumns) {
+
+		@Override
+		public boolean isCellEditable(int row, int column) {
+			//all cells false
+			return false;
+		}
+	};
 		this.numberOfColumns = numberOfColumns;
 		currentColumn = numberOfColumns;
-		model = new DefaultTableModel(0,numberOfColumns);
+
 		
 		for (int i = 0; i < numberOfColumns; i++)
 			fields.add(new SmartChemTableField("Structure", SmartChemTableField.Type.STRUCTURE));
 		
 		setFields(f);
 		initGUI();
+
+
 		
 	}
 	

@@ -34,7 +34,14 @@ public class SmartChemTable extends JPanel
 		
 	List<SmartChemTableField> fields = new ArrayList<SmartChemTableField>();
 	MoleculeDrawer drawer = new MoleculeDrawer();
-	DefaultTableModel model = new DefaultTableModel(0,4);
+	DefaultTableModel model = new DefaultTableModel(0,4) {
+
+		@Override
+		public boolean isCellEditable(int row, int column) {
+			//all cells false
+			return false;
+		}
+	};;
 
 
 	static ComponentListener componentListener = new ComponentListener() {
@@ -94,7 +101,14 @@ public class SmartChemTable extends JPanel
 	public void setFields(List<SmartChemTableField> fields)
 	{
 		this.fields = fields;
-		model = new DefaultTableModel();
+		model = new DefaultTableModel() {
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				//all cells false
+				return false;
+			}
+		};
 		for (int i = 0; i < fields.size(); i++)
 			model.addColumn(fields.get(i).name);
 

@@ -7,22 +7,12 @@ import pu.filtering.IFilter;
 import pu.filtering.filters.SetFilter;
 import pu.gui.utils.contextmenus.ReactionContextMenu;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreePath;
-
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -63,7 +53,7 @@ public class ReactionSetTree extends SetTree
 
 			 tree.addMouseListener(new ReactionContextMenu(this.tree));
 
-		setIcons("pu/images/reactionIcon.png","pu/images/reactionGroup.png","pu/images/reactionGroup.png" );
+		setIcons("pu/images/reactionGroup.png" );
 
 		JScrollPane scrollBar = new JScrollPane(tree);
 
