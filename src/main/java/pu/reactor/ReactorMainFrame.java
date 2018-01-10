@@ -85,10 +85,6 @@ public class ReactorMainFrame extends JFrame {
 	private JMenu menuHelp;
 	private JMenuItem miAbout;
 
-
-	
-	
-
 	private ReactionToolBar reactionToolBar;
 
 
@@ -218,14 +214,10 @@ public class ReactorMainFrame extends JFrame {
 
 
 		bottomCenterTabbedPanel = new JTabbedPane();
-    	treesTabPane.add("molecules", moleculeTree);
+		treesTabPane.add("molecules", moleculeTree);
 		bottomCenterTabbedPanel.add("selected molecule",moleculeTree.getMoleculePanel());
 
 		areas.get(2).add(bottomCenterTabbedPanel,BorderLayout.CENTER);
-
-
-
-
 
 		consoleFieldPanel = new JTextArea();
 		consoleFieldPanel.setLayout(new BorderLayout());
@@ -244,7 +236,6 @@ public class ReactorMainFrame extends JFrame {
 	{
 		if (preferencesFilePath == null)
 		{
-
 			preferences = new Preferences();
 			return;
 		}
@@ -388,10 +379,10 @@ public class ReactorMainFrame extends JFrame {
 		menuProcess = new JMenu("Process");
 		menuBar.add(menuProcess);
 
-		miWorkspaceProcess = new JMenu("New Process");
-		menuProcess.add(miWorkspaceProcess);
+		//miWorkspaceProcess = new JMenu("New Process");
+		//menuProcess.add(miWorkspaceProcess);
 
-		miSingleReaction = new JMenuItem("Single Reaction");
+		miSingleReaction = new JMenuItem("New Single Reaction");
 		miSingleReaction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -400,7 +391,7 @@ public class ReactorMainFrame extends JFrame {
 		});
 
 
-		miBasicReactor = new JMenuItem("Basic Reactor");
+		miBasicReactor = new JMenuItem("New Basic Reactor");
 		miBasicReactor.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -410,7 +401,7 @@ public class ReactorMainFrame extends JFrame {
 		});
 		
 		
-		miReactionSequence = new JMenuItem("Reaction Sequence");
+		miReactionSequence = new JMenuItem("New Reaction Sequence");
 		miReactionSequence.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -419,12 +410,10 @@ public class ReactorMainFrame extends JFrame {
 			}
 		});
 		
-		miWorkspaceProcess.add(miSingleReaction);
-		miWorkspaceProcess.add(miBasicReactor);
-		miWorkspaceProcess.add(miReactionSequence);
-
-
-		menuProcess.addSeparator();
+		menuProcess.add(miSingleReaction);
+		menuProcess.add(miBasicReactor);
+		menuProcess.add(miReactionSequence);
+		//menuProcess.addSeparator();
 
 		// menu Settings 
 		menuSettings = new JMenu("Settings"); 
@@ -437,9 +426,7 @@ public class ReactorMainFrame extends JFrame {
 				
 			}
 		});
-		
-	
-		
+			
 		menuSettings.addSeparator();
 		
 		miProjectSettings = new JMenuItem("Project settings");
@@ -543,9 +530,6 @@ public class ReactorMainFrame extends JFrame {
 		
 	}
 	// some test utils -------------------------------------
-
-	
-
 
 }
 
