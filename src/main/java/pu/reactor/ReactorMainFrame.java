@@ -254,9 +254,8 @@ public class ReactorMainFrame extends JFrame {
 	{
 		try
 		{
-			 ReactionDataBase reactionDB = new  ReactionDataBase(new File(preferences.reactionDBPath));
+			 ReactionDataBase reactionDB = new  ReactionDataBase(preferences.reactionDBPath);
 			 processChemData.setReactionDB(reactionDB);
-			
 		}
 		catch (Exception x)
 		{
