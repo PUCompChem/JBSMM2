@@ -45,7 +45,7 @@ public class ReactorMainFrame extends JFrame {
 	MoleculeSetTree moleculeTree;
 	ArrayList<Panel2D> p2dList = new ArrayList<Panel2D>();
 
-	PreferencesWindow preferencesWindow = null;
+	//PreferencesWindow preferencesWindow = null;
     ActionListener actionListener;
 	
     // Menu components
@@ -124,10 +124,9 @@ public class ReactorMainFrame extends JFrame {
 	{
 		setPreferences();
 		setReactionDB();
-		preferencesWindow = new PreferencesWindow(preferences, preferencesFilePath);
-
-
-		preferencesWindow.setVisible(false);
+		
+		//preferencesWindow = new PreferencesWindow(preferences, preferencesFilePath);
+		//preferencesWindow.setVisible(false);
 
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle("JBSMM Reactor");
@@ -453,7 +452,8 @@ public class ReactorMainFrame extends JFrame {
 		
 		menuPreferences.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				preferencesWindow.setVisible(true);
+				PreferencesWindow prefWin = new PreferencesWindow(preferences, preferencesFilePath);
+				prefWin.setVisible(true);
 			}
 		});
 

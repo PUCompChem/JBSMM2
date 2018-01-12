@@ -4,14 +4,17 @@ import pu.reactor.workspace.gui.PreferencesWindow;
 
 public class Preferences 
 {
+	//Tab: Paths
 	public  String reactionDBPath = "./reaction-database.json";
 	public  String startingMaterialsPath = "./starting-materials.txt";
-
+	
+	//Tab: Appearance 
+	public int strcctureSizeInTables = 200;
+	
 	
 	public PreferencesWindow createPreferencesWindow()
 	{
 		//TODO
-		
 		return null;
 	}
 	
