@@ -161,7 +161,7 @@ public class MoleculeSetTree extends SetTree
 				if (node == null)
 				{return;}
 				else {
-				 tableInfoPanel.Write(getNodeInfoText(node));
+				 tableInfoPanel.write(getNodeInfoText(node));
 				}
 			}
 		});

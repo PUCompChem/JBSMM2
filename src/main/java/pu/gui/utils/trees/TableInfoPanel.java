@@ -2,13 +2,18 @@ package pu.gui.utils.trees;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.tree.DefaultMutableTreeNode;
+
+import ambit2.reactions.GenericReaction;
+
 import java.awt.*;
 
 /**
  * Created by gogo on 26.7.2017 г..
  */
-public class TableInfoPanel extends JPanel {
-    JTable table;
+public class TableInfoPanel extends JPanel 
+{	
+ 	JTable table;
     DefaultTableModel model;
 
     public TableInfoPanel() {
@@ -28,17 +33,32 @@ public class TableInfoPanel extends JPanel {
         table.setTableHeader(null);
     }
 
-    public void Write(String input) {
-        //  model = new DefaultTableModel();
-
-        String[] lines = input.split("\n");
-        for (int i = 0; i < lines.length; i++) {
-            String[] components = lines[i].split(": ");
-            model.setValueAt(components[0], i, 0);
-            model.setValueAt(components[1], i, 1);
-        }
-        this.remove(table);
-        model.fireTableDataChanged();
-        this.add(table, BorderLayout.CENTER);
+    public void write(String input) 
+    {
+    	nullifyTable();
+    	model.setValueAt(input, 0, 0);
+    	model.fireTableDataChanged();
+    }
+    
+    void nullifyTable()
+    {
+    	for (int i = 0; i < model.getRowCount(); i++)
+    		for (int k = 0; k < model.getColumnCount(); k++)
+    			model.setValueAt(null, i, k);
+    }
+    
+    
+    public void write(GenericReaction r) 
+    {
+    	model.setValueAt("Name", 0, 0);
+    	model.setValueAt(r.getName(), 0, 1);
+    	
+    	model.setValueAt("Class", 1, 0);
+    	model.setValueAt(r.getReactionClass(), 1, 1);
+    	
+    	model.setValueAt("Smirks", 2, 0);
+    	model.setValueAt(r.getSmirks(), 2, 1);
+    	
+    	model.fireTableDataChanged();
     }
 }

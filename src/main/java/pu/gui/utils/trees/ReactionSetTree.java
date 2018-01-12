@@ -143,13 +143,18 @@ public class ReactionSetTree extends SetTree
 				if (node == null)
 					return;
 
-				reactionInfoPanel.Write(getNodeInfoText(node));
+				GenericReaction r = nodeReactions.get(node);
+				if (r == null)
+					reactionInfoPanel.write(node.toString());
+				else
+					reactionInfoPanel.write(r);
 			}
 		});
 	}
 
 
 
+	/*
 	String getNodeInfoText(DefaultMutableTreeNode node)
 	{
 		GenericReaction r = nodeReactions.get(node);
@@ -164,6 +169,7 @@ public class ReactionSetTree extends SetTree
 			return sb.toString();
 		}
 	}
+	*/
 
 	void applyFilter(IFilter filter)
 	{
