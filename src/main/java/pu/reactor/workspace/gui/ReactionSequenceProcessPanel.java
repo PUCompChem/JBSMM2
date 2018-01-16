@@ -2,11 +2,16 @@ package pu.reactor.workspace.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -49,8 +54,10 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 	List<LevelData> levels = new ArrayList<LevelData>();
 	
 	//GUI elements
-	JPanel configPanel;
 	DrawTextElement dte;
+	JPanel configPanel;
+	JComboBox<String> modeComboBox;
+	
 	
 	public ReactionSequenceProcessPanel(ReactionSequenceProcess reactionSequenceProcess)
 	{
@@ -79,8 +86,26 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		configPanel = new JPanel();
 		configPanel.setLayout(new BoxLayout(configPanel, BoxLayout.PAGE_AXIS)); 
 		add(configPanel, BorderLayout.EAST);
-		JLabel labelConfig = new JLabel("Config");
+		
+		JLabel labelConfig = new JLabel("Reaction Sequence Mode");
+		labelConfig.setAlignmentX(Component.LEFT_ALIGNMENT);
 		configPanel.add(labelConfig);
+				String[] modeStrings = { "Manual", "Semi-automatic", "Automatic"};
+		modeComboBox = new JComboBox<String>(modeStrings);
+		modeComboBox.setAlignmentX(Component.LEFT_ALIGNMENT);
+		modeComboBox.setAlignmentY(Component.TOP_ALIGNMENT);
+		//modeComboBox.setPreferredSize(new Dimension(0,0));
+		modeComboBox.setMaximumSize(new Dimension(150,20));
+		
+		
+		/*
+		modeComboBox.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.red),
+                modeComboBox.getBorder()));
+		*/
+		
+		configPanel.add(modeComboBox);
+		
 		
 		//Test code
 		addLevel();
