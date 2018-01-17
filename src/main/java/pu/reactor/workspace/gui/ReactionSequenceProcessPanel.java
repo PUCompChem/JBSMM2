@@ -11,6 +11,7 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -56,7 +57,8 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 	//GUI elements
 	DrawTextElement dte;
 	JPanel configPanel;
-	JComboBox<String> modeComboBox;
+	JCheckBox checkboxAutomaticMode;
+	//JComboBox<String> modeComboBox;
 	
 	
 	public ReactionSequenceProcessPanel(ReactionSequenceProcess reactionSequenceProcess)
@@ -87,25 +89,28 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		configPanel.setLayout(new BoxLayout(configPanel, BoxLayout.PAGE_AXIS)); 
 		add(configPanel, BorderLayout.EAST);
 		
-		JLabel labelConfig = new JLabel("Reaction Sequence Mode");
+		JLabel labelConfig = new JLabel("Reaction Sequence Config");
 		labelConfig.setAlignmentX(Component.LEFT_ALIGNMENT);
 		configPanel.add(labelConfig);
-				String[] modeStrings = { "Manual", "Semi-automatic", "Automatic"};
+		
+		checkboxAutomaticMode = new JCheckBox("Automatic mode");
+		checkboxAutomaticMode.setSelected(true);
+		configPanel.add(checkboxAutomaticMode);
+		
+		/*
+		String[] modeStrings = { "Manual", "Semi-automatic", "Automatic"};
 		modeComboBox = new JComboBox<String>(modeStrings);
 		modeComboBox.setAlignmentX(Component.LEFT_ALIGNMENT);
 		modeComboBox.setAlignmentY(Component.TOP_ALIGNMENT);
 		//modeComboBox.setPreferredSize(new Dimension(0,0));
 		modeComboBox.setMaximumSize(new Dimension(150,20));
-		
+		configPanel.add(modeComboBox);
 		
 		/*
 		modeComboBox.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.red),
                 modeComboBox.getBorder()));
 		*/
-		
-		configPanel.add(modeComboBox);
-		
 		
 		//Test code
 		addLevel();
