@@ -124,6 +124,8 @@ public class ReactorMainFrame extends JFrame {
 	{
 		setPreferences();
 		setReactionDB();
+		setStartingMaterialsDB();
+
 		
 		//preferencesWindow = new PreferencesWindow(preferences, preferencesFilePath);
 		//preferencesWindow.setVisible(false);
@@ -137,40 +139,21 @@ public class ReactorMainFrame extends JFrame {
 		});
 
 		setBounds(5, 5, 1000, 800);
-
 		createMenus();
 
 		// Setting the splitters and other GUI components
 		prepareGUIAreas();
-
-		//
-		setReactionDB();
-		setStartingMaterialsDB();
-
-
 		areas.get(1).setLayout(new BorderLayout());
-
 		processTabs.setTabLayoutPolicy(JTabbedPane.WRAP_TAB_LAYOUT);
 		areas.get(1).add(processTabs);
-
 		
-		/*
-		//Temporary code
-		BasicReactorProcess basicReactorProcess = new BasicReactorProcess();
-		basicReactorProcess.inputTagetMoleculeAsString = "CCO";
-		basicReactorProcess.name = "Process 1";
-		basicReactorProcess.createPanel();
-		processTabs.addProcess(basicReactorProcess);
-		*/
-
-	//	setReactionTree
+		treesTabPane = new JTabbedPane();
+		
+		//setReactionTree
 		if (processChemData.getReactionDB() != null)
 		{
 			reactionSetTree = new ReactionSetTree(processChemData.getReactionDB().genericReactions);
-			  treesTabPane = new JTabbedPane();
-			  treesTabPane.add("reactions",reactionSetTree);
-
-
+			treesTabPane.add("reactions",reactionSetTree);
 			areas.get(0).setLayout(new BorderLayout());
 			areas.get(0).add( treesTabPane, BorderLayout.CENTER);
 		}
@@ -179,17 +162,16 @@ public class ReactorMainFrame extends JFrame {
 		reactionToolBar.getNextButton().addActionListener(nextButtonActionListener);
 		miNextStep.addActionListener(nextButtonActionListener);
 		this.add(reactionToolBar, BorderLayout.NORTH);
-
-		/**
-		 * set Molecules Tree
-		 */
-
+		
+		//set Molecules Tree
 		List<String> smiles = new ArrayList<String>();
 		List<String> molClass = new ArrayList<String>();
 
 		FileUtilities f = new FileUtilities();
 
-		smiles = f.readSmilesSetFromFile(new File(preferences.startingMaterialsPath));
+		if (preferences != null)
+			smiles = f.readSmilesSetFromFile(new File(preferences.startingMaterialsPath));
+		
 		if(smiles == null){
 			smiles = new ArrayList<String>();
 			smiles.add("CCCC");
@@ -197,39 +179,27 @@ public class ReactorMainFrame extends JFrame {
 		}
 		List<StructureRecord> structureRecords = new ArrayList<StructureRecord>();
 
-			for (int i = 0; i < smiles.size(); i++) {
-				StructureRecord sr = new StructureRecord();
-				sr.setDataEntryID(i);
-				sr.setSmiles(smiles.get(i));
+		for (int i = 0; i < smiles.size(); i++) {
+			StructureRecord sr = new StructureRecord();
+			sr.setDataEntryID(i);
+			sr.setSmiles(smiles.get(i));
 
-				sr.setRecordProperty(new Property(moleculeClassProperty), "class1");
-				structureRecords.add(sr);
-			}
+			sr.setRecordProperty(new Property(moleculeClassProperty), "class1");
+			structureRecords.add(sr);
+		}
 
 		moleculeTree = new MoleculeSetTree(structureRecords);
-
+		
 		areas.get(2).setLayout(new BorderLayout());
-
-
-
 		bottomCenterTabbedPanel = new JTabbedPane();
 		treesTabPane.add("molecules", moleculeTree);
 		bottomCenterTabbedPanel.add("selected molecule",moleculeTree.getMoleculePanel());
 
 		areas.get(2).add(bottomCenterTabbedPanel,BorderLayout.CENTER);
-
 		consoleFieldPanel = new JTextArea();
 		consoleFieldPanel.setLayout(new BorderLayout());
 		bottomCenterTabbedPanel.add("Console",consoleFieldPanel);
-				/**
-				 * End setConsole
-				 */
-
-
-
 	}
-
-
 
 	void setPreferences() throws Exception
 	{
@@ -240,13 +210,17 @@ public class ReactorMainFrame extends JFrame {
 		}
 
 		PreferencesJsonParser prefPar = new PreferencesJsonParser();
-		preferences = prefPar.loadFromJSON(new File(preferencesFilePath));
-
+		try
+		{
+			preferences = prefPar.loadFromJSON(new File(preferencesFilePath));
+		}
+		catch (Exception x) {
+			System.out.println("Preferences loading error: " + x.getMessage());
+		}
 
 		if (!prefPar.getErrors().isEmpty())
 			throw new Exception("Preferences configuration errors:\n"
 					+ prefPar.getAllErrorsAsString());
-
 	}
 
 	void setReactionDB()
