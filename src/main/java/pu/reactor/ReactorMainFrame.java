@@ -104,29 +104,26 @@ public class ReactorMainFrame extends JFrame {
 
 	private ReactorProcessTabsSet processTabs = new ReactorProcessTabsSet();
 
-	private SmartChemTable smartChemTable;
-	
-	
-	public ReactorMainFrame() throws Exception {
+	public ReactorMainFrame(Preferences preferences,
+			ProcessCommonChemData processChemData) throws Exception 
+	{
 		super();
+		this.preferences = preferences;
+		this.processChemData = processChemData;
 		initGUI();
-		repaint();
-		smartChemTable.updateUI();
 	}
-
+	
 	public ReactorMainFrame(String preferencesFilePath) throws Exception {
 		super();
 		this.preferencesFilePath = preferencesFilePath;
+		preferences = getPreferences(preferencesFilePath);
+		setReactionDB();
+		setStartingMaterialsDB(preferences, processChemData);
 		initGUI();
 	}
 
 	private void initGUI() throws Exception
 	{
-		setPreferences();
-		setReactionDB();
-		setStartingMaterialsDB();
-
-		
 		//preferencesWindow = new PreferencesWindow(preferences, preferencesFilePath);
 		//preferencesWindow.setVisible(false);
 
@@ -164,31 +161,8 @@ public class ReactorMainFrame extends JFrame {
 		this.add(reactionToolBar, BorderLayout.NORTH);
 		
 		//set Molecules Tree
-		List<String> smiles = new ArrayList<String>();
-		List<String> molClass = new ArrayList<String>();
-
-		FileUtilities f = new FileUtilities();
-
-		if (preferences != null)
-			smiles = f.readSmilesSetFromFile(new File(preferences.startingMaterialsPath));
-		
-		if(smiles == null){
-			smiles = new ArrayList<String>();
-			smiles.add("CCCC");
-			System.out.println("Materials path is wrong");
-		}
-		List<StructureRecord> structureRecords = new ArrayList<StructureRecord>();
-
-		for (int i = 0; i < smiles.size(); i++) {
-			StructureRecord sr = new StructureRecord();
-			sr.setDataEntryID(i);
-			sr.setSmiles(smiles.get(i));
-
-			sr.setRecordProperty(new Property(moleculeClassProperty), "class1");
-			structureRecords.add(sr);
-		}
-
-		moleculeTree = new MoleculeSetTree(structureRecords);
+		moleculeTree = new MoleculeSetTree(processChemData.getStructureRecords());
+		//TODO handle starting materials
 		
 		areas.get(2).setLayout(new BorderLayout());
 		bottomCenterTabbedPanel = new JTabbedPane();
@@ -201,18 +175,18 @@ public class ReactorMainFrame extends JFrame {
 		bottomCenterTabbedPanel.add("Console",consoleFieldPanel);
 	}
 
-	void setPreferences() throws Exception
+	public static Preferences getPreferences(String prefFileName) throws Exception
 	{
-		if (preferencesFilePath == null)
+		if (prefFileName == null)
 		{
-			preferences = new Preferences();
-			return;
+			return new Preferences();
 		}
 
 		PreferencesJsonParser prefPar = new PreferencesJsonParser();
+		Preferences pref = null;
 		try
 		{
-			preferences = prefPar.loadFromJSON(new File(preferencesFilePath));
+			pref = prefPar.loadFromJSON(new File(prefFileName));
 		}
 		catch (Exception x) {
 			System.out.println("Preferences loading error: " + x.getMessage());
@@ -221,6 +195,7 @@ public class ReactorMainFrame extends JFrame {
 		if (!prefPar.getErrors().isEmpty())
 			throw new Exception("Preferences configuration errors:\n"
 					+ prefPar.getAllErrorsAsString());
+		return pref;
 	}
 
 	void setReactionDB()
@@ -237,11 +212,40 @@ public class ReactorMainFrame extends JFrame {
 
 		}
 	}
-	private void setStartingMaterialsDB() {
+	
+	public static void setStartingMaterialsDB(Preferences pref, ProcessCommonChemData pccd) 
+	{
 		try
 		{
+			//TODO set starting materials
+
 			//StartingMaterialsDataBase startingMaterialsDataBase = new StartingMaterialsDataBase();
 			//processChemData.setStartingMaterialsDataBase(startingMaterialsDataBase);
+
+			//Setting structure records
+			List<String> smiles = new ArrayList<String>();
+			FileUtilities f = new FileUtilities();
+			smiles = f.readSmilesSetFromFile(new File(pref.startingMaterialsPath));
+
+			if(smiles == null){
+				smiles = new ArrayList<String>();
+				smiles.add("CCC");
+				smiles.add("CCCC");
+				smiles.add("CCCCC");
+				System.out.println("Materials path is wrong");
+			}
+			List<StructureRecord> structureRecords = new ArrayList<StructureRecord>();
+
+			for (int i = 0; i < smiles.size(); i++) {
+				StructureRecord sr = new StructureRecord();
+				sr.setDataEntryID(i);
+				sr.setSmiles(smiles.get(i));
+
+				sr.setRecordProperty(new Property(moleculeClassProperty), "class1");
+				structureRecords.add(sr);
+			}
+			pccd.setStructureRecords(structureRecords);
+
 		}
 		catch (Exception x)
 		{
