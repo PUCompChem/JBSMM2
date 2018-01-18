@@ -223,9 +223,10 @@ public class ReactorMainFrame extends JFrame {
 			//processChemData.setStartingMaterialsDataBase(startingMaterialsDataBase);
 
 			//Setting structure records
-			List<String> smiles = new ArrayList<String>();
+			List<String> smiles = null;
 			FileUtilities f = new FileUtilities();
-			smiles = f.readSmilesSetFromFile(new File(pref.startingMaterialsPath));
+			if (pref != null)
+				smiles = f.readSmilesSetFromFile(new File(pref.startingMaterialsPath));
 
 			if(smiles == null){
 				smiles = new ArrayList<String>();

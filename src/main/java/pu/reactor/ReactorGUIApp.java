@@ -29,7 +29,8 @@ public class ReactorGUIApp
 					}			
 					else
 					{	
-						reactor = new ReactorMainFrame( "./preferences.json");
+						//reactor = new ReactorMainFrame( "./preferences.json");
+						reactor = createReactorMainFrameWithDemoInfo();
 						reactor.setVisible(true);
 					}
 				} catch (Exception e) {
@@ -56,7 +57,14 @@ public class ReactorGUIApp
 		Preferences pref = new Preferences();
 		ProcessCommonChemData pccd = new ProcessCommonChemData();
 		ReactorMainFrame.setStartingMaterialsDB(null, pccd);
-		//TODO create demo reaction db
+		
+		//create demo reaction db
+		List<String> smirks = new ArrayList<String>();
+		smirks.add("[C:1]Cl>>[C:1]");		
+		smirks.add("[H][C:1][C:2][H]>>[H][C:1][H].[H][C:2][H]");
+		ReactionDataBase reactionDB = new ReactionDataBase(smirks);
+		pccd.setReactionDB(reactionDB);
+		
 		ReactorMainFrame reactor = new ReactorMainFrame(pref, pccd);
 		return reactor;
 	}
