@@ -14,7 +14,7 @@ import pu.reactor.workspace.ProcessCommonChemData;
 
 public class ReactorGUIApp 
 {
-	public static void main(String[] args) throws Exception
+	public static void main(final String[] args) throws Exception
 	{
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() 
