@@ -15,12 +15,16 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 import ambit2.reactions.retrosynth.IReactionSequenceHandler;
 import ambit2.reactions.retrosynth.ReactionSequence;
 import ambit2.reactions.retrosynth.ReactionSequence.MoleculeStatus;
+import ambit2.reactions.rules.scores.ReactionScoreSchema;
 import ambit2.smarts.SmartsHelper;
 import pu.gui.utils.chemtable.SmartChemTable;
 import pu.gui.utils.chemtable.SmartChemTableField;
@@ -58,6 +62,9 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 	DrawTextElement dte;
 	JPanel configPanel;
 	JCheckBox checkboxAutomaticMode;
+	JTable tableWeights;
+	DefaultTableModel modelTableWeights;
+    
 	//JComboBox<String> modeComboBox;
 	
 	
@@ -96,6 +103,31 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		checkboxAutomaticMode = new JCheckBox("Automatic mode");
 		checkboxAutomaticMode.setSelected(true);
 		configPanel.add(checkboxAutomaticMode);
+		
+		JLabel labelEmptySpace = new JLabel("   ");
+		configPanel.add(labelEmptySpace);
+		
+		//setup weight table
+		JLabel labelWeights = new JLabel("Reaction score weights");
+		labelWeights.setAlignmentX(Component.LEFT_ALIGNMENT);
+		configPanel.add(labelWeights);
+		modelTableWeights = new DefaultTableModel(7, 2)
+		{
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                if (column > 0)
+                		return true;
+                else
+                		return false;
+            }
+        };
+        
+        tableWeights = new JTable(modelTableWeights);
+        addReactionScoreSchemaFieldsToTable();
+        //reactionScoreSchemaToTable(reactionSequenceProcess.getStrategy().reactionScoreSchema);
+        tableWeights.setTableHeader(null);
+        configPanel.add(tableWeights);
+       
 		
 		/*
 		String[] modeStrings = { "Manual", "Semi-automatic", "Automatic"};
@@ -158,6 +190,39 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		for (int i = 0; i < numStructureColumns; i++)
 			fields.add(new SmartChemTableField("Structure", SmartChemTableField.Type.STRUCTURE));
 		return fields;
+	}
+	
+	protected void addReactionScoreSchemaFieldsToTable()
+	{	
+		modelTableWeights.setValueAt("basic", 0, 0);
+		modelTableWeights.setValueAt("transform", 1, 0);
+		modelTableWeights.setValueAt("exp. conditions", 2, 0);
+		modelTableWeights.setValueAt("yield", 3, 0);
+		modelTableWeights.setValueAt("product complexity", 4, 0);
+		
+		
+		
+		modelTableWeights.fireTableDataChanged();
+		
+        /*
+         * public double basicScoreWeight = 0.0;
+	public double classcScoreWeight = 0.0;
+	public double transformScoreWeight = 0.0;
+	public double conditionsScoreWeight = 0.0;
+	public double experimentalConditionsScoreWeight = 0.0;
+	public double yieldScoreWeight = 0.0;
+	public double productComplexityWeight = 0.0; 
+	public double productSimilarityWeight = 0.0;
+	public double productStabilityWeight = 0.0;
+	public double reactionCenterPositionWeight = 0.0;
+	public double reactionCenterComplexityWeight = 0.0;
+	public double electronWithdrawingLevelWeight = 0.0;
+         */
+	}
+	
+	protected void reactionScoreSchemaToTable(ReactionScoreSchema rss)
+	{	
+		//TODO
 	}
 	
 	@Override
