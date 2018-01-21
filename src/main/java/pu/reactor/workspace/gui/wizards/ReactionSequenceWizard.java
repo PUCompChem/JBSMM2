@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import ambit2.reactions.retrosynth.SyntheticStrategy;
 import pu.gui.utils.ButtonTabComponent;
 import pu.reactor.workspace.ProcessCommonChemData;
 import pu.reactor.workspace.ReactionSequenceProcess;
@@ -81,6 +82,7 @@ public class ReactionSequenceWizard extends JFrame
 					rsp.setReactDB(processCommonChemData.getReactionDB());
 					rsp.setName(processNameField.getText());
 					rsp.setTargetInputString(smilesField.getText()); 
+					rsp.setStrategy(new SyntheticStrategy());
 					rsp.initProcess();
 					ReactionSequenceProcessPanel rspPanel = new ReactionSequenceProcessPanel(rsp);
 					

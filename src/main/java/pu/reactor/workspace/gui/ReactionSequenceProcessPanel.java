@@ -124,7 +124,7 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
         
         tableWeights = new JTable(modelTableWeights);
         addReactionScoreSchemaFieldsToTable();
-        //reactionScoreSchemaToTable(reactionSequenceProcess.getStrategy().reactionScoreSchema);
+        reactionScoreSchemaToTable(reactionSequenceProcess.getStrategy().reactionScoreSchema);
         tableWeights.setTableHeader(null);
         configPanel.add(tableWeights);
        
@@ -199,9 +199,6 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		modelTableWeights.setValueAt("exp. conditions", 2, 0);
 		modelTableWeights.setValueAt("yield", 3, 0);
 		modelTableWeights.setValueAt("product complexity", 4, 0);
-		
-		
-		
 		modelTableWeights.fireTableDataChanged();
 		
         /*
@@ -222,7 +219,12 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 	
 	protected void reactionScoreSchemaToTable(ReactionScoreSchema rss)
 	{	
-		//TODO
+		modelTableWeights.setValueAt(rss.basicScoreWeight, 0, 1);
+		modelTableWeights.setValueAt(rss.transformScoreWeight, 1, 1);
+		modelTableWeights.setValueAt(rss.experimentalConditionsScoreWeight, 2, 1);
+		modelTableWeights.setValueAt(rss.yieldScoreWeight, 3, 1);
+		modelTableWeights.setValueAt(rss.productComplexityWeight, 4, 1);
+		modelTableWeights.fireTableDataChanged();
 	}
 	
 	@Override
