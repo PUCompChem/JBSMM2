@@ -145,4 +145,9 @@ public class ReactionSequenceProcess implements IProcess
 		
 	}
 
+	@Override
+	public void resetProcess() throws Exception {
+		// TODO Auto-generated method stub
+	}
+
 }

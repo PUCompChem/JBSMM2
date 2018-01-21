@@ -168,4 +168,10 @@ public class BasicReactorProcess implements IProcess
 		return name;
 	}
 
+	@Override
+	public void resetProcess() throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

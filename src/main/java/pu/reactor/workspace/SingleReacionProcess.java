@@ -40,4 +40,10 @@ public class SingleReacionProcess implements IProcess  {
     public void runProcessNextSteps() throws Exception {
 
     }
+
+	@Override
+	public void resetProcess() throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
 }

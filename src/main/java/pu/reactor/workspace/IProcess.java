@@ -18,4 +18,5 @@ public interface IProcess {
     public void runProcess() throws Exception;
     public void runProcessNextSteps(int nSteps) throws Exception;
     public void runProcessNextSteps() throws Exception;
+    public void resetProcess() throws Exception;
 }
