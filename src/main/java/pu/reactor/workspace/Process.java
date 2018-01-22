@@ -68,6 +68,12 @@ public class Process implements IProcess
 		return null;
 	}
 
+	@Override
+	public void resetProcess() throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
 	/*	
 	@Override
 	public JPanel getParametersPanel() {

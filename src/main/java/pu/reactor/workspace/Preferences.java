@@ -7,17 +7,12 @@ public class Preferences
 	//Tab: Paths
 	public  String reactionDBPath = "./reaction-database.json";
 	public  String startingMaterialsPath = "./starting-materials.txt";
+	public  String startingMaterialsPath2 = null;
 	
 	//Tab: Appearance 
 	public int strcctureSizeInTables = 200;
 	
-	
-	public PreferencesWindow createPreferencesWindow()
-	{
-		//TODO
-		return null;
-	}
-	
+
 	public String toJsonString()
 	{	
 		String endLine = "\n";
@@ -28,10 +23,11 @@ public class Preferences
 		if (reactionDBPath != null)
 		{
 			sb.append("\t\"REACTION_DB_PATH\" : " + "\"" + reactionDBPath + "\"");
-			nFields++;
-
+			nFields++;			
+		}
 		
-
+		if (startingMaterialsPath != null)
+		{
 			if (nFields > 0)
 				sb.append("," + endLine);
 			else
@@ -39,12 +35,20 @@ public class Preferences
 			
 			sb.append("\t\"STARTING_MATERIALS_PATH\" : " + "\"" + startingMaterialsPath + "\"");
 			nFields++;
-
-
-
 		}
-		sb.append(endLine);
 		
+		if (startingMaterialsPath2 != null)
+		{
+			if (nFields > 0)
+				sb.append("," + endLine);
+			else
+				sb.append(endLine);
+			
+			sb.append("\t\"STARTING_MATERIALS_PATH2\" : " + "\"" + startingMaterialsPath2 + "\"");
+			nFields++;
+		}
+		
+		sb.append(endLine);
 		sb.append("}" + endLine);
 		return sb.toString();
 	}

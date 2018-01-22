@@ -51,7 +51,6 @@ public class PreferencesJsonParser{
 				preferences.reactionDBPath = s;
 		}
 		
-		
 		//STARTING_MATERIALS_PATH
 		node = root.path("STARTING_MATERIALS_PATH");
 		if (node.isMissingNode())
@@ -67,22 +66,20 @@ public class PreferencesJsonParser{
 				preferences.startingMaterialsPath = s;
 		}
 		
-		/*
-		//CheckBoxTest
-		node = root.path("checkBoxTest");
+		//STARTING_MATERIALS_PATH2
+		node = root.path("STARTING_MATERIALS_PATH2");
 		if (node.isMissingNode())
 		{	
-			errors.add("JSON Section \"checkBoxTest\" is missing!");
 		}
 		else
 		{	
-			String s = jsonUtils.extractStringKeyword(root, "checkBoxTest", false);
+			String s = jsonUtils.extractStringKeyword(root, "STARTING_MATERIALS_PATH2", false);
 			if (s == null)
-				errors.add("Incorrect checkBoxTest " + jsonUtils.getError());
+				errors.add("Incorrect STARTING_MATERIALS_PATH2 " + jsonUtils.getError());
 			else
-				preferences.checkBoxTest = Boolean.parseBoolean(s);
+				preferences.startingMaterialsPath2 = s;
 		}
-		*/
+		
 				
 		 //TODO
 	   	return preferences;
