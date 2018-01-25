@@ -142,7 +142,7 @@ public class ReactionBrowserPanel extends JPanel
 			if (showProducts)
 				rowFields.add(instance.products);
 			if (showReactionScore)
-				rowFields.add(instance.score);
+				rowFields.add(instance.reactionScore.totalScore);
 			if (showReactionScoreDetails)
 				rowFields.add("Score details");
 			break;
