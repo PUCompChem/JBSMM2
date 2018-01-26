@@ -2,12 +2,14 @@ package pu.test;
 
 import ambit2.jchempaint.editor.AbstractMoleculeAction;
 import ambit2.jchempaint.editor.JChemPaintDialog;
+
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 import ambit2.jchempaint.editor.MoleculeEditAction;
 import ambit2.smarts.SmartsHelper;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
@@ -28,42 +30,72 @@ public class TestJChemPaint {
 	{
 		System.out.println("JCP input smiles: " + smiles);
 		IAtomContainer mol = SmartsHelper.getMoleculeFromSmiles(smiles);
+		
 		JFrame frame = new JFrame();
-
 		frame.setSize(1000,1000);
+		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		frame.setVisible(true);
         MyMoleculeEditAction molEdAction = new MyMoleculeEditAction(mol);
+		//MoleculeEditAction molEdAction = new MoleculeEditAction(mol);
+		molEdAction.setModal(true);
 		molEdAction.setMolecule(mol);
 		molEdAction.editMolecule(true, frame);
 
+		/*
 		IAtomContainer resultMol = molEdAction.getMolecule();
 		String resultSmiles = SmartsHelper.moleculeToSMILES(resultMol, true);
 		System.out.println("JCP result smiles: " + resultSmiles);
+		*/
+		
+		
 
 
 	}
 
 }
-class MyMoleculeEditAction  extends MoleculeEditAction{
-    public IAtomContainer endMolecule =  jcpDialog.okAction();
+
+class MyMoleculeEditAction  extends MoleculeEditAction
+{
+	//public IAtomContainer endMolecule =  jcpDialog.okAction();
 
 	public MyMoleculeEditAction(IAtomContainer molecule) {
 		super(molecule);
 	}
-    public void editMolecule(boolean editable, Component frame) {
+	public void editMolecule(boolean editable, Component frame) {
 
-        if (molecules != null) {
-            if (jcpDialog == null) {
-                jcpModel.setMoleculeSet(molecules);
+		if (molecules != null) {
+			if (jcpDialog == null) {
+				jcpModel.setMoleculeSet(molecules);
 
-                jcpDialog = new JChemPaintDialog(getParent(frame), false,
-                        jcpModel) {
-                    private static final long serialVersionUID = -492805673357520991L;
+				jcpDialog = new JChemPaintDialog(getParent(frame), false,
+						jcpModel) {
+					private static final long serialVersionUID = -492805673357520991L;
 
-                    @Override
-                    public IAtomContainer okAction() {
-                        updateMolecule(super.okAction());
+					@Override
+					public IAtomContainer okAction() 
+					{
+						System.out.println("-----OK---------");
+						updateMolecule(super.okAction());
 
-                        molecules = jcpep.getChemModel().getMoleculeSet();
+						
+						//molecules = jcpep.getChemModel().getMoleculeSet();
+						try
+						{
+							System.out.println("Editor result:");
+							/*
+							for (IAtomContainer mol : molecules.atomContainers())
+							{	
+								String resultSmiles = SmartsHelper.moleculeToSMILES(mol, true);
+								System.out.println(resultSmiles);
+							}
+							*/
+							
+							String resultSmiles = SmartsHelper.moleculeToSMILES((IAtomContainer) molecule, true);
+							System.out.println(resultSmiles);
+							
+						}
+						catch (Exception e){};
+						
 
 						/*
 						 * updatedMolecule.setProperties(dataContainer.getMolecule
@@ -72,50 +104,50 @@ class MyMoleculeEditAction  extends MoleculeEditAction{
 						 * getDataContainer().setMolecule(updatedMolecule);
 						 * getActions().allActionsEnable(true);
 						 */
-                        dispose();
-                        jcpDialog = null;
-                        return (IAtomContainer) molecule;
-                    };
+						dispose();
+						jcpDialog = null;
+						return (IAtomContainer) molecule;
+					};
 
-                    @Override
-                    public void cancelAction() {
-                        super.cancelAction();
+					@Override
+					public void cancelAction() {
+						super.cancelAction();
 
-                        // data.getDataContainer().setEnabled(true);
-                        // data.getActions().allActionsEnable(true);
-                        dispose();
-                        jcpDialog = null;
+						// data.getDataContainer().setEnabled(true);
+						// data.getActions().allActionsEnable(true);
+						dispose();
+						jcpDialog = null;
 
-                    }
+					}
 
-                };
-                jcpDialog.setTitle("JChemPaint structure diagram editor");
-                jcpDialog.addWindowListener(new WindowAdapter() {
-                    @Override
-                    public void windowClosing(WindowEvent arg0) {
-                        super.windowClosing(arg0);
-                        // getDataContainer().setEnabled(true);
-                        // getActions().allActionsEnable(true);
-                        jcpDialog = null;
-                    }
-                });
-                // TODO center it
-                // TODO nonmodal
-            } else
-                jcpModel.setMoleculeSet(molecules);
+				};
+				jcpDialog.setTitle("JChemPaint structure diagram editor");
+				jcpDialog.addWindowListener(new WindowAdapter() {
+					@Override
+					public void windowClosing(WindowEvent arg0) {
+						super.windowClosing(arg0);
+						// getDataContainer().setEnabled(true);
+						// getActions().allActionsEnable(true);
+						jcpDialog = null;
+					}
+				});
+				// TODO center it
+				// TODO nonmodal
+			} else
+				jcpModel.setMoleculeSet(molecules);
 
-            jcpDialog.cleanup();
-            jcpDialog.toFront();
-            // dataContainer.setEnabled(false);
-            // getActions().allActionsEnable(false);
-            jcpDialog.setVisible(true);
+			jcpDialog.cleanup();
+			jcpDialog.toFront();
+			// dataContainer.setEnabled(false);
+			// getActions().allActionsEnable(false);
+			jcpDialog.setVisible(true);
 
 			/*
 			 * while (jcpDialog != null) { try { wait(); } catch
 			 * (InterruptedException e) { e.printStackTrace(); } }
 			 */
-        }
-    }
+		}
+	}
 
 
 
