@@ -13,6 +13,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 
 import ambit2.reactions.GenericReaction;
 import ambit2.reactions.GenericReactionInstance;
+import ambit2.reactions.rules.scores.ReactionScore;
 import ambit2.smarts.SmartsHelper;
 import pu.reactor.workspace.gui.ReactionBrowserPanel;
 
@@ -70,7 +71,8 @@ public class TestReactionBrowserPanel extends JFrame
 		GenericReactionInstance ri = new GenericReactionInstance();
 		ri.reaction = r;
 		//ri.target = target;
-		ri.score = 70;
+		ri.reactionScore = new ReactionScore();
+		ri.reactionScore.totalScore = 70;
 		ri.products = SmartsHelper.getMoleculeFromSmiles("CCC.CCC");
 		ri.instanceAtoms = new ArrayList<IAtom>();
 		ri.instanceAtoms.add(target.getAtom(0));
@@ -80,7 +82,8 @@ public class TestReactionBrowserPanel extends JFrame
 		ri = new GenericReactionInstance();	
 		ri.reaction = r;
 		//ri.target = target;
-		ri.score = 47;
+		ri.reactionScore = new ReactionScore();
+		ri.reactionScore.totalScore = 47;
 		ri.products = SmartsHelper.getMoleculeFromSmiles("NCCC.CCCO");
 		//ri.instanceAtoms = new ArrayList<IAtom>();
 		//ri.instanceAtoms.add(target.getAtom(2));
@@ -90,7 +93,8 @@ public class TestReactionBrowserPanel extends JFrame
 		ri = new GenericReactionInstance();	
 		ri.reaction = r;
 		//ri.target = target;
-		ri.score = 78;
+		ri.reactionScore = new ReactionScore();
+		ri.reactionScore.totalScore = 78;
 		ri.products = SmartsHelper.getMoleculeFromSmiles("NCCC.C1CCO1");
 		ri.instanceAtoms = new ArrayList<IAtom>();
 		ri.instanceAtoms.add(target.getAtom(4));
@@ -100,7 +104,8 @@ public class TestReactionBrowserPanel extends JFrame
 		ri = new GenericReactionInstance();	
 		ri.reaction = r;
 		//ri.target = target;
-		ri.score = 88;
+		ri.reactionScore = new ReactionScore();
+		ri.reactionScore.totalScore = 88;
 		ri.products = SmartsHelper.getMoleculeFromSmiles("NCCC.C1CCCC1");
 		//ri.instanceAtoms = new ArrayList<IAtom>();
 		//ri.instanceAtoms.add(target.getAtom(2));
