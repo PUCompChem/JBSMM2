@@ -63,7 +63,7 @@ public class ReactorMainFrame extends JFrame {
 	JMenuItem miRun;
 	JMenuItem miStop;
 	JMenuItem miNextStep;
-
+	JMenuItem miReset;
 	private ActionListener nextButtonActionListener;
 	
 	JMenu menuProcess;
@@ -103,6 +103,7 @@ public class ReactorMainFrame extends JFrame {
 	private JTextArea consoleFieldPanel;
 
 	private ReactorProcessTabsSet processTabs = new ReactorProcessTabsSet();
+
 
 	public ReactorMainFrame(Preferences preferences,
 			ProcessCommonChemData processChemData) throws Exception 
@@ -351,7 +352,15 @@ public class ReactorMainFrame extends JFrame {
 
 		miNextStep.addActionListener(nextButtonActionListener);
 
+		miReset = new JMenuItem("Reset");
+		menuReact.add(miReset);
 
+		miReset.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, ActionEvent.CTRL_MASK));
+		miReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+
+			}
+		});
 		//menu Process
 		menuProcess = new JMenu("Process");
 		menuBar.add(menuProcess);
