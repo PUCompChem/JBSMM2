@@ -23,6 +23,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 
 import ambit2.reactions.retrosynth.IReactionSequenceHandler;
 import ambit2.reactions.retrosynth.ReactionSequence;
+import ambit2.reactions.retrosynth.ReactionSequenceLevel;
 import ambit2.reactions.retrosynth.ReactionSequence.MoleculeStatus;
 import ambit2.reactions.rules.scores.ReactionScoreSchema;
 import ambit2.smarts.SmartsHelper;
@@ -142,8 +143,6 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		//modeComboBox.setPreferredSize(new Dimension(0,0));
 		modeComboBox.setMaximumSize(new Dimension(150,20));
 		configPanel.add(modeComboBox);
-		
-		/*
 		modeComboBox.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.red),
                 modeComboBox.getBorder()));
@@ -152,15 +151,8 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
         /*
 		//Test code
 		addLevel();
-		addLevel();
-		addLevel();
-		insertNewRowInLevel(0);
-		insertNewRowInLevel(1);
-		insertNewRowInLevel(1);
-		IAtomContainer target = reactionSequenceProcess.getReactSeq().getTarget();
-		addStructureToLevel(0,target);
-		addStructureToLevel(1,target);
-		addStructureToLevel(1,target);
+		for (int i = 0; i < 8; i++)
+			addStructureToLevel(1,target);
 		*/
 		
 		
@@ -170,7 +162,6 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 			LevelData ld = levels.get(i);
 			System.out.println("Level" + i + ": " + ld.toString());
 		}
-		
 		removeRowFromLevel(1,2);
 		
 		for (int i = 0; i < levels.size(); i++)
@@ -178,7 +169,6 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 			LevelData ld = levels.get(i);
 			System.out.println("Level" + i + ": " + ld.toString());
 		}
-		
 		
 		LevelData ld = levels.get(1);
 		for (int i = 0; i < 15; i++)
@@ -210,7 +200,6 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		modelTableWeights.fireTableDataChanged();
 		
         /*
-         
 	public double classcScoreWeight = 0.0;
 	public double conditionsScoreWeight = 0.0;
 	public double productSimilarityWeight = 0.0;
@@ -331,20 +320,21 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		smartChemTable.getModel().fireTableDataChanged();
 	}
 	
-	public void addStructureToLevel(int level, IAtomContainer mol)
+	public void addStructureToLevel(int levelIndex, IAtomContainer mol)
 	{	
 		ImageIcon icon = smartChemTable.getDrawer().getImage(mol);
-		LevelData ld = levels.get(level);
-		int pos[] = ld.getMoleculePos(ld.numMolecules);
+		LevelData ld = levels.get(levelIndex);
 		ld.numMolecules++;
-		
-		dte.text = "M" + level + "." + ld.numMolecules + " " + 
+		int pos[] = ld.getMoleculePos(ld.numMolecules-1);
+		//TODO fix the check for new addint new row
+		if (((ld.numMolecules / numStructureColumns) + 1) > ld.numRows)
+			insertNewRowInLevel(levelIndex);
+			
+		dte.text = "M" + levelIndex + "." + ld.numMolecules + " " + 
 				MoleculeStatus.getShortString((MoleculeStatus)
-						mol.getProperty(ReactionSequence.MoleculeStatusProperty))	;		
-		
+						mol.getProperty(ReactionSequence.MoleculeStatusProperty))	;	
 		dte.draw(icon.getImage().getGraphics());
 		
-		//TODO update ld.numRows 
 		smartChemTable.getModel().setValueAt(icon, pos[0], pos[1]);
 		smartChemTable.getModel().fireTableDataChanged();
 	}
@@ -366,7 +356,42 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 	void handleEvent(RSEvent event) 
 	{
 		System.out.println("Handle event: " + event.type);
+		switch (event.type)
+		{
+		case RESET:
+			reset();
+			break;
+		case ADD_MANY_LEVELS:
+			addAllSequenceLevelsToTable();
+			break;
+		}
+	}
+	
+	void reset() 
+	{
 		//TODO
 	}
+	
+	void addAllSequenceLevelsToTable()
+	{
+		ReactionSequence reactSeq = reactionSequenceProcess.getReactSeq();
+		ReactionSequenceLevel level = reactSeq.getFirstLevel();
+		level = level.nextLevel;
+		while (level != null)
+		{
+			addLevel();
+			addSequenceLevelToTable(level);
+			level = level.nextLevel;
+		}
+	}
+	
+	void addSequenceLevelToTable(ReactionSequenceLevel level)
+	{
+		for (int i = 0; i < level.molecules.size(); i++)
+		{
+			addStructureToLevel(level.levelIndex, level.molecules.get(i));
+		}
+	}
+	
 
 }

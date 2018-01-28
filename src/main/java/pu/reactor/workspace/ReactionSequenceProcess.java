@@ -159,10 +159,8 @@ public class ReactionSequenceProcess implements IProcess
 		if (!FlagAutomaticMode)
 			return;
 		
-		System.out.println("--->");
 		ReactionSequenceLevel level = reactSeq.getFirstLevel();
 		reactSeq.iterateLevelMoleculesRandomly(level);
-		System.out.println("-------->");
 		for (int i = 0; i < 30; i++)
 		{	
 			level = level.nextLevel;
