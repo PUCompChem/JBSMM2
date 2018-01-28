@@ -8,7 +8,10 @@ import java.util.List;
 
 import javax.swing.SwingUtilities;
 
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
+
 import ambit2.reactions.ReactionDataBase;
+import ambit2.smarts.SMIRKSManager;
 import pu.reactor.workspace.Preferences;
 import pu.reactor.workspace.ProcessCommonChemData;
 
@@ -29,8 +32,8 @@ public class ReactorGUIApp
 					}			
 					else
 					{	
-						reactor = new ReactorMainFrame( "./preferences.json");
-						//reactor = createReactorMainFrameWithDemoInfo();
+						//reactor = new ReactorMainFrame( "./preferences.json");
+						reactor = createReactorMainFrameWithDemoInfo();
 						reactor.setVisible(true);
 					}
 				} catch (Exception e) {
@@ -46,6 +49,8 @@ public class ReactorGUIApp
 		Preferences pref = ReactorMainFrame.getPreferences(prefFileName);
 		ProcessCommonChemData pccd = new ProcessCommonChemData();
 		ReactionDataBase reactionDB = new  ReactionDataBase(pref.reactionDBPath);
+		SMIRKSManager smrkMan0 = new SMIRKSManager(SilentChemObjectBuilder.getInstance()); 
+		reactionDB.configureGenericReactions(smrkMan0);
 		pccd.setReactionDB(reactionDB);
 		ReactorMainFrame.setStartingMaterialsDB(pref, pccd);
 		ReactorMainFrame reactor = new ReactorMainFrame(pref, pccd);
@@ -63,6 +68,8 @@ public class ReactorGUIApp
 		smirks.add("[C:1]Cl>>[C:1]");		
 		smirks.add("[H][C:1][C:2][H]>>[H][C:1][H].[H][C:2][H]");
 		ReactionDataBase reactionDB = new ReactionDataBase(smirks);
+		SMIRKSManager smrkMan0 = new SMIRKSManager(SilentChemObjectBuilder.getInstance()); 
+		reactionDB.configureGenericReactions(smrkMan0);
 		pccd.setReactionDB(reactionDB);
 		
 		ReactorMainFrame reactor = new ReactorMainFrame(pref, pccd);

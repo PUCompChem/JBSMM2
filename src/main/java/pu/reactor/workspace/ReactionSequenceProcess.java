@@ -133,7 +133,6 @@ public class ReactionSequenceProcess implements IProcess
 		StartingMaterialsDataBase smdb = new StartingMaterialsDataBase(startMatSmi);
 		reactSeq.setStartMatDB(smdb);
 		
-		reactDB.configureGenericReactions(reactSeq.getSmrkMan());
 		reactSeq.setReactDB(reactDB);
 		reactSeq.setStrategy(strategy);
 		reactSeq.setTarget(target);

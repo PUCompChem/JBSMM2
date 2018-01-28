@@ -4,6 +4,7 @@ import ambit2.base.data.Property;
 import ambit2.base.data.StructureRecord;
 import ambit2.reactions.ReactionDataBase;
 import ambit2.reactions.retrosynth.StartingMaterialsDataBase;
+import ambit2.smarts.SMIRKSManager;
 import ambit2.ui.Panel2D;
 import pu.gui.utils.chemtable.SmartChemTable;
 import pu.gui.utils.trees.MoleculeSetTree;
@@ -23,6 +24,8 @@ import pu.reactor.workspace.gui.wizards.SingleReactionWizard;
 import pu.reactor.workspace.gui.ReactorProcessTabsSet;
 
 import javax.swing.*;
+
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -204,6 +207,8 @@ public class ReactorMainFrame extends JFrame {
 		try
 		{
 			 ReactionDataBase reactionDB = new  ReactionDataBase(preferences.reactionDBPath);
+			 SMIRKSManager smrkMan0 = new SMIRKSManager(SilentChemObjectBuilder.getInstance()); 
+			 reactionDB.configureGenericReactions(smrkMan0);
 			 processChemData.setReactionDB(reactionDB);
 		}
 		catch (Exception x)
