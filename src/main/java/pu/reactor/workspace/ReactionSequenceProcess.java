@@ -7,12 +7,14 @@ import java.util.List;
 import java.util.Set;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
 import ambit2.reactions.ReactionDataBase;
 import ambit2.reactions.retrosynth.IReactionSequenceHandler.EventType;
 import ambit2.reactions.retrosynth.IReactionSequenceHandler.RSEvent;
 import ambit2.reactions.retrosynth.ReactionSequence;
 import ambit2.reactions.retrosynth.ReactionSequenceLevel;
+import ambit2.reactions.retrosynth.StartingMaterialsDataBase;
 import ambit2.reactions.retrosynth.SyntheticStrategy;
 import ambit2.smarts.SMIRKSManager;
 import ambit2.smarts.SmartsHelper;
@@ -115,13 +117,25 @@ public class ReactionSequenceProcess implements IProcess
 
 	@Override
 	public void initProcess() throws Exception {
-				
+		
+		/*
 		//Temporary test code
 		List<String> smirks = new ArrayList<String>();
 		smirks.add("[C:1]Cl>>[C:1]");		
 		smirks.add("[H][C:1][C:2][H]>>[H][C:1][H].[H][C:2][H]");
 		ReactionDataBase rdb = new ReactionDataBase(smirks);
+		rdb.configureGenericReactions(reactSeq.getSmrkMan());
 		reactSeq.setReactDB(rdb);
+		*/
+		
+		//Temporary code
+		String startMatSmi[] =  {"CC","CCC","CO","NC(C)C", "Cl"};
+		StartingMaterialsDataBase smdb = new StartingMaterialsDataBase(startMatSmi);
+		reactSeq.setStartMatDB(smdb);
+		
+		reactDB.configureGenericReactions(reactSeq.getSmrkMan());
+		reactSeq.setReactDB(reactDB);
+		reactSeq.setStrategy(strategy);
 		reactSeq.setTarget(target);
 		
 		//setup smrkMan
@@ -137,6 +151,8 @@ public class ReactionSequenceProcess implements IProcess
 		smrkMan.setFlagHAtomsTransformation(false);
 		//smrkMan.setFlagHAtomsTransformationMode(FlagHAtomsTransformationMode);
 		smrkMan.setFlagAromaticityTransformation(false);
+		
+		reactSeq.initilize();
 	}
 
 	@Override
@@ -144,8 +160,10 @@ public class ReactionSequenceProcess implements IProcess
 		if (!FlagAutomaticMode)
 			return;
 		
+		System.out.println("--->");
 		ReactionSequenceLevel level = reactSeq.getFirstLevel();
 		reactSeq.iterateLevelMoleculesRandomly(level);
+		System.out.println("-------->");
 		for (int i = 0; i < 30; i++)
 		{	
 			level = level.nextLevel;
