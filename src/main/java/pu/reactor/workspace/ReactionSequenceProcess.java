@@ -9,7 +9,10 @@ import java.util.Set;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 import ambit2.reactions.ReactionDataBase;
+import ambit2.reactions.retrosynth.IReactionSequenceHandler.EventType;
+import ambit2.reactions.retrosynth.IReactionSequenceHandler.RSEvent;
 import ambit2.reactions.retrosynth.ReactionSequence;
+import ambit2.reactions.retrosynth.ReactionSequenceLevel;
 import ambit2.reactions.retrosynth.SyntheticStrategy;
 import ambit2.smarts.SMIRKSManager;
 import ambit2.smarts.SmartsHelper;
@@ -23,6 +26,7 @@ public class ReactionSequenceProcess implements IProcess
 	SyntheticStrategy strategy = null;
 	ReactionSequence reactSeq = new ReactionSequence();
 	Set<ReactionSequence> reactSeqVesrions = new HashSet<ReactionSequence>();
+	boolean FlagAutomaticMode = true;
 	
 	public void setTargetInputString(String targetInputString)
 	{
@@ -78,6 +82,14 @@ public class ReactionSequenceProcess implements IProcess
 	public void setReactSeqVesrions(Set<ReactionSequence> reactSeqVesrions) {
 		this.reactSeqVesrions = reactSeqVesrions;
 	}
+	
+	public boolean isFlagAutomaticMode() {
+		return FlagAutomaticMode;
+	}
+
+	public void setFlagAutomaticMode(boolean flagAutomaticMode) {
+		FlagAutomaticMode = flagAutomaticMode;
+	}
 
 	@Override
 	public String toJsonString() {
@@ -129,8 +141,22 @@ public class ReactionSequenceProcess implements IProcess
 
 	@Override
 	public void runProcess() throws Exception {
-		// TODO Auto-generated method stub
+		if (!FlagAutomaticMode)
+			return;
 		
+		ReactionSequenceLevel level = reactSeq.getFirstLevel();
+		reactSeq.iterateLevelMoleculesRandomly(level);
+		for (int i = 0; i < 30; i++)
+		{	
+			level = level.nextLevel;
+			if (level == null)
+				break;
+			reactSeq.iterateLevelMoleculesRandomly(level);
+		}
+		System.out.println("ReactionSequence:\n" + reactSeq.toString());
+		
+		RSEvent event = new RSEvent(EventType.ADD_MANY_LEVELS, 0, null);
+		reactSeq.getReactionSequenceHandler().registerEvent(event);
 	}
 
 	@Override
@@ -141,13 +167,15 @@ public class ReactionSequenceProcess implements IProcess
 
 	@Override
 	public void runProcessNextSteps() throws Exception {
-		// TODO Auto-generated method stub
-		
+		if (!FlagAutomaticMode)
+			return;
 	}
 
 	@Override
 	public void resetProcess() throws Exception {
-		// TODO Auto-generated method stub
+		reactSeq.reset();
+		RSEvent event = new RSEvent(EventType.RESET, 0, null);
+		reactSeq.getReactionSequenceHandler().registerEvent(event);
 	}
 
 }

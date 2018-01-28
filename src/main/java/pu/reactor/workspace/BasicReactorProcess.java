@@ -159,7 +159,6 @@ public class BasicReactorProcess implements IProcess
 
 	public void runProcessNextSteps() throws Exception 
 	{
-
 		runProcessNextSteps(stepSize);
 	}
 

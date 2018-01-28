@@ -326,7 +326,7 @@ public class ReactorMainFrame extends JFrame {
 		miRun.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, ActionEvent.CTRL_MASK));
 		miRun.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				// TODO
+				miRunActionPerformed(evt);
 			}
 		});
 
@@ -488,6 +488,7 @@ public class ReactorMainFrame extends JFrame {
 		{
 			System.out.println("Run process: " + pp.getProcess().getName());
 			pp.getProcess().runProcess();
+			pp.updatePanel();
 		}
 		catch (Exception x)
 		{

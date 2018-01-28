@@ -365,6 +365,7 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 	
 	void handleEvent(RSEvent event) 
 	{
+		System.out.println("Handle event: " + event.type);
 		//TODO
 	}
 
