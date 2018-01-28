@@ -205,16 +205,14 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		modelTableWeights.setValueAt("exp. conditions", 2, 0);
 		modelTableWeights.setValueAt("yield", 3, 0);
 		modelTableWeights.setValueAt("product complexity", 4, 0);
+		modelTableWeights.setValueAt("react. center compl.", 5, 0);
+		
 		modelTableWeights.fireTableDataChanged();
 		
         /*
-         * public double basicScoreWeight = 0.0;
+         
 	public double classcScoreWeight = 0.0;
-	public double transformScoreWeight = 0.0;
 	public double conditionsScoreWeight = 0.0;
-	public double experimentalConditionsScoreWeight = 0.0;
-	public double yieldScoreWeight = 0.0;
-	public double productComplexityWeight = 0.0; 
 	public double productSimilarityWeight = 0.0;
 	public double productStabilityWeight = 0.0;
 	public double reactionCenterPositionWeight = 0.0;
@@ -230,6 +228,8 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		modelTableWeights.setValueAt(rss.experimentalConditionsScoreWeight, 2, 1);
 		modelTableWeights.setValueAt(rss.yieldScoreWeight, 3, 1);
 		modelTableWeights.setValueAt(rss.productComplexityWeight, 4, 1);
+		modelTableWeights.setValueAt(rss.reactionCenterComplexityWeight, 5, 1);
+		
 		modelTableWeights.fireTableDataChanged();
 	}
 	

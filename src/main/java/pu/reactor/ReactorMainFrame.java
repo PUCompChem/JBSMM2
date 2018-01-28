@@ -353,14 +353,15 @@ public class ReactorMainFrame extends JFrame {
 		miNextStep.addActionListener(nextButtonActionListener);
 
 		miReset = new JMenuItem("Reset");
+		miReset.setMnemonic('T');
 		menuReact.add(miReset);
-
-		miReset.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, ActionEvent.CTRL_MASK));
+		miReset.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F8, ActionEvent.CTRL_MASK));
 		miReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-
+				miResetActionPerformed(evt);
 			}
 		});
+		
 		//menu Process
 		menuProcess = new JMenu("Process");
 		menuBar.add(menuProcess);
@@ -514,7 +515,25 @@ public class ReactorMainFrame extends JFrame {
 		{
 			System.out.println("Process error: " + x.getMessage());
 		}
-		
+	}
+	
+	
+	private void miResetActionPerformed(ActionEvent evt){
+		System.out.println("Reset");
+		if (processTabs.getComponentCount() == 0)
+			return;
+		int processIndex = processTabs.getSelectedIndex();
+		ProcessPanel pp = (ProcessPanel)processTabs.getComponentAt(processIndex);
+		try
+		{
+			System.out.println("Reset process: " + pp.getProcess().getName());
+			pp.getProcess().resetProcess();
+			pp.updatePanel();
+		}
+		catch (Exception x)
+		{
+			System.out.println("Process error: " + x.getMessage());
+		}
 	}
 	// some test utils -------------------------------------
 
