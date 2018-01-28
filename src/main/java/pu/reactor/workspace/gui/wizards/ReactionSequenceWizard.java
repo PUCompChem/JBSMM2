@@ -90,7 +90,7 @@ public class ReactionSequenceWizard extends JFrame implements ICustomActionHandl
 					rsp.setReactDB(processCommonChemData.getReactionDB());
 					rsp.setName(processNameField.getText());
 					rsp.setTargetInputString(smilesField.getText()); 
-					rsp.setStrategy(new SyntheticStrategy());
+					rsp.setStrategy(SyntheticStrategy.getDefaultSyntheticStrategy());
 					rsp.initProcess();
 					ReactionSequenceProcessPanel rspPanel = new ReactionSequenceProcessPanel(rsp);
 					

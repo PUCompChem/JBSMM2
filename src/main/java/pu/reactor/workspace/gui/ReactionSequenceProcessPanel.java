@@ -57,6 +57,7 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 	int numStructureColumns = 4;
 	boolean useAdditionalInfoColumn = false;
 	List<LevelData> levels = new ArrayList<LevelData>();
+	List<RSEvent> events = new ArrayList<RSEvent>();
 	
 	//GUI elements
 	DrawTextElement dte;
@@ -71,6 +72,7 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 	public ReactionSequenceProcessPanel(ReactionSequenceProcess reactionSequenceProcess)
 	{
 		this.reactionSequenceProcess = reactionSequenceProcess;
+		reactionSequenceProcess.getReactSeq().setReactionSequenceHandler(this);
 		initGUI();
 	}
 	
@@ -127,6 +129,9 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
         reactionScoreSchemaToTable(reactionSequenceProcess.getStrategy().reactionScoreSchema);
         tableWeights.setTableHeader(null);
         configPanel.add(tableWeights);
+        addLevel();
+        IAtomContainer target = reactionSequenceProcess.getReactSeq().getTarget();
+		addStructureToLevel(0,target);
        
 		
 		/*
@@ -144,6 +149,7 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
                 modeComboBox.getBorder()));
 		*/
 		
+        /*
 		//Test code
 		addLevel();
 		addLevel();
@@ -151,12 +157,12 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		insertNewRowInLevel(0);
 		insertNewRowInLevel(1);
 		insertNewRowInLevel(1);
-		
-		
 		IAtomContainer target = reactionSequenceProcess.getReactSeq().getTarget();
 		addStructureToLevel(0,target);
 		addStructureToLevel(1,target);
 		addStructureToLevel(1,target);
+		*/
+		
 		
 		/*
 		for (int i = 0; i < levels.size(); i++)
@@ -234,6 +240,10 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 
 	@Override
 	public void updatePanel() {
+		//Handle all events and clear event list
+		for (int i = 0; i < events.size(); i++)
+			handleEvent(events.get(i));
+		events.clear();
 	}
 	
 	public int getNumStructureColumns() {
@@ -346,13 +356,16 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 
 	@Override
 	public void setReactionSequence(ReactionSequence sequence) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void registerEvent(RSEvent event) {
-		// TODO Auto-generated method stub
-		
+		events.add(event);
 	}	
+	
+	void handleEvent(RSEvent event) 
+	{
+		//TODO
+	}
 
 }
