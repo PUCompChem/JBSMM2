@@ -4,6 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,6 +99,44 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		List<SmartChemTableField> fields = getTableFields();
 		smartChemTable = new SmartChemTable(fields);
 		add(smartChemTable,BorderLayout.CENTER);
+		
+		smartChemTable.getTable().addMouseMotionListener(new MouseMotionListener() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+            		//System.out.println("^^^^^^^");
+            		//smartChemTable_MouseMoved(e);
+            }
+			@Override
+            public void mouseDragged(MouseEvent e) {
+            		System.out.println("drug ");
+            }
+        });
+		smartChemTable.getTable().addMouseListener(new MouseListener(){
+			@Override
+			public void mouseClicked(MouseEvent evnt) {
+				System.out.println("mouse clicked");
+		     }
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				System.out.println("mouse presssed");
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				System.out.println("mouse released");
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				System.out.println("mouse entered");
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				System.out.println("mouse exited");
+			}
+		});
 		
 		configPanel = new JPanel();
 		configPanel.setLayout(new BoxLayout(configPanel, BoxLayout.PAGE_AXIS)); 
@@ -398,5 +441,20 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		}
 	}
 	
+	//------------- handle smartsChemTable mouse events --------------
+	
+	public void smartChemTable_MouseMoved(MouseEvent e)
+	{
+		Point p = e.getPoint();
+		System.out.println("mouse moved " + p.toString());
+		/*
+		int row = smartChemTable.rowAtPoint(p);
+		int col = smartChemTable.columnAtPoint(p);
+
+		if ((row > -1 && row < smartChemTable.getRowCount()) && (col > -1 && col < smartChemTable.getColumnCount())) {
+
+		}
+		*/
+	}	
 
 }

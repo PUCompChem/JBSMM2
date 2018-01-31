@@ -32,6 +32,7 @@ public class SmartChemTable extends JPanel
 {
 	private static final long serialVersionUID = 13634655675682345L;
 		
+	JTable table;
 	List<SmartChemTableField> fields = new ArrayList<SmartChemTableField>();
 	MoleculeDrawer drawer = new MoleculeDrawer();
 	DefaultTableModel model = new DefaultTableModel(0,4) {
@@ -65,7 +66,7 @@ public class SmartChemTable extends JPanel
 		}
 	};
 
-	JTable table;
+	
 
 	public SmartChemTable(List<SmartChemTableField> fields) 
 	{
@@ -113,16 +114,32 @@ public class SmartChemTable extends JPanel
 			model.addColumn(fields.get(i).name);
 
 	}
-
+	
+	
+	public JTable getTable() {
+		return table;
+	}
+	
+	public void setTable(JTable table) {
+		this.table = table;
+	}
+	
+	public List<SmartChemTableField> getFields() {
+		return fields;
+	}
+	
 	public DefaultTableModel getModel() {
 		return model;
 	}
+	
 	public void setModel(DefaultTableModel model) {
 		this.model = model;
 	}
+	
 	public MoleculeDrawer getDrawer() {
 		return drawer;
 	}
+	
 	public void addTableRow(List<Object> rowFields)
 	{
 		Object rowData[] = new Object[fields.size()]; 
