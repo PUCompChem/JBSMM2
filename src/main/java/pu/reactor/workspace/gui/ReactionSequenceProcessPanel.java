@@ -60,6 +60,8 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 	
 	ReactionSequenceProcess reactionSequenceProcess = null;
 	SmartChemTable smartChemTable = new SmartChemTable();
+	int curTableRow = -1;
+	int curTableColumn = -1;
 	int numStructureColumns = 4;
 	boolean useAdditionalInfoColumn = false;
 	List<LevelData> levels = new ArrayList<LevelData>();
@@ -103,38 +105,37 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		smartChemTable.getTable().addMouseMotionListener(new MouseMotionListener() {
 			@Override
 			public void mouseMoved(MouseEvent e) {
-            		//System.out.println("^^^^^^^");
-            		//smartChemTable_MouseMoved(e);
+            		smartChemTable_MouseMoved(e);
             }
 			@Override
             public void mouseDragged(MouseEvent e) {
-            		System.out.println("drug ");
+            		//System.out.println("drug ");
             }
         });
 		smartChemTable.getTable().addMouseListener(new MouseListener(){
 			@Override
 			public void mouseClicked(MouseEvent evnt) {
-				System.out.println("mouse clicked");
+				//System.out.println("mouse clicked");
 		     }
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				System.out.println("mouse presssed");
+				//System.out.println("mouse presssed");
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				System.out.println("mouse released");
+				//System.out.println("mouse released");
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				System.out.println("mouse entered");
+				//System.out.println("mouse entered");
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				System.out.println("mouse exited");
+				//System.out.println("mouse exited");
 			}
 		});
 		
@@ -441,19 +442,38 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		}
 	}
 	
+	void updateCurrentTableRowAndColumn (int row, int column)
+	{
+		if ((row == curTableRow) && (column == curTableColumn))
+			return;
+		
+		curTableRow = row;
+		curTableColumn = column;
+		System.out.println("new position in cell: " + row + "  " + column);
+		
+	}
+	
 	//------------- handle smartsChemTable mouse events --------------
 	
 	public void smartChemTable_MouseMoved(MouseEvent e)
-	{
+	{	
 		Point p = e.getPoint();
-		System.out.println("mouse moved " + p.toString());
+		//System.out.println("mouse moved " + p.toString());
+		JTable table = smartChemTable.getTable();
+		int row = table.rowAtPoint(p);
+		int col = table.columnAtPoint(p);
+		updateCurrentTableRowAndColumn(row, col);
+		
 		/*
-		int row = smartChemTable.rowAtPoint(p);
-		int col = smartChemTable.columnAtPoint(p);
-
 		if ((row > -1 && row < smartChemTable.getRowCount()) && (col > -1 && col < smartChemTable.getColumnCount())) {
 
 		}
+		Point p = event.getPoint();
+            int row = table.rowAtPoint(p);
+            int col = table.columnAtPoint(p);
+            Rectangle currentCell = table.getCellRect(row, col, false);
+            p.translate(-currentCell.x, -currentCell.y);
+		
 		*/
 	}	
 
