@@ -26,6 +26,8 @@ import javax.swing.table.TableModel;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 
+import com.mchange.v2.cfg.DelayedLogItem.Level;
+
 import ambit2.reactions.retrosynth.IReactionSequenceHandler;
 import ambit2.reactions.retrosynth.ReactionSequence;
 import ambit2.reactions.retrosynth.ReactionSequenceLevel;
@@ -451,6 +453,23 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		curTableColumn = column;
 		System.out.println("new position in cell: " + row + "  " + column);
 		
+	}
+	
+	int getLevelIndex(int tableRow)
+	{
+		for (int i = 0; i < levels.size(); i++)
+		{
+			LevelData ld = levels.get(i);
+			if ((tableRow >= ld.firstRowIndex) && (tableRow < ld.firstRowIndex + ld.numRows))
+				return i;
+		}
+		return -1;
+	}
+	
+	int getMoleculeIndex(int tableRow, int tableColumn, int levelIndex)
+	{
+		//TODO
+		return 0;
 	}
 	
 	//------------- handle smartsChemTable mouse events --------------
