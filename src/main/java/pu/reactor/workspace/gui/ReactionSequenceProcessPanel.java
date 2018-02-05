@@ -62,8 +62,6 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 	
 	ReactionSequenceProcess reactionSequenceProcess = null;
 	SmartChemTable smartChemTable = new SmartChemTable();
-	int curTableRow = -1;
-	int curTableColumn = -1;
 	int numStructureColumns = 4;
 	boolean useAdditionalInfoColumn = false;
 	List<LevelData> levels = new ArrayList<LevelData>();
@@ -75,6 +73,11 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 	JCheckBox checkboxAutomaticMode;
 	JTable tableWeights;
 	DefaultTableModel modelTableWeights;
+	
+	int mouseTableRow = -1;
+	int mouseTableColumn = -1;
+	int mouseLevelIndex = -1;
+	int mouseMolIndex = -1;
     
 	//JComboBox<String> modeComboBox;
 	
@@ -446,17 +449,19 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 	
 	void updateCurrentTableRowAndColumn (int row, int column)
 	{
-		if ((row == curTableRow) && (column == curTableColumn))
+		if ((row == mouseTableRow) && (column == mouseTableColumn))
 			return;
 		
-		curTableRow = row;
-		curTableColumn = column;
-		System.out.println("new position in cell: " + row + "  " + column);
-		
+		mouseTableRow = row;
+		mouseTableColumn = column;
+		mouseLevelIndex = getLevelIndex (mouseTableRow);
+		mouseMolIndex = getMoleculeIndex(mouseTableRow, mouseTableColumn, mouseLevelIndex);
+		System.out.println("new position in cell: " + row + "  " + column 
+				+ "   level = " + mouseLevelIndex + "  molIndex" + mouseMolIndex);
 	}
 	
 	int getLevelIndex(int tableRow)
-	{
+	{	
 		for (int i = 0; i < levels.size(); i++)
 		{
 			LevelData ld = levels.get(i);
@@ -468,8 +473,17 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 	
 	int getMoleculeIndex(int tableRow, int tableColumn, int levelIndex)
 	{
-		//TODO
-		return 0;
+		if (tableColumn == 0)
+			return -1;
+		if (tableColumn > numStructureColumns)
+			return -1;
+		LevelData ld = levels.get(levelIndex);
+		int levelRowIndex = tableRow - ld.firstRowIndex;
+		int molIndex = levelRowIndex * numStructureColumns + tableColumn - 1;
+		if (molIndex < ld.numMolecules)
+			return molIndex;
+		else
+			return -1;
 	}
 	
 	//------------- handle smartsChemTable mouse events --------------
