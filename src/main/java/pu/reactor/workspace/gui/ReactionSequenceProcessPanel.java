@@ -11,6 +11,7 @@ import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -24,10 +25,12 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 import com.mchange.v2.cfg.DelayedLogItem.Level;
 
+import ambit2.reactions.GenericReaction;
 import ambit2.reactions.GenericReactionInstance;
 import ambit2.reactions.retrosynth.IReactionSequenceHandler;
 import ambit2.reactions.retrosynth.ReactionSequence;
@@ -514,6 +517,7 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 	
 	public void smartChemTable_MouseClicked(MouseEvent e)
 	{
+		//System.out.println("   level = " + mouseLevelIndex + "  molIndex" + mouseMolIndex);
 		if (checkboxAutomaticMode.isSelected())
 			return;
 		
@@ -523,12 +527,40 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		ReactionSequence rseq = reactionSequenceProcess.getReactSeq();
 		ReactionSequenceLevel rsLevel = rseq.getLevel(mouseLevelIndex);
 		if(rsLevel == null)
+		{	
+			System.out.println("rsLevel == null");
+			return;
+		}	
+		
+		IAtomContainer mol = rsLevel.molecules.get(mouseMolIndex);		
+		MoleculeStatus status = ReactionSequence.getMoleculeStatus(mol);
+		System.out.println(status);
+		if (status != MoleculeStatus.ADDED_TO_LEVEL)
 			return;
 		
-		//List<GenericReactionInstance> calcReactionInstancesForMousePos()
+		Map<GenericReaction,List<List<IAtom>>> allInstances = rseq.generateAllReactionInstances(mol);
+		if (allInstances.isEmpty())
+		{	
+			ReactionSequence.setMoleculeStatus(mol, MoleculeStatus.UNRESOLVED);
+			System.out.println("No instances!");
+			return;
+		}
 		
-		ReactionBrowser rb = new ReactionBrowser(this, null, null);
-		rb.setVisible(true);
+		List<GenericReactionInstance> griList = null;
+		try {
+			griList = rseq.handleReactionInstances(allInstances, mol);
+		}
+		catch(Exception x) {
+			System.out.println(x.getMessage());
+		}
+		
+		if (griList != null)
+			if (!griList.isEmpty())
+			{
+				ReactionBrowser rb = new ReactionBrowser(this, griList, mol);
+				rb.setVisible(true);
+			}
+		
 	}
 	
 	/*
