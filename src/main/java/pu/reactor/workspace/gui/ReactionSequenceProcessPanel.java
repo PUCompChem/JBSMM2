@@ -106,6 +106,7 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		List<SmartChemTableField> fields = getTableFields();
 		smartChemTable = new SmartChemTable(fields);
 		add(smartChemTable,BorderLayout.CENTER);
+		smartChemTable.getTable().setRowSelectionAllowed(false);
 		
 		smartChemTable.getTable().addMouseMotionListener(new MouseMotionListener() {
 			@Override
@@ -120,7 +121,7 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		smartChemTable.getTable().addMouseListener(new MouseListener(){
 			@Override
 			public void mouseClicked(MouseEvent evnt) {
-				//System.out.println("mouse clicked");
+				smartChemTable_MouseClicked(evnt);
 		     }
 
 			@Override
@@ -508,6 +509,12 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
             p.translate(-currentCell.x, -currentCell.y);
 		
 		*/
-	}	
+	}
+	
+	public void smartChemTable_MouseClicked(MouseEvent e)
+	{
+		ReactionBrowser rb = new ReactionBrowser(this);
+		rb.setVisible(true);
+	}
 
 }
