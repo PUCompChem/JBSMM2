@@ -28,6 +28,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 
 import com.mchange.v2.cfg.DelayedLogItem.Level;
 
+import ambit2.reactions.GenericReactionInstance;
 import ambit2.reactions.retrosynth.IReactionSequenceHandler;
 import ambit2.reactions.retrosynth.ReactionSequence;
 import ambit2.reactions.retrosynth.ReactionSequenceLevel;
@@ -457,8 +458,8 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		mouseTableColumn = column;
 		mouseLevelIndex = getLevelIndex (mouseTableRow);
 		mouseMolIndex = getMoleculeIndex(mouseTableRow, mouseTableColumn, mouseLevelIndex);
-		System.out.println("new position in cell: " + row + "  " + column 
-				+ "   level = " + mouseLevelIndex + "  molIndex" + mouseMolIndex);
+		//System.out.println("new position in cell: " + row + "  " + column 
+		//		+ "   level = " + mouseLevelIndex + "  molIndex" + mouseMolIndex);
 	}
 	
 	int getLevelIndex(int tableRow)
@@ -513,11 +514,33 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 	
 	public void smartChemTable_MouseClicked(MouseEvent e)
 	{
-		if (!checkboxAutomaticMode.isSelected())
-		{	
-			ReactionBrowser rb = new ReactionBrowser(this);
-			rb.setVisible(true);
-		}	
+		if (checkboxAutomaticMode.isSelected())
+			return;
+		
+		if (mouseMolIndex == -1)
+			return;
+		
+		ReactionSequence rseq = reactionSequenceProcess.getReactSeq();
+		ReactionSequenceLevel rsLevel = rseq.getLevel(mouseLevelIndex);
+		if(rsLevel == null)
+			return;
+		
+		//List<GenericReactionInstance> calcReactionInstancesForMousePos()
+		
+		ReactionBrowser rb = new ReactionBrowser(this, null, null);
+		rb.setVisible(true);
 	}
+	
+	/*
+	List<GenericReactionInstance> calcReactionInstancesForMousePos()
+	{	
+		ReactionSequence rseq = reactionSequenceProcess.getReactSeq();
+		ReactionSequenceLevel rsLevel = rseq.getLevel(mouseLevelIndex);
+		if(rsLevel == null)
+			return null;
+		
+		return null;
+	}
+	*/
 
 }
