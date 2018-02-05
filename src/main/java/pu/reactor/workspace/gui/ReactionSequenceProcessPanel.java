@@ -513,8 +513,11 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 	
 	public void smartChemTable_MouseClicked(MouseEvent e)
 	{
-		ReactionBrowser rb = new ReactionBrowser(this);
-		rb.setVisible(true);
+		if (!checkboxAutomaticMode.isSelected())
+		{	
+			ReactionBrowser rb = new ReactionBrowser(this);
+			rb.setVisible(true);
+		}	
 	}
 
 }
