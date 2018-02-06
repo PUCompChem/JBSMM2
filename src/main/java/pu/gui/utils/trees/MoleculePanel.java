@@ -21,7 +21,12 @@ public class MoleculePanel extends JPanel {
 
     }
 
+    public MoleculePanel() {
 
+
+
+
+    }
     public void draw(IAtomContainer atomContainer){
         stucturePanel.display(atomContainer);
 
