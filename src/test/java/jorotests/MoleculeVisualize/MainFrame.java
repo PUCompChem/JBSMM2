@@ -20,7 +20,7 @@ public class MainFrame extends JFrame {
     MoleculePanel compoundPanel ;
     ArrayList<String> list;
     int i = 0;
-    public MainFrame(ArrayList<String> list) {
+    public MainFrame(final ArrayList<String> list) {
         try {
             atomContainer = SmartsHelper.getMoleculeFromSmiles("CCCCC");
         } catch (Exception e) {
