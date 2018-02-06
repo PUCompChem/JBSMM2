@@ -12,6 +12,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import ambit2.reactions.ReactionDataBase;
 import ambit2.reactions.retrosynth.IReactionSequenceHandler.EventType;
 import ambit2.reactions.retrosynth.IReactionSequenceHandler.RSEvent;
+import ambit2.reactions.retrosynth.ReactionSequence.MoleculeStatus;
 import ambit2.reactions.retrosynth.ReactionSequence;
 import ambit2.reactions.retrosynth.ReactionSequenceLevel;
 import ambit2.reactions.retrosynth.StartingMaterialsDataBase;
@@ -168,6 +169,13 @@ public class ReactionSequenceProcess implements IProcess
 				break;
 			reactSeq.iterateLevelMoleculesRandomly(level);
 		}
+		
+		if (reactSeq.getFirstLevel().nextLevel != null)
+		{	
+			IAtomContainer startMol = reactSeq.getFirstLevel().molecules.get(0);
+			ReactionSequence.setMoleculeStatus(startMol, MoleculeStatus.RESOLVED);
+		}	
+			
 		System.out.println("ReactionSequence:\n" + reactSeq.toString());
 		
 		RSEvent event = new RSEvent(EventType.ADD_MANY_LEVELS, 0, null);

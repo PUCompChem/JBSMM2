@@ -93,9 +93,9 @@ public class ReactionBrowser extends JFrame
 	
 	
 	void applyButtonEvent()
-	{
-		//System.out.println("selectedRow = " + selectedRow);
+	{	
 		int selectedRow = reactBrowserPanel.chemTable.getTable().getSelectedRow();
+		System.out.println("selectedRow = " + selectedRow);
 		if (selectedRow != -1)
 		{	
 			GenericReactionInstance gri = reactInstances.get(selectedRow);
