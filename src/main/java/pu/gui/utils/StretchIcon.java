@@ -11,7 +11,7 @@ import javax.swing.ImageIcon;
 
 /**
  * An <CODE>Icon</CODE> that scales its image to fill the component area,
- * excluding any border or insets, optionally maintaining the image's aspect
+ * excluding ay border or insets, optionally maintaining the image's aspect
  * ratio by padding and centering the scaled image horizontally or vertically.
  * <P>
  * The class is a drop-in replacement for <CODE>ImageIcon</CODE>, except that

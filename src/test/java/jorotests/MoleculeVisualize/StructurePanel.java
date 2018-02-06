@@ -1,4 +1,6 @@
-package pu.gui.utils.panels;
+package jorotests.MoleculeVisualize;
+
+
 import ambit2.ui.Panel2D;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
@@ -12,15 +14,16 @@ public class StructurePanel extends JPanel{
 
 
     protected Panel2D picturePanel = null;
+
     IAtomContainer mol;
 
     public StructurePanel(IAtomContainer atomContainer) {
 
 
-        this.setSize(new Dimension(100, 700));
-        this.setBorder( BorderFactory.createLineBorder(Color.green));
 
-        this.add(structurePanel(),BorderLayout.CENTER);
+
+
+        this.add(structurePanel());
 
         try {
             mol = atomContainer;
@@ -30,28 +33,18 @@ public class StructurePanel extends JPanel{
         display(mol);
 
     }
-    public StructurePanel() {
 
-
-        this.setSize(new Dimension(100, 700));
-        this.setBorder( BorderFactory.createLineBorder(Color.green));
-
-        this.add(structurePanel(),BorderLayout.CENTER);
-    }
     protected JPanel structurePanel() {
         JPanel strucPanel = new JPanel();
         strucPanel.setLayout(new BorderLayout());
 
         JLabel label = new JLabel("<html><b>Structure diagram</b></html>");
         label.setOpaque(true);
-        // label.setBackground(bgColor);
-        //label.setForeground(fColor);
-        label.setSize(120,32);
         label.setAlignmentX(CENTER_ALIGNMENT);
-        // label.setBorder(BorderFactory.createMatteBorder(5,0,0,0,bgColor));
         strucPanel.add(label,BorderLayout.NORTH);
 
         picturePanel = new Panel2D();
+        picturePanel.setPreferredSize(new Dimension(500,500));
         picturePanel.setEditable(false);
         // picturePanel.setBorder(BorderFactory.createLineBorder(fColor));
         //picturePanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
