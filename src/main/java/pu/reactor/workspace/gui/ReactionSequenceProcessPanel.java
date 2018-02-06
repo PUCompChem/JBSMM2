@@ -11,6 +11,7 @@ import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -24,10 +25,13 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 import com.mchange.v2.cfg.DelayedLogItem.Level;
 
+import ambit2.reactions.GenericReaction;
+import ambit2.reactions.GenericReactionInstance;
 import ambit2.reactions.retrosynth.IReactionSequenceHandler;
 import ambit2.reactions.retrosynth.ReactionSequence;
 import ambit2.reactions.retrosynth.ReactionSequenceLevel;
@@ -106,6 +110,7 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		List<SmartChemTableField> fields = getTableFields();
 		smartChemTable = new SmartChemTable(fields);
 		add(smartChemTable,BorderLayout.CENTER);
+		smartChemTable.getTable().setRowSelectionAllowed(false);
 		
 		smartChemTable.getTable().addMouseMotionListener(new MouseMotionListener() {
 			@Override
@@ -120,7 +125,7 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		smartChemTable.getTable().addMouseListener(new MouseListener(){
 			@Override
 			public void mouseClicked(MouseEvent evnt) {
-				//System.out.println("mouse clicked");
+				smartChemTable_MouseClicked(evnt);
 		     }
 
 			@Override
@@ -456,8 +461,8 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		mouseTableColumn = column;
 		mouseLevelIndex = getLevelIndex (mouseTableRow);
 		mouseMolIndex = getMoleculeIndex(mouseTableRow, mouseTableColumn, mouseLevelIndex);
-		System.out.println("new position in cell: " + row + "  " + column 
-				+ "   level = " + mouseLevelIndex + "  molIndex" + mouseMolIndex);
+		//System.out.println("new position in cell: " + row + "  " + column 
+		//		+ "   level = " + mouseLevelIndex + "  molIndex" + mouseMolIndex);
 	}
 	
 	int getLevelIndex(int tableRow)
@@ -508,6 +513,54 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
             p.translate(-currentCell.x, -currentCell.y);
 		
 		*/
-	}	
+	}
+	
+	public void smartChemTable_MouseClicked(MouseEvent e)
+	{
+		//System.out.println("   level = " + mouseLevelIndex + "  molIndex" + mouseMolIndex);
+		if (checkboxAutomaticMode.isSelected())
+			return;
+		
+		if (mouseMolIndex == -1)
+			return;
+		
+		ReactionSequence rseq = reactionSequenceProcess.getReactSeq();
+		ReactionSequenceLevel rsLevel = rseq.getLevel(mouseLevelIndex);
+		if(rsLevel == null)
+		{	
+			System.out.println("rsLevel == null");
+			return;
+		}	
+		
+		IAtomContainer mol = rsLevel.molecules.get(mouseMolIndex);		
+		MoleculeStatus status = ReactionSequence.getMoleculeStatus(mol);
+		System.out.println(status);
+		if (status != MoleculeStatus.ADDED_TO_LEVEL)
+			return;
+		
+		Map<GenericReaction,List<List<IAtom>>> allInstances = rseq.generateAllReactionInstances(mol);
+		if (allInstances.isEmpty())
+		{	
+			ReactionSequence.setMoleculeStatus(mol, MoleculeStatus.UNRESOLVED);
+			System.out.println("No instances!");
+			return;
+		}
+		
+		List<GenericReactionInstance> griList = null;
+		try {
+			griList = rseq.handleReactionInstances(allInstances, mol);
+		}
+		catch(Exception x) {
+			System.out.println(x.getMessage());
+		}
+		
+		if (griList != null)
+			if (!griList.isEmpty())
+			{
+				ReactionBrowser rb = new ReactionBrowser(this, griList, mol);
+				rb.setVisible(true);
+			}
+		
+	}
 
 }
