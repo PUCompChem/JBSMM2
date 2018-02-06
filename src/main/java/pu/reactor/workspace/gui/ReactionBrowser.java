@@ -112,11 +112,20 @@ public class ReactionBrowser extends JFrame
 				if (level.nextLevel != null) 
 				{
 					rseq.setMoleculeStatus(target, MoleculeStatus.RESOLVED);
+					//System.out.println("numMolBeforeReact = " + numMolBeforeReact);
+					//System.out.println("rspPanel.levels.size() = " + rspPanel.levels.size());
+					//System.out.println("levInd = " + levInd);
+					
+					if (rspPanel.levels.size() == (levInd+1))
+						rspPanel.addLevel();
+					
 					for (int i = numMolBeforeReact; i < level.nextLevel.molecules.size(); i++)
 						rspPanel.addStructureToLevel(levInd + 1, level.nextLevel.molecules.get(i));
+						
 				}
 			}
 			catch (Exception e) {
+				System.out.println("applyButtonEvent exception: " + e.getMessage());
 			}
 			
 		}
