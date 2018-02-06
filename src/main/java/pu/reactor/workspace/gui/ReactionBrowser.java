@@ -112,6 +112,8 @@ public class ReactionBrowser extends JFrame
 				if (level.nextLevel != null) 
 				{
 					rseq.setMoleculeStatus(target, MoleculeStatus.RESOLVED);
+					String text = rspPanel.generateTableCellText(levInd, molInd, target);
+					rspPanel.setTableCellText(levInd, molInd, text);
 					//System.out.println("numMolBeforeReact = " + numMolBeforeReact);
 					//System.out.println("rspPanel.levels.size() = " + rspPanel.levels.size());
 					//System.out.println("levInd = " + levInd);

@@ -384,15 +384,35 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		if (((ld.numMolecules / numStructureColumns) + 1) > ld.numRows)
 			insertNewRowInLevel(levelIndex);
 			
+		/*
 		dte.text = "M" + levelIndex + "." + ld.numMolecules + " " + 
 				MoleculeStatus.getShortString((MoleculeStatus)
-						mol.getProperty(ReactionSequence.MoleculeStatusProperty))	;	
+						mol.getProperty(ReactionSequence.MoleculeStatusProperty))	;
+		*/
+		dte.text = generateTableCellText(levelIndex, ld.numMolecules-1, mol);
 		dte.draw(icon.getImage().getGraphics());
-		
 		smartChemTable.getModel().setValueAt(icon, pos[0], pos[1]);
 		smartChemTable.getModel().fireTableDataChanged();
 	}
-
+	
+	public String generateTableCellText(int levelIndex, int molIndex, IAtomContainer mol)
+	{
+		return "M" + levelIndex + "." + (molIndex+1) + " " + 
+				MoleculeStatus.getShortString((MoleculeStatus)
+						mol.getProperty(ReactionSequence.MoleculeStatusProperty))	;
+	}
+	
+	public void setTableCellText(int levelIndex, int molIndex, String text)
+	{
+		LevelData ld = levels.get(levelIndex);		
+		int pos[] = ld.getMoleculePos(molIndex);
+		ImageIcon icon = (ImageIcon)smartChemTable.getModel().getValueAt(pos[0], pos[1]);
+		dte.text = text;
+		dte.draw(icon.getImage().getGraphics());
+		smartChemTable.getModel().setValueAt(icon, pos[0], pos[1]);
+		smartChemTable.getModel().fireTableDataChanged();
+	}
+	
 	@Override
 	public ReactionSequence getReactionSequence() {
 		return reactionSequenceProcess.getReactSeq();
