@@ -562,17 +562,5 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 			}
 		
 	}
-	
-	/*
-	List<GenericReactionInstance> calcReactionInstancesForMousePos()
-	{	
-		ReactionSequence rseq = reactionSequenceProcess.getReactSeq();
-		ReactionSequenceLevel rsLevel = rseq.getLevel(mouseLevelIndex);
-		if(rsLevel == null)
-			return null;
-		
-		return null;
-	}
-	*/
 
 }

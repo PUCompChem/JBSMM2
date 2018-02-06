@@ -17,6 +17,7 @@ import ambit2.reactions.GenericReactionInstance;
 import ambit2.reactions.retrosynth.ReactionSequence;
 import ambit2.reactions.retrosynth.ReactionSequenceLevel;
 import ambit2.reactions.retrosynth.SyntheticStrategy;
+import ambit2.reactions.retrosynth.ReactionSequence.MoleculeStatus;
 import pu.gui.utils.ButtonTabComponent;
 import pu.reactor.workspace.ReactionSequenceProcess;
 
@@ -52,7 +53,6 @@ public class ReactionBrowser extends JFrame
 		this.setLayout(new BorderLayout());
 		
 		reactBrowserPanel = new ReactionBrowserPanel();
-		//rbPanel.setPreferredSize(new Dimension(1000,800));
 		add(reactBrowserPanel, BorderLayout.CENTER);
 		
 		buttonsPanel = new JPanel(new FlowLayout());
@@ -85,32 +85,42 @@ public class ReactionBrowser extends JFrame
 	
 	
 	void fillReactionInstanceData()
-	{
-		/*
-		ReactionSequenceProcess process = (ReactionSequenceProcess)rspPanel.getProcess();
-		ReactionSequence rseq = process.getReactSeq();
-		int levInd = rspPanel.mouseLevelIndex;
-		int molInd = rspPanel.mouseMolIndex;
-		ReactionSequenceLevel rsLevel = rseq.getLevel(levInd);
-		*/
-		
+	{	
 		reactBrowserPanel.setTarget(target);
 		reactBrowserPanel.setReactionInstances(reactInstances);	
 		reactBrowserPanel.fillTable();
 	}
 	
 	
-	void cancelButtonEvent()
-	{	
-		dispose();
-	}
-	
 	void applyButtonEvent()
 	{
-		//TODO
+		//System.out.println("selectedRow = " + selectedRow);
+		int selectedRow = reactBrowserPanel.chemTable.getTable().getSelectedRow();
+		if (selectedRow != -1)
+		{	
+			GenericReactionInstance gri = reactInstances.get(selectedRow);
+			ReactionSequenceProcess process = (ReactionSequenceProcess)rspPanel.getProcess();
+			ReactionSequence rseq = process.getReactSeq();
+			int levInd = rspPanel.mouseLevelIndex;
+			int molInd = rspPanel.mouseMolIndex;
+			ReactionSequenceLevel level = rseq.getLevel(levInd);
+			try {
+				int numMolBeforeReact = 0;
+				if (level.nextLevel != null)
+					numMolBeforeReact += level.nextLevel.molecules.size();
+				rseq.generateSequenceStepForReactionInstance(level, molInd, gri);
+				if (level.nextLevel != null) 
+				{
+					rseq.setMoleculeStatus(target, MoleculeStatus.RESOLVED);
+					for (int i = numMolBeforeReact; i < level.nextLevel.molecules.size(); i++)
+						rspPanel.addStructureToLevel(levInd + 1, level.nextLevel.molecules.get(i));
+				}
+			}
+			catch (Exception e) {
+			}
+			
+		}
 		dispose();
 	}
-	
-	
 
 }
