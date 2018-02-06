@@ -59,7 +59,7 @@ public class StructurePanel extends JPanel{
         strucPanel.add(picturePanel,BorderLayout.CENTER);
         return strucPanel;
     }
-    protected void display(IAtomContainer ac) {
+    public void display(IAtomContainer ac) {
         if (picturePanel != null) {
 
             picturePanel.setAtomContainer(ac,true);

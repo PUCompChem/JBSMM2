@@ -24,7 +24,7 @@ public class ReactorGUIApp
 			{	
 				ReactorMainFrame reactor;
 				try {
-					if (args.length >= 1)
+					if (false)//args.length >= 1)
 					{	
 						reactor = createReactorMainFrame(args[0]);
 						//reactor = new ReactorMainFrame(args[0]);
@@ -32,8 +32,8 @@ public class ReactorGUIApp
 					}			
 					else
 					{	
-						//reactor = new ReactorMainFrame( "./preferences.json");
-						reactor = createReactorMainFrameWithDemoInfo();
+						reactor = new ReactorMainFrame( "./preferences.json");
+						//reactor = createReactorMainFrameWithDemoInfo();
 						reactor.setVisible(true);
 					}
 				} catch (Exception e) {
