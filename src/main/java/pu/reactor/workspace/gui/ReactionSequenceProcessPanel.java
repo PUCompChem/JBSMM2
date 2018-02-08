@@ -22,6 +22,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -184,9 +186,17 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
         reactionScoreSchemaToTable(reactionSequenceProcess.getStrategy().reactionScoreSchema);
         tableWeights.setTableHeader(null);
         configPanel.add(tableWeights);
+        tableWeights.getModel().addTableModelListener(new TableModelListener() {
+
+            public void tableChanged(TableModelEvent e) {
+            		tableWeights_Changed(e);
+            }
+          });
+        
         addLevel();
         IAtomContainer target = reactionSequenceProcess.getReactSeq().getTarget();
 		addStructureToLevel(0,target);
+		
        
 		
 		/*
@@ -580,6 +590,16 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 				ReactionBrowser rb = new ReactionBrowser(this, griList, mol);
 				rb.setVisible(true);
 			}
+		
+	}
+	
+	public void tableWeights_Changed(TableModelEvent e)
+	{
+		System.out.println("e.getType() = " + e.getType());
+		System.out.println("e.getColumn() = " + e.getColumn());
+		System.out.println("e.getFirstRow() = " + e.getFirstRow());
+		
+		
 		
 	}
 
