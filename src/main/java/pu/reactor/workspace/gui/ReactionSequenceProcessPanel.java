@@ -595,12 +595,85 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 	
 	public void tableWeights_Changed(TableModelEvent e)
 	{
+		/*
 		System.out.println("e.getType() = " + e.getType());
 		System.out.println("e.getColumn() = " + e.getColumn());
 		System.out.println("e.getFirstRow() = " + e.getFirstRow());
+		*/
 		
-		
-		
+		if (e.getType() == TableModelEvent.UPDATE)
+		{	
+			int rowNum = e.getFirstRow();
+			Object obj = modelTableWeights.getValueAt(rowNum, 1);
+			Double dValue = null;
+			if (obj instanceof Double)
+				dValue = (Double) obj;
+			else if (obj instanceof String)
+			{
+				try {
+					dValue = Double.parseDouble((String)obj);
+				}
+				catch (Exception x) {
+					System.out.println("Incorrect double value: " + x.getMessage());
+				}
+			}
+			
+			//System.out.println(obj.getClass().getName() + "  " + obj.toString());
+			
+			ReactionScoreSchema rss = reactionSequenceProcess.getStrategy().reactionScoreSchema;
+			if (dValue == null)
+			{
+				//Restore previous value from ReactionScoreSchema
+				//Value restoration causes change value event with the correct value
+				switch (rowNum)
+				{
+				case 0:
+					modelTableWeights.setValueAt(rss.basicScoreWeight, rowNum, 1);
+					break;
+				case 1:
+					modelTableWeights.setValueAt(rss.transformScoreWeight, rowNum, 1);
+					break;
+				case 2:
+					modelTableWeights.setValueAt(rss.experimentalConditionsScoreWeight, rowNum, 1);
+					break;
+				case 3:
+					modelTableWeights.setValueAt(rss.yieldScoreWeight, rowNum, 1);
+					break;	
+				case 4:
+					modelTableWeights.setValueAt(rss.productComplexityWeight, rowNum, 1);
+					break;	
+				case 5:
+					modelTableWeights.setValueAt(rss.reactionCenterComplexityWeight, rowNum, 1);
+					break;
+				}
+			}
+			else
+			{	
+				switch (rowNum)
+				{
+				case 0:
+					rss.basicScoreWeight = dValue;
+					break;
+				case 1:
+					rss.transformScoreWeight = dValue;
+					break;
+				case 2:
+					rss.experimentalConditionsScoreWeight = dValue;
+					break;
+				case 3:
+					rss.yieldScoreWeight = dValue;
+					break;
+				case 4:
+					rss.productComplexityWeight = dValue;
+					break;
+				case 5:
+					rss.reactionCenterComplexityWeight = dValue;
+					break;	
+				}
+			}
+			
+			System.out.println(rss.toString());
+		}
 	}
 
 }
