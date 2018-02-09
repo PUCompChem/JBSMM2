@@ -573,6 +573,8 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		{	
 			ReactionSequence.setMoleculeStatus(mol, MoleculeStatus.UNRESOLVED);
 			System.out.println("No instances!");
+			String text = generateTableCellText(mouseLevelIndex, mouseMolIndex, mol);
+			setTableCellText(mouseLevelIndex, mouseMolIndex, text);
 			return;
 		}
 		
