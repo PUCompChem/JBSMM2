@@ -390,8 +390,8 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		LevelData ld = levels.get(levelIndex);
 		ld.numMolecules++;
 		int pos[] = ld.getMoleculePos(ld.numMolecules-1);
-		//TODO fix the check for new addint new row
-		if (((ld.numMolecules / numStructureColumns) + 1) > ld.numRows)
+		
+		if (ld.numMolecules > (ld.numRows*numStructureColumns))
 			insertNewRowInLevel(levelIndex);
 			
 		/*
