@@ -32,8 +32,14 @@ public class ReactorGUIApp
 					}			
 					else
 					{	
-						//reactor = new ReactorMainFrame( "./preferences.json");
-						reactor = createReactorMainFrameWithDemoInfo();
+						File f = new File("./preferences.json");
+						if (f.exists())
+							reactor = createReactorMainFrame("./preferences.json");
+						else
+						{	
+							System.out.println("File ./preferences.json not found!");
+							reactor = createReactorMainFrameWithDemoInfo();
+						}	
 						reactor.setVisible(true);
 					}
 				} catch (Exception e) {
@@ -46,6 +52,7 @@ public class ReactorGUIApp
 	
 	public static ReactorMainFrame createReactorMainFrame(String prefFileName) throws Exception
 	{
+		System.out.println("Loading preferences: " + prefFileName);
 		Preferences pref = ReactorMainFrame.getPreferences(prefFileName);
 		ProcessCommonChemData pccd = new ProcessCommonChemData();
 		ReactionDataBase reactionDB = new  ReactionDataBase(pref.reactionDBPath);
@@ -59,6 +66,7 @@ public class ReactorGUIApp
 	
 	public static ReactorMainFrame createReactorMainFrameWithDemoInfo() throws Exception
 	{
+		System.out.println("Loading demo preferences:");
 		Preferences pref = new Preferences();
 		ProcessCommonChemData pccd = new ProcessCommonChemData();
 		ReactorMainFrame.setStartingMaterialsDB(null, pccd);
