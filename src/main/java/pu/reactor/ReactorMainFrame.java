@@ -167,7 +167,9 @@ public class ReactorMainFrame extends JFrame {
 		//set Molecules Tree
 		if (processChemData.getStructureRecords() != null)
 			moleculeTree = new MoleculeSetTree(processChemData.getStructureRecords());
-		
+		else
+			moleculeTree = new MoleculeSetTree(processChemData.getStartingMaterialsDataBase());
+			
 		//TODO handle starting materials
 		
 		areas.get(2).setLayout(new BorderLayout());
