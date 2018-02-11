@@ -2,6 +2,7 @@ package pu.gui.utils.trees;
 
 import ambit2.base.data.Property;
 import ambit2.base.data.StructureRecord;
+import ambit2.reactions.retrosynth.StartingMaterialsDataBase;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -28,28 +29,15 @@ public class MoleculeSetTree extends SetTree
 	public static final String moleculeClassProperty = "MoleculeClass";
 	
 	private List<StructureRecord> structureRecords = new ArrayList<StructureRecord>();
-	private List<IAtomContainer> molecules = new ArrayList<IAtomContainer>();
+	private StartingMaterialsDataBase startingMaterialsDataBase = null;
+	//private List<IAtomContainer> molecules = new ArrayList<IAtomContainer>();
 
 	private MoleculeDrawer moleculeDrawer = new MoleculeDrawer();
 	private MoleculePanel moleculePanel = new MoleculePanel();
 
-	private String dbFilePath;
-
+	//private String dbFilePath;
 	private  TableInfoPanel tableInfoPanel;
-
-
-	public String getDbFilePath() {
-	return dbFilePath;
-}
-
-	public void setDbFilePath(String dbFilePath) {
-		this.dbFilePath = dbFilePath;
-	}
-	public List<StructureRecord> getStructureRecords(){
-		return structureRecords;
-	}
-
-
+	
 	public MoleculeSetTree(List<StructureRecord> structureRecords)
 	{
 		this.structureRecords = structureRecords;
@@ -70,8 +58,33 @@ public class MoleculeSetTree extends SetTree
 		}
 
 		initGUI();
-		
 	}
+	
+	public MoleculeSetTree(StartingMaterialsDataBase startingMaterialsDataBase)
+	{
+		this.startingMaterialsDataBase = startingMaterialsDataBase;
+		initGUI();
+	}
+
+	/*
+	public String getDbFilePath() {
+		return dbFilePath;
+	}
+
+	public void setDbFilePath(String dbFilePath) {
+		this.dbFilePath = dbFilePath;
+	}
+	*/
+	
+	public List<StructureRecord> getStructureRecords(){
+		return structureRecords;
+	}
+	
+	
+	public StartingMaterialsDataBase getStartingMaterialsDataBase() {
+		return startingMaterialsDataBase;
+	}
+
 	public MoleculePanel getMoleculePanel() {
 		return moleculePanel;
 	}
@@ -79,6 +92,7 @@ public class MoleculeSetTree extends SetTree
 	public void setMoleculePanel(MoleculePanel moleculePanel) {
 		this.moleculePanel = moleculePanel;
 	}
+	
 	private void initGUI() {
 		infoPanel = new InfoPanel();
 		tree = new JTree();

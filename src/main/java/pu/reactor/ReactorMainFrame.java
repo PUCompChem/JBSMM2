@@ -165,13 +165,18 @@ public class ReactorMainFrame extends JFrame {
 		this.add(reactionToolBar, BorderLayout.NORTH);
 		
 		//set Molecules Tree
-		moleculeTree = new MoleculeSetTree(processChemData.getStructureRecords());
+		if (processChemData.getStructureRecords() != null)
+			moleculeTree = new MoleculeSetTree(processChemData.getStructureRecords());
+		
 		//TODO handle starting materials
 		
 		areas.get(2).setLayout(new BorderLayout());
 		bottomCenterTabbedPanel = new JTabbedPane();
-		treesTabPane.add("molecules", moleculeTree);
-		bottomCenterTabbedPanel.add("selected molecule",moleculeTree.getMoleculePanel());
+		if (moleculeTree != null)
+		{	
+			treesTabPane.add("molecules", moleculeTree);
+			bottomCenterTabbedPanel.add("selected molecule",moleculeTree.getMoleculePanel());
+		}	
 
 		areas.get(2).add(bottomCenterTabbedPanel,BorderLayout.CENTER);
 		consoleFieldPanel = new JTextArea();
@@ -224,35 +229,47 @@ public class ReactorMainFrame extends JFrame {
 		try
 		{
 			//TODO set starting materials
+			if (pref.startingMaterialsPath.endsWith(".smi"))
+			{
+				//Setting structure records
+				List<String> smiles = null;
+				FileUtilities f = new FileUtilities();
+				if (pref != null)
+				{	
+					System.out.println("Loading structures from smiles file...");
+					smiles = f.readSmilesSetFromFile(new File(pref.startingMaterialsPath));
+				}	
 
-			//StartingMaterialsDataBase startingMaterialsDataBase = new StartingMaterialsDataBase();
-			//processChemData.setStartingMaterialsDataBase(startingMaterialsDataBase);
+				if(smiles == null){
+					smiles = new ArrayList<String>();
+					System.out.println("Materials path " + pref.startingMaterialsPath +  " is wrong");
+					System.out.println("Loaded demo molecules!");
+					smiles.add("CCC");
+					smiles.add("CCCC");
+					smiles.add("CCCCC");
+				}
+				else
+					System.out.println("Loaded " + smiles.size() + " structures");
+				List<StructureRecord> structureRecords = new ArrayList<StructureRecord>();
 
-			//Setting structure records
-			List<String> smiles = null;
-			FileUtilities f = new FileUtilities();
-			if (pref != null)
-				smiles = f.readSmilesSetFromFile(new File(pref.startingMaterialsPath));
+				for (int i = 0; i < smiles.size(); i++) {
+					StructureRecord sr = new StructureRecord();
+					sr.setDataEntryID(i);
+					sr.setSmiles(smiles.get(i));
 
-			if(smiles == null){
-				smiles = new ArrayList<String>();
-				smiles.add("CCC");
-				smiles.add("CCCC");
-				smiles.add("CCCCC");
-				System.out.println("Materials path is wrong");
+					sr.setRecordProperty(new Property(moleculeClassProperty), "class1");
+					structureRecords.add(sr);
+				}
+				pccd.setStructureRecords(structureRecords);
 			}
-			List<StructureRecord> structureRecords = new ArrayList<StructureRecord>();
-
-			for (int i = 0; i < smiles.size(); i++) {
-				StructureRecord sr = new StructureRecord();
-				sr.setDataEntryID(i);
-				sr.setSmiles(smiles.get(i));
-
-				sr.setRecordProperty(new Property(moleculeClassProperty), "class1");
-				structureRecords.add(sr);
+			else
+			{
+				System.out.println("Loading starting material data base...");
+				StartingMaterialsDataBase startingMaterialsDataBase = 
+						new StartingMaterialsDataBase(new File(pref.startingMaterialsPath));
+				pccd.setStartingMaterialsDataBase(startingMaterialsDataBase);	
+				System.out.println("starting material data base loaded!");
 			}
-			pccd.setStructureRecords(structureRecords);
-
 		}
 		catch (Exception x)
 		{
