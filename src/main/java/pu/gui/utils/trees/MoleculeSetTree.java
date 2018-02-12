@@ -3,6 +3,7 @@ package pu.gui.utils.trees;
 import ambit2.base.data.Property;
 import ambit2.base.data.StructureRecord;
 import ambit2.reactions.retrosynth.StartingMaterialsDataBase;
+import ambit2.reactions.retrosynth.StartingMaterialsDataBase.StartMaterialData;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -13,6 +14,7 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
+
 import pu.gui.utils.MoleculeDrawer;
 
 import java.awt.*;
@@ -21,6 +23,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 
@@ -31,7 +35,7 @@ public class MoleculeSetTree extends SetTree
 	private List<StructureRecord> structureRecords = new ArrayList<StructureRecord>();
 	private StartingMaterialsDataBase startingMaterialsDataBase = null;
 	//private List<IAtomContainer> molecules = new ArrayList<IAtomContainer>();
-
+	private String rootNodeText = "Starting materials";
 	private MoleculeDrawer moleculeDrawer = new MoleculeDrawer();
 	private MoleculePanel moleculePanel = new MoleculePanel();
 
@@ -106,35 +110,34 @@ public class MoleculeSetTree extends SetTree
 		searchBoxSet();
 		setTreeSelectionListener();
 		expandAllNodes(tree, 0, tree.getRowCount());
-        setMoleculePanel();
+        //setMoleculePanel();
 
 		this.add(scrollBar, BorderLayout.CENTER);
 		this.add(tableInfoPanel, BorderLayout.SOUTH);
 	}
 
-	private void setMoleculePanel() 
-	{
-		tree.addTreeSelectionListener(new TreeSelectionListener() {
-			public void valueChanged(TreeSelectionEvent e) {
-				DefaultMutableTreeNode node = (DefaultMutableTreeNode)
-						tree.getLastSelectedPathComponent();
-
-				List<StructureRecord> strs =  structureRecords;
-				for (StructureRecord str : strs){
-					if (node.toString().equals(getMoleculeName(str))){
-						moleculePanel.removeAll();
-						moleculeDrawer.add2DMolecule(moleculePanel, str.getSmiles());
-					}
-				}
-			}
-		});
-
-	}
+	
 
 	private void dataToTree()
 	{
-		DefaultMutableTreeNode root = new DefaultMutableTreeNode("Starting materials");
+		DefaultMutableTreeNode root = new DefaultMutableTreeNode(rootNodeText);
 		tree.setModel(new DefaultTreeModel(root));
+		
+		if (startingMaterialsDataBase != null)
+		{
+			Map<String, StartMaterialData> materials = startingMaterialsDataBase.getMaterials();
+			
+			for (Entry entry : materials.entrySet())
+			{
+				String inchiKey = (String)entry.getKey();
+				StartMaterialData sm = (StartMaterialData)entry.getValue();
+				//System.out.println(inchiKey + "  " + sm.id + "   " + sm.smiles);
+				DefaultMutableTreeNode moleculeNode = new DefaultMutableTreeNode(sm.smiles);
+				root.add(moleculeNode);
+			}
+			return;
+		}
+		
 		for (int i = 0; i < structureRecords.size(); i++) {
 			String reactionClass = getMoleculeClass(structureRecords.get(i));
 			String[] levels = reactionClass.split(Pattern.quote("."));
@@ -178,11 +181,39 @@ public class MoleculeSetTree extends SetTree
 		});
 	}
 	
+	/*
+	 * private void setMoleculePanel() 
+	{
+		tree.addTreeSelectionListener(new TreeSelectionListener() {
+			public void valueChanged(TreeSelectionEvent e) {
+				DefaultMutableTreeNode node = (DefaultMutableTreeNode)
+						tree.getLastSelectedPathComponent();
+
+				List<StructureRecord> strs =  structureRecords;
+				for (StructureRecord str : strs){
+					if (node.toString().equals(getMoleculeName(str))){
+						moleculePanel.removeAll();
+						moleculeDrawer.add2DMolecule(moleculePanel, str.getSmiles());
+					}
+				}
+			}
+		});
+
+	}
+	 */
+	
 	
 	String getNodeInfoText(DefaultMutableTreeNode node)
 	{
+		if (startingMaterialsDataBase != null)
+		{
+			if (node == tree.getModel().getRoot())
+				return "root";
+			else
+				return node.toString();
+		}
+		
 		StructureRecord r = null;
-
 		for(StructureRecord str : structureRecords){
 			if (node.toString().equals(Integer.toString(str.getDataEntryID())))
 			{

@@ -292,7 +292,8 @@ public class ReactorMainFrame extends JFrame {
 				StartingMaterialsDataBase startingMaterialsDataBase = 
 						new StartingMaterialsDataBase(new File(pref.startingMaterialsPath));
 				pccd.setStartingMaterialsDataBase(startingMaterialsDataBase);	
-				System.out.println("starting material data base loaded!");
+				System.out.println("starting material data base loaded : " + 
+						startingMaterialsDataBase.getMaterials().size() + "materials");
 			}
 		}
 		catch (Exception x)
