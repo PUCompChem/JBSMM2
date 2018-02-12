@@ -229,8 +229,30 @@ public class ReactorMainFrame extends JFrame {
 	public static void setStartingMaterialsDB(Preferences pref, ProcessCommonChemData pccd) 
 	{
 		try
-		{
-			//TODO set starting materials
+		{	
+			if (pref == null)
+			{
+				List<String> smiles = new ArrayList<String>();
+				
+				System.out.println("Loaded demo molecules!");
+				smiles.add("CCC");
+				smiles.add("CCCC");
+				smiles.add("CCCCC");
+				
+				List<StructureRecord> structureRecords = new ArrayList<StructureRecord>();
+				for (int i = 0; i < smiles.size(); i++) {
+					StructureRecord sr = new StructureRecord();
+					sr.setDataEntryID(i);
+					sr.setSmiles(smiles.get(i));
+
+					sr.setRecordProperty(new Property(moleculeClassProperty), "class1");
+					structureRecords.add(sr);
+				}
+				pccd.setStructureRecords(structureRecords);
+				return;
+			}
+			
+			
 			if (pref.startingMaterialsPath.endsWith(".smi"))
 			{
 				//Setting structure records
