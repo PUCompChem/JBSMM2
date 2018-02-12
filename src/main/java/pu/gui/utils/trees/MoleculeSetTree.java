@@ -169,16 +169,40 @@ public class MoleculeSetTree extends SetTree
 	{
 		tree.addTreeSelectionListener(new TreeSelectionListener() {
 			public void valueChanged(TreeSelectionEvent e) {
-				DefaultMutableTreeNode node = (DefaultMutableTreeNode)
-						tree.getLastSelectedPathComponent();
-				if (node == null){
-					return;
-				}
-				else {
-				 tableInfoPanel.write(getNodeInfoText(node));
-				}
+				handle_TreeSelectionEventValueChanged(e);
 			}
 		});
+	}
+	
+	private void handle_TreeSelectionEventValueChanged(TreeSelectionEvent e)
+	{
+		DefaultMutableTreeNode node = (DefaultMutableTreeNode)
+				tree.getLastSelectedPathComponent();
+		if (node == null){
+			return;
+		}
+		else {
+			String nodeText = getNodeInfoText(node);
+			tableInfoPanel.write(nodeText);
+			
+			//Set Panel2D
+			if (startingMaterialsDataBase != null)
+			{
+				moleculePanel.removeAll();
+				moleculeDrawer.add2DMolecule(moleculePanel,nodeText);			
+			}
+			else
+			{
+				List<StructureRecord> strs =  structureRecords;
+				for (StructureRecord str : strs){
+					if (node.toString().equals(getMoleculeName(str))){
+						moleculePanel.removeAll();
+						moleculeDrawer.add2DMolecule(moleculePanel, str.getSmiles());
+					}
+				}
+			}
+			
+		}
 	}
 	
 	/*
