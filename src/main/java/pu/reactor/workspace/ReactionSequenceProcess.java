@@ -26,6 +26,7 @@ public class ReactionSequenceProcess implements IProcess
 	String targetInputString = null;
 	IAtomContainer target = null;
 	ReactionDataBase reactDB = null;
+	StartingMaterialsDataBase startMaterialDB = null;
 	SyntheticStrategy strategy = null;
 	ReactionSequence reactSeq = new ReactionSequence();
 	Set<ReactionSequence> reactSeqVesrions = new HashSet<ReactionSequence>();
@@ -62,6 +63,14 @@ public class ReactionSequenceProcess implements IProcess
 		this.reactDB = reactDB;
 	}
 			
+	public StartingMaterialsDataBase getStartMaterialDB() {
+		return startMaterialDB;
+	}
+
+	public void setStartMaterialDB(StartingMaterialsDataBase startMaterialDB) {
+		this.startMaterialDB = startMaterialDB;
+	}
+
 	public SyntheticStrategy getStrategy() {
 		return strategy;
 	}
@@ -117,24 +126,17 @@ public class ReactionSequenceProcess implements IProcess
 	
 
 	@Override
-	public void initProcess() throws Exception {
-		
-		/*
-		//Temporary test code
-		List<String> smirks = new ArrayList<String>();
-		smirks.add("[C:1]Cl>>[C:1]");		
-		smirks.add("[H][C:1][C:2][H]>>[H][C:1][H].[H][C:2][H]");
-		ReactionDataBase rdb = new ReactionDataBase(smirks);
-		rdb.configureGenericReactions(reactSeq.getSmrkMan());
-		reactSeq.setReactDB(rdb);
-		*/
-		
+	public void initProcess() throws Exception 
+	{
+		/*		
 		//Temporary code
 		String startMatSmi[] =  {"CC","CCC","CO","NC(C)C", "Cl"};
 		StartingMaterialsDataBase smdb = new StartingMaterialsDataBase(startMatSmi);
 		reactSeq.setStartMatDB(smdb);
+		*/
 		
 		reactSeq.setReactDB(reactDB);
+		reactSeq.setStartMatDB(startMaterialDB);
 		reactSeq.setStrategy(strategy);
 		reactSeq.setTarget(target);
 		
