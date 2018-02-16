@@ -58,6 +58,11 @@ public class ReactorGUIApp
 		ReactionDataBase reactionDB = new  ReactionDataBase(pref.reactionDBPath);
 		SMIRKSManager smrkMan0 = new SMIRKSManager(SilentChemObjectBuilder.getInstance()); 
 		reactionDB.configureGenericReactions(smrkMan0);
+		if (!reactionDB.errors.isEmpty())
+		{	
+			System.out.println(reactionDB.getErrorsAsString());
+			reactionDB.excludeReactionsWithConfigErrors();
+		}	
 		pccd.setReactionDB(reactionDB);
 		ReactorMainFrame.setStartingMaterialsDB(pref, pccd);
 		ReactorMainFrame reactor = new ReactorMainFrame(pref, pccd);
@@ -78,6 +83,11 @@ public class ReactorGUIApp
 		ReactionDataBase reactionDB = new ReactionDataBase(smirks);
 		SMIRKSManager smrkMan0 = new SMIRKSManager(SilentChemObjectBuilder.getInstance()); 
 		reactionDB.configureGenericReactions(smrkMan0);
+		if (!reactionDB.errors.isEmpty())
+		{	
+			System.out.println(reactionDB.getErrorsAsString());
+			reactionDB.excludeReactionsWithConfigErrors();
+		}
 		pccd.setReactionDB(reactionDB);
 		
 		ReactorMainFrame reactor = new ReactorMainFrame(pref, pccd);
