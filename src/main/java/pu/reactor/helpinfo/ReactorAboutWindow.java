@@ -5,6 +5,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -38,49 +39,94 @@ public class ReactorAboutWindow extends JFrame{
         this.add(logosPanel, BorderLayout.WEST);
         this.add(textPanel, BorderLayout.CENTER);
 
+
         logosPanel.setLayout(new BoxLayout(logosPanel, BoxLayout.PAGE_AXIS));
+
+
         textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.PAGE_AXIS));
-        Image cLabLogo = null;
+        Image logosImage = null;
         try {
-            cLabLogo = ImageIO.read( ClassLoader.getSystemResource("pu/images/cLabLogo.png"));
+            logosImage = ImageIO.read( ClassLoader.getSystemResource("pu/images/test.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        JLabel cLabLabel = new JLabel(new ImageIcon(cLabLogo));
-        logosPanel.add(cLabLabel);
+        JLabel label = new JLabel(new ImageIcon(logosImage));
+        logosPanel.add(label);
 
 
-        Image ideaLogo = null;
-        try {
-            ideaLogo = ImageIO.read( ClassLoader.getSystemResource("pu/images/IdeaLogo.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Image ideaLogoResized = ideaLogo.getScaledInstance(150, 100, Image.SCALE_DEFAULT);
-        JLabel ideaLabel = new JLabel(new ImageIcon(ideaLogoResized));
-        logosPanel.add(ideaLabel);
 
 
-        Image facultyLogo = null;
-        try {
-            facultyLogo = ImageIO.read( ClassLoader.getSystemResource("pu/images/ChemFacultyLogo.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        JLabel chemFacultyLabel = new JLabel(new ImageIcon(facultyLogo));
-        logosPanel.add(chemFacultyLabel);
 
+//        Icon aboutIcon = new ImageIcon("pu/images/IdeaLogo.png");
+//        Icon addIcon = new ImageIcon("pu/images/IdeaLogo.png");
+//        Icon copyIcon = new ImageIcon("pu/images/IdeaLogo.png");
+//        String[] columnNames = {"Picture", "Description"};
+//        Object[][] data =
+//                {
+//                        {aboutIcon, "About"},
+//                        {addIcon, "Add"},
+//                        {copyIcon, "Copy"},
+//                };
+//
+//        DefaultTableModel model = new DefaultTableModel(data, columnNames)
+//        {
+//            //  Returning the Class of each column will allow different
+//            //  renderers to be used based on Class
+//            public Class getColumnClass(int column)
+//            {
+//                return getValueAt(0, column).getClass();
+//            }
+//        };
+//        JTable table = new JTable( model );
+//        table.setPreferredScrollableViewportSize(table.getPreferredSize());
+//
+//        JScrollPane scrollPane = new JScrollPane( table );
+//        add( scrollPane );
+//            logosPanel.add(table);
 
-        Image uniLogo = null;
-
-        try {
-            uniLogo = ImageIO.read( ClassLoader.getSystemResource("pu/images/PlovdivUniversityLogo.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Image uniLogoResized = uniLogo.getScaledInstance(400, 120, Image.SCALE_DEFAULT);
-        JLabel universityLabel = new JLabel(new ImageIcon(uniLogoResized));
-        logosPanel.add(universityLabel);
+//        logosPanel.setLayout(new BoxLayout(logosPanel, BoxLayout.PAGE_AXIS));
+//        textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.PAGE_AXIS));
+//        Image cLabLogo = null;
+//        try {
+//            cLabLogo = ImageIO.read( ClassLoader.getSystemResource("pu/images/cLabLogo.png"));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        JLabel cLabLabel = new JLabel(new ImageIcon(cLabLogo));
+//        logosPanel.add(cLabLabel);
+//
+//
+//        Image ideaLogo = null;
+//        try {
+//            ideaLogo = ImageIO.read( ClassLoader.getSystemResource("pu/images/IdeaLogo.png"));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        Image ideaLogoResized = ideaLogo.getScaledInstance(150, 100, Image.SCALE_DEFAULT);
+//        JLabel ideaLabel = new JLabel(new ImageIcon(ideaLogoResized));
+//        logosPanel.add(ideaLabel);
+//
+//
+//        Image facultyLogo = null;
+//        try {
+//            facultyLogo = ImageIO.read( ClassLoader.getSystemResource("pu/images/ChemFacultyLogo.png"));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        JLabel chemFacultyLabel = new JLabel(new ImageIcon(facultyLogo));
+//        logosPanel.add(chemFacultyLabel);
+//
+//
+//        Image uniLogo = null;
+//
+//        try {
+//            uniLogo = ImageIO.read( ClassLoader.getSystemResource("pu/images/PlovdivUniversityLogo.png"));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        Image uniLogoResized = uniLogo.getScaledInstance(400, 120, Image.SCALE_DEFAULT);
+//        JLabel universityLabel = new JLabel(new ImageIcon(uniLogoResized));
+//        logosPanel.add(universityLabel);
 
 
         JLabel name = new JLabel("Reactor");
@@ -98,6 +144,7 @@ public class ReactorAboutWindow extends JFrame{
 
 
         JLabel gitHubLink = new JLabel("https://github.com/PUCompChem/JBSMM2#jbsmm2");
+        gitHubLink.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         gitHubLink.setFont(new Font("Serif", Font.PLAIN, 20));
         gitHubLink.setForeground(Color.BLUE);
         textPanel.add(gitHubLink);
