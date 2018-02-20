@@ -40,6 +40,7 @@ import ambit2.reactions.retrosynth.IReactionSequenceHandler;
 import ambit2.reactions.retrosynth.ReactionSequence;
 import ambit2.reactions.retrosynth.ReactionSequenceLevel;
 import ambit2.reactions.retrosynth.ReactionSequence.MoleculeStatus;
+import ambit2.reactions.retrosynth.ReactionSequenceStep;
 import ambit2.reactions.rules.scores.ReactionScoreSchema;
 import ambit2.smarts.SmartsHelper;
 import pu.gui.utils.chemtable.SmartChemTable;
@@ -554,7 +555,10 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		JTable table = smartChemTable.getTable();
 		int row = table.rowAtPoint(p);
 		int col = table.columnAtPoint(p);
-		updateCurrentTableRowAndColumn(row, col);
+		boolean changed = updateCurrentTableRowAndColumn(row, col);
+		
+		if (changed)
+			setCurCellInfoText();
 		
 		/*
 		if ((row > -1 && row < smartChemTable.getRowCount()) && (col > -1 && col < smartChemTable.getColumnCount())) {
@@ -567,6 +571,61 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
             p.translate(-currentCell.x, -currentCell.y);
 		
 		*/
+	}
+	
+	void setCurCellInfoText()
+	{
+		if ((mouseTableRow == -1) || (mouseTableColumn == -1)) 
+		{
+			curCellInfoTextArea.setText("");
+			return;
+		}	
+
+		if (mouseMolIndex == -1)
+		{
+			curCellInfoTextArea.setText("");
+			return;
+		}
+		
+		ReactionSequence rseq = reactionSequenceProcess.getReactSeq();
+		ReactionSequenceLevel rsLevel = rseq.getLevel(mouseLevelIndex);
+		if(rsLevel == null)
+		{	
+			System.out.println("rsLevel == null");
+			return;
+		}
+		IAtomContainer mol = rsLevel.molecules.get(mouseMolIndex);		
+		MoleculeStatus status = ReactionSequence.getMoleculeStatus(mol);
+		StringBuffer sb = new StringBuffer();
+		sb.append("Molecule " +mouseLevelIndex + "." + (mouseMolIndex+1));
+		sb.append ("\n");
+		
+		//Set previous level info
+		IAtomContainer prevLevMol = rsLevel.prevLevelMolecules.get(mouseMolIndex);
+		if (prevLevMol == null)
+			sb.append ("This is the target (start molecule)\n");
+		else
+		{
+			ReactionSequenceLevel prevLevel = rsLevel.previousLevel;
+			int prevLevelIndex = prevLevel.molecules.indexOf(prevLevMol);
+			sb.append ("obtained from M" + (mouseLevelIndex-1) 
+						+ "." + (prevLevelIndex+1));
+			sb.append ("\n");
+			
+			ReactionSequenceStep rss = prevLevel.steps.get(prevLevelIndex);
+			GenericReaction r = rss.getReaction();
+			sb.append ("by " + r.getName() + " <" + r.getExternId() + ">");
+			sb.append ("\n");
+		}
+		
+		sb.append (status);
+		sb.append ("\n");
+		
+		//TODO handle equivalent info and next level info
+		
+		curCellInfoTextArea.setText(sb.toString());
+		//curCellInfoTextArea.setText("****" + mouseTableRow + "  " + mouseTableColumn);
+		
 	}
 	
 	public void smartChemTable_MouseClicked(MouseEvent e)
