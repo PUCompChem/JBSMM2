@@ -260,6 +260,8 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		modelTableWeights.setValueAt("yield", 3, 0);
 		modelTableWeights.setValueAt("product complexity", 4, 0);
 		modelTableWeights.setValueAt("react. center compl.", 5, 0);
+		modelTableWeights.setValueAt("priority", 6, 0);
+		
 		
 		modelTableWeights.fireTableDataChanged();
 		
@@ -282,6 +284,7 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		modelTableWeights.setValueAt(rss.yieldScoreWeight, 3, 1);
 		modelTableWeights.setValueAt(rss.productComplexityWeight, 4, 1);
 		modelTableWeights.setValueAt(rss.reactionCenterComplexityWeight, 5, 1);
+		modelTableWeights.setValueAt(rss.priorityScoreWeight, 6, 1);
 		
 		modelTableWeights.fireTableDataChanged();
 	}
@@ -647,6 +650,9 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 				case 5:
 					modelTableWeights.setValueAt(rss.reactionCenterComplexityWeight, rowNum, 1);
 					break;
+				case 6:
+					modelTableWeights.setValueAt(rss.priorityScoreWeight, rowNum, 1);
+					break;	
 				}
 			}
 			else
@@ -670,6 +676,9 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 					break;
 				case 5:
 					rss.reactionCenterComplexityWeight = dValue;
+					break;
+				case 6:
+					rss.priorityScoreWeight = dValue;
 					break;	
 				}
 			}
