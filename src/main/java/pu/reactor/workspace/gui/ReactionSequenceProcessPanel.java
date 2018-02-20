@@ -21,7 +21,9 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
@@ -79,6 +81,7 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 	JCheckBox checkboxAutomaticMode;
 	JTable tableWeights;
 	DefaultTableModel modelTableWeights;
+	JTextArea curCellInfoTextArea;	
 	
 	int mouseTableRow = -1;
 	int mouseTableColumn = -1;
@@ -161,6 +164,7 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		
 		checkboxAutomaticMode = new JCheckBox("Automatic mode");
 		checkboxAutomaticMode.setSelected(true);
+		checkboxAutomaticMode.setAlignmentX(Component.LEFT_ALIGNMENT);
 		configPanel.add(checkboxAutomaticMode);
 		
 		JLabel labelEmptySpace = new JLabel("   ");
@@ -193,11 +197,26 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
             }
           });
         
-        addLevel();
+        
+        JLabel labelEmptySpace1 = new JLabel("   ");
+		configPanel.add(labelEmptySpace1);
+		
+		curCellInfoTextArea = new JTextArea();
+		curCellInfoTextArea.setEditable(false);
+		curCellInfoTextArea.setLineWrap(true);
+		
+		JScrollPane scroll = new JScrollPane (curCellInfoTextArea);
+		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scroll.setPreferredSize(new Dimension(10,10));
+		configPanel.add(scroll);
+		
+		
+		//Set Level 0
+		addLevel();
         IAtomContainer target = reactionSequenceProcess.getReactSeq().getTarget();
 		addStructureToLevel(0,target);
 		
-       
 		
 		/*
 		String[] modeStrings = { "Manual", "Semi-automatic", "Automatic"};
@@ -485,10 +504,10 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		}
 	}
 	
-	void updateCurrentTableRowAndColumn (int row, int column)
+	boolean updateCurrentTableRowAndColumn (int row, int column)
 	{
 		if ((row == mouseTableRow) && (column == mouseTableColumn))
-			return;
+			return false;
 		
 		mouseTableRow = row;
 		mouseTableColumn = column;
@@ -496,6 +515,8 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		mouseMolIndex = getMoleculeIndex(mouseTableRow, mouseTableColumn, mouseLevelIndex);
 		//System.out.println("new position in cell: " + row + "  " + column 
 		//		+ "   level = " + mouseLevelIndex + "  molIndex" + mouseMolIndex);
+		
+		return true;
 	}
 	
 	int getLevelIndex(int tableRow)
