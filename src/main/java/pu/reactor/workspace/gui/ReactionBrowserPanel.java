@@ -97,8 +97,9 @@ public class ReactionBrowserPanel extends JPanel
 		if (itemSelection != null)
 		{
 			for (int i = 0; i < itemSelection.length; i++)
-			{
+			{	
 				GenericReactionInstance inst = reactionInstances.get(itemSelection[i]);
+				//System.out.println("Adding: " + itemSelection[i] + "  " + inst.reactionScore.totalScore);
 				List<Object> rowFields = getTableRowFields(inst, (i+1));
 				chemTable.addTableRow(rowFields);
 			}	

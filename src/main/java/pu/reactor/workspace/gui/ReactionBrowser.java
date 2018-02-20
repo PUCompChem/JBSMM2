@@ -86,6 +86,14 @@ public class ReactionBrowser extends JFrame
 	
 	void fillReactionInstanceData()
 	{	
+		//Sorting
+		int sortedItems[] = ReactionSequence.sortReactionInstances(reactInstances);
+		reactBrowserPanel.setItemSelection(sortedItems);
+		
+		//for (int i = 0; i < sortedItems.length; i++)			
+		//		System.out.println("sort " + sortedItems[i] + "  " +
+		//				reactInstances.get(sortedItems[i]).reactionScore.totalScore);
+		
 		reactBrowserPanel.setTarget(target);
 		reactBrowserPanel.setReactionInstances(reactInstances);	
 		reactBrowserPanel.fillTable();
