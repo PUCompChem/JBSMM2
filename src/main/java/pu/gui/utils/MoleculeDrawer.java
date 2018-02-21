@@ -58,7 +58,7 @@ public class MoleculeDrawer
 
 			public void componentResized(ComponentEvent arg0) {
 				// TODO Auto-generated method stub
-				System.out.println("componentResized events");
+				//System.out.println("componentResized events");
 				Panel2D p = p2dList.get(p2dList.size() - 1);
 				p.setPreferredSize(arg0.getComponent().getSize());
 			}

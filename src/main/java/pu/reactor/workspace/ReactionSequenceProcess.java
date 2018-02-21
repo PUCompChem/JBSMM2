@@ -163,13 +163,15 @@ public class ReactionSequenceProcess implements IProcess
 			return;
 		
 		ReactionSequenceLevel level = reactSeq.getFirstLevel();
-		reactSeq.iterateLevelMoleculesRandomly(level);
+		//reactSeq.iterateLevelMoleculesRandomly(level);
+		reactSeq.iterateLevelMolecules(level);
 		for (int i = 0; i < 30; i++)
 		{	
 			level = level.nextLevel;
 			if (level == null)
 				break;
-			reactSeq.iterateLevelMoleculesRandomly(level);
+			//reactSeq.iterateLevelMoleculesRandomly(level);
+			reactSeq.iterateLevelMolecules(level);
 		}
 		
 		if (reactSeq.getFirstLevel().nextLevel != null)

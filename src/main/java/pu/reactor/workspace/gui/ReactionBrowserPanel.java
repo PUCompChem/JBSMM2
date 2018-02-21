@@ -3,6 +3,7 @@ package pu.reactor.workspace.gui;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JPanel;
 
 import org.openscience.cdk.interfaces.IAtom;
@@ -11,6 +12,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import ambit2.reactions.GenericReaction;
 import ambit2.reactions.GenericReactionInstance;
 import ambit2.reactions.ReactionDataBase;
+import ambit2.reactions.retrosynth.ReactionSequence.SortingMethod;
 import pu.gui.utils.AtomContainerHighlights;
 import pu.gui.utils.AtomContainerHighlights.SelectionMetod;
 import pu.gui.utils.chemtable.SmartChemTable;
@@ -34,7 +36,8 @@ public class ReactionBrowserPanel extends JPanel
 	String targetString = "";
 	ReactionDataBase reactionDB = null;
 	List<GenericReactionInstance> reactionInstances = new ArrayList<GenericReactionInstance>();
-	List<Integer> itemSelection = null;
+	SortingMethod sortMethod = SortingMethod.REACTION_SCORE;
+	int itemSelection[] = null;
 	int numTableColumns = 0;
 	
 	//Table columns config
@@ -93,9 +96,10 @@ public class ReactionBrowserPanel extends JPanel
 	{
 		if (itemSelection != null)
 		{
-			for (int i = 0; i < itemSelection.size(); i++)
-			{
-				GenericReactionInstance inst = reactionInstances.get(itemSelection.get(i));
+			for (int i = 0; i < itemSelection.length; i++)
+			{	
+				GenericReactionInstance inst = reactionInstances.get(itemSelection[i]);
+				//System.out.println("Adding: " + itemSelection[i] + "  " + inst.reactionScore.totalScore);
 				List<Object> rowFields = getTableRowFields(inst, (i+1));
 				chemTable.addTableRow(rowFields);
 			}	
@@ -199,11 +203,11 @@ public class ReactionBrowserPanel extends JPanel
 		this.reactionInstances = reactionInstances;
 	}
 
-	public List<Integer> getItemSelection() {
+	public int [] getItemSelection() {
 		return itemSelection;
 	}
 
-	public void setItemSelection(List<Integer> itemSelection) {
+	public void setItemSelection(int itemSelection[]) {
 		this.itemSelection = itemSelection;
 	}
 	
