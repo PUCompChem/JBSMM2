@@ -28,8 +28,8 @@ public class MainFrame extends JFrame {
         }
 
         compoundPanel = new MoleculePanel(atomContainer);
-        this.add(compoundPanel,BorderLayout.CENTER);
-        this.setSize(new Dimension(1000, 700));
+        this.add(compoundPanel);
+        this.setSize(new Dimension(600, 500));
         this.setVisible(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setTitle("FromSmilesDB to Visualization");

@@ -44,7 +44,7 @@ public class StructurePanel extends JPanel{
         strucPanel.add(label,BorderLayout.NORTH);
 
         picturePanel = new Panel2D();
-        picturePanel.setPreferredSize(new Dimension(500,500));
+       picturePanel.setPreferredSize(new Dimension(500,500));
         picturePanel.setEditable(false);
         // picturePanel.setBorder(BorderFactory.createLineBorder(fColor));
         //picturePanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));

@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class MolVizualStartTest {
   public static ArrayList<String> list;
     public static void main(String[] args) throws Exception {
-        list = loadFromJSON(new File("/starting-materials.txt"));
+        list = loadFromJSON(new File("./starting-materials.txt"));
         MainFrame frame = new MainFrame(list);
         frame.setVisible(true);
 
