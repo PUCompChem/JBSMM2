@@ -67,7 +67,6 @@ public class ReactorMainFrame extends JFrame {
 	JMenuItem miStop;
 	JMenuItem miNextStep;
 	JMenuItem miReset;
-	private ActionListener nextButtonActionListener;
 	
 	JMenu menuProcess;
 	JMenuItem miSingleReaction;
@@ -78,17 +77,22 @@ public class ReactorMainFrame extends JFrame {
 
 	JMenu menuSettings;
 	JMenuItem menuPreferences;
+	
+	//private JMenu menuProjectSettings;
+	JMenuItem miWorkspaceSettings;
+	JMenuItem miProjectSettings;
+	JMenuItem miProcessSettings;
 
+	JMenu menuHelp;
+	JMenuItem miAbout;
 
-	private JMenu menuProjectSettings;
-	private JMenuItem miWorkspaceSettings;
-	private JMenuItem miProjectSettings;
-	private JMenuItem miProcessSettings;
-
-	private JMenu menuHelp;
-	private JMenuItem miAbout;
-
-	private ReactionToolBar reactionToolBar;
+	//Action listeners for toolbar buttons
+	ActionListener runButtonActionListener;
+	ActionListener nextStepButtonActionListener;
+	ActionListener stopButtonActionListener;
+	ActionListener resetButtonActionListener;
+	
+	ReactionToolBar reactionToolBar;
 
 
 	//private BasicReactorWizard newProcessWizard;
@@ -102,10 +106,10 @@ public class ReactorMainFrame extends JFrame {
 	//StartingMaterialsDataBase startingMaterialsDataBase = null;
 	
 	JTabbedPane treesTabPane;
-	private JTabbedPane bottomCenterTabbedPanel;
-	private JTextArea consoleFieldPanel;
+	JTabbedPane bottomCenterTabbedPanel;
+	JTextArea consoleFieldPanel;
 
-	private ReactorProcessTabsSet processTabs = new ReactorProcessTabsSet();
+	ReactorProcessTabsSet processTabs = new ReactorProcessTabsSet();
 
 
 	public ReactorMainFrame(Preferences preferences,
@@ -160,8 +164,13 @@ public class ReactorMainFrame extends JFrame {
 		}
 
 		reactionToolBar = new ReactionToolBar();
-		reactionToolBar.getNextButton().addActionListener(nextButtonActionListener);
-		miNextStep.addActionListener(nextButtonActionListener);
+		reactionToolBar.getStartButton().addActionListener(runButtonActionListener);
+		reactionToolBar.getNextButton().addActionListener(nextStepButtonActionListener);
+		reactionToolBar.getStopButton().addActionListener(stopButtonActionListener);
+		reactionToolBar.getResetButton().addActionListener(resetButtonActionListener);
+		
+		
+		//miNextStep.addActionListener(nextStepButtonActionListener); not needed
 		this.add(reactionToolBar, BorderLayout.NORTH);
 		
 		//set Molecules Tree
@@ -371,43 +380,45 @@ public class ReactorMainFrame extends JFrame {
 		menuReact.add(miRun);
 		miRun.setMnemonic('R');
 		miRun.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, ActionEvent.CTRL_MASK));
-		miRun.addActionListener(new ActionListener() {
+		runButtonActionListener = new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				miRunActionPerformed(evt);
 			}
-		});
+		};
+		miRun.addActionListener(runButtonActionListener);
 
 		miStop = new JMenuItem("Stop");
 		menuReact.add(miStop);
 		miStop.setMnemonic('S');
 		miStop.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F6, ActionEvent.CTRL_MASK));
-		miStop.addActionListener(new ActionListener() {
+		stopButtonActionListener = new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				// TODO
+				miStopActionPerformed(evt);
 			}
-		});
+		};
+		miStop.addActionListener(stopButtonActionListener);
 
 		miNextStep = new JMenuItem("Next Step");
 		menuReact.add(miNextStep);
 		miNextStep.setMnemonic('N');
 		miNextStep.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F7, ActionEvent.CTRL_MASK));
-		nextButtonActionListener = (new ActionListener() {
+		nextStepButtonActionListener = new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				miNextStepActionPerformed(evt);
 			}
-		});
-
-		miNextStep.addActionListener(nextButtonActionListener);
+		};
+		miNextStep.addActionListener(nextStepButtonActionListener);
 
 		miReset = new JMenuItem("Reset");
 		miReset.setMnemonic('T');
 		menuReact.add(miReset);
 		miReset.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F8, ActionEvent.CTRL_MASK));
-		miReset.addActionListener(new ActionListener() {
+		resetButtonActionListener = new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				miResetActionPerformed(evt);
 			}
-		});
+		};
+		miReset.addActionListener(resetButtonActionListener);
 		
 		//menu Process
 		menuProcess = new JMenu("Process");
