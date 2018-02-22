@@ -88,7 +88,7 @@ public class ReactorAboutWindow extends JFrame{
 
         Image uniLogo = null;
         try {
-            uniLogo = ImageIO.read( ClassLoader.getSystemResource("pu/images/PULogo.png"));
+            uniLogo = ImageIO.read( ClassLoader.getSystemResource("pu/images/PUlogo.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
