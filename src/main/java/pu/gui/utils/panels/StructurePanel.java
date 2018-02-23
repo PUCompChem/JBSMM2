@@ -12,15 +12,19 @@ public class StructurePanel extends JPanel{
 
 
     protected Panel2D picturePanel = null;
+
     IAtomContainer mol;
 
     public StructurePanel(IAtomContainer atomContainer) {
 
+        this.setLayout(new BorderLayout());
+        this.setBorder(BorderFactory.createLineBorder(Color.black));
+        picturePanel = new Panel2D();
 
-        this.setSize(new Dimension(100, 700));
-        this.setBorder( BorderFactory.createLineBorder(Color.green));
+        picturePanel.setEditable(false);
 
-        this.add(structurePanel(),BorderLayout.CENTER);
+        picturePanel.setBackground(new Color(255, 255, 255));
+        this.add( picturePanel,BorderLayout.CENTER);
 
         try {
             mol = atomContainer;
@@ -30,35 +34,8 @@ public class StructurePanel extends JPanel{
         display(mol);
 
     }
-    public StructurePanel() {
 
 
-        this.setSize(new Dimension(100, 700));
-        this.setBorder( BorderFactory.createLineBorder(Color.green));
-
-        this.add(structurePanel(),BorderLayout.CENTER);
-    }
-    protected JPanel structurePanel() {
-        JPanel strucPanel = new JPanel();
-        strucPanel.setLayout(new BorderLayout());
-
-        JLabel label = new JLabel("<html><b>Structure diagram</b></html>");
-        label.setOpaque(true);
-        // label.setBackground(bgColor);
-        //label.setForeground(fColor);
-        label.setSize(120,32);
-        label.setAlignmentX(CENTER_ALIGNMENT);
-        // label.setBorder(BorderFactory.createMatteBorder(5,0,0,0,bgColor));
-        strucPanel.add(label,BorderLayout.NORTH);
-
-        picturePanel = new Panel2D();
-        picturePanel.setEditable(false);
-        // picturePanel.setBorder(BorderFactory.createLineBorder(fColor));
-        //picturePanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-        picturePanel.setBackground(new Color(255, 255, 255));
-        strucPanel.add(picturePanel,BorderLayout.CENTER);
-        return strucPanel;
-    }
     public void display(IAtomContainer ac) {
         if (picturePanel != null) {
 
@@ -70,3 +47,4 @@ public class StructurePanel extends JPanel{
     }
 
 }
+
