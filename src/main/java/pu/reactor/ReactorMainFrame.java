@@ -183,11 +183,13 @@ public class ReactorMainFrame extends JFrame {
 		
 		areas.get(2).setLayout(new BorderLayout());
 		bottomCenterTabbedPanel = new JTabbedPane();
+		
 		if (moleculeTree != null)
 		{	
 			treesTabPane.add("molecules", moleculeTree);
-			bottomCenterTabbedPanel.add("selected molecule",moleculeTree.getMoleculePanel());
-		}	
+			//bottomCenterTabbedPanel.add("selected molecule",moleculeTree.getMoleculePanel());
+		}
+			
 
 		areas.get(2).add(bottomCenterTabbedPanel,BorderLayout.CENTER);
 		consoleFieldPanel = new JTextArea();

@@ -4,6 +4,7 @@ import ambit2.base.data.Property;
 import ambit2.base.data.StructureRecord;
 import ambit2.reactions.retrosynth.StartingMaterialsDataBase;
 import ambit2.reactions.retrosynth.StartingMaterialsDataBase.StartMaterialData;
+import ambit2.smarts.SmartsHelper;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -16,6 +17,7 @@ import javax.swing.tree.DefaultTreeModel;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 import pu.gui.utils.MoleculeDrawer;
+import pu.gui.utils.panels.StructurePanel;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -36,11 +38,14 @@ public class MoleculeSetTree extends SetTree
 	private StartingMaterialsDataBase startingMaterialsDataBase = null;
 	//private List<IAtomContainer> molecules = new ArrayList<IAtomContainer>();
 	private String rootNodeText = "Starting materials";
-	private MoleculeDrawer moleculeDrawer = new MoleculeDrawer();
-	private MoleculePanel moleculePanel = new MoleculePanel();
+	//private MoleculeDrawer moleculeDrawer = new MoleculeDrawer();
+	//private MoleculePanel moleculePanel = new MoleculePanel();
+	private StructurePanel structurePanel = new StructurePanel();
+	
 
 	//private String dbFilePath;
 	private  TableInfoPanel tableInfoPanel;
+	DefaultMutableTreeNode root;
 	
 	public MoleculeSetTree(List<StructureRecord> structureRecords)
 	{
@@ -88,6 +93,8 @@ public class MoleculeSetTree extends SetTree
 		return startingMaterialsDataBase;
 	}
 
+	
+	/*
 	public MoleculePanel getMoleculePanel() {
 		return moleculePanel;
 	}
@@ -95,12 +102,13 @@ public class MoleculeSetTree extends SetTree
 	public void setMoleculePanel(MoleculePanel moleculePanel) {
 		this.moleculePanel = moleculePanel;
 	}
+	*/
+	
 	
 	private void initGUI() {
 		infoPanel = new InfoPanel();
 		tree = new JTree();
 		setIcons("pu/images/molecule.png");
-
 
 		this.add(tree);
 		JScrollPane scrollBar = new JScrollPane(tree);
@@ -111,16 +119,24 @@ public class MoleculeSetTree extends SetTree
 		setTreeSelectionListener();
 		expandAllNodes(tree, 0, tree.getRowCount());
         //setMoleculePanel();
+		
+		JPanel southPanel = new JPanel();
+		this.add(southPanel, BorderLayout.SOUTH);
+		southPanel.setLayout(new BorderLayout());
+		structurePanel.setVisible(true);
+		southPanel.add(structurePanel, BorderLayout.CENTER);
+		southPanel.add(tableInfoPanel, BorderLayout.SOUTH);
+		
 
 		this.add(scrollBar, BorderLayout.CENTER);
-		this.add(tableInfoPanel, BorderLayout.SOUTH);
+		//this.add(tableInfoPanel, BorderLayout.SOUTH);
 	}
 
 	
 
 	private void dataToTree()
 	{
-		DefaultMutableTreeNode root = new DefaultMutableTreeNode(rootNodeText);
+		root = new DefaultMutableTreeNode(rootNodeText);
 		tree.setModel(new DefaultTreeModel(root));
 		
 		if (startingMaterialsDataBase != null)
@@ -182,22 +198,42 @@ public class MoleculeSetTree extends SetTree
 			return;
 		}
 		else {
+			if (node == root)
+			{	
+				tableInfoPanel.write("");
+				return;
+			}	
+			
 			String nodeText = getNodeInfoText(node);
 			tableInfoPanel.write(nodeText);
 			
 			//Set Panel2D
 			if (startingMaterialsDataBase != null)
 			{
-				moleculePanel.removeAll();
-				moleculeDrawer.add2DMolecule(moleculePanel,nodeText);			
+				//moleculePanel.removeAll();
+				//moleculeDrawer.add2DMolecule(moleculePanel,nodeText);
+				try {
+					IAtomContainer mol = SmartsHelper.getMoleculeFromSmiles(nodeText);
+					structurePanel.display(mol);
+					
+				} catch (Exception x) {
+					x.printStackTrace();
+				}
 			}
 			else
 			{
 				List<StructureRecord> strs =  structureRecords;
 				for (StructureRecord str : strs){
 					if (node.toString().equals(getMoleculeName(str))){
-						moleculePanel.removeAll();
-						moleculeDrawer.add2DMolecule(moleculePanel, str.getSmiles());
+						//moleculePanel.removeAll();
+						//moleculeDrawer.add2DMolecule(moleculePanel, str.getSmiles());
+						try {
+							IAtomContainer mol = SmartsHelper.getMoleculeFromSmiles(str.getSmiles());
+							structurePanel.display(mol);
+							
+						} catch (Exception x) {
+							x.printStackTrace();
+						}
 					}
 				}
 			}

@@ -14,17 +14,14 @@ public class StructurePanel extends JPanel{
     protected Panel2D picturePanel = null;
 
     IAtomContainer mol;
+    
+    public StructurePanel() {
+    	initGUI();
+    }	
 
     public StructurePanel(IAtomContainer atomContainer) {
 
-        this.setLayout(new BorderLayout());
-        this.setBorder(BorderFactory.createLineBorder(Color.black));
-        picturePanel = new Panel2D();
-
-        picturePanel.setEditable(false);
-
-        picturePanel.setBackground(new Color(255, 255, 255));
-        this.add( picturePanel,BorderLayout.CENTER);
+    	initGUI();
 
         try {
             mol = atomContainer;
@@ -32,7 +29,19 @@ public class StructurePanel extends JPanel{
             e.printStackTrace();
         }
         display(mol);
+    }
+    
+    
+    void initGUI()
+    {
+    	 this.setLayout(new BorderLayout());
+         this.setBorder(BorderFactory.createLineBorder(Color.black));
+         picturePanel = new Panel2D();
 
+         picturePanel.setEditable(false);
+
+         picturePanel.setBackground(new Color(255, 255, 255));
+         this.add( picturePanel,BorderLayout.CENTER);
     }
 
 
@@ -41,7 +50,6 @@ public class StructurePanel extends JPanel{
 
             picturePanel.setAtomContainer(ac,true);
             picturePanel.setSelector(null);
-
         }
 
     }
