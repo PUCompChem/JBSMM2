@@ -476,12 +476,15 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 	
 	void reset() 
 	{
+		System.out.println("**** reset event");
 		levels.clear();
 		smartChemTable.getModel().setRowCount(0);
-		//smartChemTable.getModel().fireTableDataChanged();
+		smartChemTable.getModel().fireTableDataChanged();
+		
+		//Set Level 0
 		addLevel();
         IAtomContainer target = reactionSequenceProcess.getReactSeq().getTarget();
-		addStructureToLevel(0,target);
+		addStructureToLevel(0,target);		
 	}
 	
 	void addAllSequenceLevelsToTable()

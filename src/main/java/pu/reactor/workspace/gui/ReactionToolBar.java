@@ -77,8 +77,33 @@ public class ReactionToolBar extends JToolBar {
 
         ReactionToolBar.this.add(startButton, BorderLayout.EAST);
     }
+    
+    
+    public JButton getStartButton() {
+		return startButton;
+	}
 
-    public JButton getGoButton() {
+	public void setStartButton(JButton startButton) {
+		this.startButton = startButton;
+	}
+
+	public JButton getStopButton() {
+		return stopButton;
+	}
+
+	public void setStopButton(JButton stopButton) {
+		this.stopButton = stopButton;
+	}
+
+	public JButton getResetButton() {
+		return resetButton;
+	}
+
+	public void setResetButton(JButton resetButton) {
+		this.resetButton = resetButton;
+	}
+
+	public JButton getGoButton() {
         return goButton;
     }
 

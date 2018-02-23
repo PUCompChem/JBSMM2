@@ -102,11 +102,17 @@ public class ReactionBrowser extends JFrame
 	
 	void applyButtonEvent()
 	{	
-		int selectedRow = reactBrowserPanel.chemTable.getTable().getSelectedRow();
+		int selectedRow = reactBrowserPanel.chemTable.getTable().getSelectedRow();		
 		System.out.println("selectedRow = " + selectedRow);
 		if (selectedRow != -1)
 		{	
-			GenericReactionInstance gri = reactInstances.get(selectedRow);
+			int selectedReaction;
+			if (reactBrowserPanel.itemSelection == null)
+				selectedReaction = selectedRow;
+			else
+				selectedReaction = reactBrowserPanel.itemSelection[selectedRow];
+			
+			GenericReactionInstance gri = reactInstances.get(selectedReaction);
 			ReactionSequenceProcess process = (ReactionSequenceProcess)rspPanel.getProcess();
 			ReactionSequence rseq = process.getReactSeq();
 			int levInd = rspPanel.mouseLevelIndex;
