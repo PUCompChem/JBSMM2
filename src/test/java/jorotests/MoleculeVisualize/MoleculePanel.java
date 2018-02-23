@@ -13,7 +13,8 @@ public class MoleculePanel extends JPanel {
 
     StructurePanel stucturePanel;
     JTable informationTable;
-DefaultTableModel informationTableModel = new DefaultTableModel(3,2);
+    DefaultTableModel informationTableModel = new DefaultTableModel(3,2);
+
     public MoleculePanel(IAtomContainer atomContainer) {
 
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -23,7 +24,6 @@ DefaultTableModel informationTableModel = new DefaultTableModel(3,2);
         stucturePanel = new StructurePanel(atomContainer);
         this.add(stucturePanel);
         this.add(informationTable);
-
 
     }
 

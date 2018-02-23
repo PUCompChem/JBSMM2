@@ -5,6 +5,7 @@ import ambit2.ui.Panel2D;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 
 /**
@@ -19,11 +20,14 @@ public class StructurePanel extends JPanel{
 
     public StructurePanel(IAtomContainer atomContainer) {
 
+        this.setLayout(new BorderLayout());
+        this.setBorder(BorderFactory.createLineBorder(Color.black));
+        picturePanel = new Panel2D();
 
+        picturePanel.setEditable(false);
 
-
-
-        this.add(structurePanel());
+        picturePanel.setBackground(new Color(255, 255, 255));
+        this.add( picturePanel,BorderLayout.CENTER);
 
         try {
             mol = atomContainer;
@@ -34,24 +38,7 @@ public class StructurePanel extends JPanel{
 
     }
 
-    protected JPanel structurePanel() {
-        JPanel strucPanel = new JPanel();
-        strucPanel.setLayout(new BorderLayout());
 
-        JLabel label = new JLabel("<html><b>Structure diagram</b></html>");
-        label.setOpaque(true);
-        label.setAlignmentX(CENTER_ALIGNMENT);
-        strucPanel.add(label,BorderLayout.NORTH);
-
-        picturePanel = new Panel2D();
-       picturePanel.setPreferredSize(new Dimension(500,500));
-        picturePanel.setEditable(false);
-        // picturePanel.setBorder(BorderFactory.createLineBorder(fColor));
-        //picturePanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-        picturePanel.setBackground(new Color(255, 255, 255));
-        strucPanel.add(picturePanel,BorderLayout.CENTER);
-        return strucPanel;
-    }
     protected void display(IAtomContainer ac) {
         if (picturePanel != null) {
 
