@@ -2,6 +2,7 @@ package jorotests.MoleculeVisualize;
 
 import ambit2.smarts.SmartsHelper;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import pu.gui.utils.trees.MoleculePanel;
 import pu.gui.utils.trees.MoleculeSetTree;
 
 import javax.swing.*;
