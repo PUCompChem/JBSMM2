@@ -6,7 +6,7 @@ import java.util.Vector;
 public class Test_SequenceAlignment 
 {
 	static int scoreType = 0;
-	static int scoreEqualBases = 1;
+	static int scoreEqualBases = 0;
 	static int scoreDiffBases = -1;
 	
 	static int scoreCT_GA = -2;
@@ -15,10 +15,12 @@ public class Test_SequenceAlignment
 	
 	public static void main(String[] args)
 	{
-		testAllSeq("GGTAGAT", "ATATAA");
+		//testAllSeq("GGTAGAT", "ATATAA");
 		//testAllSeq("AGTACGCCG", "ACGTCTGGT");
 		//testAllSeq("ATATG", "TTTTTT");
 		//testAllSeq("TTGT", "CTAGG");
+		
+		testAllSeq("AAGA", "CATGG");
 	}
 	
 	

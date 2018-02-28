@@ -34,6 +34,7 @@ public class SequenceAlignment
 
 	public int getScore0(char s, char t)
 	{
+		//System.out.println("score 0  " + s + "  " + t);
 		if (s==t)
 			return scoreEqualBases;
 		else 
@@ -46,6 +47,8 @@ public class SequenceAlignment
 	
 	public int getScore1(char s, char t)
 	{
+		//System.out.println("score 1  " + s + "  " + t);
+		
 		if (s==t)
 			return scoreEqualBases;
 		
@@ -59,10 +62,6 @@ public class SequenceAlignment
 		 return scoreDiffBases;
 	}
 	
-	
-	
-	
-		
 	
 	
 	public DPElement backTrackAlignment()
@@ -262,18 +261,25 @@ public class SequenceAlignment
 	}
 	
 	public void calcDP(int i, int j)
-	{
+	{	
+		/* String temp = "  M(" + i + ",'-') = " +   getScore(seq1.charAt(i-1), '-') + 
+					"  M('-'," + j + ") = " +   getScore('-', seq2.charAt(j-1)) +
+					"  M("+ i + "," + j + ") = " + getScore(seq1.charAt(i-1), seq2.charAt(j-1)); */
+		
+		
 		//charAt(i-1) is used because charAt is 0-based indexes while DP is 1 based indexed
-				
+		
 		int v1 = DP[i-1][j] + getScore(seq1.charAt(i-1), '-');
 		int v2 = DP[i][j-1] + getScore('-', seq2.charAt(j-1));
 		int v3 = DP[i-1][j-1] + getScore(seq1.charAt(i-1), seq2.charAt(j-1));   
-			
+		
+		
 		int cost;
 		cost = Math.max(v3, Math.max(v1, v2));  //The cost is negative i.e. it is a penalty that is way max is searched
 		//cost = Math.min(v3, Math.min(v1, v2));   
 		DP[i][j] = cost;
 		
+		//System.out.println("Filing: (" + i + ", " + j + ")   v1 = " + v1 + "  v2 = " + v1 + "  v3 = " + v3 + "  cost = " + cost +  "   " + temp) ;
 		//System.out.println("DP(" + i + "," +j + ")  " + seq1.charAt(i-1) + "  " +  seq2.charAt(j-1) + "  " + cost);
 	}
 	
