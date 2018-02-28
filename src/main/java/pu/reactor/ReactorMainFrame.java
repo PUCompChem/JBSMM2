@@ -6,6 +6,7 @@ import ambit2.reactions.ReactionDataBase;
 import ambit2.reactions.retrosynth.StartingMaterialsDataBase;
 import ambit2.smarts.SMIRKSManager;
 import ambit2.ui.Panel2D;
+import pu.gui.utils.ConsolePanel;
 import pu.gui.utils.chemtable.SmartChemTable;
 import pu.gui.utils.trees.MoleculeSetTree;
 import pu.gui.utils.trees.ReactionSetTree;
@@ -107,7 +108,7 @@ public class ReactorMainFrame extends JFrame {
 	
 	JTabbedPane treesTabPane;
 	JTabbedPane bottomCenterTabbedPanel;
-	JTextArea consoleFieldPanel;
+	ConsolePanel console = new ConsolePanel();
 
 	ReactorProcessTabsSet processTabs = new ReactorProcessTabsSet();
 
@@ -192,9 +193,9 @@ public class ReactorMainFrame extends JFrame {
 			
 
 		areas.get(2).add(bottomCenterTabbedPanel,BorderLayout.CENTER);
-		consoleFieldPanel = new JTextArea();
-		consoleFieldPanel.setLayout(new BorderLayout());
-		bottomCenterTabbedPanel.add("Console",consoleFieldPanel);
+
+
+		bottomCenterTabbedPanel.add("Console",console);
 	}
 
 	public static Preferences getPreferences(String prefFileName) throws Exception

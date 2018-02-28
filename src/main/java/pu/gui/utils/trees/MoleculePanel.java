@@ -14,7 +14,7 @@ public class MoleculePanel extends JPanel {
     StructurePanel stucturePanel;
     JTable informationTable;
     DefaultTableModel informationTableModel = new DefaultTableModel(3,2);
-
+    boolean setVisibleInfoTableFlag = false;
     public MoleculePanel() {
 
     }
@@ -30,7 +30,10 @@ public class MoleculePanel extends JPanel {
         stucturePanel = new StructurePanel(atomContainer);
         this.add(stucturePanel);
         this.add(informationTable);
+        if(setVisibleInfoTableFlag == false){
 
+            informationTable.setVisible(false);
+        }
     }
 
 
