@@ -64,7 +64,7 @@ public class VariousTests
 		
 		//testReadWorkspaceJson("/test-workspace.json");
 		
-		testReadPreferencesJson("/test-preferences.json");
+		testReadPreferencesJson("/test-preferences.json" );
 		
 		//testResources();
 		
