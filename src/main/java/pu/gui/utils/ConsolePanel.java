@@ -12,6 +12,7 @@ public class ConsolePanel extends JPanel
 {	
 	private static final long serialVersionUID = -8648685179926331982L;
 	JTextPane textPane = new  JTextPane();
+	
 
 	public ConsolePanel()
 	{
@@ -22,27 +23,31 @@ public class ConsolePanel extends JPanel
 	{
 		//textArea.setLineWrap(true);
 		//textArea.setWrapStyleWord(true);
+		//textPane.setEditable(false);
 		JScrollPane scrollPane = new JScrollPane(textPane);
 
 		this.setLayout( new BorderLayout());
 
 		this.add(scrollPane, BorderLayout.CENTER );
+		
+		textPane.setEditable(false);
 
 	}
 
-	public  void print(String input){
+	public  void write(String input){
 		appendToPane(textPane, input, Color.BLACK);
 	}
-	public  void print(String input, Color textColor){
-	appendToPane(textPane, input, textColor);
-
-}
-	public  void println(String input){
+	
+	public  void write(String input, Color textColor){
+		appendToPane(textPane, input, textColor);
+	}
+	
+	public  void writeln(String input){
 		appendToPane(textPane, input+"\n", Color.black);
 	}
-	public  void println(String input, Color textColor){
-	appendToPane(textPane, input+"\n", textColor);
-
+	
+	public  void writeln(String input, Color textColor){
+		appendToPane(textPane, input+"\n", textColor);
 	}
 
 	public void clearConsole(){
@@ -51,6 +56,7 @@ public class ConsolePanel extends JPanel
 
 	private void appendToPane(JTextPane tp, String msg, Color c)
 	{
+		tp.setEditable(true);
 		StyleContext sc = StyleContext.getDefaultStyleContext();
 		AttributeSet aset = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, c);
 
@@ -61,6 +67,7 @@ public class ConsolePanel extends JPanel
 		tp.setCaretPosition(len);
 		tp.setCharacterAttributes(aset, false);
 		tp.replaceSelection(msg);
+		tp.setEditable(false);
 	}
 
 }

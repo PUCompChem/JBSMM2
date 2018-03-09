@@ -194,8 +194,8 @@ public class ReactorMainFrame extends JFrame {
 
 		areas.get(2).add(bottomCenterTabbedPanel,BorderLayout.CENTER);
 
-
-		bottomCenterTabbedPanel.add("Console",console);
+		bottomCenterTabbedPanel.add("Console", console);
+		
 	}
 
 	public static Preferences getPreferences(String prefFileName) throws Exception
@@ -582,6 +582,7 @@ public class ReactorMainFrame extends JFrame {
 	
 	private void miResetActionPerformed(ActionEvent evt){
 		System.out.println("Reset");
+		
 		if (processTabs.getComponentCount() == 0)
 			return;
 		int processIndex = processTabs.getSelectedIndex();

@@ -15,12 +15,14 @@ public class Test_SequenceAlignment
 	
 	public static void main(String[] args)
 	{
-		//testAllSeq("GGTAGAT", "ATATAA");
+		testAllSeq("GGTAGAT", "ATATAA");
+		
+		
 		//testAllSeq("AGTACGCCG", "ACGTCTGGT");
 		//testAllSeq("ATATG", "TTTTTT");
 		//testAllSeq("TTGT", "CTAGG");
 		
-		testAllSeq("AAGA", "CATGG");
+		//testAllSeq("AAGA", "CATGG");
 	}
 	
 	
