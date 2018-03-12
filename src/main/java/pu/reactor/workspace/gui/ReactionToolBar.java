@@ -53,6 +53,7 @@ public class ReactionToolBar extends JToolBar {
 
     private void  StopButton(){
         stopButton = new JButton();
+        stopButton.setToolTipText("stop");
         ReactionToolBar.this.add(stopButton, BorderLayout.EAST);
         try {
 
@@ -68,6 +69,7 @@ public class ReactionToolBar extends JToolBar {
     private void StartButton() {
 
         startButton = new JButton();
+        startButton.setToolTipText("start");
         try {
             Image img = ImageIO.read( ClassLoader.getSystemResource("pu/images/play.png"));
             startButton.setIcon(new ImageIcon(img));
@@ -121,6 +123,7 @@ public class ReactionToolBar extends JToolBar {
 
     private void NextButton() {
         nextButton = new JButton();
+        nextButton.setToolTipText("next");
         try {
             Image img = ImageIO.read( ClassLoader.getSystemResource("pu/images/next.png"));
             nextButton.setIcon(new ImageIcon(img));
@@ -133,11 +136,13 @@ public class ReactionToolBar extends JToolBar {
 
     private void GoButton(){
         goButton = new JButton("Go");
+        goButton.setToolTipText("Go");
         ReactionToolBar.this.add(goButton, BorderLayout.EAST);
 
     }
     private void resetButton(){
-        resetButton = new JButton();
+        resetButton = new JButton("reset");
+        resetButton.setToolTipText("reset");
         ReactionToolBar.this.add(resetButton, BorderLayout.EAST);
         try {
 
