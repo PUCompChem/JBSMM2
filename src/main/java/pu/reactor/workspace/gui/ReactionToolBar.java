@@ -16,6 +16,7 @@ public class ReactionToolBar extends JToolBar {
     private JButton goButton;
     private JButton startButton;
     private JButton nextButton;
+    private JButton previousButton;
     private JButton stopButton;
     private JButton resetButton;
     private JComboBox  comboBox;
@@ -42,6 +43,7 @@ public class ReactionToolBar extends JToolBar {
         comboBox.setEditable(true);
 
         StartButton();
+        PreviousButton();
         NextButton();
         StopButton();
         resetButton();
@@ -133,7 +135,18 @@ public class ReactionToolBar extends JToolBar {
 
         ReactionToolBar.this.add(nextButton, BorderLayout.EAST);
     }
+    private void PreviousButton() {
+        previousButton = new JButton();
+        previousButton.setToolTipText("previous");
+        try {
+            Image img = ImageIO.read( ClassLoader.getSystemResource("pu/images/previous.png"));
+            previousButton.setIcon(new ImageIcon(img));
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
 
+        ReactionToolBar.this.add( previousButton, BorderLayout.EAST);
+    }
     private void GoButton(){
         goButton = new JButton("Go");
         goButton.setToolTipText("Go");
