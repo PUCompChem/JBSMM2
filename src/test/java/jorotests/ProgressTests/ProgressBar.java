@@ -1,5 +1,7 @@
 package jorotests.ProgressTests;
 
+import ambit2.rules.miscellaneous.IProgress;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -8,7 +10,7 @@ import java.awt.*;
 /**
  * Created by gogo on 13.3.2018 г..
  */
-public class ProgressBar extends JFrame    {
+public class ProgressBar extends JFrame implements IProgress {
     private JProgressBar progressBar;
     private double percentage;
     private String info;
