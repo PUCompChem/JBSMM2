@@ -66,23 +66,22 @@ public class PreferencesJsonParser{
 				preferences.startingMaterialsPath = s;
 		}
 		
-		//STARTING_MATERIALS_PATH2
-		node = root.path("STARTING_MATERIALS_PATH2");
+
+
+		//DEFAUT_RETRO_STRATEGY
+		node = root.path("DEFAULT_RETRO_STRATEGY");
 		if (node.isMissingNode())
-		{	
+		{
+			errors.add("JSON Section \"DEFAUT_RETRO_STRATEGY\" is missing!");
 		}
 		else
-		{	
-			String s = jsonUtils.extractStringKeyword(root, "STARTING_MATERIALS_PATH2", false);
-			if (s == null)
-				errors.add("Incorrect STARTING_MATERIALS_PATH2 " + jsonUtils.getError());
-			else
-				preferences.startingMaterialsPath2 = s;
+		{
+
+
+			preferences.basicScoreWeight  =	jsonUtils.extractDoubleKeyword(node, "BASIC_SCORE_WEIGHT", false);
 		}
-		
-				
-		 //TODO
-	   	return preferences;
+	//TODO
+   	return preferences;
 	}
 	 
 	public List<String> getErrors()

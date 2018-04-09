@@ -7,11 +7,16 @@ public class Preferences
 	//Tab: Paths
 	public  String reactionDBPath = "./reaction-database.json";
 	public  String startingMaterialsPath = "./starting-materials.txt";
-	public  String startingMaterialsPath2 = null;
-	
+
+
 	//Tab: Appearance 
 	public int strcctureSizeInTables = 200;
-	
+
+
+	//Tab: StrategiesDefaultValues
+
+	public double basicScoreWeight = 0.0;
+
 
 	public String toJsonString()
 	{	
@@ -36,17 +41,28 @@ public class Preferences
 			sb.append("\t\"STARTING_MATERIALS_PATH\" : " + "\"" + startingMaterialsPath + "\"");
 			nFields++;
 		}
-		
-		if (startingMaterialsPath2 != null)
+
+		if (startingMaterialsPath != null)
 		{
-			if (nFields > 0)
+
+			if (nFields > 0){
 				sb.append("," + endLine);
-			else
+			}
+			else {
+
+			}
 				sb.append(endLine);
-			
-			sb.append("\t\"STARTING_MATERIALS_PATH2\" : " + "\"" + startingMaterialsPath2 + "\"");
+			sb.append("\t\"DEFAULT_RETRO_STRATEGY\":");
+			sb.append(endLine);
+			sb.append("\t\t{");
+			sb.append(endLine);
+			sb.append("\t\t\t\"BASIC_SCORE_WEIGHT\" : "  + basicScoreWeight);
+			sb.append(endLine);
+			sb.append("\t\t}" + endLine);
 			nFields++;
 		}
+
+
 		
 		sb.append(endLine);
 		sb.append("}" + endLine);

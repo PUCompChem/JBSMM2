@@ -1,9 +1,9 @@
 package pu.reactor.workspace.gui;
 
-import pu.gui.utils.trees.SetTree;
 import pu.reactor.workspace.Preferences;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -23,8 +23,8 @@ public class PreferencesWindow extends JFrame
 		this.preferences = preferences;
 	}
 
-	private Preferences preferences;
-	private String preferencesFilePath = null;
+	public Preferences preferences;
+	public String preferencesFilePath;
 
 	public JTabbedPane getTabbedPane() {
 		return tabbedPane;
@@ -48,6 +48,12 @@ public class PreferencesWindow extends JFrame
 	JTextField reactionDBPathField;
 	JTextField startingMaterialsDBPathField;
 
+	//StrategiesFields
+	JTextField basicScoreWeight = new JTextField(20);
+
+
+
+
 	public JButton getApplyButton() {
 		return applyButton;
 	}
@@ -64,7 +70,8 @@ public class PreferencesWindow extends JFrame
 	 * @param no parameters
 	 */
 	public PreferencesWindow() { 
-		this.preferences = new Preferences();  
+		this.preferences = new Preferences();
+
 		initGUI();
 		fillGUIComponentsData();
 	}
@@ -72,6 +79,7 @@ public class PreferencesWindow extends JFrame
 	public PreferencesWindow(Preferences prefs, String preferencesFilePath) { 
 		this.preferences = prefs; 
 		this.preferencesFilePath = preferencesFilePath;
+
 
 		initGUI();
 		fillGUIComponentsData();
@@ -86,22 +94,46 @@ public class PreferencesWindow extends JFrame
 		//Sett Tabs
 		JTabbedPane	 preferencesTabsPane = new JTabbedPane();
 		//Setting OptionsMenu
-		reactionDBPathField = new JTextField(20);
-		startingMaterialsDBPathField = new JTextField(20);
-		optionsMenuPanel = new JPanel(new FlowLayout(20,20,20));
+
+
+		optionsMenuPanel = new JPanel();
 		optionsMenuPanel.setSize(100,100);
 		optionsMenuPanel.setBackground(Color.WHITE);
-		optionsMenuPanel.add(new JLabel("Reaction database path:"));
-		optionsMenuPanel.add(reactionDBPathField);
+		reactionDBPathField = new JTextField(20);
+		startingMaterialsDBPathField = new JTextField(20);
+		JPanel labelPanel = new JPanel(new GridLayout(2, 1));
+		JPanel fieldPanel = new JPanel(new GridLayout(2, 1));
+		optionsMenuPanel.add(labelPanel, BorderLayout.WEST);
+		optionsMenuPanel.add(fieldPanel, BorderLayout.CENTER);
+		labelPanel.add(new JLabel("Reaction database path:"));
+		fieldPanel.add(reactionDBPathField);
+		labelPanel.add(new JLabel("Starting materials database path:"));
+		fieldPanel.add(startingMaterialsDBPathField);
 
-		optionsMenuPanel.add(new JLabel("Starting materials database path:"));
-		optionsMenuPanel.add(startingMaterialsDBPathField);
+
 		preferencesTabsPane.add("Paths",optionsMenuPanel);
 
-		//Setting TestDialogPanel
-		JPanel testPanel = new JPanel();
-		testPanel.add(new JTextField(20));
-		preferencesTabsPane.add("TestMenu",testPanel);
+
+		// StrategyPanel
+
+		JPanel strategyPanel = new JPanel();
+
+		strategyPanel.setSize(100,100);
+		strategyPanel.setBackground(Color.WHITE);
+
+		 labelPanel = new JPanel(new GridLayout(2, 1));
+		 fieldPanel = new JPanel(new GridLayout(2, 1));
+		strategyPanel.add(labelPanel, BorderLayout.WEST);
+		strategyPanel.add(fieldPanel, BorderLayout.CENTER);
+		labelPanel.add(new JLabel("basic score weight"));
+		fieldPanel.add(basicScoreWeight);
+
+
+
+
+
+
+		preferencesTabsPane.add("Strategy Panel",strategyPanel);
 
 
 		//Setting QuitAndSaveMenu
@@ -130,8 +162,13 @@ public class PreferencesWindow extends JFrame
 
 	void fillGUIComponentsData()
 	{
+
 		reactionDBPathField.setText(preferences.reactionDBPath);
 		startingMaterialsDBPathField.setText(preferences.startingMaterialsPath);
+
+		//DefaultStrategies
+		basicScoreWeight.setText(String.valueOf(preferences.basicScoreWeight));
+
 	}
 
 
@@ -142,6 +179,7 @@ public class PreferencesWindow extends JFrame
 	 */
 	private JButton setApplyButton(){
 
+
 		JButton button = new JButton("Apply");
 		JPanel applyButtonPanel = new JPanel(); 
 		applyButtonPanel.add(button, BorderLayout.WEST);
@@ -151,30 +189,7 @@ public class PreferencesWindow extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent e){
 				System.out.println("Apply button was clicked");
-				preferences.reactionDBPath = reactionDBPathField.getText();
-				preferences.startingMaterialsPath = startingMaterialsDBPathField.getText();
-
-
-				if (preferencesFilePath != null)
-				{
-					BufferedWriter bw  = null;
-					try {
-						FileWriter fw = new FileWriter(preferencesFilePath);
-						bw = new BufferedWriter(fw);
-						bw.write(preferences.toJsonString());
-					}
-					catch (IOException ioe) {
-						ioe.printStackTrace();
-					}
-					finally{
-						try{
-							if(bw!=null)
-								bw.close();
-						}catch(Exception ex){
-							System.out.println("Error in closing the BufferedWriter"+ex);
-						}
-					}
-				}
+				ApplyPreferences();
 
 			}
 
@@ -193,45 +208,56 @@ public class PreferencesWindow extends JFrame
 		return button;
 
 	};
+
 	private JButton setOKButton(){
 
 		JButton button = new JButton("OK");
 		JPanel OKButtonPanel = new JPanel(); 
 		OKButtonPanel.add(button,BorderLayout.EAST);
 		add(OKButtonPanel);
+
 		button.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e){
-				System.out.println("Apply button was clicked"); 
-
-				preferences.reactionDBPath = reactionDBPathField.getText();
-				System.out.println(preferences.reactionDBPath);
-				BufferedWriter bw  = null;
-				try {
-					FileWriter fw = new FileWriter("/TestJson.json");
-					bw = new BufferedWriter(fw);
-					bw.write(preferences.toJsonString());
-				}  
-				catch (IOException ioe) {
-					ioe.printStackTrace();
-				}
-				finally{ 
-					try{
-						if(bw!=null)
-							bw.close();
-					}catch(Exception ex){
-						System.out.println("Error in closing the BufferedWriter"+ex);
-
-					}
-				}
+				ApplyPreferences();
 				dispose();
 			}
 
 		});
 		return button;
 	}
+	private void ApplyPreferences(){
+		preferences.reactionDBPath = reactionDBPathField.getText();
+		preferences.startingMaterialsPath = startingMaterialsDBPathField.getText();
 
+		preferences.basicScoreWeight = Double.parseDouble(basicScoreWeight.getText());
+
+
+
+
+
+		if (preferencesFilePath != null)
+		{
+			BufferedWriter bw  = null;
+			try {
+				FileWriter fw = new FileWriter(preferencesFilePath);
+				bw = new BufferedWriter(fw);
+				bw.write(preferences.toJsonString());
+			}
+			catch (IOException ioe) {
+				ioe.printStackTrace();
+			}
+			finally{
+				try{
+					if(bw!=null)
+						bw.close();
+				}catch(Exception ex){
+					System.out.println("Error in closing the BufferedWriter"+ex);
+				}
+			}
+		}
+	}
 
 	private void createTreeTable(){
 		DefaultMutableTreeNode top = new DefaultMutableTreeNode("root");
