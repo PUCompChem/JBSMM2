@@ -16,6 +16,17 @@ public class Preferences
 	//Tab: StrategiesDefaultValues
 
 	public double basicScoreWeight = 0.0;
+	public double classcScoreWeight = 0.0;
+	public double transformScoreWeight = 0.0;
+	public double conditionsScoreWeight = 0.0;
+	public double experimentalConditionsScoreWeight = 0.0;
+	public double yieldScoreWeight = 0.0;
+	public double productComplexityWeight = 0.0;
+	public double productSimilarityWeight = 0.0;
+	public double productStabilityWeight = 0.0;
+	public double reactionCenterPositionWeight = 0.0;
+	public double reactionCenterComplexityWeight = 0.0;
+	public double electronWithdrawingLevelWeight = 0.0;
 
 
 	public String toJsonString()
@@ -56,8 +67,32 @@ public class Preferences
 			sb.append(endLine);
 			sb.append("\t\t{");
 			sb.append(endLine);
-			sb.append("\t\t\t\"BASIC_SCORE_WEIGHT\" : "  + basicScoreWeight);
+			sb.append("\t\t\t\"BASIC_SCORE_WEIGHT\" : "  + basicScoreWeight+",");
 			sb.append(endLine);
+			sb.append("\t\t\t\"classcScoreWeight\" : "  + classcScoreWeight+",");
+			sb.append(endLine);
+			sb.append("\t\t\t\"transformScoreWeight\" : "  + transformScoreWeight+",");
+			sb.append(endLine);
+			sb.append("\t\t\t\"conditionsScoreWeight\" : "  + conditionsScoreWeight+",");
+			sb.append(endLine);
+			sb.append("\t\t\t\"experimentalConditionsScoreWeight\" : "  + experimentalConditionsScoreWeight+",");
+			sb.append(endLine);
+			sb.append("\t\t\t\"yieldScoreWeight\" : "  + yieldScoreWeight+",");
+			sb.append(endLine);
+			sb.append("\t\t\t\"productComplexityWeight\" : "  + productComplexityWeight+",");
+			sb.append(endLine);
+			sb.append("\t\t\t\"productSimilarityWeight\" : "  + productSimilarityWeight+",");
+			sb.append(endLine);
+			sb.append("\t\t\t\"productStabilityWeight\" : "  + productStabilityWeight+",");
+			sb.append(endLine);
+			sb.append("\t\t\t\"reactionCenterPositionWeight\" : "  + reactionCenterPositionWeight+",");
+			sb.append(endLine);
+			sb.append("\t\t\t\"reactionCenterComplexityWeight\" : "  + reactionCenterComplexityWeight+",");
+			sb.append(endLine);
+			sb.append("\t\t\t\"electronWithdrawingLevelWeight\" : "  + electronWithdrawingLevelWeight);
+			sb.append(endLine);
+
+
 			sb.append("\t\t}" + endLine);
 			nFields++;
 		}

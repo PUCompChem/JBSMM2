@@ -76,9 +76,18 @@ public class PreferencesJsonParser{
 		}
 		else
 		{
-
-
 			preferences.basicScoreWeight  =	jsonUtils.extractDoubleKeyword(node, "BASIC_SCORE_WEIGHT", false);
+			preferences.classcScoreWeight  =	jsonUtils.extractDoubleKeyword(node, "classcScoreWeight", false);
+			preferences.transformScoreWeight  =	jsonUtils.extractDoubleKeyword(node, "transformScoreWeight", false);
+			preferences.conditionsScoreWeight  =	jsonUtils.extractDoubleKeyword(node, "conditionsScoreWeight", false);
+			preferences.experimentalConditionsScoreWeight  =	jsonUtils.extractDoubleKeyword(node, "experimentalConditionsScoreWeight", false);
+			preferences.yieldScoreWeight  =	jsonUtils.extractDoubleKeyword(node, "yieldScoreWeight", false);
+			preferences.productComplexityWeight  =	jsonUtils.extractDoubleKeyword(node, "productComplexityWeight", false);
+			preferences.productSimilarityWeight  =	jsonUtils.extractDoubleKeyword(node, "productSimilarityWeight", false);
+			preferences.productStabilityWeight  =	jsonUtils.extractDoubleKeyword(node, "productStabilityWeight", false);
+			preferences.reactionCenterPositionWeight  =	jsonUtils.extractDoubleKeyword(node, "reactionCenterPositionWeight", false);
+			preferences.reactionCenterComplexityWeight  =	jsonUtils.extractDoubleKeyword(node, "reactionCenterComplexityWeight", false);
+			preferences.electronWithdrawingLevelWeight  =	jsonUtils.extractDoubleKeyword(node, "electronWithdrawingLevelWeight", false);
 		}
 	//TODO
    	return preferences;

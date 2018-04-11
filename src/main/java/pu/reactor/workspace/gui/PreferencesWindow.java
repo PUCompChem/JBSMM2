@@ -50,6 +50,18 @@ public class PreferencesWindow extends JFrame
 
 	//StrategiesFields
 	JTextField basicScoreWeight = new JTextField(20);
+	JTextField classcScoreWeight = new JTextField(20);
+	JTextField transformScoreWeight = new JTextField(20);
+	JTextField conditionsScoreWeight = new JTextField(20);
+	JTextField experimentalConditionsScoreWeight = new JTextField(20);
+	JTextField yieldScoreWeight = new JTextField(20);
+	JTextField productComplexityWeight = new JTextField(20);
+	JTextField productSimilarityWeight = new JTextField(20);
+	JTextField productStabilityWeight = new JTextField(20);
+	JTextField reactionCenterPositionWeight = new JTextField(20);
+	JTextField reactionCenterComplexityWeight = new JTextField(20);
+	JTextField electronWithdrawingLevelWeight = new JTextField(20);
+
 
 
 
@@ -121,14 +133,35 @@ public class PreferencesWindow extends JFrame
 		strategyPanel.setSize(100,100);
 		strategyPanel.setBackground(Color.WHITE);
 
-		 labelPanel = new JPanel(new GridLayout(2, 1));
-		 fieldPanel = new JPanel(new GridLayout(2, 1));
+		labelPanel = new JPanel(new GridLayout(12, 1,5,8));
+		fieldPanel = new JPanel(new GridLayout(12, 1,0,4));
 		strategyPanel.add(labelPanel, BorderLayout.WEST);
 		strategyPanel.add(fieldPanel, BorderLayout.CENTER);
+
 		labelPanel.add(new JLabel("basic score weight"));
 		fieldPanel.add(basicScoreWeight);
-
-
+		labelPanel.add(new JLabel("classic Score Weightt"));
+		fieldPanel.add(classcScoreWeight);
+		labelPanel.add(new JLabel("transformScoreWeight"));
+		fieldPanel.add(transformScoreWeight);
+		labelPanel.add(new JLabel("conditionsScoreWeight"));
+		fieldPanel.add(conditionsScoreWeight);
+		labelPanel.add(new JLabel("experimentalConditionsScoreWeight"));
+		fieldPanel.add(experimentalConditionsScoreWeight);
+		labelPanel.add(new JLabel("yieldScoreWeight"));
+		fieldPanel.add(yieldScoreWeight);
+		labelPanel.add(new JLabel("productComplexityWeight"));
+		fieldPanel.add(productComplexityWeight);
+		labelPanel.add(new JLabel("productSimilarityWeight"));
+		fieldPanel.add(productSimilarityWeight);
+		labelPanel.add(new JLabel("productStabilityWeight"));
+		fieldPanel.add(productStabilityWeight);
+		labelPanel.add(new JLabel("reactionCenterPositionWeight"));
+		fieldPanel.add(reactionCenterPositionWeight);
+		labelPanel.add(new JLabel("reactionCenterComplexityWeight"));
+		fieldPanel.add(reactionCenterComplexityWeight);
+		labelPanel.add(new JLabel("electronWithdrawingLevelWeight"));
+		fieldPanel.add(electronWithdrawingLevelWeight);
 
 
 
@@ -168,7 +201,17 @@ public class PreferencesWindow extends JFrame
 
 		//DefaultStrategies
 		basicScoreWeight.setText(String.valueOf(preferences.basicScoreWeight));
-
+		classcScoreWeight.setText(String.valueOf(preferences.classcScoreWeight));
+		transformScoreWeight.setText(String.valueOf(preferences.transformScoreWeight));
+		conditionsScoreWeight.setText(String.valueOf(preferences.conditionsScoreWeight));
+		experimentalConditionsScoreWeight.setText(String.valueOf(preferences.experimentalConditionsScoreWeight));
+		yieldScoreWeight.setText(String.valueOf(preferences.yieldScoreWeight));
+		productComplexityWeight.setText(String.valueOf(preferences.productComplexityWeight));
+		productSimilarityWeight.setText(String.valueOf(preferences.productSimilarityWeight));
+		productStabilityWeight.setText(String.valueOf(preferences.productStabilityWeight));
+		reactionCenterPositionWeight.setText(String.valueOf(preferences.reactionCenterPositionWeight));
+		reactionCenterComplexityWeight.setText(String.valueOf(preferences.reactionCenterComplexityWeight));
+		electronWithdrawingLevelWeight.setText(String.valueOf(preferences.electronWithdrawingLevelWeight));
 	}
 
 
@@ -231,11 +274,19 @@ public class PreferencesWindow extends JFrame
 		preferences.reactionDBPath = reactionDBPathField.getText();
 		preferences.startingMaterialsPath = startingMaterialsDBPathField.getText();
 
+
 		preferences.basicScoreWeight = Double.parseDouble(basicScoreWeight.getText());
-
-
-
-
+		preferences.classcScoreWeight = Double.parseDouble(classcScoreWeight.getText());
+		preferences.transformScoreWeight = Double.parseDouble(transformScoreWeight.getText());
+		preferences.conditionsScoreWeight = Double.parseDouble(conditionsScoreWeight.getText());
+		preferences.experimentalConditionsScoreWeight = Double.parseDouble(experimentalConditionsScoreWeight.getText());
+		preferences.yieldScoreWeight = Double.parseDouble(yieldScoreWeight.getText());
+		preferences.productComplexityWeight = Double.parseDouble(productComplexityWeight.getText());
+		preferences.productSimilarityWeight = Double.parseDouble(productSimilarityWeight.getText());
+		preferences.productStabilityWeight = Double.parseDouble(productStabilityWeight.getText());
+		preferences.reactionCenterPositionWeight = Double.parseDouble(reactionCenterPositionWeight.getText());
+		preferences.reactionCenterComplexityWeight = Double.parseDouble(reactionCenterComplexityWeight.getText());
+		preferences.electronWithdrawingLevelWeight = Double.parseDouble(electronWithdrawingLevelWeight.getText());
 
 		if (preferencesFilePath != null)
 		{
