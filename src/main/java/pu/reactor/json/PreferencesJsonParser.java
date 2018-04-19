@@ -17,6 +17,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class PreferencesJsonParser{
 	List<String> errors = new ArrayList<String>();
+	List<String> warnings = new ArrayList<String>();
+	
 	JsonUtilities jsonUtils = new JsonUtilities();
 	JsonNode root = null;
 	
@@ -68,11 +70,11 @@ public class PreferencesJsonParser{
 		
 
 
-		//DEFAUT_RETRO_STRATEGY
+		//DEFAULT_RETRO_STRATEGY
 		node = root.path("DEFAULT_RETRO_STRATEGY");
 		if (node.isMissingNode())
 		{
-			errors.add("JSON Section \"DEFAUT_RETRO_STRATEGY\" is missing!");
+			warnings.add("JSON Section \"DEFAULT_RETRO_STRATEGY\" is missing!");
 		}
 		else
 		{
@@ -103,6 +105,19 @@ public class PreferencesJsonParser{
 		StringBuffer sb = new StringBuffer();
 		for (int i = 0; i < errors.size(); i++)
 			sb.append(errors.get(i) + "\n");
+		return sb.toString();
+	}
+	
+	public List<String> getWarnings()
+	{
+		return warnings;
+	}
+	
+	public String getAllWarningsAsString()
+	{
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < warnings.size(); i++)
+			sb.append(warnings.get(i) + "\n");
 		return sb.toString();
 	}
 	

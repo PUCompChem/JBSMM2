@@ -288,6 +288,9 @@ public class PreferencesWindow extends JFrame
 		preferences.reactionCenterComplexityWeight = Double.parseDouble(reactionCenterComplexityWeight.getText());
 		preferences.electronWithdrawingLevelWeight = Double.parseDouble(electronWithdrawingLevelWeight.getText());
 
+		/*
+		System.out.println("preferencesFilePath " + preferencesFilePath);
+		
 		if (preferencesFilePath != null)
 		{
 			BufferedWriter bw  = null;
@@ -308,6 +311,8 @@ public class PreferencesWindow extends JFrame
 				}
 			}
 		}
+		*/
+		
 	}
 
 	private void createTreeTable(){
