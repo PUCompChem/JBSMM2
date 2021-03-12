@@ -654,7 +654,14 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		if (status != MoleculeStatus.ADDED_TO_LEVEL)
 			return;
 		
-		Map<GenericReaction,List<List<IAtom>>> allInstances = rseq.generateAllReactionInstances(mol);
+		Map<GenericReaction,List<List<IAtom>>> allInstances = null;
+		try {
+			allInstances = rseq.generateAllReactionInstances(mol);
+		}
+		catch(Exception x) {
+			System.out.println(x.getMessage());
+		}
+		
 		if (allInstances.isEmpty())
 		{	
 			ReactionSequence.setMoleculeStatus(mol, MoleculeStatus.UNRESOLVED);
