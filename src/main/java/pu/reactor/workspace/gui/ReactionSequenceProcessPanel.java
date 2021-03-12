@@ -656,6 +656,7 @@ public class ReactionSequenceProcessPanel extends ProcessPanel implements IReact
 		
 		Map<GenericReaction,List<List<IAtom>>> allInstances = null;
 		try {
+			
 			allInstances = rseq.generateAllReactionInstances(mol);
 		}
 		catch(Exception x) {
