@@ -43,7 +43,7 @@ public class HNMRSimplePanel extends JPanel
 	
 	//Config flags
 	String defaultConfigFile = "./hnmr-knowledgebase.txt";
-	String configFile = "hnmr-knowledgebase.txt";
+	String configFile = "/hnmr-knowledgebase.txt";
 	boolean printExplanation = true;
 	boolean printLog = false;
 	boolean spinSplit = true;
