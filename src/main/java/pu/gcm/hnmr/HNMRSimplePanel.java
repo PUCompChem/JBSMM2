@@ -3,6 +3,8 @@ package pu.gcm.hnmr;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -27,7 +29,7 @@ public class HNMRSimplePanel extends JPanel
 	JTextField smilesField;
 	JTextArea resultTextArea;
 	Panel2D panel2d;	
-	JButton applyButton;
+	JButton runButton;
 	
 	//Chem data
 	IAtomContainer targetMol = null;
@@ -70,5 +72,35 @@ public class HNMRSimplePanel extends JPanel
 		panel2d = new Panel2D();
 		panel2d.setPreferredSize(new Dimension(150,150));
 		targetPanel.add(panel2d, BorderLayout.CENTER);
+		
+		
+		//Buttons panel (is put within target panel)
+		buttonsPanel = new JPanel(new FlowLayout());
+		//this.add(buttonsPanel, BorderLayout.SOUTH);
+		targetPanel.add(buttonsPanel, BorderLayout.SOUTH);
+		buttonsPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+
+		runButton = new JButton("Run");
+		buttonsPanel.add(runButton);
+		runButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				handleRunButton(e);	
+			}
+		});
+		
 	}
+	
+	
+	
+	private void handleRunButton(ActionEvent e)
+	{
+		try {
+			targetMol = SmartsHelper.getMoleculeFromSmiles(smilesField.getText());
+			panel2d.setAtomContainer(targetMol);
+		} catch (Exception x) {
+			System.out.println("Incorrect input smiles: " + x.getMessage());
+		}
+	}	
+	
 }
